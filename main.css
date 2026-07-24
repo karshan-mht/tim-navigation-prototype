@@ -173,7 +173,6 @@ body {
   cursor: pointer;
 }
 .icon-btn:hover { background: rgba(13, 27, 41, 0.05); }
-.icon-btn svg { width: 22px; height: 22px; }
 .icon-btn img.icon { width: 22px; height: 22px; }
 
 /* Figma-exported icons render as <img>; contain guards against distortion
@@ -214,7 +213,6 @@ img.icon { display: block; object-fit: contain; }
   color: var(--color-text-secondary);
 }
 .profile-btn img { width: 100%; height: 100%; object-fit: cover; }
-.profile-btn svg { width: 18px; height: 18px; }
 .profile-btn .badge {
   position: absolute;
   top: 0;

@@ -98,7 +98,7 @@ Only defined for **Logged In Member** in the source file (node 7042:711). Logged
 
 ## Assets — real (pulled from Figma 2026-07-24)
 
-Real assets are now pulled from the Figma file into `assets/` (at the repo root) and referenced by relative path from `app.js` (as `<img>`), so every flow folder picks them up automatically. Icons keep the fills Figma exported them with — nav = ink `#0D1B29`, library & community = magenta `#A440BC`, back-chevron = blue `#0F57A8`, dropdown = ink — so they are dropped in without any CSS tinting.
+Real assets are now pulled from the Figma file into `assets/` (at the repo root) and referenced by relative path from `main.js` (as `<img>`), so every flow folder picks them up automatically. Icons keep the fills Figma exported them with — nav = ink `#0D1B29`, library & community = magenta `#A440BC`, back-chevron = blue `#0F57A8`, dropdown = ink — so they are dropped in without any CSS tinting.
 
 Node ids below are the exact **vector/frame node** each file was exported from (verified against the live file on the pull date — the parent-frame ranges the earlier draft listed still resolve, but these are the leaf nodes actually exported).
 
@@ -151,5 +151,5 @@ Node ids below are the exact **vector/frame node** each file was exported from (
 
 ### Still placeholder / not pulled — deliberate
 - **Notification badge**: still the CSS dot (`.badge`, `--color-badge`). The Figma badge (ellipse 7042:629) is a solid-fill 8px dot with a white ring — pixel-identical to the CSS version and better kept as a positioned CSS element than an `<img>`, so no file was pulled.
-- **Panel close (X)**: still an inline SVG in `app.js` (`INLINE_ICONS.close`). The Figma panel has no close-icon node — it dismisses by tapping the scrim — so there is no real asset to pull; the X is a prototype-only affordance.
+- **Panel close (X)**: still an inline SVG in `main.js` (`INLINE_ICONS.close`). The Figma panel has no close-icon node — it dismisses by tapping the scrim — so there is no real asset to pull; the X is a prototype-only affordance.
 - **Logged-in member avatar**: uses `placeholder_profile.svg`, same as the logged-out state. The source file's `member-photo` variant shows a `Photo` image-fill, but there is no distinct curated member headshot asset to export, and `navigation.md` had already decided the stock photo should be replaced by Figma's own `placeholder_profile` illustration. The `member` vs `member-photo` nav variants still exist in the persona model.

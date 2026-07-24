@@ -1,7 +1,7 @@
 # TIM Navigation — behavior spec & decisions log
 
 Source: Figma **Global Navigation** file `42yas7Q9FfwhL6xUocjEAl`.
-Prototype: plain HTML/CSS/JS in this repo (`index.html`, `main.css`, `app.js`), no build step.
+Prototype: plain HTML/CSS/JS in this repo (`index.html`, `main.css`, `main.js`), no build step.
 
 This doc tracks *behavior and decisions*. Component-level structure (props, states, node ids) lives in `components.md`. Code is source of truth if the two ever disagree — correct this doc, don't erase the stale entry.
 
@@ -69,6 +69,7 @@ Note: the underlying content behind each nav (article body, profile grid, etc.) 
 - **2026-07-24** — Pulled real assets from Figma (`42yas7Q9FfwhL6xUocjEAl`) into `assets/` and swapped out the placeholders: the inline-SVG icon set, the text-wordmark logo/logomark, and the hotlinked Unsplash profile photo are all gone. `app.js` now emits `<img>` tags pointing at local files (`../assets/...`); `main.css` sizes them instead of styling text logos or tinting inline SVGs. Re-verified the documented node ids against the live file first — they all still resolve and match `components.md`, so no drift correction was needed. Icons keep the fills Figma exported (nav ink, library/community magenta, back-chevron blue). Three deliberate exceptions, all logged in `components.md` → Assets: the notification badge stays a CSS dot, the panel close (X) stays inline SVG (no Figma node for it), and the logged-in member avatar reuses `placeholder_profile` (no distinct headshot asset in source — matches the 2026-07-24 stock-photo decision below). Logo delivered as 3× PNG since the Figma nav logo is a raster image-fill, not vector.
 - **2026-07-24** — Restructured from one combined `index.html` (with a persona switcher) into one folder per persona (`/visitor/`, `/logged-out-member/`, `/logged-in-member/`, `/subscriber/`), each with its own `index.html` locked to that persona. Reason: individual flows need to be shared as standalone starting points without exposing the others. `NOTES.md` is retired — its node-id table now lives in `components.md`, and its "how it works" section is folded into this doc. Shared CSS/JS moved into standalone files under `/shared/` (later flattened to the repo root — see next entry). The root `index.html` is now a static picker linking out to each flow (not itself interactive). CTA buttons ("Join", "Log in now", "Finish up now") now do a real page navigation to `/logged-in-member/` instead of an in-page persona swap.
 - **2026-07-24** — Flattened the `/shared/` folder into the repo root to keep things lean: `main.css`, `app.js`, and `assets/` now sit at the top level. Each flow page references `../main.css` / `../app.js`, and `app.js`'s asset base became `../assets`. No behavior change — purely a path/layout move.
+- **2026-07-24** — Renamed `app.js` → `main.js` so the two shared source files read as a matched pair (`main.css` / `main.js`); flow pages now load `../main.js`. Also added a `README.md` and pruned two CSS rules left dead by the asset swap (`.icon-btn svg`, `.profile-btn svg` — everything in the nav is now an `<img>`).
 
 ---
 
