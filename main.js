@@ -379,8 +379,10 @@ document.addEventListener("click", (e) => {
    than it, scale the whole device down with a transform so the page never
    scrolls — the 393x852 design stays intact, just smaller. A transform is
    visual only and would otherwise leave its full-size layout box behind
-   (still forcing scroll), so we collapse that leftover space with a
-   negative margin equal to the height the scale removed.
+   (still forcing scroll), so we collapse that leftover space with negative
+   margins — split evenly on all four sides so the collapsed box stays
+   centered on the same point the transform scales around, letting the
+   flex .stage center it both ways.
    Skipped on <=430px-wide screens, where the CSS media query already makes
    the phone full-bleed (height:100vh). ---- */
 
@@ -394,7 +396,7 @@ function fitPhone() {
 
   if (window.innerWidth <= 430) {
     phone.style.transform = "";
-    phone.style.marginBottom = "";
+    phone.style.margin = "";
     return;
   }
 
@@ -404,9 +406,10 @@ function fitPhone() {
     (window.innerWidth - FIT_MARGIN) / PHONE_W
   );
 
-  phone.style.transformOrigin = "top center";
+  phone.style.transformOrigin = "center center";
   phone.style.transform = `scale(${scale})`;
-  phone.style.marginBottom = `${-PHONE_H * (1 - scale)}px`;
+  // Collapse the leftover layout box symmetrically so it stays centered.
+  phone.style.margin = `${(-PHONE_H * (1 - scale)) / 2}px ${(-PHONE_W * (1 - scale)) / 2}px`;
 }
 
 window.addEventListener("resize", fitPhone);
