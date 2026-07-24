@@ -27,9 +27,9 @@ body {
 
 .stage {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 8px 16px 40px;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0;
 }
 
 /* ---- Phone frame ---- */
@@ -417,21 +417,6 @@ img.icon { display: block; object-fit: contain; }
 
 @media (max-width: 430px) {
   .phone { border-radius: 0; border-width: 0; height: 100vh; box-shadow: none; }
-}
-
-/* ---------------- Flow page chrome (each persona's own index.html) ---- */
-
-.flow-header {
-  padding: 20px 24px 8px;
-  text-align: center;
-}
-.flow-header h1 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.25px;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
 }
 
 /* ---------------- Launcher page (root index.html) ---- */
