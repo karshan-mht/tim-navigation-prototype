@@ -374,4 +374,44 @@ document.addEventListener("click", (e) => {
   }
 });
 
-if (persona) render();
+/* ---------------- Fit the fixed 393x852 device to the viewport ----
+   The phone is a fixed-size "device". On a viewport shorter (or narrower)
+   than it, scale the whole device down with a transform so the page never
+   scrolls — the 393x852 design stays intact, just smaller. A transform is
+   visual only and would otherwise leave its full-size layout box behind
+   (still forcing scroll), so we collapse that leftover space with a
+   negative margin equal to the height the scale removed.
+   Skipped on <=430px-wide screens, where the CSS media query already makes
+   the phone full-bleed (height:100vh). ---- */
+
+const PHONE_W = 393;
+const PHONE_H = 852;
+const FIT_MARGIN = 16; // px of breathing room kept around the device
+
+function fitPhone() {
+  const phone = document.getElementById("phone");
+  if (!phone) return;
+
+  if (window.innerWidth <= 430) {
+    phone.style.transform = "";
+    phone.style.marginBottom = "";
+    return;
+  }
+
+  const scale = Math.min(
+    1, // never upscale past the intended 393x852
+    (window.innerHeight - FIT_MARGIN) / PHONE_H,
+    (window.innerWidth - FIT_MARGIN) / PHONE_W
+  );
+
+  phone.style.transformOrigin = "top center";
+  phone.style.transform = `scale(${scale})`;
+  phone.style.marginBottom = `${-PHONE_H * (1 - scale)}px`;
+}
+
+window.addEventListener("resize", fitPhone);
+
+if (persona) {
+  render();
+  fitPhone();
+}

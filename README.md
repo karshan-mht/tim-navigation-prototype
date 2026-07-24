@@ -63,6 +63,13 @@ sets one attribute and loads the two shared files:
 content, and screens, and renders them. There is no persona switcher — the
 page is locked to whatever `data-persona` says.
 
+The phone is a fixed **393 × 852** device frame. `main.js` scales it down to
+fit shorter/narrower windows (capped at 1×, so it never upscales past the
+intended size), which keeps the page from ever scrolling vertically while
+preserving the design. Screen-to-screen navigation happens via elements
+*inside* the prototype — any element with `data-screen="<id>"` jumps to that
+screen (valid ids live in the `PERSONAS` map in `main.js`).
+
 | Persona | Nav | Panel | Dropdown |
 |---|---|---|---|
 | Anonymous Visitor | Full logotype + Join | Library (6) + join card | — |
