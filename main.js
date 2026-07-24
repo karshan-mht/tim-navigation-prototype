@@ -309,25 +309,14 @@ function render() {
   }
 
   document.getElementById("phone").innerHTML = `<div class="screen">${body}</div>`;
-  renderScreenTabs();
-  const hint = document.getElementById("stageHint");
-  if (hint) hint.textContent = screen.label;
-}
-
-function renderScreenTabs() {
-  const screenTabs = document.getElementById("screenTabs");
-  if (!screenTabs) return;
-  screenTabs.innerHTML = persona.screens
-    .map(
-      (s) =>
-        `<button class="tab-btn${s.id === state.screenId ? " is-active" : ""}" data-screen="${s.id}">${s.label}</button>`
-    )
-    .join("");
 }
 
 /* ---------------- Event wiring ---- */
 
 document.addEventListener("click", (e) => {
+  // In-prototype navigation: any element with data-screen="<id>" jumps to that
+  // screen. This is how the flows link between screens now that the external
+  // screen-tab switcher is gone — e.g. a panel/nav item can carry data-screen.
   const screenBtn = e.target.closest("[data-screen]");
   if (screenBtn) {
     state.screenId = screenBtn.dataset.screen;
