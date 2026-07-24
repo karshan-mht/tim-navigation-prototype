@@ -7,6 +7,8 @@
   --color-text-muted: rgba(13, 27, 41, 0.7);
   --color-border: #dbdddf;
   --color-badge: #e0483e;
+  --color-magenta: #a440bc;              /* Library / Community icon tint */
+  --color-magenta-soft: rgba(164, 65, 188, 0.14); /* pink circle behind icons */
   --radius-pill: 999px;
   --radius-card: 16px;
   --font-body: "Lato", sans-serif;
@@ -53,21 +55,34 @@ body {
   height: 100%;
   background: #fff;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.screen__placeholder {
-  position: absolute;
-  inset: 0;
+/* Scrollable content area below the fixed nav/uplevel; holds content + footer. */
+.screen__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+}
+.screen__body { flex: 1 0 auto; display: flex; flex-direction: column; }
+
+.screen__placeholder {
+  margin: auto;              /* center within the flex body */
   text-align: center;
-  padding: 0 24px;
+  padding: 24px;
   font-size: 20px;
   line-height: 1.3;
   color: rgba(0, 0, 0, 0.35);
   white-space: pre-line;
 }
+
+/* Optional full-bleed sample image as a screen's body (natural height, scrolls).
+   Provide a pre-cropped image — the prototype adds its own nav + footer. */
+.screen__shot { display: block; width: 100%; height: auto; }
 
 /* ---- Top nav ---- */
 
@@ -76,6 +91,7 @@ body {
   width: 100%;
   background: #fff;
   box-shadow: inset 0 -1px 0 0 var(--color-border);
+  flex-shrink: 0;  /* fixed chrome; the scroll area is below it */
 }
 
 .nav__top {
@@ -89,8 +105,9 @@ body {
 .nav__left, .nav__right {
   display: flex;
   align-items: center;
-  gap: 8px;
 }
+.nav__left { gap: 2px; }   /* stacked logotype sits close to the menu icon */
+.nav__right { gap: 10px; }  /* more air between search / AI / Join (felt tight) */
 
 .icon-btn {
   width: 44px;
@@ -105,15 +122,25 @@ body {
   cursor: pointer;
 }
 .icon-btn:hover { background: rgba(13, 27, 41, 0.05); }
-.icon-btn img.icon { width: 22px; height: 22px; }
 
-/* Figma-exported icons render as <img>; contain guards against distortion
-   since their intrinsic aspect ratios vary (menu 22x18, search 22x22, etc.). */
-img.icon { display: block; object-fit: contain; }
+/* Monochrome inline SVG icons (fill=currentColor), so each context's `color`
+   tints them — nav = ink, Library/Community = magenta, back chevron = blue,
+   dropdown = ink. Fixed square box; the SVG sits at natural size, centered
+   (like object-fit: contain). Inlined so it works over file:// too. */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.icon svg { display: block; max-width: 100%; max-height: 100%; width: auto; height: auto; }
 
-/* Real logo assets exported from Figma (see components.md → Assets). */
+/* Logo assets (full-colour raster wordmark / mark — kept as <img>, not tinted). */
+.logo-btn { display: flex; align-items: center; border: none; background: none; padding: 0; cursor: pointer; }
 .logo { display: block; width: auto; }
-.logo--full { height: 44px; }  /* full "this is Menopause" wordmark */
+.logo--full { height: 40px; }  /* stacked "this is Menopause" wordmark */
 .logo--mark { height: 40px; }  /* compact circular logomark */
 
 .join-btn {
@@ -170,21 +197,19 @@ img.icon { display: block; object-fit: contain; }
   width: 100%;
   cursor: pointer;
   font-family: var(--font-body);
+  color: var(--color-primary);  /* tints both the back chevron and the label */
+  flex-shrink: 0;
 }
-.uplevel img.icon { width: 24px; height: 24px; }
+.uplevel .icon { width: 24px; height: 24px; }
 .uplevel span {
   font-weight: 600;
   font-size: 16px;
-  color: var(--color-primary);
 }
 
 /* ---- Gated / welcome card (Logged-out Member home) ---- */
 
 .welcome-card {
-  position: absolute;
-  top: 80px;
-  left: 12px;
-  right: 12px;
+  margin: 12px;
   border: 1px solid rgba(13, 27, 41, 0.1);
   border-radius: var(--radius-card);
   padding: 16px;
@@ -223,8 +248,11 @@ img.icon { display: block; object-fit: contain; }
   background: rgba(0, 0, 0, 0.75);
   z-index: 20;
   display: flex;
-  animation: fadeIn 0.15s ease;
+  animation: fadeIn 0.2s ease;
 }
+/* Smooth dismiss: scrim fades and panel slides back out (slower ease-out). */
+.panel-overlay.is-closing { animation: fadeOut 0.32s ease-out forwards; }
+.panel-overlay.is-closing .panel { animation: slideOut 0.32s ease-out forwards; }
 
 .panel {
   width: 300px;
@@ -235,48 +263,36 @@ img.icon { display: block; object-fit: contain; }
   flex-direction: column;
   gap: 24px;
   overflow-y: auto;
-  animation: slideIn 0.2s ease;
+  animation: slideIn 0.24s ease-out;
 }
 
 .panel__top {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
-.panel__logotype { height: 32px; }  /* overrides .logo--full for the panel top */
+.panel__logotype { height: 30px; }  /* panel wordmark (overrides .logo--full) */
 
-.panel__close {
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: var(--color-text-secondary);
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.panel__close svg { width: 20px; height: 20px; }
-
-.panel__menu { display: flex; flex-direction: column; gap: 24px; }
+.panel__menu { display: flex; flex-direction: column; gap: 28px; }
 
 .panel__section-label {
   font-size: 14px;
   text-transform: uppercase;
   color: var(--color-text-secondary);
-  margin: 0 0 12px;
-  letter-spacing: 0.5px;
+  margin: 0 0 8px;
+  letter-spacing: 0;
 }
 
-.panel__section { display: flex; flex-direction: column; gap: 12px; }
+.panel__section { display: flex; flex-direction: column; gap: 4px; }
 
 .panel__item {
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 44px;
-  border-radius: var(--radius-pill);
+  width: calc(100% + 24px);
+  margin: 0 -12px;          /* bleed the rollover wider, into the panel padding */
+  padding: 6px 12px;
+  border-radius: 12px;
   background: none;
   border: none;
   text-align: left;
@@ -284,10 +300,21 @@ img.icon { display: block; object-fit: contain; }
   font-family: var(--font-body);
   font-size: 18px;
   color: var(--color-text);
-  padding: 0 8px;
 }
-.panel__item:hover { background: rgba(13, 27, 41, 0.04); }
-.panel__item img.icon { width: 22px; height: 22px; flex-shrink: 0; }
+.panel__item:hover { background: rgba(13, 27, 41, 0.05); }
+
+/* Light-pink circle behind each Library / Community icon; icon itself magenta. */
+.panel__item-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--color-magenta-soft);
+  color: var(--color-magenta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .panel__access {
   position: relative;
@@ -349,6 +376,7 @@ img.icon { display: block; object-fit: contain; }
 .panel__footer {
   margin-top: auto;
   font-size: 14px;
+  line-height: 1.5;  /* "Powered by" on line 1, company name wraps to line 2 */
   color: var(--color-text-secondary);
   letter-spacing: -0.25px;
 }
@@ -410,11 +438,51 @@ img.icon { display: block; object-fit: contain; }
   padding: 0;
   text-align: left;
 }
-.dropdown__item img.icon { width: 24px; height: 24px; flex-shrink: 0; }
+.dropdown__item .icon { width: 24px; height: 24px; }
 .dropdown__divider { border-top: 1px solid var(--color-border); padding-top: 16px; }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 @keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+@keyframes slideOut { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+
+/* ---- Global footer (bottom of every screen's scroll area) ---- */
+
+.footer { flex-shrink: 0; font-family: var(--font-body); }
+
+.footer__bar { padding: 24px 12px; }
+.footer__brand { margin-bottom: 24px; }
+.footer__logo { display: block; height: 40px; width: auto; margin-bottom: 12px; }
+.footer__headline {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.25px;
+  color: var(--color-text);
+}
+.footer__links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
+.footer__col { display: flex; flex-direction: column; gap: 12px; }
+.footer__link {
+  color: var(--color-primary);
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.footer__link:hover { text-decoration: underline; }
+
+.footer__end { background: #f3f4f6; padding: 24px 12px; }
+.footer__legal { margin: 0 0 16px; font-size: 13px; line-height: 1.9; }
+.footer__link--dark { color: var(--color-text); font-size: 13px; }
+.footer__dot { color: var(--color-text-secondary); }
+.footer__privacy img { height: 14px; width: auto; vertical-align: middle; margin-right: 4px; }
+.footer__disclaimer,
+.footer__copyright {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+.footer__disclaimer { margin-bottom: 16px; }
 
 @media (max-width: 430px) {
   .phone { border-radius: 0; border-width: 0; height: 100vh; box-shadow: none; }

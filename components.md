@@ -12,6 +12,8 @@ Fixed bar, 68px tall, white background, `inset 0 -1px 0 #dbdddf` hairline bottom
 
 **Layout:** `[ Menu icon | Logo ]  ...  [ Search | AI | Join-button OR Profile ]`
 
+The logotype/logomark is a button that returns to the persona's home screen (`go-home`). The stacked visitor logotype renders at 40px, hugging the menu icon.
+
 ### Variant: `visitor`
 - Logo slot: full logotype (`ThisIsMenopause_Logo_FullColor_Digital`), 133×44
 - Right slot: Search icon, AI icon, **Join** pill button (bg `#0f57a8`, white text)
@@ -61,18 +63,24 @@ Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from l
 
 ### Content slots
 
+Each Library / Community item carries a `data-screen` and navigates to a placeholder destination screen within the current persona (in-page state change; the panel closes on click). Item → screen id:
+
 **Library** — bulleted icon list, section label "LIBRARY" (uppercase, `#626b74`, 14px)
-- Full set (Visitor, Subscriber): HRT & Other Treatments, Mood & Mental Health, Sleep & Insomnia, Diet & Nutrition, Family & Relationships, All Topics
-- Short set (Logged Out Member, Logged In Member): HRT & Other Treatments, Mood & Mental Health, Sleep & Insomnia, All Topics
+- Full set (Visitor, Subscriber): HRT & Other Treatments → `lib-hrt`, Mood & Mental Health → `lib-mood`, Sleep & Insomnia → `lib-sleep`, Diet & Nutrition → `lib-diet`, Family & Relationships → `lib-family`, All Topics → `lib-all`
+- Short set (Logged Out Member, Logged In Member): HRT → `lib-hrt`, Mood → `lib-mood`, Sleep → `lib-sleep`, All Topics → `lib-all`
 
 **Community** — only present for Logged Out Member / Logged In Member. Section label "COMMUNITY".
-- Stories, Questions & Answers, Groups, Meet Others, All Activities
+- Stories → `com-stories`, Questions & Answers → `com-questions`, Groups → `com-groups`, Meet Others → `com-meet`, All Activities → `com-activities`
+
+These are *list*-type destinations, deliberately separate from the existing *detail* screens (`group` = Group Detail, `question` = Question Show, `activity` = Activity Show, `profile` = Member Profile), which are left untouched.
 
 **Access card** — only present for Visitor / Subscriber. Navy (`#2b2b68`) rounded card, `DM Serif Display` headline "Don't miss out!", body copy, white pill CTA, secondary link.
 - Visitor: "Join our community to access posts, questions, groups, and meet people." → **Join for free** → "Get a preview first"
 - Subscriber: "Create your account to access posts, questions, groups, and meet people." → **Finish up now** → "Get a preview first"
 
-**Footer** — "Powered by MyHealthTeam, a Swoop company" (`#626b74`, 14px), pinned to bottom.
+**Footer** — "Powered by" on line 1, "MyHealthTeam, a Swoop company" on line 2 (`#626b74`, 14px), pinned to bottom.
+
+**Rendering notes (2026-07-24):** each Library/Community item icon sits in a light-pink circle (`--color-magenta-soft`) with the icon in magenta; section labels are 14px uppercase, normal tracking; the row rollover bleeds wider than the text (negative inline margin into the 24px panel padding). There is **no close (X)** — the panel dismisses via the scrim with a slower ease-out slide-out (`closePanel()`). The top wordmark uses `panel-logo.svg` (see Assets).
 
 ### Node refs
 - Visitor panel: 6950:226
@@ -88,17 +96,36 @@ Anchored card, top-right under the profile avatar, 246px wide, white, `#dbdddf` 
 
 **Structure:** `User block → menu items → divider → Log out`
 
-- User block: name ("Janet Smithsonian"), handle ("@jannie1234"), "View Profile" link (`#0f57a8`)
-- Menu: My Health, Messages, Notifications (5), Settings — icon + label rows
-- Divider, then: Log out
+- User block: name ("Janet Smithsonian"), handle ("@jannie1234"), "View Profile" link (`#0f57a8`) → navigates to `profile` (Member Profile)
+- Menu: My Health → `acct-health`, Messages → `acct-messages`, Notifications (5) → `acct-notifications`, Settings → `acct-settings` — icon + label rows
+- Divider, then: Log out → navigates to the **Logged Out Member flow** (`../logged-out-member/`)
+
+The four menu rows carry a `data-screen` and navigate to a placeholder destination screen within the persona (in-page state change; the dropdown closes on click). **Log out** is the exception: it carries `data-action="log-out"` and does a real cross-folder page navigation into the Logged Out Member flow — modelled as an auth transition alongside the Join / Log in / Finish up CTAs, not an in-page screen.
 
 Only defined for **Logged In Member** in the source file (node 7042:711). Logged Out Member and Subscriber have a profile-style icon in the nav but no corresponding dropdown content in Figma — not built for those personas in the prototype.
 
 ---
 
+## 5. Global footer
+
+Added 2026-07-24 to the bottom of **every screen's scroll area** (`renderFooter()` in `main.js`). Content mirrors the Figma mobile footer (`6371:29` / `6371:139`). Two bands:
+
+- **Bar** (white): horizontal wordmark (`logo/logotype.svg`) + headline "Making sense of menopause, together", then two link columns — About / Editorial Process / Partner with Us / Accessibility · Getting Started / Community Guidelines / Help Center / Crisis (links are non-navigating placeholders).
+- **End** (grey `#f3f4f6`): legal line "Terms of Use · Privacy Policy · Cookie Policy · Health Data Policy · [icon] Your Privacy Choices · CA Notice at Collection" (the CCPA opt-out icon is `assets/footer/privacy-choices.png`), the medical disclaimer, and "© 2026 MyHealthTeam, A Swoop Company. All Rights Reserved."
+
+Because the footer is tall, screens are now vertically scrollable: `.screen` is a flex column with a fixed nav/uplevel and a scrollable `.screen__scroll` holding the content + footer. Panel/dropdown overlays stay pinned to the phone viewport (absolute over `.screen`, don't scroll).
+
+**Screen content** is a labelled placeholder by default. A screen may optionally carry an `image` field to show a full-bleed sample image as the body instead (rendered as `.screen__shot`, natural height, scrolls); the image must be pre-cropped to just the page content, since the prototype wraps it with its own nav + footer. None is wired currently.
+
+---
+
 ## Assets — real (pulled from Figma 2026-07-24)
 
-Real assets are now pulled from the Figma file into `assets/` (at the repo root) and referenced by relative path from `main.js` (as `<img>`), so every flow folder picks them up automatically. Icons keep the fills Figma exported them with — nav = ink `#0D1B29`, library & community = magenta `#A440BC`, back-chevron = blue `#0F57A8`, dropdown = ink — so they are dropped in without any CSS tinting.
+Real assets are pulled from the Figma file into `assets/` (at the repo root) and referenced by relative path from `main.js`, so every flow folder picks them up automatically.
+
+**Icons are monochrome (black) and tinted via CSS.** The 20 icons are **inlined** in `main.js` as the `ICON_SVGS` map — each SVG normalized to `fill="currentColor"` — and rendered by `icon()` as `<span class="icon">…inline svg…</span>`. Colour comes from each context's `color`: nav = ink `#0D1B29`, Library/Community = magenta `#A440BC` (`--color-magenta`, on a `--color-magenta-soft` pink circle), back-chevron = blue `#0F57A8`, dropdown = ink. Inlining (rather than `<img>` or CSS `mask` of external files) is deliberate: CSS `mask`/`url()` refs to external SVGs are **blocked over `file://`**, so masked icons vanished when the prototype was opened directly. Inline SVG works over `file://` and still tints via `color`. The standalone `assets/icons/*.svg` files were removed (now redundant); the node-id table below is their Figma provenance.
+
+Logos and the profile illustration stay full-colour `<img>` (load fine over `file://`). Files in `assets/logo/`: `logotype.png` (stacked nav wordmark, 3×), `logomark.png` (compact mark), `logotype.svg` (horizontal wordmark — used by the panel top and the footer). Footer CCPA icon: `assets/footer/privacy-choices.png`.
 
 Node ids below are the exact **vector/frame node** each file was exported from (verified against the live file on the pull date — the parent-frame ranges the earlier draft listed still resolve, but these are the leaf nodes actually exported).
 
