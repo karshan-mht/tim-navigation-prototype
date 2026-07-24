@@ -98,17 +98,17 @@ Only defined for **Logged In Member** in the source file (node 7042:711). Logged
 
 ## Assets — real (pulled from Figma 2026-07-24)
 
-Real assets are now pulled from the Figma file into `shared/assets/` and referenced by relative path from `shared/app.js` (as `<img>`), so every flow folder picks them up automatically. Icons keep the fills Figma exported them with — nav = ink `#0D1B29`, library & community = magenta `#A440BC`, back-chevron = blue `#0F57A8`, dropdown = ink — so they are dropped in without any CSS tinting.
+Real assets are now pulled from the Figma file into `assets/` (at the repo root) and referenced by relative path from `app.js` (as `<img>`), so every flow folder picks them up automatically. Icons keep the fills Figma exported them with — nav = ink `#0D1B29`, library & community = magenta `#A440BC`, back-chevron = blue `#0F57A8`, dropdown = ink — so they are dropped in without any CSS tinting.
 
 Node ids below are the exact **vector/frame node** each file was exported from (verified against the live file on the pull date — the parent-frame ranges the earlier draft listed still resolve, but these are the leaf nodes actually exported).
 
-### Logo — `shared/assets/logo/` (PNG, exported at 3× because the Figma nav logo is a raster image-fill, not vector)
+### Logo — `assets/logo/` (PNG, exported at 3× because the Figma nav logo is a raster image-fill, not vector)
 | File | What | Source node |
 |---|---|---|
 | `logotype.png` | Full "this is Menopause" wordmark | 6950:211 (`Logotype` → `ThisIsMenopause_Logo_FullColor_Digital`) |
 | `logomark.png` | Compact circular logomark | 7082:926 (`Logomark`, member nav instance) |
 
-### Nav / uplevel icons — `shared/assets/icons/` (SVG)
+### Nav / uplevel icons — `assets/icons/` (SVG)
 | File | Source node |
 |---|---|
 | `menu.svg` | 6875:148 |
@@ -144,7 +144,7 @@ Node ids below are the exact **vector/frame node** each file was exported from (
 | `menu-settings.svg` | Settings | 7042:797 |
 | `menu-logout.svg` | Log out | 7042:806 |
 
-### Profile — `shared/assets/profile/` (SVG)
+### Profile — `assets/profile/` (SVG)
 | File | What | Source node |
 |---|---|---|
 | `placeholder_profile.svg` | Generic profile illustration (magenta silhouette on light circle) | 7042:626 (from Member gated 6960:52) |

@@ -8,13 +8,13 @@
 
 /* ---------------- Icons — real assets exported from Figma
    (Global Navigation 42yas7Q9FfwhL6xUocjEAl), saved under
-   shared/assets/ and referenced by relative path. See components.md
+   assets/ and referenced by relative path. See components.md
    → Assets for the source node id behind each file.
 
    Paths are relative to each flow page (e.g. /visitor/index.html),
-   which sits one level above /shared/ — hence the "../shared" base. ---- */
+   which sits one level above /assets/ — hence the "../assets" base. ---- */
 
-const ASSET_BASE = "../shared/assets";
+const ASSET_BASE = "../assets";
 
 // Figma-exported SVG icons, keyed by the names used throughout this script.
 // Each icon carries its own fill straight from Figma (nav = ink, library &
