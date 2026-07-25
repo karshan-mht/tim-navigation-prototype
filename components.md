@@ -34,11 +34,13 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 
 ---
 
-## 2. Uplevel bar (back navigation)
+## 2. Level-up bar (one level up)
 
 44px tall, sits directly under the Top Nav, `0 1px 0 #dbdddf` bottom hairline shadow.
 
-**Content slot:** `[ back-chevron icon ]  [ label ]` — label color `#0f57a8`, 16px semibold.
+**Content slot:** `[ chevron icon ]  [ label ]` — label color `#0f57a8`, 16px semibold.
+
+Only on **detail** screens. It steps **one level up** to the parent list (`upTo` → `data-screen`), not "back" and not home. Top-level pages (panel/dropdown destinations) have no level-up bar — the nav logo returns home. Both the nav and this bar live in the sticky `.screen__chrome`, which auto-hides on scroll-down.
 
 | Screen | Back label | Node id |
 |---|---|---|
@@ -51,7 +53,7 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 | Member — Question Show | Questions & Answers | 6951:734 |
 | Member — Activity Show | Activity | 6951:531 |
 
-No back-arrow destination logic is specified in Figma (each frame is static) — the prototype sends all of these to the persona's home screen as a simplification.
+Figma frames are static (no destination logic). The prototype routes each detail screen's level-up bar to its parent list where one exists (`upTo`); `Program Detail` has no Programs list, so it falls back to home.
 
 ---
 
@@ -125,11 +127,11 @@ Real assets are pulled from the Figma file into `assets/` (at the repo root) and
 
 **Icons are monochrome (black) and tinted via CSS.** The 20 icons are **inlined** in `main.js` as the `ICON_SVGS` map — each SVG normalized to `fill="currentColor"` — and rendered by `icon()` as `<span class="icon">…inline svg…</span>`. Colour comes from each context's `color`: nav = ink `#0D1B29`, Library/Community = magenta `#A440BC` (`--color-magenta`, on a `--color-magenta-soft` pink circle), back-chevron = blue `#0F57A8`, dropdown = ink. Inlining (rather than `<img>` or CSS `mask` of external files) is deliberate: CSS `mask`/`url()` refs to external SVGs are **blocked over `file://`**, so masked icons vanished when the prototype was opened directly. Inline SVG works over `file://` and still tints via `color`. The standalone `assets/icons/*.svg` files were removed (now redundant); the node-id table below is their Figma provenance.
 
-Logos and the profile illustration stay full-colour `<img>` (load fine over `file://`). Files in `assets/logo/`: `logotype.png` (stacked nav wordmark, 3×), `logomark.png` (compact mark), `logotype.svg` (horizontal wordmark — used by the panel top and the footer). Footer CCPA icon: `assets/footer/privacy-choices.png`.
+Logos and the profile illustration stay full-colour `<img>` (load fine over `file://`). `assets/` is a single flat folder (no per-type subfolders): `logotype.png` (stacked nav wordmark, 3×), `logomark.png` (compact mark), `logotype.svg` (horizontal wordmark — used by the panel top and the footer), `placeholder_profile.svg` (member avatar), and `privacy-choices.png` (footer CCPA icon).
 
 Node ids below are the exact **vector/frame node** each file was exported from (verified against the live file on the pull date — the parent-frame ranges the earlier draft listed still resolve, but these are the leaf nodes actually exported).
 
-### Logo — `assets/logo/` (PNG, exported at 3× because the Figma nav logo is a raster image-fill, not vector)
+### Logo — `assets/` (PNG, exported at 3× because the Figma nav logo is a raster image-fill, not vector)
 | File | What | Source node |
 |---|---|---|
 | `logotype.png` | Full "this is Menopause" wordmark | 6950:211 (`Logotype` → `ThisIsMenopause_Logo_FullColor_Digital`) |
@@ -171,7 +173,7 @@ Node ids below are the exact **vector/frame node** each file was exported from (
 | `menu-settings.svg` | Settings | 7042:797 |
 | `menu-logout.svg` | Log out | 7042:806 |
 
-### Profile — `assets/profile/` (SVG)
+### Profile — `assets/` (SVG)
 | File | What | Source node |
 |---|---|---|
 | `placeholder_profile.svg` | Generic profile illustration (magenta silhouette on light circle) | 7042:626 (from Member gated 6960:52) |

@@ -32,10 +32,10 @@ index.html                     Launcher — static picker linking to each flow
 main.css                       All styles (shared by every page)
 main.js                        All behavior — reads <body data-persona> and
                                renders the nav/panel/dropdown for that persona
-assets/                        Real assets exported from Figma
-  icons/                         nav, topic, community & dropdown icons (SVG)
-  logo/                          full wordmark + compact logomark (PNG @3x)
-  profile/                       placeholder profile illustration (SVG)
+assets/                        Real assets exported from Figma (flat folder):
+                               logotype.png/.svg + logomark.png (logos),
+                               placeholder_profile.svg, privacy-choices.png
+                               (icons are inlined in main.js, not files)
 visitor/index.html             Anonymous Visitor flow
 logged-out-member/index.html   Logged Out Member flow
 logged-in-member/index.html    Logged In Member flow (has the dropdown)

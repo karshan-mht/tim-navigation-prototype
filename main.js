@@ -44,13 +44,13 @@ const ICON_SVGS = {
 };
 
 // Logo + profile assets (raster wordmark/mark exported at 3x; profile is SVG).
-const LOGO_FULL = `${ASSET_BASE}/logo/logotype.png`; // full "this is Menopause" wordmark
-const LOGO_MARK = `${ASSET_BASE}/logo/logomark.png`; // compact circular logomark
-const PROFILE_PLACEHOLDER = `${ASSET_BASE}/profile/placeholder_profile.svg`;
+const LOGO_FULL = `${ASSET_BASE}/logotype.png`; // full "this is Menopause" wordmark
+const LOGO_MARK = `${ASSET_BASE}/logomark.png`; // compact circular logomark
+const PROFILE_PLACEHOLDER = `${ASSET_BASE}/placeholder_profile.svg`;
 // Panel wordmark — the distinct horizontal "this is Menopause" logo the user
-// added (assets/logo/logotype.svg), vs the stacked lockup used in the nav.
+// added (assets/logotype.svg), vs the stacked lockup used in the nav.
 // Falls back to the nav wordmark via <img onerror> if the file is ever missing.
-const PANEL_LOGO = `${ASSET_BASE}/logo/logotype.svg`;
+const PANEL_LOGO = `${ASSET_BASE}/logotype.svg`;
 
 /* ---------------- Content data (pulled verbatim from Figma nodes —
    see components.md for the node-id source of each list) ---- */
@@ -93,18 +93,18 @@ const DROPDOWN_MENU = [
 /* ---------------- Persona / screen model ---- */
 
 // Destination screens for the Panel Library / Community items and the
-// Dropdown account items. These are list/section landing views \u2014 placeholder
-// content like every other screen, and uplevel-type so their back bar returns
-// to the persona's home (the prototype's go-home). Defined once here and
-// shared into each persona that shows the matching menu, so every item's
+// Dropdown account items. These are top-level list/section pages (type "page")
+// \u2014 so they have NO level-up bar (there's nowhere "up" to go; the nav logo
+// returns home). Placeholder content like every other screen. Defined once here
+// and shared into each persona that shows the matching menu, so every item's
 // screenId resolves within its own persona.
 const LIB = {
-  hrt: { id: "lib-hrt", label: "HRT & Other Treatments", type: "uplevel", title: "HRT & Other Treatments", backLabel: "Home" },
-  mood: { id: "lib-mood", label: "Mood & Mental Health", type: "uplevel", title: "Mood & Mental Health", backLabel: "Home" },
-  sleep: { id: "lib-sleep", label: "Sleep & Insomnia", type: "uplevel", title: "Sleep & Insomnia", backLabel: "Home" },
-  diet: { id: "lib-diet", label: "Diet & Nutrition", type: "uplevel", title: "Diet & Nutrition", backLabel: "Home" },
-  family: { id: "lib-family", label: "Family & Relationships", type: "uplevel", title: "Family & Relationships", backLabel: "Home" },
-  all: { id: "lib-all", label: "All Topics", type: "uplevel", title: "All Topics", backLabel: "Home" },
+  hrt: { id: "lib-hrt", label: "HRT & Other Treatments", type: "page", title: "HRT & Other Treatments" },
+  mood: { id: "lib-mood", label: "Mood & Mental Health", type: "page", title: "Mood & Mental Health" },
+  sleep: { id: "lib-sleep", label: "Sleep & Insomnia", type: "page", title: "Sleep & Insomnia" },
+  diet: { id: "lib-diet", label: "Diet & Nutrition", type: "page", title: "Diet & Nutrition" },
+  family: { id: "lib-family", label: "Family & Relationships", type: "page", title: "Family & Relationships" },
+  all: { id: "lib-all", label: "All Topics", type: "page", title: "All Topics" },
 };
 // Full Library set (Visitor, Subscriber) vs short set (Member personas) \u2014
 // mirrors TOPIC_ITEMS vs TOPIC_ITEMS_MEMBER.
@@ -112,18 +112,18 @@ const LIBRARY_SCREENS_FULL = [LIB.hrt, LIB.mood, LIB.sleep, LIB.diet, LIB.family
 const LIBRARY_SCREENS_MEMBER = [LIB.hrt, LIB.mood, LIB.sleep, LIB.all];
 
 const COMMUNITY_SCREENS = [
-  { id: "com-stories", label: "Stories", type: "uplevel", title: "Stories", backLabel: "Home" },
-  { id: "com-questions", label: "Questions & Answers", type: "uplevel", title: "Questions & Answers", backLabel: "Home" },
-  { id: "com-groups", label: "Groups", type: "uplevel", title: "Groups", backLabel: "Home" },
-  { id: "com-meet", label: "Meet Others", type: "uplevel", title: "Meet Others", backLabel: "Home" },
-  { id: "com-activities", label: "All Activities", type: "uplevel", title: "All Activities", backLabel: "Home" },
+  { id: "com-stories", label: "Stories", type: "page", title: "Stories" },
+  { id: "com-questions", label: "Questions & Answers", type: "page", title: "Questions & Answers" },
+  { id: "com-groups", label: "Groups", type: "page", title: "Groups" },
+  { id: "com-meet", label: "Meet Others", type: "page", title: "Meet Others" },
+  { id: "com-activities", label: "All Activities", type: "page", title: "All Activities" },
 ];
 
 const ACCOUNT_SCREENS = [
-  { id: "acct-health", label: "My Health", type: "uplevel", title: "My Health", backLabel: "Home" },
-  { id: "acct-messages", label: "Messages", type: "uplevel", title: "Messages", backLabel: "Home" },
-  { id: "acct-notifications", label: "Notifications", type: "uplevel", title: "Notifications", backLabel: "Home" },
-  { id: "acct-settings", label: "Settings", type: "uplevel", title: "Settings", backLabel: "Home" },
+  { id: "acct-health", label: "My Health", type: "page", title: "My Health" },
+  { id: "acct-messages", label: "Messages", type: "page", title: "Messages" },
+  { id: "acct-notifications", label: "Notifications", type: "page", title: "Notifications" },
+  { id: "acct-settings", label: "Settings", type: "page", title: "Settings" },
   // No acct-logout screen: "Log out" navigates out to the Logged Out Member flow.
 ];
 
@@ -134,8 +134,8 @@ const PERSONAS = {
     panelType: "visitor",
     screens: [
       { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing" },
-      { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center" },
+      { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
+      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
       ...LIBRARY_SCREENS_FULL,
     ],
   },
@@ -154,13 +154,13 @@ const PERSONAS = {
     navVariant: "member-photo",
     panelType: "member",
     screens: [
-      { id: "home", label: "Home as a Hub", type: "tabs", title: "Home as a Hub" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic" },
-      { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups" },
+      { id: "home", label: "Home as a Hub", type: "tabs", title: "Home as a Hub", modules: true },
+      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "HRT & Other Treatments", upTo: "lib-hrt" },
+      { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs" },
-      { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others" },
-      { id: "question", label: "Question Show", type: "uplevel", title: "Question Show", backLabel: "Questions & Answers" },
-      { id: "activity", label: "Activity Show", type: "uplevel", title: "Activity Show", backLabel: "Activity" },
+      { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others", upTo: "com-meet" },
+      { id: "question", label: "Question Show", type: "uplevel", title: "Question Show", backLabel: "Questions & Answers", upTo: "com-questions" },
+      { id: "activity", label: "Activity Show", type: "uplevel", title: "Activity Show", backLabel: "All Activities", upTo: "com-activities" },
       ...LIBRARY_SCREENS_MEMBER,
       ...COMMUNITY_SCREENS,
       ...ACCOUNT_SCREENS,
@@ -171,7 +171,7 @@ const PERSONAS = {
     navVariant: "member",
     panelType: "subscriber",
     screens: [
-      { id: "home", label: "Home (assumed)", type: "tabs", title: "Home\n(no Subscriber-specific\ntop nav in source file)" },
+      { id: "home", label: "Home (assumed)", type: "tabs", title: "Home\n(no Subscriber-specific\ntop nav in source file)", modules: true },
       ...LIBRARY_SCREENS_FULL,
     ],
   },
@@ -244,11 +244,15 @@ function renderTopNav() {
   `;
 }
 
-function renderUplevel(backLabel) {
+// Level-up bar (only on detail screens): steps one level up to the parent
+// list via data-screen (falls back to home if a screen has no `upTo`). Not a
+// "back" button — it always goes up a level, whatever screen you came from.
+function renderUplevel(screen) {
+  const upTo = screen.upTo || persona.screens[0].id;
   return `
-    <button class="uplevel" data-action="go-home">
+    <button class="uplevel" data-screen="${upTo}">
       ${icon("back")}
-      <span>${backLabel}</span>
+      <span>${screen.backLabel}</span>
     </button>
   `;
 }
@@ -342,6 +346,45 @@ function renderGatedHome() {
   `;
 }
 
+// Minimal placeholder content modules (hero + a "browse by topic" card list),
+// used on the home screens so there's realistic scrollable content instead of a
+// flat label. The CTA and cards navigate via data-screen to real screens.
+function renderModules() {
+  const card = (id, label) => `<button class="mod-card" data-screen="${id}">${label}</button>`;
+
+  // Featured article → links into the Article Show detail page, so the level-up
+  // bar there can be exercised (Article Show → up one level → HRT topic page).
+  // Only shown where the persona actually has an `article` screen.
+  const hasArticle = persona.screens.some((s) => s.id === "article");
+  const featured = hasArticle
+    ? `<section class="mod-section">
+         <h3 class="mod-section__title">Featured article</h3>
+         <button class="mod-article" data-screen="article">
+           <span class="mod-article__eyebrow">HRT &amp; Other Treatments</span>
+           <span class="mod-article__title">What to expect in your first month on HRT</span>
+           <span class="mod-article__meta">5 min read · Reviewed by a clinician</span>
+         </button>
+       </section>`
+    : "";
+
+  return `
+    <section class="mod-hero">
+      <h2 class="mod-hero__title">Where expert advice meets real women.</h2>
+      <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
+      <button class="mod-hero__cta" data-screen="lib-all">Explore all topics</button>
+    </section>
+    <section class="mod-section">
+      <h3 class="mod-section__title">Browse by topic</h3>
+      <div class="mod-cards">
+        ${card("lib-hrt", "HRT &amp; Other Treatments")}
+        ${card("lib-mood", "Mood &amp; Mental Health")}
+        ${card("lib-sleep", "Sleep &amp; Insomnia")}
+      </div>
+    </section>
+    ${featured}
+  `;
+}
+
 // Global site footer — added to the bottom of every screen's scroll area.
 // Content mirrors the Figma mobile footer (6371:29). Links are non-navigating
 // placeholders (no destinations in the prototype). "Your Privacy Choices" keeps
@@ -354,7 +397,7 @@ function renderFooter() {
     <footer class="footer">
       <div class="footer__bar">
         <div class="footer__brand">
-          <img class="footer__logo" src="${ASSET_BASE}/logo/logotype.svg" onerror="this.onerror=null;this.src='${LOGO_FULL}'" alt="This is Menopause" />
+          <img class="footer__logo" src="${PANEL_LOGO}" onerror="this.onerror=null;this.src='${LOGO_FULL}'" alt="This is Menopause" />
           <p class="footer__headline">Making sense of menopause, together</p>
         </div>
         <div class="footer__links">
@@ -364,7 +407,7 @@ function renderFooter() {
       </div>
       <div class="footer__end">
         <p class="footer__legal">
-          ${legal.map((t) => `<a class="footer__link footer__link--dark">${t}</a>`).join(sep)}${sep}<a class="footer__link footer__link--dark footer__privacy"><img src="${ASSET_BASE}/footer/privacy-choices.png" alt="" />Your Privacy Choices</a>${sep}<a class="footer__link footer__link--dark">CA Notice at Collection</a>
+          ${legal.map((t) => `<a class="footer__link footer__link--dark">${t}</a>`).join(sep)}${sep}<a class="footer__link footer__link--dark footer__privacy"><img src="${ASSET_BASE}/privacy-choices.png" alt="" />Your Privacy Choices</a>${sep}<a class="footer__link footer__link--dark">CA Notice at Collection</a>
         </p>
         <p class="footer__disclaimer">ThisIsMenopause&trade; is not a medical referral site and does not recommend or endorse any particular provider or medical treatment. No information on ThisIsMenopause should be construed as medical and/or health advice.</p>
         <p class="footer__copyright">&copy; 2026 MyHealthTeam, A Swoop Company. All Rights Reserved.</p>
@@ -383,15 +426,21 @@ function render() {
     // Optional full-bleed sample image as the screen body. Must be pre-cropped
     // to just the page content — the prototype adds its own nav + footer.
     content = `<img class="screen__shot" src="${screen.image}" alt="${screen.title}" />`;
+  } else if (screen.modules) {
+    content = renderModules();
   } else if (screen.type === "gated-home") {
     content = renderGatedHome();
   } else {
     content = `<div class="screen__placeholder">${screen.title}</div>`;
   }
+  // Fill the viewport (centering the label / keeping the footer below the fold)
+  // only for label & gated screens; image/module screens flow at natural height.
+  const bodyFill = !screen.image && !screen.modules ? " screen__body--fill" : "";
 
-  // Fixed chrome (stays put); scrollable body holds the content + footer.
+  // Chrome (nav + level-up bar) is sticky at the top of the scroll area, so it
+  // can auto-hide on scroll-down and return on scroll-up (see attachAutoHide).
   let chrome = renderTopNav();
-  if (screen.type === "uplevel") chrome += renderUplevel(screen.backLabel);
+  if (screen.type === "uplevel") chrome += renderUplevel(screen);
 
   let overlays = "";
   if (state.panelOpen) overlays += renderPanel();
@@ -399,13 +448,30 @@ function render() {
 
   document.getElementById("phone").innerHTML = `
     <div class="screen">
-      ${chrome}
       <div class="screen__scroll">
-        <div class="screen__body">${content}</div>
+        <div class="screen__chrome">${chrome}</div>
+        <div class="screen__body${bodyFill}">${content}</div>
         ${renderFooter()}
       </div>
       ${overlays}
     </div>`;
+
+  attachAutoHide();
+}
+
+// Auto-hiding header: hide the sticky chrome on scroll-down (past a small
+// threshold), reveal it on scroll-up. Re-bound each render (the DOM is rebuilt).
+function attachAutoHide() {
+  const scroll = document.querySelector(".screen__scroll");
+  const chrome = scroll && scroll.querySelector(".screen__chrome");
+  if (!scroll || !chrome) return;
+  let lastY = scroll.scrollTop;
+  scroll.addEventListener("scroll", () => {
+    const y = scroll.scrollTop;
+    if (y > lastY && y > 80) chrome.classList.add("is-hidden");
+    else if (y < lastY) chrome.classList.remove("is-hidden");
+    lastY = y;
+  });
 }
 
 /* ---------------- Panel close animation ---- */
@@ -537,7 +603,18 @@ function fitPhone() {
 
 window.addEventListener("resize", fitPhone);
 
+// Hidden "back to all flows" hotspot — a small circle in the top-left corner
+// that's invisible until hovered, linking back to the root launcher. Only on
+// flow pages (this script runs there; the launcher doesn't load it).
+function addHomeHotspot() {
+  document.body.insertAdjacentHTML(
+    "afterbegin",
+    `<a class="home-hotspot" href="../index.html" aria-label="Back to all flows" title="All flows">${icon("back")}</a>`
+  );
+}
+
 if (persona) {
   render();
   fitPhone();
+  addHomeHotspot();
 }
