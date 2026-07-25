@@ -117,7 +117,7 @@ Added 2026-07-24 to the bottom of **every screen's scroll area** (`renderFooter(
 
 Because the footer is tall, screens are now vertically scrollable: `.screen` is a flex column with a fixed nav/uplevel and a scrollable `.screen__scroll` holding the content + footer. Panel/dropdown overlays stay pinned to the phone viewport (absolute over `.screen`, don't scroll).
 
-**Screen content** is a labelled placeholder by default. A screen may optionally carry an `image` field to show a full-bleed sample image as the body instead (rendered as `.screen__shot`, natural height, scrolls); the image must be pre-cropped to just the page content, since the prototype wraps it with its own nav + footer. None is wired currently.
+**Screen content** is a labelled placeholder by default. Home screens (all three personas' homes) instead carry a `modules: true` flag and render real placeholder content via `renderModules()` — a hero band, a "Browse by topic" card list, and (where an `article` screen exists) a featured-article card — all navigating via `data-screen`. Richer screens are built out the same way, as modules; there is no screenshot-image path.
 
 ---
 

@@ -95,10 +95,6 @@ body {
   white-space: pre-line;
 }
 
-/* Optional full-bleed sample image as a screen's body (natural height, scrolls).
-   Provide a pre-cropped image — the prototype adds its own nav + footer. */
-.screen__shot { display: block; width: 100%; height: auto; }
-
 /* ---- Placeholder content modules (home screens) ---- */
 
 .mod-hero {

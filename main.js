@@ -133,7 +133,7 @@ const PERSONAS = {
     navVariant: "visitor",
     panelType: "visitor",
     screens: [
-      { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing" },
+      { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
       { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
       { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
       ...LIBRARY_SCREENS_FULL,
@@ -419,14 +419,10 @@ function renderFooter() {
 function render() {
   const screen = persona.screens.find((s) => s.id === state.screenId) || persona.screens[0];
 
-  // Screen content: a full-page sample image if the screen has one, the gated
-  // welcome card, otherwise the labelled placeholder.
+  // Screen content: content modules if the screen has them, the gated welcome
+  // card, otherwise the labelled placeholder.
   let content;
-  if (screen.image) {
-    // Optional full-bleed sample image as the screen body. Must be pre-cropped
-    // to just the page content — the prototype adds its own nav + footer.
-    content = `<img class="screen__shot" src="${screen.image}" alt="${screen.title}" />`;
-  } else if (screen.modules) {
+  if (screen.modules) {
     content = renderModules();
   } else if (screen.type === "gated-home") {
     content = renderGatedHome();
@@ -434,8 +430,8 @@ function render() {
     content = `<div class="screen__placeholder">${screen.title}</div>`;
   }
   // Fill the viewport (centering the label / keeping the footer below the fold)
-  // only for label & gated screens; image/module screens flow at natural height.
-  const bodyFill = !screen.image && !screen.modules ? " screen__body--fill" : "";
+  // only for label & gated screens; module screens flow at natural height.
+  const bodyFill = !screen.modules ? " screen__body--fill" : "";
 
   // Chrome (nav + level-up bar) is sticky at the top of the scroll area, so it
   // can auto-hide on scroll-down and return on scroll-up (see attachAutoHide).
