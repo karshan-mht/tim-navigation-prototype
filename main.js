@@ -362,12 +362,8 @@ function renderGatedHome() {
 // Mobile_Splash_Landing frame (file EWsXKakhyFLhkse035AoHX, node 4101:3).
 // Nav and Footer are handled elsewhere (renderTopNav / renderFooter); this
 // covers the six body sections in Figma order: Checker (hero), Listicles,
-// Articles, Experts, Factoid, Community. "Browse by topic" is this
-// prototype's own addition (not in the Figma frame) — kept because it
-// exercises real in-persona deep links (lib-hrt/mood/sleep) that the nav
-// prototype needs to test; it's placed between Listicles and Articles.
+// Articles, Experts, Factoid, Community.
 function renderModules() {
-  const card = (id, label) => `<button class="mod-card" data-screen="${id}">${label}</button>`;
 
   // Featured article → links into the Article Show detail page, so the level-up
   // bar there can be exercised (Article Show → up one level → HRT topic page).
@@ -376,19 +372,26 @@ function renderModules() {
 
   const checkerPills = ["Irritability", "Low libido", "Anxiety", "Brain fog", "Joint pain", "Hot flashes"];
 
+  // Five cards, matching the Figma desktop "Listicles" carousel (node 4113:51).
+  // Cards 4 & 5 carry the frame's own "[symptom]" / "[Listicle]" placeholders —
+  // kept verbatim rather than invented; the brackets signal they're not final.
+  // Icons approximate the frame's custom Scale/Head/Face/Bed/Heart glyphs, which
+  // aren't in ICON_SVGS.
   const listicles = [
-    { iconName: "diet", title: "What helps with weight gain", cta: "Weight Tips" },
+    { iconName: "diet", title: "Ways to manage weight gain", cta: "Weight Tips" },
     { iconName: "mood", title: "How to clear brain fog", cta: "Brain Fog Tips" },
-    { iconName: "sleep", title: "Getting real sleep back", cta: "Sleep Tips" },
+    { iconName: "hrt", title: "Ways to manage hot flashes", cta: "Hot Flashes Tips" },
+    { iconName: "sleep", title: "Ways to manage [symptom]", cta: "Sleep Tips" },
+    { iconName: "family", title: "Ways to manage [symptom]", cta: "[Listicle] Tips" },
   ];
 
-  // Figma's Articles section is a 2-up image + title grid ("Everything you
-  // need to know"). We don't have real article images/titles yet, so the
-  // thumbnails are CSS gradient placeholders — this is layout, not fabricated
-  // content, so it isn't [TBD]-flagged the way invented stats/counts are.
+  // Figma's Articles section is an image + title carousel ("Everything you need
+  // to know"), with no eyebrow/tag on the cards. Titles come from the frame's
+  // image asset names; thumbnails are CSS gradient placeholders since we don't
+  // have the real images.
   const articles = [
-    { eyebrow: "General Health", title: "6 menopause facts women wish they'd known sooner" },
-    { eyebrow: "HRT & Other Treatments", title: "Which doctors treat menopause?" },
+    { title: "6 menopause facts women wish they'd known sooner" },
+    { title: "Which doctors treat menopause?" },
   ];
 
   const experts = [
@@ -442,27 +445,17 @@ function renderModules() {
       </div>
     </section>
 
-    <section class="mod-section">
-      <h3 class="mod-section__title">Browse by topic</h3>
-      <div class="mod-cards">
-        ${card("lib-hrt", "HRT &amp; Other Treatments")}
-        ${card("lib-mood", "Mood &amp; Mental Health")}
-        ${card("lib-sleep", "Sleep &amp; Insomnia")}
-      </div>
-    </section>
-
     <section class="mod-articles">
       <div class="mod-section-text">
         <h3 class="mod-section-text__title">Everything you <em>need to know</em>.</h3>
         <p class="mod-section-text__sub">Medically-reviewed resources to help you prepare for your appointments.</p>
       </div>
-      <div class="mod-articles__grid">
+      <div class="mod-articles__scroll">
         ${articles
           .map(
             (a, i) => `
           <button class="mod-article-card" ${hasArticle ? 'data-screen="article"' : ""}>
             <span class="mod-article-card__thumb mod-article-card__thumb--${i + 1}"></span>
-            <span class="mod-article-card__eyebrow">${a.eyebrow}</span>
             <span class="mod-article-card__title">${a.title}</span>
           </button>`
           )

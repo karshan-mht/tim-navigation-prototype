@@ -21,6 +21,10 @@
   --radius-card: 16px;
   --font-body: "Lato", sans-serif;
   --font-display: "DM Serif Display", serif;
+  /* Device frame — iPhone 14 Pro / 15 logical resolution. Swap these to
+     retarget the mock to another device size. */
+  --device-width: 393px;
+  --device-height: 852px;
 }
 
 * { box-sizing: border-box; }
@@ -51,8 +55,8 @@ body {
 
 .phone {
   position: relative;
-  width: 393px;
-  height: 852px;
+  width: var(--device-width);
+  height: var(--device-height);
   max-width: 100%;
   background: #fff;
   border-radius: 40px;
@@ -123,13 +127,23 @@ body {
 .mod-hero {
   background: linear-gradient(160deg, var(--color-navy), #4a2a7a);
   color: #fff;
-  padding: 32px 20px;
+  padding: 32px 12px;
 }
+
+/* Letter-spacing across the splash: -0.25px baseline on all module text
+   (inherited from each section), with headlines overriding to -0.75px. */
+.mod-hero,
+.mod-listicles,
+.mod-articles,
+.mod-experts,
+.mod-factoid,
+.mod-community { letter-spacing: -0.25px; }
 .mod-hero__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 30px;
-  line-height: 1.15;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.75px;
   margin: 0 0 12px;
 }
 .mod-hero__sub { font-size: 16px; line-height: 1.5; margin: 0 0 20px; opacity: 0.9; }
@@ -147,7 +161,7 @@ body {
 }
 .mod-hero__cta:hover { filter: brightness(0.97); }
 
-.mod-section { padding: 24px 16px; }
+.mod-section { padding: 24px 12px; }
 .mod-section__title { font-size: 18px; font-weight: 700; letter-spacing: -0.25px; margin: 0 0 16px; }
 .mod-cards { display: flex; flex-direction: column; gap: 12px; }
 .mod-card {
@@ -264,7 +278,7 @@ body {
   margin: 0 0 16px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 26px;
+  font-size: 32px;
   line-height: 1.25;
   letter-spacing: -0.75px;
   color: var(--color-navy);
@@ -278,12 +292,13 @@ body {
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 16px;
+  letter-spacing: -0.75px;
   color: var(--color-primary);
 }
 
 /* ---- Listicles — horizontal card carousel, Figma "Listicles" section ---- */
 
-.mod-listicles { background: var(--color-bg-purple-soft); padding: 32px 16px; }
+.mod-listicles { background: var(--color-bg-purple-soft); padding: 32px 12px; }
 .mod-listicles__scroll {
   display: flex;
   gap: 16px;
@@ -319,7 +334,7 @@ body {
   text-align: center;
   font-weight: 600;
   font-size: 16px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.75px;
   color: var(--color-navy);
 }
 .mod-listicle-card__cta {
@@ -337,9 +352,18 @@ body {
 
 /* ---- Articles — 2-up image + title grid, Figma "Articles" section ---- */
 
-.mod-articles { background: var(--color-bg-cool); padding: 32px 16px; }
-.mod-articles__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.mod-articles { background: var(--color-bg-cool); padding: 32px 12px; }
+/* Horizontal carousel with edge peek, matching the Figma "Articles" carousel. */
+.mod-articles__scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
 .mod-article-card {
+  flex: 0 0 auto;
+  width: 324px;            /* Figma card/image width (node 4101:74) */
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -353,25 +377,18 @@ body {
 .mod-article-card__thumb {
   display: block;
   width: 100%;
-  aspect-ratio: 1200 / 630;
+  aspect-ratio: 324 / 170;  /* Figma image dimensions 324×170 (node 4101:75) */
   border-radius: var(--radius-card);
   background: linear-gradient(135deg, var(--color-navy), var(--color-magenta));
 }
 .mod-article-card__thumb--2 { background: linear-gradient(135deg, var(--color-primary), var(--color-purple-light)); }
-.mod-article-card__eyebrow {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-magenta);
-}
 .mod-article-card__title { font-size: 15px; line-height: 1.3; color: var(--color-navy); }
 
 /* ---- Experts — stacked advisor cards, Figma "Experts" section ---- */
 
 .mod-experts {
   background: linear-gradient(90deg, #edf3f9, var(--color-bg-purple-soft));
-  padding: 32px 16px;
+  padding: 32px 12px;
 }
 .mod-experts__list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
 .mod-expert-card {
@@ -405,14 +422,15 @@ body {
 
 .mod-factoid {
   background: linear-gradient(180deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
-  padding: 32px 16px;
+  padding: 32px 12px;
   color: #fff;
 }
 .mod-factoid__title {
   margin: 0 0 24px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 26px;
+  font-size: 32px;
+  line-height: 1.25;
   letter-spacing: -0.75px;
 }
 .mod-factoid__title em { font-style: normal; color: var(--color-purple-light); }
@@ -427,7 +445,8 @@ body {
   margin: 0 0 8px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 36px;
+  font-size: 40px;
+  line-height: 1.2;
   letter-spacing: -0.75px;
   color: var(--color-magenta);
 }
@@ -436,7 +455,7 @@ body {
 
 /* ---- Community — quote carousel + closing CTA, Figma "Community" section ---- */
 
-.mod-community { background: var(--color-bg-purple-soft); padding: 32px 16px; }
+.mod-community { background: var(--color-bg-purple-soft); padding: 32px 12px; }
 .mod-quotes__scroll {
   display: flex;
   gap: 12px;
@@ -461,7 +480,7 @@ body {
   font-weight: 600;
   font-size: 19px;
   line-height: 1.35;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.75px;
   color: var(--color-navy);
 }
 .mod-quote-card__attribution {
@@ -486,7 +505,8 @@ body {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 26px;
+  font-size: 32px;
+  line-height: 1.25;
   letter-spacing: -0.75px;
 }
 .mod-cta-card__sub { margin: 0; font-size: 16px; line-height: 1.45; opacity: 0.9; }
