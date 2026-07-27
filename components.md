@@ -111,7 +111,7 @@ Only defined for **Logged In Member** in the source file (node 7042:711). Logged
 
 ## 5. Global footer
 
-Added 2026-07-24 to the bottom of **every screen's scroll area** (`renderFooter()` in `main.js`). Content mirrors the Figma mobile footer (`6371:29` / `6371:139`). A thin divider line (`1px` top border on `.footer`) separates it from the page content, with ample space above the line (`48px` margin-top) so content doesn't sit flush against it. Two bands:
+Added 2026-07-24 to the bottom of **every screen's scroll area** (`renderFooter()` in `main.js`). Content mirrors the Figma mobile footer (`6371:29` / `6371:139`). It's separated from the page content by ample space (`48px` margin-top on `.footer`) — no divider line. Two bands:
 
 - **Bar** (white): horizontal wordmark (`logotype.svg`) + headline "Making sense of menopause, together", then two link columns — About / Editorial Process / Partner with Us / Accessibility · Getting Started / Community Guidelines / Help Center / Crisis (links are non-navigating placeholders).
 - **End** (grey `#f3f4f6`): legal line "Terms of Use · Privacy Policy · Cookie Policy · Health Data Policy · [icon] Your Privacy Choices · CA Notice at Collection" (the CCPA opt-out icon is `assets/footer/privacy-choices.png`), the medical disclaimer, and "© 2026 MyHealthTeam, A Swoop Company. All Rights Reserved."

@@ -932,8 +932,7 @@ body {
 .footer {
   flex-shrink: 0;
   font-family: var(--font-body);
-  margin-top: 48px;                            /* ample space above the divider */
-  border-top: 1px solid var(--color-border);   /* thin divider above the logo */
+  margin-top: 48px;   /* breathing room separating the footer from page content */
 }
 
 .footer__bar { padding: 28px 12px 24px; }
