@@ -10,10 +10,22 @@
   --color-magenta: #a440bc;              /* Library / Community icon tint */
   --color-magenta-soft: rgba(164, 65, 188, 0.08); /* pink circle behind icons */
   --color-magenta-soft-solid: #f8f0fa;   /* opaque equivalent of --color-magenta-soft over white — used for the rollover so nothing alpha-stacks */
+  /* Splash Landing sections (Figma Mobile_Splash_Landing, node 4101:3) */
+  --color-purple-light: #d483cf;         /* "not imagining it" headline highlight, Factoid section */
+  --color-navy-deep: #6a3693;            /* Factoid gradient end stop */
+  --color-bg-purple-soft: #f6eff8;       /* Listicles / Community section background */
+  --color-bg-cool: #fafcff;              /* Articles section background */
+  --color-bg-blue-soft: #edf3f9;         /* Experts section background (solid, Figma 4122:332) */
+  --color-card-border: rgba(13, 27, 41, 0.15);
+  --color-pill-border: rgba(13, 27, 41, 0.44);
   --radius-pill: 999px;
   --radius-card: 16px;
   --font-body: "Lato", sans-serif;
   --font-display: "DM Serif Display", serif;
+  /* Device frame — iPhone 16 Pro logical resolution. Swap these to
+     retarget the mock to another device size. */
+  --device-width: 402px;
+  --device-height: 874px;
 }
 
 * { box-sizing: border-box; }
@@ -44,8 +56,12 @@ body {
 
 .phone {
   position: relative;
-  width: 393px;
-  height: 852px;
+  /* content-box so --device-width/height are the SCREEN size (matching the
+     402×874 Figma canvas); the 8px bezel sits OUTSIDE the screen, like a real
+     device, instead of eating into the usable width. */
+  box-sizing: content-box;
+  width: var(--device-width);
+  height: var(--device-height);
   max-width: 100%;
   background: #fff;
   border-radius: 40px;
@@ -111,21 +127,49 @@ body {
   white-space: pre-line;
 }
 
+/* Chromeless flow pages (Sign Up Start / Registration Step): X to close, top-left. */
+.screen__body--flow { position: relative; }
+.flow-close {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.flow-close svg { display: block; width: 24px; height: 24px; }
+
 /* ---- Placeholder content modules (home screens) ---- */
 
 .mod-hero {
   background: linear-gradient(160deg, var(--color-navy), #4a2a7a);
   color: #fff;
-  padding: 32px 20px;
+  padding: 48px 12px;
 }
+
+/* Letter-spacing across the splash: -0.25px baseline on all module text
+   (inherited from each section), with headlines overriding to -0.75px. */
+.mod-hero,
+.mod-listicles,
+.mod-articles,
+.mod-experts,
+.mod-factoid,
+.mod-community { letter-spacing: -0.25px; }
 .mod-hero__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 30px;
-  line-height: 1.15;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.75px;
   margin: 0 0 12px;
 }
-.mod-hero__sub { font-size: 16px; line-height: 1.5; margin: 0 0 20px; opacity: 0.9; }
+.mod-hero__sub { font-size: 20px; line-height: 1.4; letter-spacing: -0.75px; margin: 0 0 20px; opacity: 0.9; }
 .mod-hero__cta {
   height: 48px;
   padding: 0 24px;
@@ -140,7 +184,7 @@ body {
 }
 .mod-hero__cta:hover { filter: brightness(0.97); }
 
-.mod-section { padding: 24px 16px; }
+.mod-section { padding: 24px 12px; }
 .mod-section__title { font-size: 18px; font-weight: 700; letter-spacing: -0.25px; margin: 0 0 16px; }
 .mod-cards { display: flex; flex-direction: column; gap: 12px; }
 .mod-card {
@@ -190,6 +234,334 @@ body {
   margin-bottom: 8px;
 }
 .mod-article__meta { display: block; font-size: 13px; color: var(--color-text-secondary); }
+
+/* ---- Checker card (inside .mod-hero) — symptom pills + CTA, Figma 4101:30 ---- */
+
+.mod-hero__users { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.mod-hero__avatars { display: flex; align-items: center; }
+.mod-hero__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  /* Placeholder fill (like the article/expert placeholders) until real
+     community avatar images are added. */
+  background-color: #e9ebee;
+  background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 6px, transparent 6px, transparent 12px);
+  border: 2px solid var(--color-navy);
+  margin-left: -8px;
+}
+.mod-hero__avatars .mod-hero__avatar:first-child { margin-left: 0; }
+.mod-hero__count { font-size: 14px; color: #fff; }
+
+.mod-checker-card {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.mod-checker-card__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.75px;
+  color: var(--color-navy);
+}
+.mod-checker-card__pills { display: flex; flex-wrap: wrap; gap: 12px 8px; margin: 0; }
+.mod-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 8px 16px;
+  border: 0.5px solid var(--color-pill-border);
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  color: var(--color-text);
+  background: #fff;
+}
+.mod-checker-card__cta {
+  height: 52px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.25px;
+  cursor: pointer;
+}
+.mod-checker-card__cta:hover { filter: brightness(0.97); }
+.mod-checker-card__action { display: flex; flex-direction: column; gap: 12px; }
+.mod-checker-card__note { margin: 0; text-align: center; font-size: 14px; color: var(--color-text-secondary); }
+
+/* ---- Shared section header (Listicles / Articles / Experts / Community) ---- */
+
+.mod-section-text { margin-bottom: 24px; }
+.mod-section-text__title {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.25;
+  letter-spacing: -0.75px;
+  color: var(--color-navy);
+}
+.mod-section-text__title em { font-style: normal; color: var(--color-magenta); }
+.mod-section-text__sub { margin: 0; font-size: 20px; line-height: 1.4; letter-spacing: -0.75px; color: var(--color-navy); }
+
+.mod-view-all-link {
+  display: block;
+  margin-top: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.75px;
+  color: var(--color-primary);
+}
+
+/* ---- Listicles — horizontal card carousel, Figma "Listicles" section ---- */
+
+.mod-listicles { background: var(--color-bg-purple-soft); padding: 48px 12px; }
+.mod-listicles__scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.mod-listicle-card {
+  flex: 0 0 auto;
+  width: 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+.mod-listicle-card__icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--color-magenta-soft-solid);
+  color: var(--color-magenta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+/* Fill the circle — the SVGs carry their own padding inside a 128 viewBox
+   (artwork ~52% of the frame), so this lands the glyph at ~Figma's 46px. */
+.mod-listicle-card__icon img { width: 100%; height: 100%; object-fit: contain; }
+.mod-listicle-card__title {
+  margin: 0;
+  text-align: left;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.75px;
+  color: var(--color-navy);
+}
+.mod-listicle-card__cta {
+  height: 40px;
+  padding: 0 20px;
+  border: 0.5px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  letter-spacing: -0.25px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.mod-listicle-card__cta:hover { background: var(--color-primary-soft); }
+
+/* ---- Articles — 2-up image + title grid, Figma "Articles" section ---- */
+
+.mod-articles { background: var(--color-bg-cool); padding: 48px 12px; }
+/* Horizontal carousel with edge peek, matching the Figma "Articles" carousel. */
+.mod-articles__scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.mod-article-card {
+  flex: 0 0 auto;
+  width: 324px;            /* Figma card/image width (node 4101:74) */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  letter-spacing: -0.25px;
+}
+.mod-article-card__thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 324 / 170;  /* Figma image dimensions 324×170 (node 4101:75) */
+  border-radius: var(--radius-card);
+  /* Simple placeholder pattern (no real article images yet) — neutral gray
+     with a faint diagonal hatch so it clearly reads as a placeholder. */
+  background-color: #e9ebee;
+  background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 10px, transparent 10px, transparent 20px);
+}
+.mod-article-card__title { font-size: 18px; line-height: 1.3; color: var(--color-navy); }
+
+/* ---- Experts — stacked advisor cards, Figma "Experts" section ---- */
+
+.mod-experts {
+  background: var(--color-bg-blue-soft);
+  padding: 48px 12px;
+}
+.mod-experts__list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
+.mod-expert-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+.mod-expert-card__avatar {
+  flex: 0 0 auto;
+  width: 61px;
+  height: 61px;
+  border-radius: 50%;
+  /* Same simple placeholder pattern as the article thumbnails. */
+  background-color: #e9ebee;
+  background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 10px, transparent 10px, transparent 20px);
+}
+.mod-expert-card__info { display: flex; flex-direction: column; gap: 4px; }
+.mod-expert-card__name { font-weight: 700; font-size: 18px; letter-spacing: -0.25px; color: var(--color-navy); }
+.mod-expert-card__role { font-size: 16px; color: var(--color-text); }
+
+/* ---- Factoid — dark gradient stat cards, Figma "Factoid" section ---- */
+
+.mod-factoid {
+  background: linear-gradient(180deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
+  padding: 48px 12px;
+  color: #fff;
+}
+.mod-factoid__title {
+  margin: 0 0 24px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.25;
+  letter-spacing: -0.75px;
+}
+.mod-factoid__title em { font-style: normal; color: var(--color-purple-light); }
+.mod-factoid__stats { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
+.mod-stat-card {
+  background: #fff;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  padding: 32px;
+}
+.mod-stat-card__number {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1.2;
+  letter-spacing: -0.75px;
+  color: var(--color-magenta);
+}
+.mod-stat-card__text { margin: 0; font-size: 18px; line-height: 1.45; color: var(--color-text); }
+.mod-factoid__source { margin: 0; font-size: 14px; line-height: 1.5; color: #fff; opacity: 0.9; }
+
+/* ---- Community — quote carousel + closing CTA, Figma "Community" section ---- */
+
+.mod-community { background: var(--color-bg-purple-soft); padding: 48px 12px; }
+.mod-quotes__scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.mod-quote-card {
+  flex: 0 0 auto;
+  width: 250px;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mod-quote-card__text {
+  margin: 0;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: -0.75px;
+  color: var(--color-navy);
+}
+
+.mod-cta-card {
+  margin-top: 32px;
+  background: var(--color-navy);
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mod-cta-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.25;
+  letter-spacing: -0.75px;
+}
+.mod-cta-card__sub { margin: 0; font-size: 18px; line-height: 1.45; opacity: 0.9; }
+.mod-cta-card__buttons { display: flex; flex-direction: column; gap: 16px; }
+.mod-btn-primary,
+.mod-btn-secondary {
+  height: 48px;
+  border-radius: 24px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.25px;
+  cursor: pointer;
+}
+.mod-btn-primary { border: none; background: #fff; color: #151515; }
+.mod-btn-primary:hover { filter: brightness(0.97); }
+.mod-btn-secondary { border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: #fff; }
+.mod-btn-secondary:hover { background: rgba(255, 255, 255, 0.08); }
+
+.mod-disclaimer-note {
+  margin: 16px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text);
+}
 
 /* ---- Top nav ---- */
 
@@ -444,7 +816,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
   align-items: flex-start;
 }
 .panel__access::before,
@@ -462,7 +834,7 @@ body {
   font-family: var(--font-display);
   font-weight: 400;
   font-size: 28px;
-  margin: 0;
+  margin: 0 0 6px;
   position: relative;
 }
 .panel__access p {
@@ -478,10 +850,12 @@ body {
   border-radius: var(--radius-pill);
   background: #fff;
   color: var(--color-primary);
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   position: relative;
+  margin-top: 12px;
 }
 .panel__access-btn:hover { filter: brightness(0.97); }
 .panel__access-note {
@@ -490,6 +864,12 @@ body {
   width: 100%;
   position: relative;
   opacity: 0.9;
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 12px;
 }
 
 .panel__footer {
@@ -537,7 +917,6 @@ body {
   color: var(--color-primary);
   text-decoration: none;
 }
-.dropdown__user a:hover { text-decoration: underline; }
 
 .dropdown__menu {
   display: flex;
@@ -586,16 +965,21 @@ body {
 
 /* ---- Global footer (bottom of every screen's scroll area) ---- */
 
-.footer { flex-shrink: 0; font-family: var(--font-body); }
+.footer {
+  flex-shrink: 0;
+  font-family: var(--font-body);
+  margin-top: 48px;   /* breathing room separating the footer from page content */
+}
 
-.footer__bar { padding: 24px 12px; }
+.footer__bar { padding: 28px 12px 24px; }
 .footer__brand { margin-bottom: 24px; }
 .footer__logo { display: block; height: 40px; width: auto; margin-bottom: 12px; }
 .footer__headline {
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.25px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.75px;
   color: var(--color-text);
 }
 .footer__links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }

@@ -131,17 +131,32 @@ const ACCOUNT_SCREENS = [
   // No acct-logout screen: "Log out" navigates out to the Logged Out Member flow.
 ];
 
+// Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
+// mirrors the Visitor landing). The splash content modules deep-link into these:
+// the symptom-checker CTA, the listicle detail page, Article Show (levels up to
+// Topic Center) and a second Article Show that levels up to a Collection, and a
+// Community Overview reached from the panel's "Get a preview first".
+const SPLASH_FLOW_SCREENS = [
+  { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
+  { id: "symptom-checker", label: "Symptom Checker", type: "page", title: "Symptom Checker" },
+  { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
+  { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
+  { id: "advisors", label: "Advisors", type: "page", title: "Advisors" },
+  { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
+  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
+  { id: "all-collections", label: "All Collections", type: "page", title: "All Collections" },
+  { id: "collection", label: "Collection", type: "uplevel", title: "Collection", backLabel: "All Collections", upTo: "all-collections" },
+  { id: "article-collection", label: "Article Show (in Collection)", type: "uplevel", title: "Article Show", backLabel: "Collection", upTo: "collection" },
+  { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" },
+  ...LIBRARY_SCREENS_FULL,
+];
+
 const PERSONAS = {
   visitor: {
     label: "Anonymous Visitor",
     navVariant: "visitor",
     panelType: "visitor",
-    screens: [
-      { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
-      { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
-      ...LIBRARY_SCREENS_FULL,
-    ],
+    screens: SPLASH_FLOW_SCREENS,
   },
   "logged-out-member": {
     label: "Logged Out Member",
@@ -161,6 +176,10 @@ const PERSONAS = {
       // Home is a hub (still to be designed) — NOT the Visitor landing. Renders
       // the placeholder label until the hub is designed.
       { id: "home", label: "Home as a Hub", type: "tabs", title: "Home as a hub\n(still to be designed)" },
+      // The member's OWN profile (from the dropdown's "View Profile") — a top
+      // page with no level-up bar. Distinct from the "profile" screen below,
+      // which is SOMEONE ELSE's profile (reached from Meet Others).
+      { id: "my-profile", label: "My Profile", type: "page", title: "My Profile" },
       { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "HRT & Other Treatments", upTo: "lib-hrt" },
       { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs" },
@@ -179,21 +198,11 @@ const PERSONAS = {
     label: "Subscriber",
     navVariant: "visitor",
     panelType: "subscriber",
-    screens: [
-      { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
-      { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
-      ...LIBRARY_SCREENS_FULL,
-    ],
+    // Subscriber-only "Registration Step" page (reached from the panel's
+    // "Finish up now"); everything else mirrors the Visitor splash flow.
+    screens: [...SPLASH_FLOW_SCREENS, { id: "registration-step", label: "Registration Step", type: "page", title: "Registration Step", chromeless: true }],
   },
 };
-
-// Auth transitions cross into another flow's folder as a real page navigation
-// — not an in-page state swap — so each flow stays a genuinely separate,
-// shareable page. "Become a logged-in member" CTAs (Join / Log in / Finish up)
-// go to the logged-in flow; "Log out" goes to the logged-out flow.
-const LOGGED_IN_MEMBER_FOLDER = "../logged-in-member/index.html";
-const LOGGED_OUT_MEMBER_FOLDER = "../logged-out-member/index.html";
 
 /* ---------------- Locked persona (set per-page via <body data-persona>) ---- */
 
@@ -206,6 +215,7 @@ if (!persona) {
 
 let state = {
   screenId: persona.screens[0].id,
+  prevScreenId: null,
   panelOpen: false,
   dropdownOpen: false,
 };
@@ -232,7 +242,7 @@ function renderTopNav() {
   // Unsplash photo it replaced was a prototype stand-in). The member vs.
   // member-photo nav variants remain distinct in the persona model.
   const right = isVisitor
-    ? `<button class="join-btn" data-action="join">Join</button>`
+    ? `<button class="join-btn" data-screen="signup-start">Join</button>`
     : `<button class="profile-btn" data-action="toggle-dropdown" aria-label="Account menu">
          <span class="profile-avatar"><img class="profile-img" src="${PROFILE_PLACEHOLDER}" alt="" /></span>
          <span class="badge"></span>
@@ -286,16 +296,16 @@ function renderPanel() {
       <div class="panel__access">
         <h3>Don&rsquo;t miss out!</h3>
         <p>Join our community to access posts, questions, groups, and meet people.</p>
-        <button class="panel__access-btn" data-action="join">Join for free</button>
-        <div class="panel__access-note">Get a preview first</div>
+        <button class="panel__access-btn" data-screen="signup-start">Join for free</button>
+        <button class="panel__access-note" data-screen="community-overview">Get a preview first</button>
       </div>`;
   } else if (persona.panelType === "subscriber") {
     accessCard = `
       <div class="panel__access">
         <h3>Don&rsquo;t miss out!</h3>
         <p>Create your account to access posts, questions, groups, and meet people.</p>
-        <button class="panel__access-btn" data-action="finish-up">Finish up now</button>
-        <div class="panel__access-note">Get a preview first</div>
+        <button class="panel__access-btn" data-screen="registration-step">Finish up now</button>
+        <button class="panel__access-note" data-screen="community-overview">Get a preview first</button>
       </div>`;
   }
 
@@ -358,42 +368,169 @@ function renderGatedHome() {
   `;
 }
 
-// Minimal placeholder content modules (hero + a "browse by topic" card list),
-// used on the home screens so there's realistic scrollable content instead of a
-// flat label. The CTA and cards navigate via data-screen to real screens.
+// Content modules for the home ("splash") screens — built from the Figma
+// Mobile_Splash_Landing frame (file EWsXKakhyFLhkse035AoHX, node 4101:3).
+// Nav and Footer are handled elsewhere (renderTopNav / renderFooter); this
+// covers the six body sections in Figma order: Checker (hero), Listicles,
+// Articles, Experts, Factoid, Community.
 function renderModules() {
-  const card = (id, label) => `<button class="mod-card" data-screen="${id}">${label}</button>`;
+  const checkerPills = ["Irritability", "Low libido", "Anxiety", "Brain fog", "Joint pain", "Hot flashes"];
 
-  // Featured article → links into the Article Show detail page, so the level-up
-  // bar there can be exercised (Article Show → up one level → HRT topic page).
-  // Only shown where the persona actually has an `article` screen.
-  const hasArticle = persona.screens.some((s) => s.id === "article");
-  const featured = hasArticle
-    ? `<section class="mod-section">
-         <h3 class="mod-section__title">Featured article</h3>
-         <button class="mod-article" data-screen="article">
-           <span class="mod-article__eyebrow">HRT &amp; Other Treatments</span>
-           <span class="mod-article__title">What to expect in your first month on HRT</span>
-           <span class="mod-article__meta">5 min read · Reviewed by a clinician</span>
-         </button>
-       </section>`
-    : "";
+  // Five cards, matching the Figma desktop "Listicles" carousel (node 4113:51).
+  // Cards 4 & 5 carry the frame's own "[symptom]" / "[Listicle]" placeholders —
+  // kept verbatim rather than invented; the brackets signal they're not final.
+  // `img` points at a graphic in assets/listicles_<name>.svg; the icon degrades
+  // to an empty circle if a file is missing (onerror removes the <img>).
+  const listicles = [
+    { img: "weight", title: "Ways to manage weight gain", cta: "Weight Tips" },
+    { img: "fog", title: "How to clear brain fog", cta: "Brain Fog Tips" },
+    { img: "flashes", title: "Ways to manage hot flashes", cta: "Hot Flashes Tips" },
+    { img: "sleep", title: "Ways to manage [symptom]", cta: "Sleep Tips" },
+    { img: "libido", title: "Ways to manage [symptom]", cta: "[Listicle] Tips" },
+  ];
+
+  // Figma's Articles section is an image + title carousel ("Everything you need
+  // to know"), no eyebrow/tag. The first two titles come from the frame's image
+  // asset names; the rest are placeholder titles. Thumbnails are simple
+  // placeholder patterns (no real images yet). Most cards open Article Show
+  // (levels up to Topic Center); one opens an Article Show that levels up to a
+  // Collection.
+  const articles = [
+    { title: "6 menopause facts women wish they'd known sooner", screen: "article" },
+    { title: "Article title", screen: "article-collection" },
+    { title: "Which doctors treat menopause?", screen: "article" },
+    { title: "Article title", screen: "article" },
+  ];
+
+  const experts = [
+    { name: "Dr. Fenwa Milhouse, MD", role: "Urologist" },
+    { name: "Dr. Andrea Matsumura", role: "Sleep Specialist" },
+    { name: "Lauren Tetenbaum, LCSW", role: "Mental Health / Therapist" },
+  ];
 
   return `
     <section class="mod-hero">
       <h2 class="mod-hero__title">Where expert advice meets real women.</h2>
       <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
-      <button class="mod-hero__cta" data-screen="lib-all">Explore all topics</button>
-    </section>
-    <section class="mod-section">
-      <h3 class="mod-section__title">Browse by topic</h3>
-      <div class="mod-cards">
-        ${card("lib-hrt", "HRT &amp; Other Treatments")}
-        ${card("lib-mood", "Mood &amp; Mental Health")}
-        ${card("lib-sleep", "Sleep &amp; Insomnia")}
+      <div class="mod-hero__users">
+        <span class="mod-hero__avatars">
+          <span class="mod-hero__avatar"></span>
+          <span class="mod-hero__avatar"></span>
+          <span class="mod-hero__avatar"></span>
+        </span>
+        <!-- [TBD] live community member count — needs real figure from Eric/community team, not sourced from Menopause_Survey_4 -->
+        <span class="mod-hero__count">[TBD] women in the community</span>
+      </div>
+      <div class="mod-checker-card">
+        <p class="mod-checker-card__title">Could it be perimenopause? Start here.</p>
+        <div class="mod-checker-card__pills">
+          ${checkerPills.map((p) => `<span class="mod-pill">${p}</span>`).join("")}
+        </div>
+        <div class="mod-checker-card__action">
+          <button class="mod-checker-card__cta" data-screen="symptom-checker">Check all my symptoms</button>
+          <p class="mod-checker-card__note">Free — No Sign up Required</p>
+        </div>
       </div>
     </section>
-    ${featured}
+
+    <section class="mod-listicles">
+      <div class="mod-section-text">
+        <h3 class="mod-section-text__title">See what <em>actually works</em>.</h3>
+        <p class="mod-section-text__sub">Clinician-backed tips, voted on by women who've tried them.</p>
+      </div>
+      <div class="mod-listicles__scroll">
+        ${listicles
+          .map(
+            (l) => `
+          <div class="mod-listicle-card">
+            <span class="mod-listicle-card__icon"><img src="${ASSET_BASE}/listicles_${l.img}.svg" alt="" onerror="this.remove()" /></span>
+            <p class="mod-listicle-card__title">${l.title}</p>
+            <button class="mod-listicle-card__cta" data-screen="listicle-detail">${l.cta}</button>
+          </div>`
+          )
+          .join("")}
+      </div>
+    </section>
+
+    <section class="mod-articles">
+      <div class="mod-section-text">
+        <h3 class="mod-section-text__title">Everything you <em>need to know</em>.</h3>
+        <p class="mod-section-text__sub">Medically-reviewed resources to help you prepare for your appointments.</p>
+      </div>
+      <div class="mod-articles__scroll">
+        ${articles
+          .map(
+            (a) => `
+          <button class="mod-article-card" data-screen="${a.screen}">
+            <span class="mod-article-card__thumb"></span>
+            <span class="mod-article-card__title">${a.title}</span>
+          </button>`
+          )
+          .join("")}
+      </div>
+    </section>
+
+    <section class="mod-experts">
+      <div class="mod-section-text">
+        <h3 class="mod-section-text__title">Meet our <em>menopause advisors</em>.</h3>
+        <p class="mod-section-text__sub">Top experts helping you stay current on what matters.</p>
+      </div>
+      <div class="mod-experts__list">
+        ${experts
+          .map(
+            (e) => `
+          <div class="mod-expert-card">
+            <span class="mod-expert-card__avatar"></span>
+            <span class="mod-expert-card__info">
+              <span class="mod-expert-card__name">${e.name}</span>
+              <span class="mod-expert-card__role">${e.role}</span>
+            </span>
+          </div>`
+          )
+          .join("")}
+      </div>
+      <button class="mod-view-all-link" data-screen="advisors">View all advisors →</button>
+    </section>
+
+    <section class="mod-factoid">
+      <h3 class="mod-factoid__title">You're <em>not imagining</em> it.</h3>
+      <div class="mod-factoid__stats">
+        <div class="mod-stat-card">
+          <p class="mod-stat-card__number">82%</p>
+          <p class="mod-stat-card__text">of women mistook their early symptoms for stress, anxiety, or depression — not perimenopause.</p>
+        </div>
+        <div class="mod-stat-card">
+          <p class="mod-stat-card__number">72%</p>
+          <p class="mod-stat-card__text">of women faced pushback when they raised their symptoms, told it was "just aging" or they were "too young."</p>
+        </div>
+      </div>
+      <p class="mod-factoid__source">ThisIsMenopause Survey of 1,000 U.S. women ages 35–59 in perimenopause</p>
+    </section>
+
+    <section class="mod-community">
+      <div class="mod-section-text">
+        <h3 class="mod-section-text__title">What women are <em>saying</em>.</h3>
+      </div>
+      <div class="mod-quotes__scroll">
+        <div class="mod-quote-card">
+          <p class="mod-quote-card__text">"The brain fog from the sleep loss is killing me. I'm tired all the time because of the night sweats."</p>
+        </div>
+        <div class="mod-quote-card">
+          <p class="mod-quote-card__text">"I got three different answers on HRT from three different doctors. No wonder nobody gets it."</p>
+        </div>
+      </div>
+      <button class="mod-view-all-link" data-screen="community-overview">Join the conversation →</button>
+
+      <div class="mod-cta-card">
+        <p class="mod-cta-card__title">You don't have to figure this out alone.</p>
+        <p class="mod-cta-card__sub">Get medically-reviewed resources, tips from real women, and a community who gets it.</p>
+        <div class="mod-cta-card__buttons">
+          <button class="mod-btn-primary" data-screen="signup-start">Join for free</button>
+          <button class="mod-btn-secondary" data-screen="symptom-checker">Check symptoms first</button>
+        </div>
+      </div>
+      <p class="mod-disclaimer-note">BTW, we don't sell supplements or prescribe treatments. Just unbiased information and real talk.</p>
+    </section>
   `;
 }
 
@@ -410,7 +547,7 @@ function renderFooter() {
       <div class="footer__bar">
         <div class="footer__brand">
           <img class="footer__logo" src="${PANEL_LOGO}" onerror="this.onerror=null;this.src='${LOGO_FULL}'" alt="This is Menopause" />
-          <p class="footer__headline">Making sense of menopause, together</p>
+          <p class="footer__headline">Expert advice. Real women. Real talk.</p>
         </div>
         <div class="footer__links">
           <div class="footer__col">${col(["About", "Editorial Process", "Partner with Us", "Accessibility"])}</div>
@@ -430,6 +567,24 @@ function renderFooter() {
 
 function render() {
   const screen = persona.screens.find((s) => s.id === state.screenId) || persona.screens[0];
+
+  // Chromeless full-screen flow pages (Sign Up Start, Registration Step): no top
+  // nav, level-up bar, or footer — just an X in the top-left that closes back to
+  // the page the user came from.
+  if (screen.chromeless) {
+    document.getElementById("phone").innerHTML = `
+      <div class="screen">
+        <div class="screen__scroll">
+          <div class="screen__body screen__body--fill screen__body--flow">
+            <button class="flow-close" data-action="close-flow" aria-label="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18" /></svg>
+            </button>
+            <div class="screen__placeholder">${screen.title}</div>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
 
   // Screen content: content modules if the screen has them, the gated welcome
   // card, otherwise the labelled placeholder.
@@ -523,6 +678,7 @@ document.addEventListener("click", (e) => {
   // Stays inside the current persona; crossing folders is the auth CTAs' job.
   const screenBtn = e.target.closest("[data-screen]");
   if (screenBtn) {
+    state.prevScreenId = state.screenId; // remembered so chromeless flow pages can close "back"
     state.screenId = screenBtn.dataset.screen;
     state.panelOpen = false;
     state.dropdownOpen = false;
@@ -561,40 +717,37 @@ document.addEventListener("click", (e) => {
       state.screenId = persona.screens[0].id;
       render();
       break;
+    // Close a chromeless flow page (X in the corner) back to where it opened from.
+    case "close-flow":
+      state.screenId = state.prevScreenId || persona.screens[0].id;
+      render();
+      break;
     case "go-profile":
-      if (persona.screens.some((s) => s.id === "profile")) {
-        state.screenId = "profile";
+      if (persona.screens.some((s) => s.id === "my-profile")) {
+        state.screenId = "my-profile";
         state.dropdownOpen = false;
         render();
       }
       break;
-    // Real page navigation — this is what actually crosses from one
-    // flow folder into another, on purpose, as a deliberate user action.
-    case "join":
-    case "log-in":
-    case "finish-up":
-      window.location.href = LOGGED_IN_MEMBER_FOLDER;
-      break;
-    case "log-out":
-      window.location.href = LOGGED_OUT_MEMBER_FOLDER;
-      break;
+    // Cross-flow auth transitions (Join / Log in / Finish up / Log out) are
+    // intentionally no-ops in this prototype — these CTAs no longer jump to
+    // another persona's page; each flow stays self-contained.
   }
 });
 
-/* ---------------- Fit the fixed 393x852 device to the viewport ----
-   The phone is a fixed-size "device". On a viewport shorter (or narrower)
-   than it, scale the whole device down with a transform so the page never
-   scrolls — the 393x852 design stays intact, just smaller. A transform is
-   visual only and would otherwise leave its full-size layout box behind
-   (still forcing scroll), so we collapse that leftover space with negative
-   margins — split evenly on all four sides so the collapsed box stays
-   centered on the same point the transform scales around, letting the
-   flex .stage center it both ways.
+/* ---------------- Fit the fixed device frame to the viewport ----
+   The phone is a fixed-size "device"; its size comes from the
+   --device-width / --device-height tokens in main.css (single source of
+   truth). On a viewport shorter (or narrower) than it, scale the whole
+   device down with a transform so the page never scrolls — the design stays
+   intact, just smaller. A transform is visual only and would otherwise leave
+   its full-size layout box behind (still forcing scroll), so we collapse that
+   leftover space with negative margins — split evenly on all four sides so the
+   collapsed box stays centered on the same point the transform scales around,
+   letting the flex .stage center it both ways.
    Skipped on <=430px-wide screens, where the CSS media query already makes
    the phone full-bleed (height:100vh). ---- */
 
-const PHONE_W = 393;
-const PHONE_H = 852;
 const FIT_MARGIN = 16; // px of breathing room kept around the device
 
 function fitPhone() {
@@ -607,16 +760,22 @@ function fitPhone() {
     return;
   }
 
+  // Measure the device's true rendered box (screen + bezel border).
+  // offsetWidth/offsetHeight are transform-independent, so the fit stays
+  // correct regardless of box-sizing or border width.
+  const w = phone.offsetWidth;
+  const h = phone.offsetHeight;
+
   const scale = Math.min(
-    1, // never upscale past the intended 393x852
-    (window.innerHeight - FIT_MARGIN) / PHONE_H,
-    (window.innerWidth - FIT_MARGIN) / PHONE_W
+    1, // never upscale past the device's intrinsic size
+    (window.innerHeight - FIT_MARGIN) / h,
+    (window.innerWidth - FIT_MARGIN) / w
   );
 
   phone.style.transformOrigin = "center center";
   phone.style.transform = `scale(${scale})`;
   // Collapse the leftover layout box symmetrically so it stays centered.
-  phone.style.margin = `${(-PHONE_H * (1 - scale)) / 2}px ${(-PHONE_W * (1 - scale)) / 2}px`;
+  phone.style.margin = `${(-h * (1 - scale)) / 2}px ${(-w * (1 - scale)) / 2}px`;
 }
 
 window.addEventListener("resize", fitPhone);
