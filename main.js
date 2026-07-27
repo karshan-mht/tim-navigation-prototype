@@ -131,17 +131,32 @@ const ACCOUNT_SCREENS = [
   // No acct-logout screen: "Log out" navigates out to the Logged Out Member flow.
 ];
 
+// Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
+// mirrors the Visitor landing). The splash content modules deep-link into these:
+// the symptom-checker CTA, the listicle detail page, Article Show (levels up to
+// Topic Center) and a second Article Show that levels up to a Collection, and a
+// Community Overview reached from the panel's "Get a preview first".
+const SPLASH_FLOW_SCREENS = [
+  { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
+  { id: "symptom-checker", label: "Symptom Checker", type: "page", title: "Symptom Checker" },
+  { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
+  { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
+  { id: "advisors", label: "Advisors", type: "page", title: "Advisors" },
+  { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
+  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
+  { id: "all-collections", label: "All Collections", type: "page", title: "All Collections" },
+  { id: "collection", label: "Collection", type: "uplevel", title: "Collection", backLabel: "All Collections", upTo: "all-collections" },
+  { id: "article-collection", label: "Article Show (in Collection)", type: "uplevel", title: "Article Show", backLabel: "Collection", upTo: "collection" },
+  { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" },
+  ...LIBRARY_SCREENS_FULL,
+];
+
 const PERSONAS = {
   visitor: {
     label: "Anonymous Visitor",
     navVariant: "visitor",
     panelType: "visitor",
-    screens: [
-      { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
-      { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
-      ...LIBRARY_SCREENS_FULL,
-    ],
+    screens: SPLASH_FLOW_SCREENS,
   },
   "logged-out-member": {
     label: "Logged Out Member",
@@ -161,6 +176,10 @@ const PERSONAS = {
       // Home is a hub (still to be designed) — NOT the Visitor landing. Renders
       // the placeholder label until the hub is designed.
       { id: "home", label: "Home as a Hub", type: "tabs", title: "Home as a hub\n(still to be designed)" },
+      // The member's OWN profile (from the dropdown's "View Profile") — a top
+      // page with no level-up bar. Distinct from the "profile" screen below,
+      // which is SOMEONE ELSE's profile (reached from Meet Others).
+      { id: "my-profile", label: "My Profile", type: "page", title: "My Profile" },
       { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "HRT & Other Treatments", upTo: "lib-hrt" },
       { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs" },
@@ -179,21 +198,11 @@ const PERSONAS = {
     label: "Subscriber",
     navVariant: "visitor",
     panelType: "subscriber",
-    screens: [
-      { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
-      { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
-      ...LIBRARY_SCREENS_FULL,
-    ],
+    // Subscriber-only "Registration Step" page (reached from the panel's
+    // "Finish up now"); everything else mirrors the Visitor splash flow.
+    screens: [...SPLASH_FLOW_SCREENS, { id: "registration-step", label: "Registration Step", type: "page", title: "Registration Step", chromeless: true }],
   },
 };
-
-// Auth transitions cross into another flow's folder as a real page navigation
-// — not an in-page state swap — so each flow stays a genuinely separate,
-// shareable page. "Become a logged-in member" CTAs (Join / Log in / Finish up)
-// go to the logged-in flow; "Log out" goes to the logged-out flow.
-const LOGGED_IN_MEMBER_FOLDER = "../logged-in-member/index.html";
-const LOGGED_OUT_MEMBER_FOLDER = "../logged-out-member/index.html";
 
 /* ---------------- Locked persona (set per-page via <body data-persona>) ---- */
 
@@ -206,6 +215,7 @@ if (!persona) {
 
 let state = {
   screenId: persona.screens[0].id,
+  prevScreenId: null,
   panelOpen: false,
   dropdownOpen: false,
 };
@@ -232,7 +242,7 @@ function renderTopNav() {
   // Unsplash photo it replaced was a prototype stand-in). The member vs.
   // member-photo nav variants remain distinct in the persona model.
   const right = isVisitor
-    ? `<button class="join-btn" data-action="join">Join</button>`
+    ? `<button class="join-btn" data-screen="signup-start">Join</button>`
     : `<button class="profile-btn" data-action="toggle-dropdown" aria-label="Account menu">
          <span class="profile-avatar"><img class="profile-img" src="${PROFILE_PLACEHOLDER}" alt="" /></span>
          <span class="badge"></span>
@@ -286,16 +296,16 @@ function renderPanel() {
       <div class="panel__access">
         <h3>Don&rsquo;t miss out!</h3>
         <p>Join our community to access posts, questions, groups, and meet people.</p>
-        <button class="panel__access-btn" data-action="join">Join for free</button>
-        <div class="panel__access-note">Get a preview first</div>
+        <button class="panel__access-btn" data-screen="signup-start">Join for free</button>
+        <button class="panel__access-note" data-screen="community-overview">Get a preview first</button>
       </div>`;
   } else if (persona.panelType === "subscriber") {
     accessCard = `
       <div class="panel__access">
         <h3>Don&rsquo;t miss out!</h3>
         <p>Create your account to access posts, questions, groups, and meet people.</p>
-        <button class="panel__access-btn" data-action="finish-up">Finish up now</button>
-        <div class="panel__access-note">Get a preview first</div>
+        <button class="panel__access-btn" data-screen="registration-step">Finish up now</button>
+        <button class="panel__access-note" data-screen="community-overview">Get a preview first</button>
       </div>`;
   }
 
@@ -364,34 +374,32 @@ function renderGatedHome() {
 // covers the six body sections in Figma order: Checker (hero), Listicles,
 // Articles, Experts, Factoid, Community.
 function renderModules() {
-
-  // Featured article → links into the Article Show detail page, so the level-up
-  // bar there can be exercised (Article Show → up one level → HRT topic page).
-  // Only shown where the persona actually has an `article` screen.
-  const hasArticle = persona.screens.some((s) => s.id === "article");
-
   const checkerPills = ["Irritability", "Low libido", "Anxiety", "Brain fog", "Joint pain", "Hot flashes"];
 
   // Five cards, matching the Figma desktop "Listicles" carousel (node 4113:51).
   // Cards 4 & 5 carry the frame's own "[symptom]" / "[Listicle]" placeholders —
   // kept verbatim rather than invented; the brackets signal they're not final.
-  // Icons approximate the frame's custom Scale/Head/Face/Bed/Heart glyphs, which
-  // aren't in ICON_SVGS.
+  // `img` points at a graphic in assets/listicles_<name>.svg; the icon degrades
+  // to an empty circle if a file is missing (onerror removes the <img>).
   const listicles = [
-    { iconName: "diet", title: "Ways to manage weight gain", cta: "Weight Tips" },
-    { iconName: "mood", title: "How to clear brain fog", cta: "Brain Fog Tips" },
-    { iconName: "hrt", title: "Ways to manage hot flashes", cta: "Hot Flashes Tips" },
-    { iconName: "sleep", title: "Ways to manage [symptom]", cta: "Sleep Tips" },
-    { iconName: "family", title: "Ways to manage [symptom]", cta: "[Listicle] Tips" },
+    { img: "weight", title: "Ways to manage weight gain", cta: "Weight Tips" },
+    { img: "fog", title: "How to clear brain fog", cta: "Brain Fog Tips" },
+    { img: "flashes", title: "Ways to manage hot flashes", cta: "Hot Flashes Tips" },
+    { img: "sleep", title: "Ways to manage [symptom]", cta: "Sleep Tips" },
+    { img: "libido", title: "Ways to manage [symptom]", cta: "[Listicle] Tips" },
   ];
 
   // Figma's Articles section is an image + title carousel ("Everything you need
-  // to know"), with no eyebrow/tag on the cards. Titles come from the frame's
-  // image asset names; thumbnails are CSS gradient placeholders since we don't
-  // have the real images.
+  // to know"), no eyebrow/tag. The first two titles come from the frame's image
+  // asset names; the rest are placeholder titles. Thumbnails are simple
+  // placeholder patterns (no real images yet). Most cards open Article Show
+  // (levels up to Topic Center); one opens an Article Show that levels up to a
+  // Collection.
   const articles = [
-    { title: "6 menopause facts women wish they'd known sooner" },
-    { title: "Which doctors treat menopause?" },
+    { title: "6 menopause facts women wish they'd known sooner", screen: "article" },
+    { title: "Article title", screen: "article-collection" },
+    { title: "Which doctors treat menopause?", screen: "article" },
+    { title: "Article title", screen: "article" },
   ];
 
   const experts = [
@@ -399,9 +407,6 @@ function renderModules() {
     { name: "Dr. Andrea Matsumura", role: "Sleep Specialist" },
     { name: "Lauren Tetenbaum, LCSW", role: "Mental Health / Therapist" },
   ];
-
-  const initials = (name) =>
-    name.replace(/^Dr\.\s*/, "").split(/\s+/).filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join("");
 
   return `
     <section class="mod-hero">
@@ -421,8 +426,10 @@ function renderModules() {
         <div class="mod-checker-card__pills">
           ${checkerPills.map((p) => `<span class="mod-pill">${p}</span>`).join("")}
         </div>
-        <button class="mod-checker-card__cta" data-screen="lib-all">Check all my symptoms</button>
-        <p class="mod-checker-card__note">Free — No Sign up Required</p>
+        <div class="mod-checker-card__action">
+          <button class="mod-checker-card__cta" data-screen="symptom-checker">Check all my symptoms</button>
+          <p class="mod-checker-card__note">Free — No Sign up Required</p>
+        </div>
       </div>
     </section>
 
@@ -436,9 +443,9 @@ function renderModules() {
           .map(
             (l) => `
           <div class="mod-listicle-card">
-            <span class="mod-listicle-card__icon">${icon(l.iconName)}</span>
+            <span class="mod-listicle-card__icon"><img src="${ASSET_BASE}/listicles_${l.img}.svg" alt="" onerror="this.remove()" /></span>
             <p class="mod-listicle-card__title">${l.title}</p>
-            <button class="mod-listicle-card__cta" data-screen="lib-all">${l.cta}</button>
+            <button class="mod-listicle-card__cta" data-screen="listicle-detail">${l.cta}</button>
           </div>`
           )
           .join("")}
@@ -453,9 +460,9 @@ function renderModules() {
       <div class="mod-articles__scroll">
         ${articles
           .map(
-            (a, i) => `
-          <button class="mod-article-card" ${hasArticle ? 'data-screen="article"' : ""}>
-            <span class="mod-article-card__thumb mod-article-card__thumb--${i + 1}"></span>
+            (a) => `
+          <button class="mod-article-card" data-screen="${a.screen}">
+            <span class="mod-article-card__thumb"></span>
             <span class="mod-article-card__title">${a.title}</span>
           </button>`
           )
@@ -473,7 +480,7 @@ function renderModules() {
           .map(
             (e) => `
           <div class="mod-expert-card">
-            <span class="mod-expert-card__avatar">${initials(e.name)}</span>
+            <span class="mod-expert-card__avatar"></span>
             <span class="mod-expert-card__info">
               <span class="mod-expert-card__name">${e.name}</span>
               <span class="mod-expert-card__role">${e.role}</span>
@@ -482,7 +489,7 @@ function renderModules() {
           )
           .join("")}
       </div>
-      <span class="mod-view-all-link">View all advisors →</span>
+      <button class="mod-view-all-link" data-screen="advisors">View all advisors →</button>
     </section>
 
     <section class="mod-factoid">
@@ -512,14 +519,14 @@ function renderModules() {
           <p class="mod-quote-card__text">"I got three different answers on HRT from three different doctors. No wonder nobody gets it."</p>
         </div>
       </div>
-      <span class="mod-view-all-link">Join the conversation →</span>
+      <button class="mod-view-all-link" data-screen="community-overview">Join the conversation →</button>
 
       <div class="mod-cta-card">
         <p class="mod-cta-card__title">You don't have to figure this out alone.</p>
         <p class="mod-cta-card__sub">Get medically-reviewed resources, tips from real women, and a community who gets it.</p>
         <div class="mod-cta-card__buttons">
-          <button class="mod-btn-primary" data-action="join">Join for free</button>
-          <button class="mod-btn-secondary" data-screen="lib-all">Check symptoms first</button>
+          <button class="mod-btn-primary" data-screen="signup-start">Join for free</button>
+          <button class="mod-btn-secondary" data-screen="symptom-checker">Check symptoms first</button>
         </div>
       </div>
       <p class="mod-disclaimer-note">BTW, we don't sell supplements or prescribe treatments. Just unbiased information and real talk.</p>
@@ -540,7 +547,7 @@ function renderFooter() {
       <div class="footer__bar">
         <div class="footer__brand">
           <img class="footer__logo" src="${PANEL_LOGO}" onerror="this.onerror=null;this.src='${LOGO_FULL}'" alt="This is Menopause" />
-          <p class="footer__headline">Making sense of menopause, together</p>
+          <p class="footer__headline">Expert advice. Real women. Real talk.</p>
         </div>
         <div class="footer__links">
           <div class="footer__col">${col(["About", "Editorial Process", "Partner with Us", "Accessibility"])}</div>
@@ -560,6 +567,24 @@ function renderFooter() {
 
 function render() {
   const screen = persona.screens.find((s) => s.id === state.screenId) || persona.screens[0];
+
+  // Chromeless full-screen flow pages (Sign Up Start, Registration Step): no top
+  // nav, level-up bar, or footer — just an X in the top-left that closes back to
+  // the page the user came from.
+  if (screen.chromeless) {
+    document.getElementById("phone").innerHTML = `
+      <div class="screen">
+        <div class="screen__scroll">
+          <div class="screen__body screen__body--fill screen__body--flow">
+            <button class="flow-close" data-action="close-flow" aria-label="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18" /></svg>
+            </button>
+            <div class="screen__placeholder">${screen.title}</div>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
 
   // Screen content: content modules if the screen has them, the gated welcome
   // card, otherwise the labelled placeholder.
@@ -653,6 +678,7 @@ document.addEventListener("click", (e) => {
   // Stays inside the current persona; crossing folders is the auth CTAs' job.
   const screenBtn = e.target.closest("[data-screen]");
   if (screenBtn) {
+    state.prevScreenId = state.screenId; // remembered so chromeless flow pages can close "back"
     state.screenId = screenBtn.dataset.screen;
     state.panelOpen = false;
     state.dropdownOpen = false;
@@ -691,23 +717,21 @@ document.addEventListener("click", (e) => {
       state.screenId = persona.screens[0].id;
       render();
       break;
+    // Close a chromeless flow page (X in the corner) back to where it opened from.
+    case "close-flow":
+      state.screenId = state.prevScreenId || persona.screens[0].id;
+      render();
+      break;
     case "go-profile":
-      if (persona.screens.some((s) => s.id === "profile")) {
-        state.screenId = "profile";
+      if (persona.screens.some((s) => s.id === "my-profile")) {
+        state.screenId = "my-profile";
         state.dropdownOpen = false;
         render();
       }
       break;
-    // Real page navigation — this is what actually crosses from one
-    // flow folder into another, on purpose, as a deliberate user action.
-    case "join":
-    case "log-in":
-    case "finish-up":
-      window.location.href = LOGGED_IN_MEMBER_FOLDER;
-      break;
-    case "log-out":
-      window.location.href = LOGGED_OUT_MEMBER_FOLDER;
-      break;
+    // Cross-flow auth transitions (Join / Log in / Finish up / Log out) are
+    // intentionally no-ops in this prototype — these CTAs no longer jump to
+    // another persona's page; each flow stays self-contained.
   }
 });
 

@@ -15,6 +15,7 @@
   --color-navy-deep: #6a3693;            /* Factoid gradient end stop */
   --color-bg-purple-soft: #f6eff8;       /* Listicles / Community section background */
   --color-bg-cool: #fafcff;              /* Articles section background */
+  --color-bg-blue-soft: #edf3f9;         /* Experts section background (solid, Figma 4122:332) */
   --color-card-border: rgba(13, 27, 41, 0.15);
   --color-pill-border: rgba(13, 27, 41, 0.44);
   --radius-pill: 999px;
@@ -126,12 +127,30 @@ body {
   white-space: pre-line;
 }
 
+/* Chromeless flow pages (Sign Up Start / Registration Step): X to close, top-left. */
+.screen__body--flow { position: relative; }
+.flow-close {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.flow-close svg { display: block; width: 24px; height: 24px; }
+
 /* ---- Placeholder content modules (home screens) ---- */
 
 .mod-hero {
   background: linear-gradient(160deg, var(--color-navy), #4a2a7a);
   color: #fff;
-  padding: 32px 12px;
+  padding: 48px 12px;
 }
 
 /* Letter-spacing across the splash: -0.25px baseline on all module text
@@ -224,7 +243,10 @@ body {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: var(--color-magenta);
+  /* Placeholder fill (like the article/expert placeholders) until real
+     community avatar images are added. */
+  background-color: #e9ebee;
+  background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 6px, transparent 6px, transparent 12px);
   border: 2px solid var(--color-navy);
   margin-left: -8px;
 }
@@ -274,6 +296,7 @@ body {
   cursor: pointer;
 }
 .mod-checker-card__cta:hover { filter: brightness(0.97); }
+.mod-checker-card__action { display: flex; flex-direction: column; gap: 12px; }
 .mod-checker-card__note { margin: 0; text-align: center; font-size: 14px; color: var(--color-text-secondary); }
 
 /* ---- Shared section header (Listicles / Articles / Experts / Community) ---- */
@@ -294,6 +317,11 @@ body {
 .mod-view-all-link {
   display: block;
   margin-top: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 20px;
@@ -303,7 +331,7 @@ body {
 
 /* ---- Listicles — horizontal card carousel, Figma "Listicles" section ---- */
 
-.mod-listicles { background: var(--color-bg-purple-soft); padding: 32px 12px; }
+.mod-listicles { background: var(--color-bg-purple-soft); padding: 48px 12px; }
 .mod-listicles__scroll {
   display: flex;
   gap: 16px;
@@ -313,10 +341,10 @@ body {
 }
 .mod-listicle-card {
   flex: 0 0 auto;
-  width: 168px;
+  width: 210px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;
   padding: 16px;
   border: 1px solid var(--color-card-border);
@@ -324,19 +352,22 @@ body {
   background: #fff;
 }
 .mod-listicle-card__icon {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   background: var(--color-magenta-soft-solid);
   color: var(--color-magenta);
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
-.mod-listicle-card__icon .icon { width: 26px; height: 26px; }
+/* Fill the circle — the SVGs carry their own padding inside a 128 viewBox
+   (artwork ~52% of the frame), so this lands the glyph at ~Figma's 46px. */
+.mod-listicle-card__icon img { width: 100%; height: 100%; object-fit: contain; }
 .mod-listicle-card__title {
   margin: 0;
-  text-align: center;
+  text-align: left;
   font-weight: 600;
   font-size: 20px;
   line-height: 1.4;
@@ -353,13 +384,14 @@ body {
   font-family: var(--font-body);
   font-size: 16px;
   letter-spacing: -0.25px;
+  white-space: nowrap;
   cursor: pointer;
 }
-.mod-listicle-card__cta:hover { background: var(--color-magenta-soft); }
+.mod-listicle-card__cta:hover { background: var(--color-primary-soft); }
 
 /* ---- Articles — 2-up image + title grid, Figma "Articles" section ---- */
 
-.mod-articles { background: var(--color-bg-cool); padding: 32px 12px; }
+.mod-articles { background: var(--color-bg-cool); padding: 48px 12px; }
 /* Horizontal carousel with edge peek, matching the Figma "Articles" carousel. */
 .mod-articles__scroll {
   display: flex;
@@ -387,16 +419,18 @@ body {
   width: 100%;
   aspect-ratio: 324 / 170;  /* Figma image dimensions 324×170 (node 4101:75) */
   border-radius: var(--radius-card);
-  background: linear-gradient(135deg, var(--color-navy), var(--color-magenta));
+  /* Simple placeholder pattern (no real article images yet) — neutral gray
+     with a faint diagonal hatch so it clearly reads as a placeholder. */
+  background-color: #e9ebee;
+  background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 10px, transparent 10px, transparent 20px);
 }
-.mod-article-card__thumb--2 { background: linear-gradient(135deg, var(--color-primary), var(--color-purple-light)); }
 .mod-article-card__title { font-size: 18px; line-height: 1.3; color: var(--color-navy); }
 
 /* ---- Experts — stacked advisor cards, Figma "Experts" section ---- */
 
 .mod-experts {
-  background: linear-gradient(90deg, #edf3f9, var(--color-bg-purple-soft));
-  padding: 32px 12px;
+  background: var(--color-bg-blue-soft);
+  padding: 48px 12px;
 }
 .mod-experts__list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
 .mod-expert-card {
@@ -413,14 +447,9 @@ body {
   width: 61px;
   height: 61px;
   border-radius: 50%;
-  background: var(--color-magenta-soft-solid);
-  color: var(--color-magenta);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 18px;
+  /* Same simple placeholder pattern as the article thumbnails. */
+  background-color: #e9ebee;
+  background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 10px, transparent 10px, transparent 20px);
 }
 .mod-expert-card__info { display: flex; flex-direction: column; gap: 4px; }
 .mod-expert-card__name { font-weight: 700; font-size: 18px; letter-spacing: -0.25px; color: var(--color-navy); }
@@ -430,7 +459,7 @@ body {
 
 .mod-factoid {
   background: linear-gradient(180deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
-  padding: 32px 12px;
+  padding: 48px 12px;
   color: #fff;
 }
 .mod-factoid__title {
@@ -463,7 +492,7 @@ body {
 
 /* ---- Community — quote carousel + closing CTA, Figma "Community" section ---- */
 
-.mod-community { background: var(--color-bg-purple-soft); padding: 32px 12px; }
+.mod-community { background: var(--color-bg-purple-soft); padding: 48px 12px; }
 .mod-quotes__scroll {
   display: flex;
   gap: 12px;
@@ -787,7 +816,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
   align-items: flex-start;
 }
 .panel__access::before,
@@ -805,7 +834,7 @@ body {
   font-family: var(--font-display);
   font-weight: 400;
   font-size: 28px;
-  margin: 0;
+  margin: 0 0 6px;
   position: relative;
 }
 .panel__access p {
@@ -821,10 +850,12 @@ body {
   border-radius: var(--radius-pill);
   background: #fff;
   color: var(--color-primary);
+  font-family: var(--font-body);
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
   position: relative;
+  margin-top: 12px;
 }
 .panel__access-btn:hover { filter: brightness(0.97); }
 .panel__access-note {
@@ -833,6 +864,12 @@ body {
   width: 100%;
   position: relative;
   opacity: 0.9;
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 12px;
 }
 
 .panel__footer {
@@ -880,7 +917,6 @@ body {
   color: var(--color-primary);
   text-decoration: none;
 }
-.dropdown__user a:hover { text-decoration: underline; }
 
 .dropdown__menu {
   display: flex;
@@ -940,9 +976,10 @@ body {
 .footer__logo { display: block; height: 40px; width: auto; margin-bottom: 12px; }
 .footer__headline {
   margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: -0.25px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.75px;
   color: var(--color-text);
 }
 .footer__links { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px; }
