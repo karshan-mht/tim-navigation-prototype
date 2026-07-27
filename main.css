@@ -10,6 +10,13 @@
   --color-magenta: #a440bc;              /* Library / Community icon tint */
   --color-magenta-soft: rgba(164, 65, 188, 0.08); /* pink circle behind icons */
   --color-magenta-soft-solid: #f8f0fa;   /* opaque equivalent of --color-magenta-soft over white — used for the rollover so nothing alpha-stacks */
+  /* Splash Landing sections (Figma Mobile_Splash_Landing, node 4101:3) */
+  --color-purple-light: #d483cf;         /* "not imagining it" headline highlight, Factoid section */
+  --color-navy-deep: #6a3693;            /* Factoid gradient end stop */
+  --color-bg-purple-soft: #f6eff8;       /* Listicles / Community section background */
+  --color-bg-cool: #fafcff;              /* Articles section background */
+  --color-card-border: rgba(13, 27, 41, 0.15);
+  --color-pill-border: rgba(13, 27, 41, 0.44);
   --radius-pill: 999px;
   --radius-card: 16px;
   --font-body: "Lato", sans-serif;
@@ -190,6 +197,320 @@ body {
   margin-bottom: 8px;
 }
 .mod-article__meta { display: block; font-size: 13px; color: var(--color-text-secondary); }
+
+/* ---- Checker card (inside .mod-hero) — symptom pills + CTA, Figma 4101:30 ---- */
+
+.mod-hero__users { display: flex; align-items: center; gap: 8px; margin-bottom: 24px; }
+.mod-hero__avatars { display: flex; align-items: center; }
+.mod-hero__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-magenta);
+  border: 2px solid var(--color-navy);
+  margin-left: -8px;
+}
+.mod-hero__avatars .mod-hero__avatar:first-child { margin-left: 0; }
+.mod-hero__count { font-size: 14px; color: #fff; }
+
+.mod-checker-card {
+  background: #fff;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.3);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.mod-checker-card__title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.75px;
+  color: var(--color-navy);
+}
+.mod-checker-card__pills { display: flex; flex-wrap: wrap; gap: 12px 8px; margin: 0; }
+.mod-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 8px 16px;
+  border: 0.5px solid var(--color-pill-border);
+  border-radius: var(--radius-pill);
+  font-size: 16px;
+  color: var(--color-text);
+  background: #fff;
+}
+.mod-checker-card__cta {
+  height: 52px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.mod-checker-card__cta:hover { filter: brightness(0.97); }
+.mod-checker-card__note { margin: 0; text-align: center; font-size: 14px; color: var(--color-text-secondary); }
+
+/* ---- Shared section header (Listicles / Articles / Experts / Community) ---- */
+
+.mod-section-text { margin-bottom: 24px; }
+.mod-section-text__title {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.25;
+  letter-spacing: -0.75px;
+  color: var(--color-navy);
+}
+.mod-section-text__title em { font-style: normal; color: var(--color-magenta); }
+.mod-section-text__sub { margin: 0; font-size: 16px; line-height: 1.4; color: var(--color-navy); }
+
+.mod-view-all-link {
+  display: block;
+  margin-top: 16px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--color-primary);
+}
+
+/* ---- Listicles — horizontal card carousel, Figma "Listicles" section ---- */
+
+.mod-listicles { background: var(--color-bg-purple-soft); padding: 32px 16px; }
+.mod-listicles__scroll {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.mod-listicle-card {
+  flex: 0 0 auto;
+  width: 168px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+.mod-listicle-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--color-magenta-soft-solid);
+  color: var(--color-magenta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mod-listicle-card__icon .icon { width: 26px; height: 26px; }
+.mod-listicle-card__title {
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.5px;
+  color: var(--color-navy);
+}
+.mod-listicle-card__cta {
+  height: 40px;
+  padding: 0 20px;
+  border: 0.5px solid var(--color-primary);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  cursor: pointer;
+}
+.mod-listicle-card__cta:hover { background: var(--color-magenta-soft); }
+
+/* ---- Articles — 2-up image + title grid, Figma "Articles" section ---- */
+
+.mod-articles { background: var(--color-bg-cool); padding: 32px 16px; }
+.mod-articles__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.mod-article-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.mod-article-card__thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1200 / 630;
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, var(--color-navy), var(--color-magenta));
+}
+.mod-article-card__thumb--2 { background: linear-gradient(135deg, var(--color-primary), var(--color-purple-light)); }
+.mod-article-card__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-magenta);
+}
+.mod-article-card__title { font-size: 15px; line-height: 1.3; color: var(--color-navy); }
+
+/* ---- Experts — stacked advisor cards, Figma "Experts" section ---- */
+
+.mod-experts {
+  background: linear-gradient(90deg, #edf3f9, var(--color-bg-purple-soft));
+  padding: 32px 16px;
+}
+.mod-experts__list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
+.mod-expert-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+.mod-expert-card__avatar {
+  flex: 0 0 auto;
+  width: 61px;
+  height: 61px;
+  border-radius: 50%;
+  background: var(--color-magenta-soft-solid);
+  color: var(--color-magenta);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 18px;
+}
+.mod-expert-card__info { display: flex; flex-direction: column; gap: 4px; }
+.mod-expert-card__name { font-weight: 700; font-size: 18px; letter-spacing: -0.25px; color: var(--color-navy); }
+.mod-expert-card__role { font-size: 16px; color: var(--color-text); }
+
+/* ---- Factoid — dark gradient stat cards, Figma "Factoid" section ---- */
+
+.mod-factoid {
+  background: linear-gradient(180deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
+  padding: 32px 16px;
+  color: #fff;
+}
+.mod-factoid__title {
+  margin: 0 0 24px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.75px;
+}
+.mod-factoid__title em { font-style: normal; color: var(--color-purple-light); }
+.mod-factoid__stats { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
+.mod-stat-card {
+  background: #fff;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  padding: 32px;
+}
+.mod-stat-card__number {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 36px;
+  letter-spacing: -0.75px;
+  color: var(--color-magenta);
+}
+.mod-stat-card__text { margin: 0; font-size: 17px; line-height: 1.45; color: var(--color-text); }
+.mod-factoid__source { margin: 0; font-size: 13px; line-height: 1.5; color: #fff; opacity: 0.9; }
+
+/* ---- Community — quote carousel + closing CTA, Figma "Community" section ---- */
+
+.mod-community { background: var(--color-bg-purple-soft); padding: 32px 16px; }
+.mod-quotes__scroll {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+}
+.mod-quote-card {
+  flex: 0 0 auto;
+  width: 250px;
+  border: 0.5px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mod-quote-card__text {
+  margin: 0;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: -0.5px;
+  color: var(--color-navy);
+}
+.mod-quote-card__attribution {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-secondary);
+}
+
+.mod-cta-card {
+  margin-top: 32px;
+  background: var(--color-navy);
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mod-cta-card__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 26px;
+  letter-spacing: -0.75px;
+}
+.mod-cta-card__sub { margin: 0; font-size: 16px; line-height: 1.45; opacity: 0.9; }
+.mod-cta-card__buttons { display: flex; flex-direction: column; gap: 16px; }
+.mod-btn-primary,
+.mod-btn-secondary {
+  height: 48px;
+  border-radius: 24px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 17px;
+  cursor: pointer;
+}
+.mod-btn-primary { border: none; background: #fff; color: #151515; }
+.mod-btn-primary:hover { filter: brightness(0.97); }
+.mod-btn-secondary { border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: #fff; }
+.mod-btn-secondary:hover { background: rgba(255, 255, 255, 0.08); }
+
+.mod-disclaimer-note {
+  margin: 16px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text);
+}
 
 /* ---- Top nav ---- */
 

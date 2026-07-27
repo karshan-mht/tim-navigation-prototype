@@ -358,9 +358,14 @@ function renderGatedHome() {
   `;
 }
 
-// Minimal placeholder content modules (hero + a "browse by topic" card list),
-// used on the home screens so there's realistic scrollable content instead of a
-// flat label. The CTA and cards navigate via data-screen to real screens.
+// Content modules for the home ("splash") screens — built from the Figma
+// Mobile_Splash_Landing frame (file EWsXKakhyFLhkse035AoHX, node 4101:3).
+// Nav and Footer are handled elsewhere (renderTopNav / renderFooter); this
+// covers the six body sections in Figma order: Checker (hero), Listicles,
+// Articles, Experts, Factoid, Community. "Browse by topic" is this
+// prototype's own addition (not in the Figma frame) — kept because it
+// exercises real in-persona deep links (lib-hrt/mood/sleep) that the nav
+// prototype needs to test; it's placed between Listicles and Articles.
 function renderModules() {
   const card = (id, label) => `<button class="mod-card" data-screen="${id}">${label}</button>`;
 
@@ -368,23 +373,75 @@ function renderModules() {
   // bar there can be exercised (Article Show → up one level → HRT topic page).
   // Only shown where the persona actually has an `article` screen.
   const hasArticle = persona.screens.some((s) => s.id === "article");
-  const featured = hasArticle
-    ? `<section class="mod-section">
-         <h3 class="mod-section__title">Featured article</h3>
-         <button class="mod-article" data-screen="article">
-           <span class="mod-article__eyebrow">HRT &amp; Other Treatments</span>
-           <span class="mod-article__title">What to expect in your first month on HRT</span>
-           <span class="mod-article__meta">5 min read · Reviewed by a clinician</span>
-         </button>
-       </section>`
-    : "";
+
+  const checkerPills = ["Irritability", "Low libido", "Anxiety", "Brain fog", "Joint pain", "Hot flashes"];
+
+  const listicles = [
+    { iconName: "diet", title: "What helps with weight gain", cta: "Weight Tips" },
+    { iconName: "mood", title: "How to clear brain fog", cta: "Brain Fog Tips" },
+    { iconName: "sleep", title: "Getting real sleep back", cta: "Sleep Tips" },
+  ];
+
+  // Figma's Articles section is a 2-up image + title grid ("Everything you
+  // need to know"). We don't have real article images/titles yet, so the
+  // thumbnails are CSS gradient placeholders — this is layout, not fabricated
+  // content, so it isn't [TBD]-flagged the way invented stats/counts are.
+  const articles = [
+    { eyebrow: "General Health", title: "6 menopause facts women wish they'd known sooner" },
+    { eyebrow: "HRT & Other Treatments", title: "Which doctors treat menopause?" },
+  ];
+
+  const experts = [
+    { name: "Dr. Fenwa Milhouse, MD", role: "Urologist" },
+    { name: "Dr. Andrea Matsumura", role: "Sleep Specialist" },
+    { name: "Lauren Tetenbaum, LCSW", role: "Mental Health / Therapist" },
+  ];
+
+  const initials = (name) =>
+    name.replace(/^Dr\.\s*/, "").split(/\s+/).filter((w) => /^[A-Z]/.test(w)).slice(0, 2).map((w) => w[0]).join("");
 
   return `
     <section class="mod-hero">
       <h2 class="mod-hero__title">Where expert advice meets real women.</h2>
       <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
-      <button class="mod-hero__cta" data-screen="lib-all">Explore all topics</button>
+      <div class="mod-hero__users">
+        <span class="mod-hero__avatars">
+          <span class="mod-hero__avatar"></span>
+          <span class="mod-hero__avatar"></span>
+          <span class="mod-hero__avatar"></span>
+        </span>
+        <!-- [TBD] live community member count — needs real figure from Eric/community team, not sourced from Menopause_Survey_4 -->
+        <span class="mod-hero__count">[TBD] women in the community</span>
+      </div>
+      <div class="mod-checker-card">
+        <p class="mod-checker-card__title">Could it be perimenopause? Start here.</p>
+        <div class="mod-checker-card__pills">
+          ${checkerPills.map((p) => `<span class="mod-pill">${p}</span>`).join("")}
+        </div>
+        <button class="mod-checker-card__cta" data-screen="lib-all">Check all my symptoms</button>
+        <p class="mod-checker-card__note">Free — No Sign up Required</p>
+      </div>
     </section>
+
+    <section class="mod-listicles">
+      <div class="mod-section-text">
+        <h3 class="mod-section-text__title">See what <em>actually works</em>.</h3>
+        <p class="mod-section-text__sub">Clinician-backed tips, voted on by women who've tried them.</p>
+      </div>
+      <div class="mod-listicles__scroll">
+        ${listicles
+          .map(
+            (l) => `
+          <div class="mod-listicle-card">
+            <span class="mod-listicle-card__icon">${icon(l.iconName)}</span>
+            <p class="mod-listicle-card__title">${l.title}</p>
+            <button class="mod-listicle-card__cta" data-screen="lib-all">${l.cta}</button>
+          </div>`
+          )
+          .join("")}
+      </div>
+    </section>
+
     <section class="mod-section">
       <h3 class="mod-section__title">Browse by topic</h3>
       <div class="mod-cards">
@@ -393,7 +450,89 @@ function renderModules() {
         ${card("lib-sleep", "Sleep &amp; Insomnia")}
       </div>
     </section>
-    ${featured}
+
+    <section class="mod-articles">
+      <div class="mod-section-text">
+        <h3 class="mod-section-text__title">Everything you <em>need to know</em>.</h3>
+        <p class="mod-section-text__sub">Medically-reviewed resources to help you prepare for your appointments.</p>
+      </div>
+      <div class="mod-articles__grid">
+        ${articles
+          .map(
+            (a, i) => `
+          <button class="mod-article-card" ${hasArticle ? 'data-screen="article"' : ""}>
+            <span class="mod-article-card__thumb mod-article-card__thumb--${i + 1}"></span>
+            <span class="mod-article-card__eyebrow">${a.eyebrow}</span>
+            <span class="mod-article-card__title">${a.title}</span>
+          </button>`
+          )
+          .join("")}
+      </div>
+    </section>
+
+    <section class="mod-experts">
+      <div class="mod-section-text">
+        <h3 class="mod-section-text__title">Meet our <em>menopause advisors</em>.</h3>
+        <p class="mod-section-text__sub">Top experts helping you stay current on what matters.</p>
+      </div>
+      <div class="mod-experts__list">
+        ${experts
+          .map(
+            (e) => `
+          <div class="mod-expert-card">
+            <span class="mod-expert-card__avatar">${initials(e.name)}</span>
+            <span class="mod-expert-card__info">
+              <span class="mod-expert-card__name">${e.name}</span>
+              <span class="mod-expert-card__role">${e.role}</span>
+            </span>
+          </div>`
+          )
+          .join("")}
+      </div>
+      <span class="mod-view-all-link">View all advisors →</span>
+    </section>
+
+    <section class="mod-factoid">
+      <h3 class="mod-factoid__title">You're <em>not imagining</em> it.</h3>
+      <div class="mod-factoid__stats">
+        <div class="mod-stat-card">
+          <p class="mod-stat-card__number">82%</p>
+          <p class="mod-stat-card__text">of women mistook their early symptoms for stress, anxiety, or depression — not perimenopause.</p>
+        </div>
+        <div class="mod-stat-card">
+          <p class="mod-stat-card__number">72%</p>
+          <p class="mod-stat-card__text">of women faced pushback when they raised their symptoms, told it was "just aging" or they were "too young."</p>
+        </div>
+      </div>
+      <p class="mod-factoid__source">ThisIsMenopause Survey of 1,000 U.S. women ages 35–59 in perimenopause</p>
+    </section>
+
+    <section class="mod-community">
+      <div class="mod-section-text">
+        <h3 class="mod-section-text__title">What women are <em>saying</em>.</h3>
+      </div>
+      <div class="mod-quotes__scroll">
+        <div class="mod-quote-card">
+          <p class="mod-quote-card__text">"I just don't always feel like myself. I have such a shorter temper and I've never been this way."</p>
+          <span class="mod-quote-card__attribution">COMMUNITY MEMBER</span>
+        </div>
+        <div class="mod-quote-card">
+          <p class="mod-quote-card__text">"I finally found people who understood what I was going through instead of telling me it was all in my head."</p>
+          <span class="mod-quote-card__attribution">COMMUNITY MEMBER</span>
+        </div>
+      </div>
+      <span class="mod-view-all-link">Join the conversation →</span>
+
+      <div class="mod-cta-card">
+        <p class="mod-cta-card__title">You don't have to figure this out alone.</p>
+        <p class="mod-cta-card__sub">Get medically-reviewed resources, tips from real women, and a community who gets it.</p>
+        <div class="mod-cta-card__buttons">
+          <button class="mod-btn-primary" data-action="join">Join for free</button>
+          <button class="mod-btn-secondary" data-screen="lib-all">Check symptoms first</button>
+        </div>
+      </div>
+      <p class="mod-disclaimer-note">BTW, we don't sell supplements or prescribe treatments. Just unbiased information and real talk.</p>
+    </section>
   `;
 }
 
