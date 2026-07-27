@@ -506,12 +506,10 @@ function renderModules() {
       </div>
       <div class="mod-quotes__scroll">
         <div class="mod-quote-card">
-          <p class="mod-quote-card__text">"I just don't always feel like myself. I have such a shorter temper and I've never been this way."</p>
-          <span class="mod-quote-card__attribution">COMMUNITY MEMBER</span>
+          <p class="mod-quote-card__text">"The brain fog from the sleep loss is killing me. I'm tired all the time because of the night sweats."</p>
         </div>
         <div class="mod-quote-card">
-          <p class="mod-quote-card__text">"I finally found people who understood what I was going through instead of telling me it was all in my head."</p>
-          <span class="mod-quote-card__attribution">COMMUNITY MEMBER</span>
+          <p class="mod-quote-card__text">"I got three different answers on HRT from three different doctors. No wonder nobody gets it."</p>
         </div>
       </div>
       <span class="mod-view-all-link">Join the conversation →</span>
@@ -713,20 +711,19 @@ document.addEventListener("click", (e) => {
   }
 });
 
-/* ---------------- Fit the fixed 393x852 device to the viewport ----
-   The phone is a fixed-size "device". On a viewport shorter (or narrower)
-   than it, scale the whole device down with a transform so the page never
-   scrolls — the 393x852 design stays intact, just smaller. A transform is
-   visual only and would otherwise leave its full-size layout box behind
-   (still forcing scroll), so we collapse that leftover space with negative
-   margins — split evenly on all four sides so the collapsed box stays
-   centered on the same point the transform scales around, letting the
-   flex .stage center it both ways.
+/* ---------------- Fit the fixed device frame to the viewport ----
+   The phone is a fixed-size "device"; its size comes from the
+   --device-width / --device-height tokens in main.css (single source of
+   truth). On a viewport shorter (or narrower) than it, scale the whole
+   device down with a transform so the page never scrolls — the design stays
+   intact, just smaller. A transform is visual only and would otherwise leave
+   its full-size layout box behind (still forcing scroll), so we collapse that
+   leftover space with negative margins — split evenly on all four sides so the
+   collapsed box stays centered on the same point the transform scales around,
+   letting the flex .stage center it both ways.
    Skipped on <=430px-wide screens, where the CSS media query already makes
    the phone full-bleed (height:100vh). ---- */
 
-const PHONE_W = 393;
-const PHONE_H = 852;
 const FIT_MARGIN = 16; // px of breathing room kept around the device
 
 function fitPhone() {
@@ -739,16 +736,22 @@ function fitPhone() {
     return;
   }
 
+  // Measure the device's true rendered box (screen + bezel border).
+  // offsetWidth/offsetHeight are transform-independent, so the fit stays
+  // correct regardless of box-sizing or border width.
+  const w = phone.offsetWidth;
+  const h = phone.offsetHeight;
+
   const scale = Math.min(
-    1, // never upscale past the intended 393x852
-    (window.innerHeight - FIT_MARGIN) / PHONE_H,
-    (window.innerWidth - FIT_MARGIN) / PHONE_W
+    1, // never upscale past the device's intrinsic size
+    (window.innerHeight - FIT_MARGIN) / h,
+    (window.innerWidth - FIT_MARGIN) / w
   );
 
   phone.style.transformOrigin = "center center";
   phone.style.transform = `scale(${scale})`;
   // Collapse the leftover layout box symmetrically so it stays centered.
-  phone.style.margin = `${(-PHONE_H * (1 - scale)) / 2}px ${(-PHONE_W * (1 - scale)) / 2}px`;
+  phone.style.margin = `${(-h * (1 - scale)) / 2}px ${(-w * (1 - scale)) / 2}px`;
 }
 
 window.addEventListener("resize", fitPhone);
