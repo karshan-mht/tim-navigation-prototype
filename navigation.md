@@ -124,6 +124,7 @@ Note: the underlying content behind each nav (article body, profile grid, etc.) 
   - **Subscriber** — top nav and landing now **mirror the Visitor** exactly (`navVariant: "visitor"`, and its home screens mirror Visitor's Splash/Topic/Article + `LIBRARY_SCREENS_FULL`), **but** its slide-out panel keeps a subscriber-specific access card (`panelType: "subscriber"` → the "Finish up now" card). So: Visitor-style top nav + landing, subscriber-style panel upsell.
 - **2026-07-24** — Root launcher: title **left-aligned** (was centered); card order changed to **Visitor → Subscriber → Logged In → Logged Out**; refreshed the Subscriber and Logged In card copy to match the above. The hidden "back to all flows" hotspot now uses a **launchpad / 2×2 grid** icon (new `grid` entry in `ICON_SVGS`) instead of the back-chevron.
 - **2026-07-24** — Hid **scrollbars everywhere** (global `* { scrollbar-width: none }` + `*::-webkit-scrollbar { display: none }`) — scrolling still works, just no visible bar. Also removed all committed/stray `.DS_Store` files (already covered by `.gitignore`).
+- **2026-07-24** — Footer gets a **thin divider line** above the logo (`1px` top border on `.footer`) with **ample space above it** (`48px` margin-top), so the page content above no longer sits flush against the line. Bumped the bar's top padding to `28px` for a little more breathing room below the line too.
 
 ---
 
