@@ -41,6 +41,8 @@ const ICON_SVGS = {
   notifications: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="vector" fill-rule="evenodd" clip-rule="evenodd" d="M0.772289 8.29594C1.286 3.57547 5.26305 0 10 0C14.7369 0 18.714 3.57547 19.2277 8.29594L19.9865 15.2681C20.1318 16.6032 19.0886 17.7692 17.7488 17.7692H15.45C14.8254 20.2022 12.6221 22 10 22C7.37789 22 5.17465 20.2022 4.54995 17.7692H2.25119C0.911406 17.7692 -0.131763 16.6032 0.0135335 15.2681L0.772289 8.29594ZM6.92975 17.7692C7.46323 18.9344 8.63734 19.7436 10 19.7436C11.3627 19.7436 12.5368 18.9344 13.0702 17.7692H6.92975ZM10 2.25641C6.41173 2.25641 3.39908 4.96485 3.00995 8.54064L2.25119 15.5128L17.7488 15.5128L16.9901 8.54064C16.6009 4.96485 13.5883 2.25641 10 2.25641Z" fill="currentColor"/> </svg>`,
   settings: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M7.19231 9.42857C9.08671 9.42857 10.6903 10.6898 11.2294 12.4286L20.7308 12.4286C21.4317 12.4286 22 13.0042 22 13.7143C22 14.4244 21.4317 15 20.7308 15L11.2293 15.0004C10.69 16.7389 9.08656 18 7.19231 18C5.29806 18 3.69457 16.7389 3.15534 15.0004L1.26923 15L1.19465 14.9978C0.528389 14.9587 0 14.399 0 13.7143C0 13.0042 0.568254 12.4286 1.26923 12.4286L3.15521 12.4286C3.6943 10.6898 5.2979 9.42857 7.19231 9.42857ZM7.19231 11.5714C6.02401 11.5714 5.07692 12.5308 5.07692 13.7143C5.07692 14.8978 6.02401 15.8571 7.19231 15.8571C8.3606 15.8571 9.30769 14.8978 9.30769 13.7143C9.30769 12.5308 8.3606 11.5714 7.19231 11.5714ZM14.8077 0C16.7021 0 18.3057 1.26126 18.8448 3.00005L20.7308 3C21.4317 3 22 3.57563 22 4.28571C22 4.99579 21.4317 5.57143 20.7308 5.57143L18.8447 5.57181C18.3054 7.31037 16.7019 8.57143 14.8077 8.57143C12.9134 8.57143 11.31 7.31037 10.7707 5.57181L1.26923 5.57143L1.19465 5.56925C0.528389 5.53014 0 4.97043 0 4.28571C0 3.57563 0.568254 3 1.26923 3L10.7706 3.00005C11.3097 1.26126 12.9133 0 14.8077 0ZM14.8077 2.14286C13.6394 2.14286 12.6923 3.10225 12.6923 4.28571C12.6923 5.46918 13.6394 6.42857 14.8077 6.42857C15.976 6.42857 16.9231 5.46918 16.9231 4.28571C16.9231 3.10225 15.976 2.14286 14.8077 2.14286Z" fill="currentColor"/> </svg>`,
   logout: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="vector" d="M10.1358 0.357981C10.6131 -0.119327 11.3869 -0.119327 11.8642 0.357981L16.7531 5.24687C17.2304 5.72418 17.2304 6.49805 16.7531 6.97535C16.2758 7.45266 15.502 7.45266 15.0246 6.97535L12.2222 4.17293V14.6667C12.2222 15.3417 11.675 15.8889 11 15.8889C10.325 15.8889 9.77778 15.3417 9.77778 14.6667V4.17293L6.97535 6.97535C6.49805 7.45266 5.72418 7.45266 5.24687 6.97535C4.76956 6.49805 4.76956 5.72418 5.24687 5.24687L10.1358 0.357981ZM1.22222 13.4444C1.89724 13.4444 2.44445 13.9917 2.44445 14.6667V14.9111C2.44445 15.958 2.4454 16.6697 2.49034 17.2198C2.53412 17.7557 2.61348 18.0297 2.71087 18.2209C2.94523 18.6808 3.31918 19.0548 3.77914 19.2891C3.97029 19.3865 4.24432 19.4659 4.78016 19.5097C5.33027 19.5546 6.04196 19.5556 7.08889 19.5556H14.9111C15.958 19.5556 16.6697 19.5546 17.2198 19.5097C17.7557 19.4659 18.0297 19.3865 18.2209 19.2891C18.6808 19.0548 19.0548 18.6808 19.2891 18.2209C19.3865 18.0297 19.4659 17.7557 19.5097 17.2198C19.5546 16.6697 19.5556 15.958 19.5556 14.9111V14.6667C19.5556 13.9917 20.1028 13.4444 20.7778 13.4444C21.4528 13.4444 22 13.9917 22 14.6667V14.9616C22 15.9455 22 16.7574 21.946 17.4189C21.8899 18.1059 21.7694 18.7374 21.4671 19.3306C20.9984 20.2505 20.2505 20.9984 19.3306 21.4671C18.7374 21.7694 18.1059 21.8899 17.4189 21.946C16.7574 22 15.9455 22 14.9616 22H7.03838C6.05454 22 5.24256 22 4.5811 21.946C3.89409 21.8899 3.26257 21.7694 2.66938 21.4671C1.74948 20.9984 1.00157 20.2505 0.532858 19.3306C0.230614 18.7374 0.110146 18.1059 0.0540155 17.4189C-2.78834e-05 16.7574 -1.50628e-05 15.9454 5.27133e-07 14.9616L1.10993e-06 14.6667C1.10993e-06 13.9917 0.547209 13.4444 1.22222 13.4444Z" fill="currentColor"/> </svg>`,
+  // Launchpad / grid (2×2) — used by the "back to all flows" hotspot.
+  grid: `<svg style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="6.5" height="6.5" rx="1.6" fill="currentColor"/><rect x="11.5" y="2" width="6.5" height="6.5" rx="1.6" fill="currentColor"/><rect x="2" y="11.5" width="6.5" height="6.5" rx="1.6" fill="currentColor"/><rect x="11.5" y="11.5" width="6.5" height="6.5" rx="1.6" fill="currentColor"/></svg>`,
 };
 
 // Logo + profile assets (raster wordmark/mark exported at 3x; profile is SVG).
@@ -80,14 +82,16 @@ const COMMUNITY_ITEMS = [
   { icon: "allActivities", label: "All Activities", screenId: "com-activities" },
 ];
 const DROPDOWN_MENU = [
+  // Notifications is pulled up above the top divider so the unread count reads
+  // first (a deliberate deviation from the Figma order).
+  { icon: "notifications", label: "Notifications (5)", screenId: "acct-notifications", iconMod: "notif" },
   { icon: "myHealth", label: "My Health", screenId: "acct-health", divider: true },
   { icon: "messages", label: "Messages", screenId: "acct-messages" },
-  { icon: "notifications", label: "Notifications (5)", screenId: "acct-notifications" },
-  { icon: "settings", label: "Settings", screenId: "acct-settings", divider: true },
+  { icon: "settings", label: "Settings", screenId: "acct-settings" },
   // Log out is an auth transition, not an in-page screen — it crosses into the
   // Logged Out Member flow (see the "log-out" action), like the Join / Log in /
-  // Finish up CTAs cross into Logged In Member.
-  { icon: "logout", label: "Log out", action: "log-out" },
+  // Finish up CTAs cross into Logged In Member. Its own divider sits above it.
+  { icon: "logout", label: "Log out", action: "log-out", divider: true, iconMod: "logout" },
 ];
 
 /* ---------------- Persona / screen model ---- */
@@ -154,7 +158,9 @@ const PERSONAS = {
     navVariant: "member-photo",
     panelType: "member",
     screens: [
-      { id: "home", label: "Home as a Hub", type: "tabs", title: "Home as a Hub", modules: true },
+      // Home is a hub (still to be designed) — NOT the Visitor landing. Renders
+      // the placeholder label until the hub is designed.
+      { id: "home", label: "Home as a Hub", type: "tabs", title: "Home as a hub\n(still to be designed)" },
       { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "HRT & Other Treatments", upTo: "lib-hrt" },
       { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs" },
@@ -166,12 +172,17 @@ const PERSONAS = {
       ...ACCOUNT_SCREENS,
     ],
   },
+  // Subscriber's top nav (visitor variant) and landing mirror the Visitor
+  // experience, but its slide-out panel keeps a subscriber-specific access card
+  // ("Finish up now") — pending a fuller subscriber-specific design.
   subscriber: {
     label: "Subscriber",
-    navVariant: "member",
+    navVariant: "visitor",
     panelType: "subscriber",
     screens: [
-      { id: "home", label: "Home (assumed)", type: "tabs", title: "Home\n(no Subscriber-specific\ntop nav in source file)", modules: true },
+      { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
+      { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
+      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
       ...LIBRARY_SCREENS_FULL,
     ],
   },
@@ -223,7 +234,7 @@ function renderTopNav() {
   const right = isVisitor
     ? `<button class="join-btn" data-action="join">Join</button>`
     : `<button class="profile-btn" data-action="toggle-dropdown" aria-label="Account menu">
-         <img class="profile-img" src="${PROFILE_PLACEHOLDER}" alt="" />
+         <span class="profile-avatar"><img class="profile-img" src="${PROFILE_PLACEHOLDER}" alt="" /></span>
          <span class="badge"></span>
        </button>`;
 
@@ -328,7 +339,8 @@ function renderDropdown() {
         <div class="dropdown__menu">
           ${DROPDOWN_MENU.map((it) => {
             const nav = it.action ? `data-action="${it.action}"` : `data-screen="${it.screenId}"`;
-            return `<button class="dropdown__item${it.divider ? " dropdown__divider" : ""}" ${nav}>${icon(it.icon)}<span>${it.label}</span></button>`;
+            const mod = it.iconMod ? ` dropdown__item--${it.iconMod}` : "";
+            return `<button class="dropdown__item${it.divider ? " dropdown__divider" : ""}${mod}" ${nav}>${icon(it.icon)}<span>${it.label}</span></button>`;
           }).join("")}
         </div>
       </div>
@@ -433,10 +445,11 @@ function render() {
   // only for label & gated screens; module screens flow at natural height.
   const bodyFill = !screen.modules ? " screen__body--fill" : "";
 
-  // Chrome (nav + level-up bar) is sticky at the top of the scroll area, so it
-  // can auto-hide on scroll-down and return on scroll-up (see attachAutoHide).
-  let chrome = renderTopNav();
-  if (screen.type === "uplevel") chrome += renderUplevel(screen);
+  // Nav + level-up bar are separate sticky elements at the top of the scroll
+  // area. The nav auto-hides on scroll-down and returns on scroll-up; the
+  // level-up bar (when present) stays pinned. See attachAutoHide.
+  let chrome = `<div class="screen__nav">${renderTopNav()}</div>`;
+  if (screen.type === "uplevel") chrome += `<div class="screen__uplevel">${renderUplevel(screen)}</div>`;
 
   let overlays = "";
   if (state.panelOpen) overlays += renderPanel();
@@ -445,7 +458,7 @@ function render() {
   document.getElementById("phone").innerHTML = `
     <div class="screen">
       <div class="screen__scroll">
-        <div class="screen__chrome">${chrome}</div>
+        ${chrome}
         <div class="screen__body${bodyFill}">${content}</div>
         ${renderFooter()}
       </div>
@@ -455,17 +468,26 @@ function render() {
   attachAutoHide();
 }
 
-// Auto-hiding header: hide the sticky chrome on scroll-down (past a small
-// threshold), reveal it on scroll-up. Re-bound each render (the DOM is rebuilt).
+// Auto-hiding nav: slide the top nav up on scroll-down (past a small threshold),
+// reveal it on scroll-up. The level-up bar stays pinned — when the nav shows,
+// the bar pins just below it (top = nav height); when the nav hides, the bar's
+// top animates to 0 so it docks to the top edge. Re-bound each render.
 function attachAutoHide() {
   const scroll = document.querySelector(".screen__scroll");
-  const chrome = scroll && scroll.querySelector(".screen__chrome");
-  if (!scroll || !chrome) return;
+  const nav = scroll && scroll.querySelector(".screen__nav");
+  if (!scroll || !nav) return;
+  const uplevel = scroll.querySelector(".screen__uplevel");
+  const navH = nav.offsetHeight;
+  const setHidden = (hidden) => {
+    nav.classList.toggle("is-hidden", hidden);
+    if (uplevel) uplevel.style.top = hidden ? "0px" : navH + "px";
+  };
+  setHidden(false);
   let lastY = scroll.scrollTop;
   scroll.addEventListener("scroll", () => {
     const y = scroll.scrollTop;
-    if (y > lastY && y > 80) chrome.classList.add("is-hidden");
-    else if (y < lastY) chrome.classList.remove("is-hidden");
+    if (y > lastY && y > 80) setHidden(true);
+    else if (y < lastY) setHidden(false);
     lastY = y;
   });
 }
@@ -605,7 +627,7 @@ window.addEventListener("resize", fitPhone);
 function addHomeHotspot() {
   document.body.insertAdjacentHTML(
     "afterbegin",
-    `<a class="home-hotspot" href="../index.html" aria-label="Back to all flows" title="All flows">${icon("back")}</a>`
+    `<a class="home-hotspot" href="../index.html" aria-label="Back to all flows" title="All flows">${icon("grid")}</a>`
   );
 }
 

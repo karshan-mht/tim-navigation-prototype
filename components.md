@@ -22,7 +22,7 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 
 ### Variant: `member` (logged-out and logged-in, non-photo state)
 - Logo slot: compact **Logomark** (circle mark, ~47×44), not the full wordmark
-- Right slot: Search icon, AI icon, **Profile** avatar (generic placeholder silhouette) + red notification badge (8px dot, top-right)
+- Right slot: Search icon, AI icon, **Profile** avatar (self-contained circular placeholder silhouette — no button border/background) + red notification badge that sits **outside, on top of** the avatar's top-right edge (11px dot with a 2px white ring). The circular crop is on an inner `.profile-avatar` wrapper so the badge (a sibling) isn't clipped by it.
 - No Join button
 - Node ref: 6960:52 (Logged Out Member — Home gated)
 
@@ -30,7 +30,7 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 - Same as `member`, but Profile avatar shows a real photo instead of the generic placeholder, still with the badge
 - Node refs: 7025:302 (Article Show), 7025:371 (Group Detail), 7031:509 (Program Detail), 7025:440 (Member Profile), 6951:734 (Question Show), 6951:531 (Activity Show), 7042:711 (Home + Dropdown)
 
-**Open gap:** Subscriber has no top-nav frame in the source file. Prototype currently reuses `member` variant — see `navigation.md` open question.
+**Subscriber:** no subscriber-specific top-nav frame in the source file, so the prototype reuses the **`visitor`** variant (full logotype + Join CTA) and the Visitor landing. Its slide-out panel keeps a subscriber-specific access card ("Finish up now"). See `navigation.md`.
 
 ---
 
@@ -40,7 +40,7 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 
 **Content slot:** `[ chevron icon ]  [ label ]` — label color `#0f57a8`, 16px semibold.
 
-Only on **detail** screens. It steps **one level up** to the parent list (`upTo` → `data-screen`), not "back" and not home. Top-level pages (panel/dropdown destinations) have no level-up bar — the nav logo returns home. Both the nav and this bar live in the sticky `.screen__chrome`, which auto-hides on scroll-down.
+Only on **detail** screens. It steps **one level up** to the parent list (`upTo` → `data-screen`), not "back" and not home. Top-level pages (panel/dropdown destinations) have no level-up bar — the nav logo returns home. The nav and the level-up bar are **independent sticky elements**: the nav (`.screen__nav`) auto-hides on scroll-down and returns on scroll-up, while the level-up bar (`.screen__uplevel`) **stays pinned**. While the nav shows, the bar pins just below it (its `top` = nav height); when the nav hides, the bar docks to the very top edge (`attachAutoHide` animates the `top`).
 
 | Screen | Back label | Node id |
 |---|---|---|
@@ -82,7 +82,7 @@ These are *list*-type destinations, deliberately separate from the existing *det
 
 **Footer** — "Powered by" on line 1, "MyHealthTeam, a Swoop company" on line 2 (`#626b74`, 14px), pinned to bottom.
 
-**Rendering notes (2026-07-24):** each Library/Community item icon sits in a light-pink circle (`--color-magenta-soft`) with the icon in magenta; section labels are 14px uppercase, normal tracking; the row rollover bleeds wider than the text (negative inline margin into the 24px panel padding). There is **no close (X)** — the panel dismisses via the scrim with a slower ease-out slide-out (`closePanel()`). The top wordmark uses `panel-logo.svg` (see Assets).
+**Rendering notes (2026-07-24):** each Library/Community item icon sits in a light-pink circle (`--color-magenta-soft`) with the icon in magenta; section labels are 14px uppercase, normal tracking; the row rollover is a **pill** (`--radius-pill`) filled with a **single flat colour** (`--color-magenta-soft-solid` = `#f8f0fa`, the opaque equivalent of the circle's `--color-magenta-soft` — now `rgba(164,65,188,0.08)` — over white), bleeding wider than the text (negative inline margin into the 24px panel padding). On hover the icon circle goes **transparent** so it disappears into the pill — one uniform colour, no darker circle stacked on the row (using two alpha layers would double up and read as two shades). There is **no close (X)** — the panel dismisses via the scrim with a slower ease-out slide-out (`closePanel()`). The top wordmark uses `panel-logo.svg` (see Assets).
 
 ### Node refs
 - Visitor panel: 6950:226
@@ -94,17 +94,18 @@ These are *list*-type destinations, deliberately separate from the existing *det
 
 ## 4. Profile dropdown
 
-Anchored card, top-right under the profile avatar, 246px wide, white, `#dbdddf` border, `0 0 8px rgba(13,27,41,0.1)` shadow, 24px padding.
+Anchored card, top-right under the profile avatar, 246px wide, white, `#dbdddf` border, `0 0 8px rgba(13,27,41,0.1)` shadow, 24px padding. The user block uses 28px line rows for unhurried spacing at the top (matches Figma).
 
-**Structure:** `User block → menu items → divider → Log out`
+**Structure:** `User block → Notifications → divider → My Health · Messages · Settings → divider → Log out`
 
 - User block: name ("Janet Smithsonian"), handle ("@jannie1234"), "View Profile" link (`#0f57a8`) → navigates to `profile` (Member Profile)
-- Menu: My Health → `acct-health`, Messages → `acct-messages`, Notifications (5) → `acct-notifications`, Settings → `acct-settings` — icon + label rows
-- Divider, then: Log out → navigates to the **Logged Out Member flow** (`../logged-out-member/`)
+- **Notifications (5)** → `acct-notifications` — pulled **above the top divider** (a deliberate deviation from the Figma order) so the unread count reads first; its bell icon **wiggles periodically** to draw the eye (`bell-wiggle`, disabled under `prefers-reduced-motion`)
+- Top divider, then: My Health → `acct-health`, Messages → `acct-messages`, Settings → `acct-settings`
+- Bottom divider (sits **above** Log out), then: Log out → navigates to the **Logged Out Member flow** (`../logged-out-member/`). Its icon is rotated 90° so the arrow points **right** (matches Figma).
 
-The four menu rows carry a `data-screen` and navigate to a placeholder destination screen within the persona (in-page state change; the dropdown closes on click). **Log out** is the exception: it carries `data-action="log-out"` and does a real cross-folder page navigation into the Logged Out Member flow — modelled as an auth transition alongside the Join / Log in / Finish up CTAs, not an in-page screen.
+The `acct-*` rows carry a `data-screen` and navigate to a placeholder destination screen within the persona (in-page state change; the dropdown closes on click). **Log out** is the exception: it carries `data-action="log-out"` and does a real cross-folder page navigation into the Logged Out Member flow — modelled as an auth transition alongside the Join / Log in / Finish up CTAs, not an in-page screen.
 
-Only defined for **Logged In Member** in the source file (node 7042:711). Logged Out Member and Subscriber have a profile-style icon in the nav but no corresponding dropdown content in Figma — not built for those personas in the prototype.
+Only defined for **Logged In Member** in the source file (node 7042:711). Logged Out Member has a profile-style icon in the nav but no corresponding dropdown content in Figma — not built. Subscriber uses the Visitor nav (Join button, no profile icon), so it has no dropdown either.
 
 ---
 
@@ -176,7 +177,7 @@ Node ids below are the exact **vector/frame node** each file was exported from (
 ### Profile — `assets/` (SVG)
 | File | What | Source node |
 |---|---|---|
-| `placeholder_profile.svg` | Generic profile illustration (magenta silhouette on light circle) | 7042:626 (from Member gated 6960:52) |
+| `placeholder_profile.svg` | Generic profile illustration — magenta silhouette on a light-magenta circle (128×128, self-contained circular avatar; user-provided replacement) | 7042:626 (from Member gated 6960:52) |
 
 ### Still placeholder / not pulled — deliberate
 - **Notification badge**: still the CSS dot (`.badge`, `--color-badge`). The Figma badge (ellipse 7042:629) is a solid-fill 8px dot with a white ring — pixel-identical to the CSS version and better kept as a positioned CSS element than an `<img>`, so no file was pulled.

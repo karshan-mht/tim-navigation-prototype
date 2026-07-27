@@ -8,7 +8,8 @@
   --color-border: #dbdddf;
   --color-badge: #e0483e;
   --color-magenta: #a440bc;              /* Library / Community icon tint */
-  --color-magenta-soft: rgba(164, 65, 188, 0.14); /* pink circle behind icons */
+  --color-magenta-soft: rgba(164, 65, 188, 0.08); /* pink circle behind icons */
+  --color-magenta-soft-solid: #f8f0fa;   /* opaque equivalent of --color-magenta-soft over white — used for the rollover so nothing alpha-stacks */
   --radius-pill: 999px;
   --radius-card: 16px;
   --font-body: "Lato", sans-serif;
@@ -16,6 +17,10 @@
 }
 
 * { box-sizing: border-box; }
+
+/* Hide scrollbars everywhere — scrolling still works, just no visible bar. */
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
 body {
   margin: 0;
@@ -59,7 +64,7 @@ body {
   flex-direction: column;
 }
 
-/* Scrollable area; holds the sticky chrome (nav + level-up bar), body, footer. */
+/* Scrollable area; holds the sticky nav + level-up bar, body, footer. */
 .screen__scroll {
   flex: 1 1 auto;
   min-height: 0;
@@ -69,15 +74,26 @@ body {
   flex-direction: column;
 }
 
-/* Sticky header that auto-hides on scroll-down, returns on scroll-up. */
-.screen__chrome {
+/* Nav and level-up bar are independent sticky elements. The nav auto-hides on
+   scroll-down (slides up) and returns on scroll-up. The level-up bar STAYS
+   pinned: while the nav shows, the bar pins just below it (its `top` is set to
+   the nav height by attachAutoHide); when the nav hides, the bar's top animates
+   to 0 so it docks to the very top edge. Nav sits above the bar (higher z). */
+.screen__nav {
   position: sticky;
   top: 0;
   z-index: 10;
   background: #fff;
-  transition: transform 0.25s ease;
+  transition: transform 0.28s ease;
 }
-.screen__chrome.is-hidden { transform: translateY(-100%); }
+.screen__nav.is-hidden { transform: translateY(-100%); }
+.screen__uplevel {
+  position: sticky;
+  top: 0; /* overridden inline to the nav height while the nav is visible */
+  z-index: 9;
+  background: #fff;
+  transition: top 0.28s ease;
+}
 
 .screen__body { flex: 1 0 auto; display: flex; flex-direction: column; }
 /* Label & gated screens fill the viewport, so the placeholder sits roughly
@@ -252,26 +268,32 @@ body {
   position: relative;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  border: 1px solid rgba(13, 27, 41, 0.1);
-  background: #eef0f2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: none;
+  background: none;
+  padding: 0;
+  flex-shrink: 0;
   cursor: pointer;
-  overflow: hidden;
-  color: var(--color-text-secondary);
 }
-.profile-btn img { width: 100%; height: 100%; object-fit: cover; }
+/* Inner wrapper does the circular crop, so the badge (a sibling) can sit
+   outside/on top of the avatar instead of being clipped by it. */
+.profile-avatar {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profile-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .profile-btn .badge {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 8px;
-  height: 8px;
+  top: -1px;
+  right: -1px;
+  width: 11px;
+  height: 11px;
   border-radius: 50%;
   background: var(--color-badge);
-  border: 1.5px solid #fff;
+  border: 2px solid #fff;   /* white ring so it reads as sitting on top */
+  z-index: 1;
 }
 
 /* ---- Uplevel (back) bar ---- */
@@ -383,7 +405,7 @@ body {
   width: calc(100% + 24px);
   margin: 0 -12px;          /* bleed the rollover wider, into the panel padding */
   padding: 6px 12px;
-  border-radius: 12px;
+  border-radius: var(--radius-pill);  /* pill — clearly rounded rollover */
   background: none;
   border: none;
   text-align: left;
@@ -393,10 +415,11 @@ body {
   color: var(--color-text);
   transition: background 0.18s ease;
 }
-/* Rollover: soft pink (lighter than the icon circle so the circle stays
-   distinct), and the circle itself deepens — a small on-brand animation. */
-.panel__item:hover { background: rgba(164, 65, 188, 0.08); }
-.panel__item:hover .panel__item-icon { background: rgba(164, 65, 188, 0.24); }
+/* Rollover: a single flat pink pill (solid, no alpha). On hover the icon circle
+   goes transparent so it disappears into the pill — one uniform colour, not a
+   darker circle stacked on a lighter row. */
+.panel__item:hover { background: var(--color-magenta-soft-solid); }
+.panel__item:hover .panel__item-icon { background: transparent; }
 
 /* Light-pink circle behind each Library / Community icon; icon itself magenta. */
 .panel__item-icon {
@@ -505,6 +528,7 @@ body {
   display: flex;
   flex-direction: column;
   letter-spacing: -0.25px;
+  line-height: 28px; /* Figma: three 28px-tall rows, unhurried spacing at top */
 }
 .dropdown__user strong { font-size: 18px; }
 .dropdown__user span { font-size: 16px; color: var(--color-text-secondary); }
@@ -512,7 +536,6 @@ body {
   font-size: 18px;
   color: var(--color-primary);
   text-decoration: none;
-  margin-top: 2px;
 }
 .dropdown__user a:hover { text-decoration: underline; }
 
@@ -536,6 +559,25 @@ body {
 }
 .dropdown__item .icon { width: 24px; height: 24px; }
 .dropdown__divider { border-top: 1px solid var(--color-border); padding-top: 16px; }
+
+/* Log out icon points right (arrow leaving the door), matching Figma. */
+.dropdown__item--logout .icon svg { transform: rotate(90deg); }
+
+/* Notifications bell wiggles periodically to draw the eye to the unread count. */
+.dropdown__item--notif .icon svg {
+  transform-origin: 50% 18%;
+  animation: bell-wiggle 2.6s ease-in-out infinite;
+}
+@keyframes bell-wiggle {
+  0%, 14%, 100% { transform: rotate(0deg); }
+  2%  { transform: rotate(15deg); }
+  5%  { transform: rotate(-13deg); }
+  8%  { transform: rotate(9deg); }
+  11% { transform: rotate(-5deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dropdown__item--notif .icon svg { animation: none; }
+}
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
@@ -621,7 +663,7 @@ body {
   padding: 64px 24px;
 }
 .launcher__title {
-  text-align: center;
+  text-align: left;
   margin-bottom: 40px;
 }
 .launcher__title h1 {
