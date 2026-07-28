@@ -49,50 +49,44 @@ visitor/index.html             Anonymous Visitor flow
 logged-out-member/index.html   Logged Out Member flow
 logged-in-member/index.html    Logged In Member flow (has the dropdown)
 subscriber/index.html          Subscriber flow
-navigation.md                  Behavior spec & decisions log
-components.md                  Component spec + Figma node ids per asset
+MANUAL.md                      Index of the foundation/ spec docs
+DECISIONS.md                   Chronological decisions log + "on the horizon"
+foundation/                    The spec docs (see MANUAL.md):
+  system.md                      Architecture & persona model (render, screens, device)
+  design.md                      Design language (tokens, type, tinting, chrome assets)
+  navigation.md                  Global-nav chrome (top nav, panel, level-up, footer)
+  landing.md                     Splash Landing surface (modules + deep-links + assets)
+  library.md                     Library surface (topic pages, Topic Center, Article)
+  community.md                   Community surface (list + detail screens, icons)
+  account.md                     Account surface (profile dropdown + its screens)
+  onboarding.md                  Onboarding surface (Sign Up Start, Registration Step)
 .claude/                       Optional local preview helper (static server)
 ```
 
 ## How it works
 
-Each flow lives in its own folder so it can be shared as a standalone,
-locked page without exposing the others. Every flow page is a thin shell that
-sets one attribute and loads the two shared files:
+Each flow lives in its own folder and is a thin shell that sets one attribute and
+loads the two shared files:
 
 ```html
 <body data-persona="logged-in-member">
-  ...
   <link rel="stylesheet" href="../main.css" />
   <script src="../main.js"></script>
 </body>
 ```
 
-`main.js` reads `data-persona`, looks up that persona's nav variant, panel
-content, and screens, and renders them. There is no persona switcher — the
-page is locked to whatever `data-persona` says.
+`main.js` reads `data-persona` and renders that persona's nav/panel/dropdown and
+screens — no framework, no build step, no persona switcher. The phone is a fixed
+**iPhone 16 Pro** frame (402 × 874) that scales to fit the window. Navigation
+happens via `data-screen="<id>"` elements inside the prototype; each flow stays
+self-contained.
 
-The phone is a fixed **iPhone 16 Pro** device frame (**402 × 874**), set by the
-`--device-width` / `--device-height` tokens in `main.css`; the 8px bezel sits
-*outside* the screen (`box-sizing: content-box`) so the usable width is a true
-402px. `main.js` scales the whole device down to fit shorter/narrower windows
-(capped at 1×, so it never upscales past the intended size), which keeps the
-page from ever scrolling vertically while preserving the design.
+The full architecture — render model, screen types, the device frame, and the
+four personas — is in **[foundation/system.md](foundation/system.md)**.
 
-Screen-to-screen navigation happens via elements *inside* the prototype — any
-element with `data-screen="<id>"` jumps to that screen (valid ids live in the
-`PERSONAS` map / `SPLASH_FLOW_SCREENS` in `main.js`). CTAs stay within the
-current flow — there are no cross-flow folder jumps. **Chromeless** flow pages
-(Sign Up Start, Registration Step) drop the nav and footer and show an **✕** in
-the top-left that closes back to the page they opened from.
+## Docs
 
-| Persona | Nav | Panel | Dropdown |
-|---|---|---|---|
-| Anonymous Visitor | Full logotype + Join | Library (6) + join card | — |
-| Logged Out Member | Logomark + profile | Library (4) + Community (5) | — |
-| Logged In Member | Logomark + profile | Library (4) + Community (5) | ✓ |
-| Subscriber | Logomark + profile | Library (6) + finish-up card | — |
-
-See **navigation.md** for behavior details and the decisions log, and
-**components.md** for the per-component spec and the Figma node id behind
-every asset.
+- **[MANUAL.md](MANUAL.md)** — index of the `foundation/` spec docs (start here).
+- **[DECISIONS.md](DECISIONS.md)** — the chronological decisions log.
+- **[foundation/](foundation/)** — the per-surface specs: system, design,
+  navigation, landing, library, community, account, onboarding.

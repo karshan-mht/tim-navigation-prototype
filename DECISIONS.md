@@ -1,82 +1,14 @@
-# TIM Navigation — behavior spec & decisions log
+# TIM — decisions log
 
-Source: Figma **Global Navigation** file `42yas7Q9FfwhL6xUocjEAl`.
-Prototype: plain HTML/CSS/JS in this repo (`index.html`, `main.css`, `main.js`), no build step.
-
-This doc tracks *behavior and decisions*. Component-level structure (props, states, node ids) lives in `components.md`. Code is source of truth if the two ever disagree — correct this doc, don't erase the stale entry.
-
----
-
-## Personas
-
-Four auth states, each with its own nav treatment and panel content:
-
-| Persona | Nav treatment | Panel content | Has profile dropdown? |
-|---|---|---|---|
-| **Anonymous Visitor** | Full logotype + "Join" button, no profile icon | Library (6 topics) + "Join for free" access card | No |
-| **Logged Out Member** | Logomark + generic profile icon (no photo), no Join button | Library (4 topics, no upsell) + Community (5 items) | Yes, but not exercised in prototype (no logged-out-specific dropdown content in source file) |
-| **Logged In Member** | Logomark + profile photo | Library (4 topics) + Community (5 items), no upsell | Yes — user card + My Health / Messages / Notifications / Settings / Log out |
-| **Subscriber** | *Assumed* same as Member (source file has no Subscriber top-nav frame) | Library (6 topics, full set) + "Finish up now" access card | Not defined in source |
-
-**Open question:** should Subscriber have its own top-nav frame (e.g. a different CTA than Join/profile), or is reusing Member's nav correct? Flagging rather than deciding — no Subscriber tabs/uplevel frame exists in the Figma file to confirm either way.
-
----
-
-## Screens per persona
-
-The screens marked **(panel dest.)** / **(dropdown dest.)** are prototype-added
-list/section landing views that the slide-out Panel and profile Dropdown items
-navigate to. They aren't distinct Figma frames (the source file only models the
-nav/panel/dropdown states, not full pages) — they're placeholder screens so the
-menu items lead *somewhere* instead of being inert. All are `uplevel`-type with a
-back bar labelled "Home" that returns to the persona's home screen. The Library
-destinations are shared across personas (`lib-*` ids); Community are `com-*`;
-Dropdown/account are `acct-*`. See `components.md` §3/§4 for the item→screen map.
-
-**Anonymous Visitor**
-- Splash Landing (tabs nav)
-- Topic Center (uplevel, back label "All Topics")
-- Article Show (uplevel, back label "Topic Center")
-- Library topics (panel dest., uplevel, back "Home"): HRT & Other Treatments `lib-hrt`, Mood & Mental Health `lib-mood`, Sleep & Insomnia `lib-sleep`, Diet & Nutrition `lib-diet`, Family & Relationships `lib-family`, All Topics `lib-all`
-
-**Logged Out Member**
-- Home as a hub — gated (tabs nav, welcome card: "Welcome back, Jannie123! You're not logged in." → "Log in now")
-- Library topics (panel dest.): HRT `lib-hrt`, Mood `lib-mood`, Sleep `lib-sleep`, All Topics `lib-all`
-- Community (panel dest.): Stories `com-stories`, Questions & Answers `com-questions`, Groups `com-groups`, Meet Others `com-meet`, All Activities `com-activities`
-
-**Logged In Member**
-- Home as a Hub (tabs nav, photo profile)
-- Home as a Hub with account dropdown open
-- Article Show (uplevel, back label "Topic")
-- Group Detail (uplevel, back label "Groups")
-- Program Detail (uplevel, back label "Programs")
-- Someone's Member Profile (uplevel, back label "Meet Others")
-- Question Show (uplevel, back label "Questions & Answers")
-- Activity Show (uplevel, back label "Activity")
-- Library topics (panel dest.): HRT `lib-hrt`, Mood `lib-mood`, Sleep `lib-sleep`, All Topics `lib-all`
-- Community (panel dest.): Stories `com-stories`, Questions & Answers `com-questions`, Groups `com-groups`, Meet Others `com-meet`, All Activities `com-activities`
-- Account (dropdown dest.): My Health `acct-health`, Messages `acct-messages`, Notifications `acct-notifications`, Settings `acct-settings` (Log out is not a screen — it navigates to the Logged Out Member flow)
-
-**Subscriber**
-- Panel only defined in source file — no home/tabs screen exists to switch to. Prototype fabricates a placeholder home screen and labels it as assumed.
-- Library topics (panel dest.): HRT `lib-hrt`, Mood `lib-mood`, Sleep `lib-sleep`, Diet `lib-diet`, Family `lib-family`, All Topics `lib-all`
-
-Note: the underlying content behind each nav (article body, profile grid, etc.) is placeholder in the *Figma file itself* — those frames just show a greyed-out screenshot placeholder. The real design surface in this file is the nav/panel/dropdown states, not full page layouts. The prototype reflects that: content areas are intentionally blank/labeled, not fleshed out. The panel/dropdown destination screens above follow the same convention — they're labelled placeholders, not fleshed-out list pages.
-
----
-
-## Interactions (as built)
-
-- **Top nav** → sticky at the top, but **auto-hides on scroll-down and returns on scroll-up** (`attachAutoHide()` toggles `.is-hidden` on the sticky `.screen__nav`). The **level-up bar** (`.screen__uplevel`) is a separate sticky element that **stays pinned** — it docks below the nav when the nav shows and rises to the top edge when the nav hides.
-- **Hamburger (☰)** → opens the slide-out Panel for the current persona. Tapping the overlay (not the panel surface) closes it with a slower ease-out slide-out animation (`closePanel()`).
-- **Nav logotype / logomark** → returns to the persona's home screen (Splash Landing for Visitor and Subscriber, Home as a hub for the member states). In-page `go-home`.
-- **Hidden home hotspot** → a small circle fixed in the top-left corner of each flow page, invisible until hovered, that links back to the root launcher (`../index.html`). Uses a launchpad / 2×2 grid icon. Injected by `main.js`, so it only appears on flow pages (not the launcher).
-- **Panel items** (Library / Community) → navigate to that item's destination screen (an in-page state change within the same persona) and close the panel. See "Screens per persona" for the id each item points to.
-- **Profile avatar** (Member/Subscriber personas only) → opens the account Dropdown. Tapping outside closes it.
-- **Dropdown items** (My Health / Messages / Notifications / Settings — Logged In Member) → navigate to that item's destination screen and close the dropdown (in-persona). **Log out** is the exception: it's an auth transition, so it does a real page navigation into the Logged Out Member flow (see CTA buttons below), not an in-page screen switch.
-- **Level-up bar** → only on *detail* screens (Article/Group/Program/Profile/Question/Activity). It steps **one level up** to the parent list/topic (via `upTo` → `data-screen`, e.g. Group Detail → Groups, Article Show → its topic page), not "back" and not necessarily home. Top-level pages (the panel/dropdown destinations) have no level-up bar — the nav logo returns home instead. (`program` has no list parent in the source, so it falls back to home.)
-- **CTA buttons** ("Join", "Log in now", "Finish up now") → jump to Logged In Member → Home, and **"Log out"** (dropdown) → jump to Logged Out Member. These dramatize the intended auth transitions via a real cross-folder page navigation; it is a prototype convenience, not something specified in Figma. Real implementation would presumably go through actual auth, not a client-side folder swap.
-- **"View Profile"** in the dropdown → jumps to the Member Profile screen if available for that persona.
+The chronological record of design/build decisions for the whole prototype —
+both the global navigation ([navigation.md](foundation/navigation.md)) and the Splash
+Landing ([landing.md](foundation/landing.md)). Entries are kept **interleaved in time
+order**, not split by surface, so the history reads as one timeline. Older
+entries are a record of what happened at the time — they are **not** corrected
+when later work supersedes them; a newer entry supersedes an older one in place.
+Filenames mentioned inside an entry that describe a *past* event (e.g. an
+`app.js` → `main.js` rename, "`NOTES.md` is retired") are left as they were
+written.
 
 ---
 
@@ -84,10 +16,10 @@ Note: the underlying content behind each nav (article body, profile grid, etc.) 
 
 - **2026-07-24** — Built as plain HTML/CSS/JS to match `tim-splash-landing` conventions (no framework, no build step, easy Rails ERB port later).
 - **2026-07-24** — Chose to represent Panel/Dropdown as *interactive overlays* triggered from any screen, rather than as separate static tabs, since that's how they actually function (overlay on top of a base screen), even though Figma models them as separate frames.
-- **2026-07-24** — Subscriber nav styled like Member's, flagged as an assumption (see Open question above) rather than invented independently.
-- **2026-07-24** — Icons and logo are placeholders (generic inline SVG set / text wordmark), not Figma exports, because the MCP asset URLs expire after 7 days and would break a prototype meant to last. Real asset pull-in is tracked as a follow-up (see `components.md` → Assets).
+- **2026-07-24** — Subscriber nav styled like Member's, flagged as an assumption (see Open question in [navigation.md](foundation/navigation.md)) rather than invented independently.
+- **2026-07-24** — Icons and logo are placeholders (generic inline SVG set / text wordmark), not Figma exports, because the MCP asset URLs expire after 7 days and would break a prototype meant to last. Real asset pull-in is tracked as a follow-up (see [navigation.md](foundation/navigation.md) → Assets).
 - **2026-07-24** — Profile photo uses a stock placeholder image; Figma's own `placeholder_profile` illustration should replace it once assets are pulled locally.
-- **2026-07-24** — Pulled real assets from Figma (`42yas7Q9FfwhL6xUocjEAl`) into `assets/` and swapped out the placeholders: the inline-SVG icon set, the text-wordmark logo/logomark, and the hotlinked Unsplash profile photo are all gone. `app.js` now emits `<img>` tags pointing at local files (`../assets/...`); `main.css` sizes them instead of styling text logos or tinting inline SVGs. Re-verified the documented node ids against the live file first — they all still resolve and match `components.md`, so no drift correction was needed. Icons keep the fills Figma exported (nav ink, library/community magenta, back-chevron blue). Three deliberate exceptions, all logged in `components.md` → Assets: the notification badge stays a CSS dot, the panel close (X) stays inline SVG (no Figma node for it), and the logged-in member avatar reuses `placeholder_profile` (no distinct headshot asset in source — matches the 2026-07-24 stock-photo decision below). Logo delivered as 3× PNG since the Figma nav logo is a raster image-fill, not vector.
+- **2026-07-24** — Pulled real assets from Figma (`42yas7Q9FfwhL6xUocjEAl`) into `assets/` and swapped out the placeholders: the inline-SVG icon set, the text-wordmark logo/logomark, and the hotlinked Unsplash profile photo are all gone. `app.js` now emits `<img>` tags pointing at local files (`../assets/...`); `main.css` sizes them instead of styling text logos or tinting inline SVGs. Re-verified the documented node ids against the live file first — they all still resolve and match the documented Assets tables, so no drift correction was needed. Icons keep the fills Figma exported (nav ink, library/community magenta, back-chevron blue). Three deliberate exceptions, all logged in [navigation.md](foundation/navigation.md) → Assets: the notification badge stays a CSS dot, the panel close (X) stays inline SVG (no Figma node for it), and the logged-in member avatar reuses `placeholder_profile` (no distinct headshot asset in source — matches the 2026-07-24 stock-photo decision below). Logo delivered as 3× PNG since the Figma nav logo is a raster image-fill, not vector.
 - **2026-07-24** — Restructured from one combined `index.html` (with a persona switcher) into one folder per persona (`/visitor/`, `/logged-out-member/`, `/logged-in-member/`, `/subscriber/`), each with its own `index.html` locked to that persona. Reason: individual flows need to be shared as standalone starting points without exposing the others. `NOTES.md` is retired — its node-id table now lives in `components.md`, and its "how it works" section is folded into this doc. Shared CSS/JS moved into standalone files under `/shared/` (later flattened to the repo root — see next entry). The root `index.html` is now a static picker linking out to each flow (not itself interactive). CTA buttons ("Join", "Log in now", "Finish up now") now do a real page navigation to `/logged-in-member/` instead of an in-page persona swap.
 - **2026-07-24** — Flattened the `/shared/` folder into the repo root to keep things lean: `main.css`, `app.js`, and `assets/` now sit at the top level. Each flow page references `../main.css` / `../app.js`, and `app.js`'s asset base became `../assets`. No behavior change — purely a path/layout move.
 - **2026-07-24** — Renamed `app.js` → `main.js` so the two shared source files read as a matched pair (`main.css` / `main.js`); flow pages now load `../main.js`. Also added a `README.md` and pruned two CSS rules left dead by the asset swap (`.icon-btn svg`, `.profile-btn svg` — everything in the nav is now an `<img>`).
@@ -104,7 +36,7 @@ Note: the underlying content behind each nav (article body, profile grid, etc.) 
   - **Panel logo:** now a distinct asset at `assets/logo/panel-logo.svg` (user is providing it); until the file exists it falls back to the nav wordmark via `<img onerror>`.
   - **Top nav:** logotype/logomark is now a button that returns to the persona's home (`go-home`); stacked visitor logotype reduced to 40px and pulled close to the menu icon (`nav__left` gap 2px); more air between the right-side icons when Join is present (`nav__right` gap 10px).
   - Still TODO (next pass): add the global **footer** (Figma `6371:29` mobile / `6371:139` desktop) to all pages.
-- **2026-07-24** — Icon tinting reworked from CSS `mask` to **inline SVG**. The masked-`<img>`/`url()` approach tinted fine over http but the icons vanished when the prototype was opened directly (`file://` blocks external mask/SVG references). Fix: the 20 icons are now inlined in `main.js` as `ICON_SVGS` (each `fill="currentColor"`), rendered as `<span class="icon">…svg…</span>` and tinted by the context's `color`. Works over `file://` and http. Removed the now-redundant `assets/icons/*.svg` files (provenance node-ids kept in `components.md`).
+- **2026-07-24** — Icon tinting reworked from CSS `mask` to **inline SVG**. The masked-`<img>`/`url()` approach tinted fine over http but the icons vanished when the prototype was opened directly (`file://` blocks external mask/SVG references). Fix: the 20 icons are now inlined in `main.js` as `ICON_SVGS` (each `fill="currentColor"`), rendered as `<span class="icon">…svg…</span>` and tinted by the context's `color`. Works over `file://` and http. Removed the now-redundant `assets/icons/*.svg` files (provenance node-ids kept in [navigation.md](foundation/navigation.md)).
 - **2026-07-24** — Added the **global footer** to every screen and made screens **vertically scrollable**. `.screen` is now a flex column: fixed nav/uplevel on top, a scrollable `.screen__scroll` holding the screen content + `renderFooter()`; panel/dropdown overlays stay pinned over the whole screen (don't scroll). Footer content mirrors Figma `6371:29` (branding + headline, two link columns, legal/disclaimer/copyright, CCPA "Your Privacy Choices" icon at `assets/footer/privacy-choices.png`). Footer links are non-navigating placeholders. The panel wordmark and footer wordmark both use the user-provided horizontal `assets/logo/logotype.svg`.
 - **2026-07-24** — Briefly added an optional `image` field (full-bleed sample screenshot as a screen body, `.screen__shot`) to test dropping in a Splash Landing capture, then **removed it entirely** — the capture bundled its own nav/footer (doubling the prototype's), and the decision is to build real content **modules** instead of pasting screenshots. Gone: the `image` branch in `render()`, the `.screen__shot` CSS, and the untracked splash png. The Visitor splash home now also uses `modules: true`, so every persona's home renders module content rather than a bare placeholder label.
 - **2026-07-24** — Root launcher cards stacked into a single column (was a 2-col grid). Added a hidden "back to all flows" hotspot: a small top-left circle (`.home-hotspot`, back-chevron icon) injected by `main.js` on each flow page, invisible until hover, linking to `../index.html`; hidden at ≤430px (where the phone is full-bleed). The launcher doesn't load `main.js`, so it has no hotspot.
@@ -131,12 +63,18 @@ Note: the underlying content behind each nav (article body, profile grid, etc.) 
   - **Linking / new screens** (placeholder pages): Symptom Checker, Listicle Detail, Advisors, **Collection → All Collections** (level-up chain: Article Show → Collection → All Collections), Community Overview, Sign Up Start, Registration Step (Subscriber-only), and **My Profile** (the dropdown's "View Profile" now opens the member's OWN profile — a page with no level-up bar — distinct from the "Someone's Member Profile" reached via Meet Others). Splash CTAs: "Check all my symptoms" / "Check symptoms first" → Symptom Checker; listicle cards → Listicle Detail; one Article card → an Article Show that levels up to Collection; "View all advisors" → Advisors; "Join the conversation" → Community Overview; panel "Get a preview first" → Community Overview.
   - **Cross-flows removed**: Join / Log in / Log out / Finish up no longer navigate to another persona's folder. **Join** family (nav, splash, panel) → **Sign Up Start**; Subscriber panel **Finish up now** → **Registration Step**.
   - **Chromeless flow pages**: Sign Up Start and Registration Step render with no top nav, level-up bar, or footer — just an **✕** in the top-left that closes back to the page they opened from (tracked via `state.prevScreenId` / `close-flow`).
+- **2026-07-27** — **Docs reorganized into `foundations/`.** The two root spec docs were split by *surface* rather than by behavior-vs-components: `navigation.md` (nav behavior + components + assets), `landing.md` (Splash Landing), and this shared `decisions.md`; the old `components.md` was dissolved into the first two and `README.md` stayed at the repo root. `main.js`'s three provenance comments now point at `foundations/navigation.md`.
+- **2026-07-27** — **Auth / Sign-up carved into its own surface** ([onboarding.md](foundation/onboarding.md)), out of `landing.md` where it had been nested. In the process, corrected stale docs against the code: `navigation.md` still claimed **Log out** did a real cross-folder navigation into `../logged-out-member/`, but the 2026-07-27 refinement made **Log in now** and **Log out** intentional **no-ops** (`data-action` with no handler — `main.js:732–734`). The docs now say so. **Join** / **Finish up now** open the chromeless `signup-start` / `registration-step` pages in-persona (`data-screen`), which is what the code does.
+- **2026-07-27** — **Community and Account carved into their own surfaces** ([community.md](foundation/community.md), [account.md](foundation/account.md)). Established the boundary rule: `navigation.md` owns the reusable **chrome mechanisms** (top nav, slide-out panel *container*, level-up bar, footer); each **content destination** — its menu items, screens, and icons — belongs to its surface doc. Community got the `com-*` list pages, the `group`/`question`/`activity`/`profile` detail screens, Community Overview, and the `community-*.svg` panel icons. Account absorbed the whole profile dropdown spec (§4) plus the `acct-*` screens, `my-profile`, and the `menu-*.svg` dropdown icons; `navigation.md` §4 is now just a pointer (the dropdown serves only Account, so it moved wholesale, unlike the panel which hosts multiple surfaces and stays chrome). Library remains nested in `navigation.md` until it's fleshed out.
+- **2026-07-27** — **Library carved into its own surface** ([library.md](foundation/library.md)) too — the `lib-*` topic pages, Topic Center / Article Show browse screens, and the `topic-*.svg` panel icons. `navigation.md` §3 keeps the panel *container* and points both its Library and Community sections at their surface docs. Also **renamed the docs folder `foundations/` → `foundation/`** (singular) and **`auth.md` → `onboarding.md`** (the surface is the *start* of sign-up/registration; "Auth" read as too technical). Corrected another stale claim against the code while here: the `lib-*` / `com-*` / `acct-*` panel/dropdown destinations are `type: "page"` with **no** level-up bar (nav logo returns home) — the docs had described them as `uplevel` with a "Home" back bar, which the 2026-07-24 level-up rework had already superseded.
+- **2026-07-27** — Added two cross-cutting foundation docs and slimmed `navigation.md` to just the chrome. **[system.md](foundation/system.md)** — architecture & persona model: the `data-persona` render model, screen types (`tabs`/`page`/`uplevel`/`gated-home` + `chromeless`), state machine, device frame / `fitPhone()`, file layout, and the **Personas + Screens-per-persona** inventory moved out of `navigation.md`. **[design.md](foundation/design.md)** — the design language: the `--color-*` token catalogue, DM Serif type scale + the size-based letter-spacing rule (pulled from `landing.md`), spacing/radius/motion, the **icon-tinting system**, and the **chrome asset provenance** (logo, nav/uplevel icons, profile) moved out of `navigation.md` → Assets. `navigation.md` now keeps only the chrome components (top nav, panel container, level-up bar, footer) + interactions, pointing at system/design/surface docs for everything else. Surface docs' "tinting mechanism" refs repointed to `design.md`.
+- **2026-07-27** — Promoted two docs to the repo root and trimmed the README. The foundation index `foundation/README.md` → root **`MANUAL.md`**; the decisions log `foundation/decisions.md` → root **`DECISIONS.md`** (all-caps, sitting alongside `README.md`). The root `README.md`'s "How it works" was trimmed to a short quick-start that points at [system.md](foundation/system.md) rather than duplicating the render model / device frame / persona table. All cross-links repointed: the eight `foundation/*.md` docs now link up to `../DECISIONS.md`, while `MANUAL.md` and `DECISIONS.md` link down into `foundation/`.
 
 ---
 
 ## On the horizon
 
-- ~~Pull real icon/logo/placeholder-profile assets from Figma into `/assets/`~~ — done 2026-07-24 (see decisions log + `components.md` → Assets).
+- ~~Pull real icon/logo/placeholder-profile assets from Figma into `/assets/`~~ — done 2026-07-24 (see decisions log + [navigation.md](foundation/navigation.md) → Assets).
 - Design the **Logged In Member** "Home as a hub" (currently a placeholder) and any **Subscriber**-specific top nav / landing (Subscriber currently mirrors the Visitor experience, keeping only a subscriber-specific panel upsell).
 - Decide whether CTA buttons should trigger a real auth flow stub vs. the current persona-swap convenience.
 - Eventual port to Rails ERB partials once nav/panel/dropdown are locked, per the tim-component-showcase workflow.
