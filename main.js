@@ -8,8 +8,8 @@
 
 /* ---------------- Icons — real assets exported from Figma
    (Global Navigation 42yas7Q9FfwhL6xUocjEAl), saved under
-   assets/ and referenced by relative path. See components.md
-   → Assets for the source node id behind each file.
+   assets/ and referenced by relative path. See
+   foundation/navigation.md → Assets for the source node id behind each file.
 
    Paths are relative to each flow page (e.g. /visitor/index.html),
    which sits one level above /assets/ — hence the "../assets" base. ---- */
@@ -17,7 +17,7 @@
 const ASSET_BASE = "../assets";
 
 // Inline SVG icons (monochrome, fill="currentColor") sourced from Figma — see
-// components.md → Assets for the node id behind each. Inlined (not <img>/mask)
+// foundation/navigation.md → Assets for the node id behind each. Inlined (not <img>/mask)
 // so `color` can tint them AND they render over file:// (external mask/url
 // refs are blocked there). Sizing/colour live in .icon (main.css).
 const ICON_SVGS = {
@@ -55,7 +55,7 @@ const PROFILE_PLACEHOLDER = `${ASSET_BASE}/placeholder_profile.svg`;
 const PANEL_LOGO = `${ASSET_BASE}/logotype.svg`;
 
 /* ---------------- Content data (pulled verbatim from Figma nodes —
-   see components.md for the node-id source of each list) ---- */
+   see foundation/navigation.md for the node-id source of each list) ---- */
 
 // Each item carries the screenId it navigates to (see the LIBRARY_/COMMUNITY_/
 // ACCOUNT_ screen groups below). The ids must exist in every persona that
