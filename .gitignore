@@ -3,4 +3,4 @@
 **/.DS_Store
 
 # Local editor / tooling state
-.claude/settings.local.json
+.claude/
