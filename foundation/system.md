@@ -69,10 +69,10 @@ details in [navigation.md](navigation.md) §1):
 
 | Persona | `navVariant` | `panelType` | Home | Dropdown? |
 |---|---|---|---|---|
-| **Anonymous Visitor** | `visitor` (full logotype + Join) | `visitor` (Library 6 + "Join for free" card) | Splash Landing | No |
-| **Logged Out Member** | `member` (logomark + generic profile) | `member` (Library 4 + Community 5) | Gated home | Icon only, not built |
-| **Logged In Member** | `member-photo` (logomark + photo) | `member` (Library 4 + Community 5) | Hub (placeholder) | Yes |
-| **Subscriber** | `visitor` (mirrors Visitor) | `subscriber` (Library 6 + "Finish up now" card) | Splash Landing (mirrors Visitor) | No |
+| **Anonymous Visitor** | `visitor` (full logotype + Join) | `visitor` (Resources 6 + "Join for free" card) | Splash Landing | No |
+| **Logged Out Member** | `member` (logomark + generic profile) | `member` (Resources 4 + Community 5) | Gated home | Icon only, not built |
+| **Logged In Member** | `member-photo` (logomark + photo) | `member` (Resources 4 + Community 5) | Hub (placeholder) | Yes |
+| **Subscriber** | `visitor` (mirrors Visitor) | `subscriber` (Resources 6 + "Finish up now" card) | Splash Landing (mirrors Visitor) | No |
 
 **Open question:** should Subscriber have its own top-nav frame, or is reusing the
 Visitor nav correct? No Subscriber tabs/uplevel frame exists in the Figma file to
@@ -91,23 +91,23 @@ its CTA deep-links are in [landing.md](landing.md).
 
 **Anonymous Visitor**
 - Splash Landing (`tabs`), Topic Center, Article Show
-- Library topics (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-diet`, `lib-family`, `lib-all`
+- Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-diet`, `lib-family`, `lib-all`
 
 **Logged Out Member**
 - Gated home (`gated-home`, welcome card → "Log in now")
-- Library (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-all`
+- Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-all`
 - Community (panel dest.): `com-stories`, `com-questions`, `com-groups`, `com-meet`, `com-activities`
 
 **Logged In Member**
 - Hub home (`tabs`, photo profile) + dropdown-open variant
 - Detail screens: Article Show, Group Detail, Program Detail, Someone's Member Profile, Question Show, Activity Show (`uplevel`)
-- Library (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-all`
+- Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-all`
 - Community (panel dest.): `com-stories`, `com-questions`, `com-groups`, `com-meet`, `com-activities`
 - Account (dropdown dest.): `acct-health`, `acct-messages`, `acct-notifications`, `acct-settings`, `my-profile` (Log out is a no-op, see [onboarding.md](onboarding.md))
 
 **Subscriber**
 - Mirrors the Visitor Splash Landing as its home (see [landing.md](landing.md))
-- Library (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-diet`, `lib-family`, `lib-all`
+- Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-diet`, `lib-family`, `lib-all`
 - Adds a Subscriber-only `registration-step` (see [onboarding.md](onboarding.md))
 
 Content behind each nav is placeholder in the *Figma source itself* — the real

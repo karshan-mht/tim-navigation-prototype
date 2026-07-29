@@ -1,6 +1,6 @@
 # TIM Community — spec
 
-The Community surface: the Stories / Questions / Groups / Meet-Others / Activities
+The Community surface: the Posts / Questions / Groups / Meet-Others / All-Community
 list pages, the detail pages reached from them, and the Community Overview. These
 are reached **through** the slide-out panel's Community section — the panel
 *container* itself is nav chrome, specified in [navigation.md](navigation.md) §3.
@@ -16,24 +16,24 @@ nav/panel states, not full page layouts) — real list/detail UI is not built.
 ## Panel Community items → list screens
 
 The Community section appears in the slide-out panel **only for Logged Out Member
-and Logged In Member** (Visitor and Subscriber panels show Library + an access
+and Logged In Member** (Visitor and Subscriber panels show Resources + an access
 card instead). Section label "COMMUNITY". Each item carries a `data-screen` and
 navigates in-persona (the panel closes on click):
 
 | Item | Screen id |
 |---|---|
-| Stories | `com-stories` |
+| Posts | `com-stories` |
 | Questions & Answers | `com-questions` |
 | Groups | `com-groups` |
 | Meet Others | `com-meet` |
-| All Activities | `com-activities` |
+| All Community | `com-activities` |
 
 These `com-*` list pages are top-level (`type: "page"`) with **no** level-up bar —
 the nav logo returns home.
 
 > **Flagged:** the Logged Out Member panel renders these Community items even
 > though that persona's home is gated — its panel already carries the member
-> Library/Community lists, so the items had to point somewhere. Left as-is.
+> Resources/Community lists, so the items had to point somewhere. Left as-is.
 
 ---
 
@@ -75,8 +75,8 @@ icon-tinting system):
 
 | File | Label | Source node |
 |---|---|---|
-| `community-stories.svg` | Stories | 7042:583 |
+| `community-stories.svg` | Posts | 7042:583 |
 | `community-qa.svg` | Questions & Answers | 7042:588 |
 | `community-groups.svg` | Groups | 7042:593 |
 | `community-meet.svg` | Meet Others | 7042:598 |
-| `community-activities.svg` | All Activities | 7042:603 |
+| `community-activities.svg` | All Community | 7042:603 |

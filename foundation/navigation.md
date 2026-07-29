@@ -81,7 +81,7 @@ Only on **detail** screens. It steps **one level up** to the parent list (`upTo`
 
 | Screen | Back label | Node id |
 |---|---|---|
-| Visitor — Topic Center | All Topics | 7082:1269 |
+| Visitor — Topic Center | All Resources | 7082:1269 |
 | Visitor — Article Show | Topic Center | 6951:800 |
 | Member — Article Show | Topic | 7025:302 |
 | Member — Group Detail | Groups | 7025:371 |
@@ -92,19 +92,21 @@ Only on **detail** screens. It steps **one level up** to the parent list (`upTo`
 
 Figma frames are static (no destination logic). The prototype routes each detail screen's level-up bar to its parent list where one exists (`upTo`); `Program Detail` has no Programs list, so it falls back to home.
 
+**In-page pill (alternative to the level-up bar).** A screen can instead carry a `pill: { label, screen }` — rendered as a rounded **label pill** at the top of the body (`.page-pill`, label only, no chevron, navigates via `data-screen`), scrolling with the content rather than pinned as a bar. The **Article Show (in Collection)** screen uses this (`type: "page"` + `pill` → Collection) instead of a level-up bar. Its parent **Collection** is a plain `page` (no bar, no pill).
+
 ---
 
 ## 3. Slide-out Panel
 
 Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from left, 24px padding, 24px gap between sections.
 
-**Structure:** `Logotype → Library section → [Community section] → [Access card] → Footer note`
+**Structure:** `Logotype → Resources section → [Community section] → [Access card] → Footer note`
 
 ### Content slots
 
 Each Library / Community item carries a `data-screen` and navigates to a placeholder destination screen within the current persona (in-page state change; the panel closes on click). Both sections' item→screen maps, destination screens, and panel icons live in their surface docs:
 
-**Library** — bulleted icon list, section label "LIBRARY" (uppercase, `#626b74`, 14px). Present in every persona's panel (full or short set). Items, browse screens, and icons in [library.md](library.md).
+**Resources** (internally the Library surface; screen ids stay `lib-*`) — bulleted icon list, section label "RESOURCES" (uppercase, `#626b74`, 14px). Present in every persona's panel (full or short set). Items, browse screens, and icons in [library.md](library.md).
 
 **Community** — only present for Logged Out Member / Logged In Member. Section label "COMMUNITY". Items, detail screens, and icons in [community.md](community.md).
 
@@ -144,7 +146,7 @@ profile avatar (§1, member/subscriber personas) toggles it open.
 Added 2026-07-24 to the bottom of **every screen's scroll area** (`renderFooter()` in `main.js`). Content mirrors the Figma mobile footer (`6371:29` / `6371:139`). It's separated from the page content by ample space (`48px` margin-top on `.footer`) — no divider line. Two bands:
 
 - **Bar** (white): horizontal wordmark (`logotype.svg`) + headline "Expert advice. Real women. Real talk." (matches the Splash frame footer, node 4101:162), then two link columns — About / Editorial Process / Partner with Us / Accessibility · Getting Started / Community Guidelines / Help Center / Crisis (links are non-navigating placeholders).
-- **End** (grey `#f3f4f6`): legal line "Terms of Use · Privacy Policy · Cookie Policy · Health Data Policy · [icon] Your Privacy Choices · CA Notice at Collection" (the CCPA opt-out icon is `assets/footer/privacy-choices.png`), the medical disclaimer, and "© 2026 MyHealthTeam, A Swoop Company. All Rights Reserved."
+- **End** (grey `#f3f4f6`): legal line "Terms of Use · Privacy Policy · Cookie Policy · Health Data · [icon] Your Privacy Choices · CA Notice at Collection" (the CCPA opt-out icon is `assets/footer/privacy-choices.png`), the medical disclaimer, and "© 2026 MyHealthTeam, A Swoop Company."
 
 Because the footer is tall, screens are now vertically scrollable: `.screen` is a flex column with a fixed nav/uplevel and a scrollable `.screen__scroll` holding the content + footer. Panel/dropdown overlays stay pinned to the phone viewport (absolute over `.screen`, don't scroll).
 

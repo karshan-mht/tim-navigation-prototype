@@ -691,6 +691,25 @@ body {
   font-size: 16px;
 }
 
+/* In-page pill (top of body) — replaces the level-up bar on some pages.
+   Sits top-left, scrolls with the content, navigates one level up. */
+.page-pill {
+  align-self: flex-start;   /* top-left, don't stretch across the body */
+  display: inline-flex;
+  align-items: center;
+  margin: 16px 12px 0;
+  padding: 8px 16px;
+  height: 40px;
+  border: 0.5px solid var(--color-pill-border);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--color-primary);
+}
+
 /* ---- Gated / welcome card (Logged-out Member home) ---- */
 
 .welcome-card {

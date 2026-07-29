@@ -90,7 +90,7 @@ The splash CTAs open placeholder destination pages within the same persona
 |---|---|
 | "Check all my symptoms" / "Check symptoms first" | **Symptom Checker** |
 | Listicle cards | **Listicle Detail** |
-| One Article card | **Article Show** → levels up to **Collection** → **All Collections** |
+| One Article card | **Article Show** (in a collection) → links back to its **Collection** via an in-page label pill |
 | "View all advisors" | **Advisors** |
 | "Join the conversation" (Community) / panel "Get a preview first" | **Community Overview** |
 | Community section **Join for free** | **Sign Up Start** — see [onboarding.md](onboarding.md) |

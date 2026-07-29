@@ -66,26 +66,26 @@ const TOPIC_ITEMS = [
   { icon: "sleep", label: "Sleep & Insomnia", screenId: "lib-sleep" },
   { icon: "diet", label: "Diet & Nutrition", screenId: "lib-diet" },
   { icon: "family", label: "Family & Relationships", screenId: "lib-family" },
-  { icon: "allTopics", label: "All Topics", screenId: "lib-all" },
+  { icon: "allTopics", label: "All Resources", screenId: "lib-all" },
 ];
 const TOPIC_ITEMS_MEMBER = [
   { icon: "hrt", label: "HRT & Other Treatments", screenId: "lib-hrt" },
   { icon: "mood", label: "Mood & Mental Health", screenId: "lib-mood" },
   { icon: "sleep", label: "Sleep & Insomnia", screenId: "lib-sleep" },
-  { icon: "allTopics", label: "All Topics", screenId: "lib-all" },
+  { icon: "allTopics", label: "All Resources", screenId: "lib-all" },
 ];
 const COMMUNITY_ITEMS = [
-  { icon: "stories", label: "Stories", screenId: "com-stories" },
+  { icon: "stories", label: "Posts", screenId: "com-stories" },
   { icon: "qa", label: "Questions & Answers", screenId: "com-questions" },
   { icon: "groups", label: "Groups", screenId: "com-groups" },
   { icon: "meetOthers", label: "Meet Others", screenId: "com-meet" },
-  { icon: "allActivities", label: "All Activities", screenId: "com-activities" },
+  { icon: "allActivities", label: "All Community", screenId: "com-activities" },
 ];
 const DROPDOWN_MENU = [
-  // Notifications is pulled up above the top divider so the unread count reads
-  // first (a deliberate deviation from the Figma order).
-  { icon: "notifications", label: "Notifications (5)", screenId: "acct-notifications", iconMod: "notif" },
-  { icon: "myHealth", label: "My Health", screenId: "acct-health", divider: true },
+  // The top divider sits above Notifications, separating the user block from the
+  // whole menu (Notifications leads it so the unread count reads first).
+  { icon: "notifications", label: "Notifications (5)", screenId: "acct-notifications", divider: true, iconMod: "notif" },
+  { icon: "myHealth", label: "My Health", screenId: "acct-health" },
   { icon: "messages", label: "Messages", screenId: "acct-messages" },
   { icon: "settings", label: "Settings", screenId: "acct-settings" },
   // Log out is an auth transition, not an in-page screen — it crosses into the
@@ -108,7 +108,7 @@ const LIB = {
   sleep: { id: "lib-sleep", label: "Sleep & Insomnia", type: "page", title: "Sleep & Insomnia" },
   diet: { id: "lib-diet", label: "Diet & Nutrition", type: "page", title: "Diet & Nutrition" },
   family: { id: "lib-family", label: "Family & Relationships", type: "page", title: "Family & Relationships" },
-  all: { id: "lib-all", label: "All Topics", type: "page", title: "All Topics" },
+  all: { id: "lib-all", label: "All Resources", type: "page", title: "All Resources" },
 };
 // Full Library set (Visitor, Subscriber) vs short set (Member personas) \u2014
 // mirrors TOPIC_ITEMS vs TOPIC_ITEMS_MEMBER.
@@ -116,11 +116,11 @@ const LIBRARY_SCREENS_FULL = [LIB.hrt, LIB.mood, LIB.sleep, LIB.diet, LIB.family
 const LIBRARY_SCREENS_MEMBER = [LIB.hrt, LIB.mood, LIB.sleep, LIB.all];
 
 const COMMUNITY_SCREENS = [
-  { id: "com-stories", label: "Stories", type: "page", title: "Stories" },
+  { id: "com-stories", label: "Posts", type: "page", title: "Posts" },
   { id: "com-questions", label: "Questions & Answers", type: "page", title: "Questions & Answers" },
   { id: "com-groups", label: "Groups", type: "page", title: "Groups" },
   { id: "com-meet", label: "Meet Others", type: "page", title: "Meet Others" },
-  { id: "com-activities", label: "All Activities", type: "page", title: "All Activities" },
+  { id: "com-activities", label: "All Community", type: "page", title: "All Community" },
 ];
 
 const ACCOUNT_SCREENS = [
@@ -142,11 +142,13 @@ const SPLASH_FLOW_SCREENS = [
   { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   { id: "advisors", label: "Advisors", type: "page", title: "Advisors" },
-  { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Topics", upTo: "lib-all" },
+  { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Resources", upTo: "lib-all" },
   { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
   { id: "all-collections", label: "All Collections", type: "page", title: "All Collections" },
-  { id: "collection", label: "Collection", type: "uplevel", title: "Collection", backLabel: "All Collections", upTo: "all-collections" },
-  { id: "article-collection", label: "Article Show (in Collection)", type: "uplevel", title: "Article Show", backLabel: "Collection", upTo: "collection" },
+  { id: "collection", label: "Collection", type: "page", title: "Collection" },
+  // Article Show (in a collection) has no level-up bar; instead an in-page "pill"
+  // at the top of the body links back up to its Collection.
+  { id: "article-collection", label: "Article Show (in Collection)", type: "page", title: "Article Show", pill: { label: "Collection", screen: "collection" } },
   { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" },
   ...LIBRARY_SCREENS_FULL,
 ];
@@ -185,7 +187,7 @@ const PERSONAS = {
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs" },
       { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others", upTo: "com-meet" },
       { id: "question", label: "Question Show", type: "uplevel", title: "Question Show", backLabel: "Questions & Answers", upTo: "com-questions" },
-      { id: "activity", label: "Activity Show", type: "uplevel", title: "Activity Show", backLabel: "All Activities", upTo: "com-activities" },
+      { id: "activity", label: "Activity Show", type: "uplevel", title: "Activity Show", backLabel: "All Community", upTo: "com-activities" },
       ...LIBRARY_SCREENS_MEMBER,
       ...COMMUNITY_SCREENS,
       ...ACCOUNT_SCREENS,
@@ -325,7 +327,7 @@ function renderPanel() {
         </div>
         <div class="panel__menu">
           <div class="panel__section">
-            <p class="panel__section-label">Library</p>
+            <p class="panel__section-label">Resources</p>
             ${renderPanelItems(topicItems)}
           </div>
           ${communitySection}
@@ -540,7 +542,7 @@ function renderModules() {
 // its CCPA opt-out icon (raster, works over file://).
 function renderFooter() {
   const col = (labels) => labels.map((t) => `<a class="footer__link">${t}</a>`).join("");
-  const legal = ["Terms of Use", "Privacy Policy", "Cookie Policy", "Health Data Policy"];
+  const legal = ["Terms of Use", "Privacy Policy", "Cookie Policy", "Health Data"];
   const sep = ` <span class="footer__dot">&middot;</span> `;
   return `
     <footer class="footer">
@@ -559,7 +561,7 @@ function renderFooter() {
           ${legal.map((t) => `<a class="footer__link footer__link--dark">${t}</a>`).join(sep)}${sep}<a class="footer__link footer__link--dark footer__privacy"><img src="${ASSET_BASE}/privacy-choices.png" alt="" />Your Privacy Choices</a>${sep}<a class="footer__link footer__link--dark">CA Notice at Collection</a>
         </p>
         <p class="footer__disclaimer">ThisIsMenopause&trade; is not a medical referral site and does not recommend or endorse any particular provider or medical treatment. No information on ThisIsMenopause should be construed as medical and/or health advice.</p>
-        <p class="footer__copyright">&copy; 2026 MyHealthTeam, A Swoop Company. All Rights Reserved.</p>
+        <p class="footer__copyright">&copy; 2026 MyHealthTeam, A Swoop Company.</p>
       </div>
     </footer>
   `;
@@ -595,6 +597,11 @@ function render() {
     content = renderGatedHome();
   } else {
     content = `<div class="screen__placeholder">${screen.title}</div>`;
+  }
+  // In-page pill at the top of the body (e.g. Collection → All Collections),
+  // used instead of a sticky level-up bar. Navigates like the level-up bar did.
+  if (screen.pill) {
+    content = `<button class="page-pill" data-screen="${screen.pill.screen}"><span>${screen.pill.label}</span></button>` + content;
   }
   // Fill the viewport (centering the label / keeping the footer below the fold)
   // only for label & gated screens; module screens flow at natural height.

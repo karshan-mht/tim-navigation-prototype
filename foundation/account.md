@@ -18,11 +18,12 @@ Anchored card, top-right under the profile avatar, 246px wide, white, `#dbdddf`
 border, `0 0 8px rgba(13,27,41,0.1)` shadow, 24px padding. The user block uses
 28px line rows for unhurried spacing at the top (matches Figma).
 
-**Structure:** `User block → Notifications → divider → My Health · Messages · Settings → divider → Log out`
+**Structure:** `User block → divider → Notifications · My Health · Messages · Settings → divider → Log out`
 
 - **User block:** name ("Janet Smithsonian"), handle ("@jannie1234"), "View Profile" link (`#0f57a8`) → navigates to the member's own **My Profile** (`my-profile`, via `data-action="go-profile"`) — a page with **no** level-up bar, distinct from "Someone's Member Profile" reached via Meet Others (see [community.md](community.md)).
-- **Notifications (5)** → `acct-notifications` — pulled **above the top divider** (a deliberate deviation from the Figma order) so the unread count reads first; its bell icon **wiggles periodically** to draw the eye (`bell-wiggle`, disabled under `prefers-reduced-motion`).
-- Top divider, then: My Health → `acct-health`, Messages → `acct-messages`, Settings → `acct-settings`.
+- Top divider (sits **above** Notifications) separates the user block from the whole menu.
+- **Notifications (5)** → `acct-notifications` — leads the menu so the unread count reads first; its bell icon **wiggles periodically** to draw the eye (`bell-wiggle`, disabled under `prefers-reduced-motion`).
+- Then: My Health → `acct-health`, Messages → `acct-messages`, Settings → `acct-settings`.
 - Bottom divider (sits **above** Log out), then: **Log out** → currently a **no-op** (`data-action="log-out"` with no handler — auth transition not wired; see [onboarding.md](onboarding.md)). Its icon is rotated 90° so the arrow points **right** (matches Figma).
 
 The `acct-*` rows carry a `data-screen` and navigate to a placeholder destination

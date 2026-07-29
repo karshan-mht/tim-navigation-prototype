@@ -18,11 +18,11 @@ the rest are the content **surfaces** it leads to.
 - **[landing.md](foundation/landing.md)** — the Splash Landing surface: the six content-module
   sections (Checker, Listicles, Articles, Experts, Factoid, Community), the splash
   CTA deep-link screens, and the landing's styling + listicle assets.
-- **[library.md](foundation/library.md)** — the Library surface: the topic pages (HRT, Mood,
-  Sleep, Diet, Family, All Topics), Topic Center / Article Show, and the panel
-  topic icons.
-- **[community.md](foundation/community.md)** — the Community surface: the Stories / Q&A /
-  Groups / Meet-Others / Activities list pages, their detail screens, Community
+- **[library.md](foundation/library.md)** — the Library surface (labelled "Resources" in the
+  panel): the topic pages (HRT, Mood, Sleep, Diet, Family, All Resources), Topic
+  Center / Article Show, and the panel topic icons.
+- **[community.md](foundation/community.md)** — the Community surface: the Posts / Q&A /
+  Groups / Meet-Others / All-Community list pages, their detail screens, Community
   Overview, and the community panel icons.
 - **[account.md](foundation/account.md)** — the Account surface: the profile dropdown menu
   and its destination screens (My Health / Messages / Notifications / Settings /
