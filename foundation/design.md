@@ -28,7 +28,6 @@ Defined in `:root` (`main.css`):
 | `--color-magenta-soft` | `rgba(164,65,188,0.08)` | pink circle behind panel icons |
 | `--color-magenta-soft-solid` | `#f8f0fa` | opaque equivalent, used for the pill rollover so nothing alpha-stacks |
 | `--color-purple-light` | `#d483cf` | Factoid headline highlight |
-| `--color-navy-deep` | `#6a3693` | Factoid gradient end stop |
 | `--color-bg-purple-soft` | `#f6eff8` | Listicles / Community section bg |
 | `--color-bg-cool` | `#fafcff` | Articles section bg |
 | `--color-bg-blue-soft` | `#edf3f9` | Experts section bg |

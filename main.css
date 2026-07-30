@@ -13,7 +13,6 @@
   --color-magenta-soft-solid: #f8f0fa;   /* opaque equivalent of --color-magenta-soft over white — used for the rollover so nothing alpha-stacks */
   /* Splash Landing sections (Figma Mobile_Splash_Landing, node 4101:3) */
   --color-purple-light: #d483cf;         /* "not imagining it" headline highlight, Factoid section */
-  --color-navy-deep: #6a3693;            /* Factoid gradient end stop */
   --color-bg-purple-soft: #f6eff8;       /* Listicles / Community section background */
   --color-bg-cool: #fafcff;              /* Articles section background */
   --color-bg-blue-soft: #edf3f9;         /* Experts section background (solid, Figma 4122:332) */
@@ -149,7 +148,7 @@ body {
 /* ---- Placeholder content modules (home screens) ---- */
 
 .mod-hero {
-  background: linear-gradient(160deg, var(--color-navy), #4a2a7a);
+  background: linear-gradient(184deg, var(--color-navy) 6%, var(--color-magenta) 94%);
   color: #fff;
   padding: 48px 12px;
 }
@@ -459,7 +458,7 @@ body {
 /* ---- Factoid — dark gradient stat cards, Figma "Factoid" section ---- */
 
 .mod-factoid {
-  background: linear-gradient(180deg, var(--color-navy) 0%, var(--color-navy-deep) 100%);
+  background: linear-gradient(180deg, var(--color-navy) 0%, var(--color-magenta) 100%);
   padding: 48px 12px;
   color: #fff;
 }
