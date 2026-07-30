@@ -254,7 +254,7 @@ body {
      community avatar images are added. */
   background-color: #e9ebee;
   background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 6px, transparent 6px, transparent 12px);
-  border: 2px solid var(--color-navy);
+  border: 2px solid #6b3794;   /* Figma ring colour — lighter than navy so it doesn't read as a dark border on the gradient */
   margin-left: -8px;
 }
 .mod-hero__avatars .mod-hero__avatar:first-child { margin-left: 0; }
@@ -343,7 +343,10 @@ body {
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  /* Bleed to the full device width so cards clip at the screen edges, not at
+     the section's 12px padding; inner padding keeps the first/last card inset. */
+  margin: 0 -12px;
+  padding: 0 12px 4px;
   -webkit-overflow-scrolling: touch;
 }
 .mod-listicle-card {
@@ -404,7 +407,8 @@ body {
   display: flex;
   gap: 16px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  margin: 0 -12px;
+  padding: 0 12px 4px;   /* full-bleed clip, first/last card stays inset */
   -webkit-overflow-scrolling: touch;
 }
 .mod-article-card {
@@ -510,8 +514,8 @@ body {
   display: flex;
   gap: 12px;
   overflow-x: auto;
-  padding-bottom: 4px;
-  margin-bottom: 4px;
+  margin: 0 -12px 4px;
+  padding: 0 12px 4px;   /* full-bleed clip, first/last card stays inset */
   -webkit-overflow-scrolling: touch;
 }
 .mod-quote-card {
