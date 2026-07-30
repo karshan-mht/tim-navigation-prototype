@@ -148,10 +148,17 @@ body {
 /* ---- Placeholder content modules (home screens) ---- */
 
 .mod-hero {
+  position: relative;
+  isolation: isolate;      /* stacking context so the z-index:-1 rings sit above the gradient */
+  overflow: hidden;
   background: linear-gradient(184deg, var(--color-navy) 6%, var(--color-magenta) 94%);
   color: #fff;
   padding: 48px 12px;
 }
+/* Decorative concentric-ring graphics (Figma), behind the content. */
+.mod-hero__ring { position: absolute; z-index: -1; pointer-events: none; }
+.mod-hero__ring--tl { top: -24px; left: -64px; width: 182px; }
+.mod-hero__ring--br { bottom: -48px; right: -24px; width: 265px; }
 
 /* Letter-spacing across the splash: -0.25px baseline on all module text
    (inherited from each section), with headlines overriding to -0.75px. */
@@ -473,11 +480,17 @@ body {
 .mod-factoid__title em { font-style: normal; color: var(--color-purple-light); }
 .mod-factoid__stats { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
 .mod-stat-card {
+  position: relative;
+  z-index: 0;              /* stacking context so the graphic sits above the card bg, below text */
+  overflow: hidden;        /* clip the decorative graphic that bleeds off the top */
   background: #fff;
   border: 1px solid var(--color-card-border);
   border-radius: var(--radius-card);
   padding: 32px;
 }
+/* Decorative blob/dot graphic peeking from the top-right of each stat card. */
+.mod-stat-card__graphic { position: absolute; z-index: -1; top: -66px; right: -24px; width: 190px; pointer-events: none; }
+.mod-stat-card__graphic--wide { top: -105px; right: -39px; width: 280px; }
 .mod-stat-card__number {
   margin: 0 0 8px;
   font-family: var(--font-display);

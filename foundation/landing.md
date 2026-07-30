@@ -71,6 +71,8 @@ this landing uses are the shared design system — catalogued in
 what's **specific to the splash sections**:
 
 - **Section padding:** 48px top/bottom, 12px sides (per the frame).
+- **Hero + Factoid gradient:** both `--color-navy` (`#2b2b68`) → `--color-magenta` (`#a440bc`) — hero `184deg`, factoid `180deg`.
+- **Decorative graphics** (exported from Figma as SVG into `assets/`): the hero has concentric-ring elements bleeding off the top-left (`hero-rings-tl.svg`) and bottom-right (`hero-rings-br.svg`) corners, behind the content (`.mod-hero__ring`, `z-index:-1` inside an `isolate`d hero). Each Factoid stat card has a blob/dot element peeking from its top-right (`factoid-blob-1.svg`, `factoid-blob-2.svg`), clipped by the card's `overflow:hidden` (`.mod-stat-card__graphic`).
 - **Listicles:** 5 cards from the desktop frame (`4113:51`), left-aligned, wider
   (210px), 80px icon circles using `assets/listicles_*.svg`, non-wrapping
   buttons; rollover uses `--color-primary-soft` (not the panel pink).

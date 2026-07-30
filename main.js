@@ -415,6 +415,8 @@ function renderModules() {
 
   return `
     <section class="mod-hero">
+      <img class="mod-hero__ring mod-hero__ring--tl" src="${ASSET_BASE}/hero-rings-tl.svg" alt="" aria-hidden="true" />
+      <img class="mod-hero__ring mod-hero__ring--br" src="${ASSET_BASE}/hero-rings-br.svg" alt="" aria-hidden="true" />
       <h2 class="mod-hero__title">Where expert advice meets real women.</h2>
       <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
       <div class="mod-hero__users">
@@ -501,10 +503,12 @@ function renderModules() {
       <h3 class="mod-factoid__title">You're <em>not imagining</em> it.</h3>
       <div class="mod-factoid__stats">
         <div class="mod-stat-card">
+          <img class="mod-stat-card__graphic" src="${ASSET_BASE}/factoid-blob-1.svg" alt="" aria-hidden="true" />
           <p class="mod-stat-card__number">82%</p>
           <p class="mod-stat-card__text">of women mistook their early symptoms for stress, anxiety, or depression — not perimenopause.</p>
         </div>
         <div class="mod-stat-card">
+          <img class="mod-stat-card__graphic mod-stat-card__graphic--wide" src="${ASSET_BASE}/factoid-blob-2.svg" alt="" aria-hidden="true" />
           <p class="mod-stat-card__number">72%</p>
           <p class="mod-stat-card__text">of women faced pushback when they raised their symptoms, told it was "just aging" or they were "too young."</p>
         </div>
