@@ -6,7 +6,8 @@
   --color-text-secondary: #626b74;
   --color-text-muted: rgba(13, 27, 41, 0.7);
   --color-border: #dbdddf;
-  --color-badge: #e0483e;
+  --color-badge: #ff741d;                 /* notification badge / chip — orange */
+  --color-badge-soft: rgba(255, 116, 29, 0.05); /* Notifications chip background */
   --color-magenta: #a440bc;              /* Library / Community icon tint */
   --color-magenta-soft: rgba(164, 65, 188, 0.08); /* pink circle behind icons */
   --color-magenta-soft-solid: #f8f0fa;   /* opaque equivalent of --color-magenta-soft over white — used for the rollover so nothing alpha-stacks */
@@ -961,6 +962,14 @@ body {
 /* Log out icon points right (arrow leaving the door), matching Figma. */
 .dropdown__item--logout .icon svg { transform: rotate(90deg); }
 
+/* Notifications is a distinct orange "chip" above the divider (matches Figma):
+   faint orange fill, rounded, orange bell + label. */
+.dropdown__item--notif {
+  background: var(--color-badge-soft);
+  color: var(--color-badge);
+  border-radius: 16px;
+  padding: 12px;
+}
 /* Notifications bell wiggles periodically to draw the eye to the unread count. */
 .dropdown__item--notif .icon svg {
   transform-origin: 50% 18%;

@@ -59,7 +59,7 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 
 ### Variant: `member` (logged-out and logged-in, non-photo state)
 - Logo slot: compact **Logomark** (circle mark, ~47×44), not the full wordmark
-- Right slot: Search icon, AI icon, **Profile** avatar (self-contained circular placeholder silhouette — no button border/background) + red notification badge that sits **outside, on top of** the avatar's top-right edge (11px dot with a 2px white ring). The circular crop is on an inner `.profile-avatar` wrapper so the badge (a sibling) isn't clipped by it.
+- Right slot: Search icon, AI icon, **Profile** avatar (self-contained circular placeholder silhouette — no button border/background) + orange notification badge (`--color-badge`, `#ff741d`) that sits **outside, on top of** the avatar's top-right edge (11px dot with a 2px white ring). The circular crop is on an inner `.profile-avatar` wrapper so the badge (a sibling) isn't clipped by it.
 - No Join button
 - Node ref: 6960:52 (Logged Out Member — Home gated)
 
@@ -82,7 +82,7 @@ Only on **detail** screens. It steps **one level up** to the parent list (`upTo`
 | Screen | Back label | Node id |
 |---|---|---|
 | Visitor — Topic Center | All Resources | 7082:1269 |
-| Visitor — Article Show | Topic Center | 6951:800 |
+| Visitor — Article Show | Topic | 6951:800 |
 | Member — Article Show | Topic | 7025:302 |
 | Member — Group Detail | Groups | 7025:371 |
 | Member — Program Detail | Programs | 7031:509 |

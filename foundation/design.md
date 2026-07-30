@@ -22,7 +22,8 @@ Defined in `:root` (`main.css`):
 | `--color-text-secondary` | `#626b74` | secondary/label text |
 | `--color-text-muted` | `rgba(13,27,41,0.7)` | muted text |
 | `--color-border` | `#dbdddf` | hairlines (nav border, dropdown border) |
-| `--color-badge` | `#e0483e` | notification badge dot |
+| `--color-badge` | `#ff741d` | notification badge dot + Notifications chip (orange) |
+| `--color-badge-soft` | `rgba(255,116,29,0.05)` | Notifications dropdown chip background |
 | `--color-magenta` | `#a440bc` | Library / Community icon tint |
 | `--color-magenta-soft` | `rgba(164,65,188,0.08)` | pink circle behind panel icons |
 | `--color-magenta-soft-solid` | `#f8f0fa` | opaque equivalent, used for the pill rollover so nothing alpha-stacks |

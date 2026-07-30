@@ -82,10 +82,11 @@ const COMMUNITY_ITEMS = [
   { icon: "allActivities", label: "All Community", screenId: "com-activities" },
 ];
 const DROPDOWN_MENU = [
-  // The top divider sits above Notifications, separating the user block from the
-  // whole menu (Notifications leads it so the unread count reads first).
-  { icon: "notifications", label: "Notifications (5)", screenId: "acct-notifications", divider: true, iconMod: "notif" },
-  { icon: "myHealth", label: "My Health", screenId: "acct-health" },
+  // Notifications sits above the divider as a distinct orange "chip" (its own
+  // pill styling reflects the orange badge colour); the divider sits below it,
+  // above the rest of the menu.
+  { icon: "notifications", label: "Notifications (5)", screenId: "acct-notifications", iconMod: "notif" },
+  { icon: "myHealth", label: "My Health", screenId: "acct-health", divider: true },
   { icon: "messages", label: "Messages", screenId: "acct-messages" },
   { icon: "settings", label: "Settings", screenId: "acct-settings" },
   // Log out is an auth transition, not an in-page screen — it crosses into the
@@ -143,7 +144,7 @@ const SPLASH_FLOW_SCREENS = [
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   { id: "advisors", label: "Advisors", type: "page", title: "Advisors" },
   { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Resources", upTo: "lib-all" },
-  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic" },
+  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic", upTo: "topic" },
   { id: "all-collections", label: "All Collections", type: "page", title: "All Collections" },
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
   // Article Show (in a collection) has no level-up bar; instead an in-page "pill"
