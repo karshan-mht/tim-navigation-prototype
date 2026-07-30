@@ -55,10 +55,9 @@ Built out 2026-07-27 from the `Mobile_Splash_Landing` frame, in this order:
 6. **Community** — quote carousel (the two real desktop-frame quotes, `4101:349`)
    + closing CTA.
 
-**Data note — nothing fabricated:** the hero community count renders as
-`[TBD] women in the community` — the real figure is still needed from the
-community team (it is **not** to be pulled from `Menopause_Survey_4`). The 82% /
-72% stats and the survey source line come straight from the frame.
+**Data note:** the hero community count renders as `12,345 women in the community`
+(the number from the Figma frame). The 82% / 72% stats and the survey source line
+also come straight from the frame.
 
 ---
 
@@ -72,7 +71,8 @@ what's **specific to the splash sections**:
 
 - **Section padding:** 48px top/bottom, 12px sides (per the frame).
 - **Hero + Factoid gradient:** both `--color-navy` (`#2b2b68`) → `--color-magenta` (`#a440bc`) — hero `184deg`, factoid `180deg`.
-- **Decorative graphics** (exported from Figma as SVG into `assets/`): the hero has concentric-ring elements bleeding off the top-left (`hero-rings-tl.svg`) and bottom-right (`hero-rings-br.svg`) corners, behind the content (`.mod-hero__ring`, `z-index:-1` inside an `isolate`d hero). Each Factoid stat card has a blob/dot element peeking from its top-right (`factoid-blob-1.svg`, `factoid-blob-2.svg`), clipped by the card's `overflow:hidden` (`.mod-stat-card__graphic`).
+- **Decorative graphics** (exported from Figma as SVG into `assets/`): the hero has concentric-ring elements bleeding off the top-left (`hero-rings-tl.svg`) and bottom-right (`hero-rings-br.svg`) corners, behind the content (`.mod-hero__ring`, `z-index:-1` inside an `isolate`d hero). Each Factoid stat card has a blob/dot element peeking from its top-right (`factoid-blob-1.svg`, `factoid-blob-2.svg`), clipped by the card's `overflow:hidden` (`.mod-stat-card__graphic`). The closing CTA card carries a magenta blob/dot element in **both** opposite corners (`closing-blob.svg`, one asset reused — top-right `scaleY(-1)` at `top:-72/right:-156`, bottom-left `scaleX(-1)` at `bottom:-96/left:-154`, so the two read as diagonal mirror-images matching Figma node `4101:141`; `.mod-cta-card__graphic`).
+- **Factoid card padding:** `24px` (the cards use tighter padding than the frame's 32px).
 - **Listicles:** 5 cards from the desktop frame (`4113:51`), left-aligned, wider
   (210px), 80px icon circles using `assets/listicles_*.svg`, non-wrapping
   buttons; rollover uses `--color-primary-soft` (not the panel pink).

@@ -425,8 +425,7 @@ function renderModules() {
           <span class="mod-hero__avatar"></span>
           <span class="mod-hero__avatar"></span>
         </span>
-        <!-- [TBD] live community member count — needs real figure from Eric/community team, not sourced from Menopause_Survey_4 -->
-        <span class="mod-hero__count">[TBD] women in the community</span>
+        <span class="mod-hero__count">12,345 women in the community</span>
       </div>
       <div class="mod-checker-card">
         <p class="mod-checker-card__title">Could it be perimenopause? Start here.</p>
@@ -531,6 +530,8 @@ function renderModules() {
       <button class="mod-view-all-link" data-screen="community-overview">Join the conversation →</button>
 
       <div class="mod-cta-card">
+        <img class="mod-cta-card__graphic mod-cta-card__graphic--tr" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
+        <img class="mod-cta-card__graphic mod-cta-card__graphic--bl" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
         <p class="mod-cta-card__title">You don't have to figure this out alone.</p>
         <p class="mod-cta-card__sub">Get medically-reviewed resources, tips from real women, and a community who gets it.</p>
         <div class="mod-cta-card__buttons">
