@@ -81,7 +81,6 @@ Only on **detail** screens. It steps **one level up** to the parent list (`upTo`
 
 | Screen | Back label | Node id |
 |---|---|---|
-| Visitor — Topic Center | All Resources | 7082:1269 |
 | Visitor — Article Show | Topic | 6951:800 |
 | Member — Article Show | Topic | 7025:302 |
 | Member — Group Detail | Groups | 7025:371 |

@@ -143,7 +143,9 @@ const SPLASH_FLOW_SCREENS = [
   { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   { id: "advisors", label: "Advisors", type: "page", title: "Advisors" },
-  { id: "topic", label: "Topic Center", type: "uplevel", title: "Topic Center", backLabel: "All Resources", upTo: "lib-all" },
+  // Topic Center is a top-level page (no level-up bar) — the side panel + in-page
+  // navigation orient the user at this level.
+  { id: "topic", label: "Topic Center", type: "page", title: "Topic Center" },
   { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic", upTo: "topic" },
   { id: "all-collections", label: "All Collections", type: "page", title: "All Collections" },
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
