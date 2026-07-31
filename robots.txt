@@ -1,2 +1,6 @@
+# Allow crawling on purpose: each page carries a `noindex` meta tag in its <head>,
+# and a crawler must be allowed to fetch the page to see (and honor) that noindex.
+# Blocking here (Disallow: /) would hide the noindex and could leave bare URLs
+# indexed anyway. So: allow crawl, let the per-page noindex keep it out of search.
 User-agent: *
-Disallow: /
+Disallow:
