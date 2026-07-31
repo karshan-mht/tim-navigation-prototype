@@ -457,9 +457,8 @@ body {
   width: 61px;
   height: 61px;
   border-radius: 50%;
-  /* Same simple placeholder pattern as the article thumbnails. */
+  object-fit: cover;
   background-color: #e9ebee;
-  background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 10px, transparent 10px, transparent 20px);
 }
 .mod-expert-card__info { display: flex; flex-direction: column; gap: 4px; }
 .mod-expert-card__name { font-weight: 700; font-size: 18px; letter-spacing: -0.25px; color: var(--color-navy); }

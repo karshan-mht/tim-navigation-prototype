@@ -48,8 +48,10 @@ Built out 2026-07-27 from the `Mobile_Splash_Landing` frame, in this order:
 2. **Listicles** — 5 cards (see asset table below).
 3. **Articles** — horizontal carousel, 324×170 thumbnails, simple diagonal-hatch
    placeholder pattern (no gradients), no eyebrows.
-4. **Experts** — solid `#EDF3F9` background (`--color-bg-blue-soft`); avatar
-   circles use the placeholder pattern.
+4. **Experts** — solid `#EDF3F9` background (`--color-bg-blue-soft`); the three
+   advisor cards use **real headshots** (`assets/expert-{1..3}.png`, 61px circles,
+   `object-fit: cover`) exported from the frame — Dr. Fenwa Milhouse (1),
+   Dr. Andrea Matsumura (2), Lauren Tetenbaum (3).
 5. **Factoid** — the 82% / 72% stats with the "Survey of 1,000 U.S. women ages
    35–59" source line, straight from the frame.
 6. **Community** — quote carousel (the two real desktop-frame quotes, `4101:349`)
@@ -119,6 +121,7 @@ frame (`4113:51`), rendered in 80px circles:
 | `listicles_sleep.svg` | Sleep |
 | `listicles_weight.svg` | Weight |
 
-Article / expert thumbnails are **not** real assets — they use a simple
+Expert-card headshots **are** real assets (`assets/expert-{1..3}.png`, see the
+Experts note above). Article thumbnails are **not** — they use a simple
 diagonal-hatch placeholder pattern (no gradients), deliberately, until real
 imagery is provided.

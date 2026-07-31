@@ -450,9 +450,9 @@ function renderModules() {
   ];
 
   const experts = [
-    { name: "Dr. Fenwa Milhouse, MD", role: "Urologist" },
-    { name: "Dr. Andrea Matsumura", role: "Sleep Specialist" },
-    { name: "Lauren Tetenbaum, LCSW", role: "Mental Health / Therapist" },
+    { name: "Dr. Fenwa Milhouse, MD", role: "Urologist", photo: "expert-1" },
+    { name: "Dr. Andrea Matsumura", role: "Sleep Specialist", photo: "expert-2" },
+    { name: "Lauren Tetenbaum, LCSW", role: "Mental Health / Therapist", photo: "expert-3" },
   ];
 
   return `
@@ -528,7 +528,7 @@ function renderModules() {
           .map(
             (e) => `
           <div class="mod-expert-card">
-            <span class="mod-expert-card__avatar"></span>
+            <img class="mod-expert-card__avatar" src="${ASSET_BASE}/${e.photo}.png" alt="${e.name}" />
             <span class="mod-expert-card__info">
               <span class="mod-expert-card__name">${e.name}</span>
               <span class="mod-expert-card__role">${e.role}</span>
