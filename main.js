@@ -463,9 +463,9 @@ function renderModules() {
       <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
       <div class="mod-hero__users">
         <span class="mod-hero__avatars">
-          <img class="mod-hero__avatar" src="${ASSET_BASE}/advisor-1.jpg" alt="" />
-          <img class="mod-hero__avatar" src="${ASSET_BASE}/advisor-2.jpg" alt="" />
-          <img class="mod-hero__avatar" src="${ASSET_BASE}/advisor-4.jpg" alt="" />
+          <span class="mod-hero__avatar"></span>
+          <span class="mod-hero__avatar"></span>
+          <span class="mod-hero__avatar"></span>
         </span>
         <span class="mod-hero__count">12,345 women in the community</span>
       </div>

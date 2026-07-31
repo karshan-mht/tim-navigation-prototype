@@ -18,6 +18,9 @@ the rest are the content **surfaces** it leads to.
 - **[landing.md](foundation/landing.md)** — the Splash Landing surface: the six content-module
   sections (Checker, Listicles, Articles, Experts, Factoid, Community), the splash
   CTA deep-link screens, and the landing's styling + listicle assets.
+- **[advisors.md](foundation/advisors.md)** — the Medical Advisory Committee page (a splash
+  deep-link): intro, the five advisor cards with real headshots, and the "Watch
+  Now" clip.
 - **[library.md](foundation/library.md)** — the Library surface (labelled "Resources" in the
   panel): the topic pages (HRT, Mood, Sleep, Diet, Family, All Resources), Topic
   Center / Article Show, and the panel topic icons.

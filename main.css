@@ -250,8 +250,9 @@ body {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  object-fit: cover;
-  background-color: #e9ebee;   /* fallback while the photo loads */
+  /* Placeholder fill (hatch) until real community avatar images are added. */
+  background-color: #e9ebee;
+  background-image: repeating-linear-gradient(45deg, rgba(13, 27, 41, 0.06) 0, rgba(13, 27, 41, 0.06) 6px, transparent 6px, transparent 12px);
   border: 2px solid #6b3794;   /* Figma ring colour — lighter than navy so it doesn't read as a dark border on the gradient */
   margin-left: -8px;
 }
