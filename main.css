@@ -589,6 +589,75 @@ body {
   color: var(--color-text);
 }
 
+/* ---- Advisors — Medical Advisory Committee page (Figma Medical Advisors 2:43) ---- */
+
+.mod-advisors { padding: 32px 12px 8px; }
+.mod-advisors__intro { display: flex; flex-direction: column; gap: 16px; padding-bottom: 24px; border-bottom: 1px solid #e5e5e5; }
+.mod-advisors__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: -0.75px;
+  color: var(--color-text);
+}
+.mod-advisors__lede { margin: 0; font-weight: 600; font-size: 18px; line-height: 26px; color: var(--color-text); }
+.mod-advisors__body { margin: 0; font-size: 18px; line-height: 26px; color: #1a1a1a; }
+.mod-advisors__body--italic { font-style: italic; font-weight: 600; color: var(--color-text); }
+
+.mod-advisors__list { list-style: none; margin: 0; padding: 0; }
+.advisor-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 28px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+.mod-advisors__list .advisor-card:last-child { border-bottom: 0; }
+.advisor-card__photo {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e9ebee;
+}
+.advisor-card__identity { display: flex; flex-direction: column; gap: 2px; }
+.advisor-card__name { margin: 0; font-weight: 600; font-size: 20px; line-height: 28px; letter-spacing: -0.75px; color: var(--color-text); }
+.advisor-card__role { margin: 0; font-weight: 600; font-size: 16px; line-height: 22px; color: var(--color-magenta); }
+.advisor-card__org { margin: 0; font-size: 14px; line-height: 22px; color: #6b6b6b; }
+.advisor-card__bio { margin: 0; font-size: 16px; line-height: 24px; color: #1a1a1a; }
+.advisor-card__link { font-weight: 600; font-size: 16px; color: var(--color-primary); }
+
+.mod-advisors__watch { padding: 24px 0 8px; }
+.mod-advisors__watch-eyebrow {
+  margin: 0 0 16px;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-magenta);
+}
+.mod-advisors__watch-card {
+  position: relative;
+  height: 218px;
+  border-radius: var(--radius-card);
+  background: var(--color-navy);
+  background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0, rgba(255, 255, 255, 0.05) 10px, transparent 10px, transparent 20px);
+  overflow: hidden;
+}
+.mod-advisors__watch-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  border-style: solid;
+  border-width: 14px 0 14px 24px;
+  border-color: transparent transparent transparent #fff;
+  opacity: 0.9;
+}
+.mod-advisors__watch-title { margin: 12px 0 0; font-weight: 600; font-size: 18px; line-height: 24px; letter-spacing: -0.25px; color: var(--color-text); }
+
 /* ---- Top nav ---- */
 
 .nav {

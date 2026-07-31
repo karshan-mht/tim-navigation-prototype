@@ -87,17 +87,38 @@ what's **specific to the splash sections**:
 
 ## Flow / deep-link screens
 
-The splash CTAs open placeholder destination pages within the same persona
-(`SPLASH_FLOW_SCREENS`, ~`main.js:139`):
+The splash CTAs open destination pages within the same persona
+(`SPLASH_FLOW_SCREENS`, ~`main.js:139`). Most are labelled placeholders; **Advisors**
+is a fully built page (see below):
 
 | CTA / trigger | Opens |
 |---|---|
 | "Check all my symptoms" / "Check symptoms first" | **Symptom Checker** |
 | Listicle cards | **Listicle Detail** |
 | One Article card | **Article Show** (in a collection) → links back to its **Collection** via an in-page label pill |
-| "View all advisors" | **Advisors** |
+| "View all advisors" | **Advisors** (built — see below) |
 | "Join the conversation" (Community) / panel "Get a preview first" | **Community Overview** |
 | Community section **Join for free** | **Sign Up Start** — see [onboarding.md](onboarding.md) |
+
+### Advisors page (built)
+
+The **Medical Advisory Committee** page (`advisors` screen, `renderAdvisors()`),
+from the separate Figma file **Medical Advisors** (`Zkiv6o4d7eyQOLAvwjVYTy`, mobile
+`2:43`). It's a top-level `page` (no level-up bar) reached from the splash Experts
+section's "View all advisors →". `render()` branches on `screen.id === "advisors"`.
+Sections:
+- **Intro** — DM Serif title (28px, ink), a bold lede, a body paragraph, and an
+  italic closing line, then a hairline divider.
+- **Committee** — the five advisors in `ADVISORS` (real content from the frame),
+  each a card: 96px round **photo**, name (20px semibold ink), role (16px magenta),
+  affiliation (14px grey), bio (16px), and a non-navigating "Read full bio →"
+  placeholder (no bio-detail page exists). Cards separated by hairline dividers.
+- **Watch now** — magenta caps eyebrow, a navy hatch **video placeholder** with a
+  play glyph, and the clip title.
+
+**Real advisor photos** are exported from Figma into `assets/advisor-{1..5}.jpg`
+(index = card order: 1 Guepet, 2 Lanners, 3 McCool-Pearson, 4 Rariy, 5 Tetenbaum),
+shown as 96px circles (`object-fit: cover`).
 
 The splash's **Join** CTAs open the sign-up flow; that surface (Sign Up Start /
 Registration Step, chromeless rendering, and the entry points from the nav and

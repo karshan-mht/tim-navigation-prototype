@@ -373,6 +373,48 @@ function renderGatedHome() {
   `;
 }
 
+// Medical Advisory Committee page (Figma "Medical Advisors", file
+// Zkiv6o4d7eyQOLAvwjVYTy, mobile 2:43). Reached from the splash "View all
+// advisors" link. Real advisor photos live in assets/advisor-{1..5}.jpg (index
+// = card order). "Read full bio" is a non-navigating placeholder (no bio page).
+const ADVISORS = [
+  { photo: 1, name: "Christy James Guepet, M.D., FACOG, FPMRS", role: "OB-GYN", org: "Southern Women’s Specialists", bio: "Board-certified OB-GYN, fellowship-trained urogynecologist, and certified menopause specialist. Co-owner of Southern Women’s Specialists in Fairhope, Alabama, focused on individualized care during perimenopause and menopause." },
+  { photo: 2, name: "Cindi Rauert Lanners, PT, DPT", role: "Physical Therapist", org: "University of Colorado School of Physical Therapy", bio: "Physical therapist specializing in women’s and pelvic health, including strength training and patient education. Affiliate faculty at the University of Colorado School of Physical Therapy." },
+  { photo: 3, name: "Angela McCool-Pearson, M.D.", role: "OB-GYN", org: "Southern Women’s Specialists", bio: "Board-certified OB-GYN and certified menopause specialist. Co-owner of Southern Women’s Specialists, where her practice focuses on perimenopause and menopause, sexual health, and overall wellness." },
+  { photo: 4, name: "Chevon Rariy, M.D.", role: "Endocrinologist", org: "Visana Health", bio: "Chief medical technology officer at Visana Health, a virtual women’s health platform, leading product and technology strategy across gynecology, hormonal health, and chronic condition care." },
+  { photo: 5, name: "Lauren Tetenbaum, LCSW, JD, PMH-C, MSCP", role: "Licensed Clinical Social Worker", org: "Menopause Society Certified Practitioner", bio: "Licensed clinical social worker specializing in women’s reproductive mental health. Certified in perinatal mental health and a Menopause Society Certified Practitioner supporting people through pregnancy, postpartum, and menopause." },
+];
+function renderAdvisors() {
+  return `
+    <div class="mod-advisors">
+      <div class="mod-advisors__intro">
+        <h2 class="mod-advisors__title">ThisIsMenopause Medical Advisory Committee</h2>
+        <p class="mod-advisors__lede">Menopause deserves better than guesswork &mdash; so we brought in real expertise to back it up.</p>
+        <p class="mod-advisors__body">Our advisory committee is made up of doctors, nurse practitioners, and clinicians who&rsquo;ve spent their careers supporting women through this exact stage of life. They help shape what we cover, weigh in on the questions that matter most, and sometimes roll up their sleeves to contribute content directly.</p>
+        <p class="mod-advisors__body mod-advisors__body--italic">Think of them as the knowledgeable friends in your corner &mdash; who also happen to have the medical degrees to back it up.</p>
+      </div>
+      <ul class="mod-advisors__list">
+        ${ADVISORS.map((a) => `
+          <li class="advisor-card">
+            <img class="advisor-card__photo" src="${ASSET_BASE}/advisor-${a.photo}.jpg" alt="${a.name}" />
+            <div class="advisor-card__identity">
+              <p class="advisor-card__name">${a.name}</p>
+              <p class="advisor-card__role">${a.role}</p>
+              <p class="advisor-card__org">${a.org}</p>
+            </div>
+            <p class="advisor-card__bio">${a.bio}</p>
+            <span class="advisor-card__link">Read full bio &rarr;</span>
+          </li>`).join("")}
+      </ul>
+      <div class="mod-advisors__watch">
+        <p class="mod-advisors__watch-eyebrow">Watch now</p>
+        <div class="mod-advisors__watch-card"><span class="mod-advisors__watch-play"></span></div>
+        <p class="mod-advisors__watch-title">What Partners Need To Know About Rage During Perimenopause and Menopause</p>
+      </div>
+    </div>
+  `;
+}
+
 // Content modules for the home ("splash") screens — built from the Figma
 // Mobile_Splash_Landing frame (file EWsXKakhyFLhkse035AoHX, node 4101:3).
 // Nav and Footer are handled elsewhere (renderTopNav / renderFooter); this
@@ -601,6 +643,8 @@ function render() {
   let content;
   if (screen.modules) {
     content = renderModules();
+  } else if (screen.id === "advisors") {
+    content = renderAdvisors();
   } else if (screen.type === "gated-home") {
     content = renderGatedHome();
   } else {
@@ -612,8 +656,8 @@ function render() {
     content = `<button class="page-pill" data-screen="${screen.pill.screen}"><span>${screen.pill.label}</span></button>` + content;
   }
   // Fill the viewport (centering the label / keeping the footer below the fold)
-  // only for label & gated screens; module screens flow at natural height.
-  const bodyFill = !screen.modules ? " screen__body--fill" : "";
+  // only for label & gated screens; module/content screens flow at natural height.
+  const bodyFill = !screen.modules && screen.id !== "advisors" ? " screen__body--fill" : "";
 
   // Nav + level-up bar are separate sticky elements at the top of the scroll
   // area. The nav auto-hides on scroll-down and returns on scroll-up; the
