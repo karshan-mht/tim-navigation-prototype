@@ -378,11 +378,11 @@ function renderGatedHome() {
 // advisors" link. Real advisor photos live in assets/advisor-{1..5}.jpg (index
 // = card order). "Read full bio" is a non-navigating placeholder (no bio page).
 const ADVISORS = [
-  { photo: 1, name: "Christy James Guepet, M.D., FACOG, FPMRS", role: "OB-GYN", org: "Southern Women’s Specialists", bio: "Board-certified OB-GYN, fellowship-trained urogynecologist, and certified menopause specialist. Co-owner of Southern Women’s Specialists in Fairhope, Alabama, focused on individualized care during perimenopause and menopause." },
-  { photo: 2, name: "Cindi Rauert Lanners, PT, DPT", role: "Physical Therapist", org: "University of Colorado School of Physical Therapy", bio: "Physical therapist specializing in women’s and pelvic health, including strength training and patient education. Affiliate faculty at the University of Colorado School of Physical Therapy." },
-  { photo: 3, name: "Angela McCool-Pearson, M.D.", role: "OB-GYN", org: "Southern Women’s Specialists", bio: "Board-certified OB-GYN and certified menopause specialist. Co-owner of Southern Women’s Specialists, where her practice focuses on perimenopause and menopause, sexual health, and overall wellness." },
-  { photo: 4, name: "Chevon Rariy, M.D.", role: "Endocrinologist", org: "Visana Health", bio: "Chief medical technology officer at Visana Health, a virtual women’s health platform, leading product and technology strategy across gynecology, hormonal health, and chronic condition care." },
-  { photo: 5, name: "Lauren Tetenbaum, LCSW, JD, PMH-C, MSCP", role: "Licensed Clinical Social Worker", org: "Menopause Society Certified Practitioner", bio: "Licensed clinical social worker specializing in women’s reproductive mental health. Certified in perinatal mental health and a Menopause Society Certified Practitioner supporting people through pregnancy, postpartum, and menopause." },
+  { photo: 1, name: "Christy James Guepet, M.D., FACOG, FPMRS", shortName: "Christy James Guepet, M.D.", role: "OB-GYN", org: "Southern Women’s Specialists", bio: "Board-certified OB-GYN, fellowship-trained urogynecologist, and certified menopause specialist. Co-owner of Southern Women’s Specialists in Fairhope, Alabama, focused on individualized care during perimenopause and menopause." },
+  { photo: 2, name: "Cindi Rauert Lanners, PT, DPT", shortName: "Cindi Rauert Lanners, DPT", role: "Physical Therapist", org: "University of Colorado School of Physical Therapy", bio: "Physical therapist specializing in women’s and pelvic health, including strength training and patient education. Affiliate faculty at the University of Colorado School of Physical Therapy." },
+  { photo: 3, name: "Angela McCool-Pearson, M.D.", shortName: "Angela McCool-Pearson, M.D.", role: "OB-GYN", org: "Southern Women’s Specialists", bio: "Board-certified OB-GYN and certified menopause specialist. Co-owner of Southern Women’s Specialists, where her practice focuses on perimenopause and menopause, sexual health, and overall wellness." },
+  { photo: 4, name: "Chevon Rariy, M.D.", shortName: "Chevon Rariy, M.D.", role: "Endocrinologist", org: "Visana Health", bio: "Chief medical technology officer at Visana Health, a virtual women’s health platform, leading product and technology strategy across gynecology, hormonal health, and chronic condition care." },
+  { photo: 5, name: "Lauren Tetenbaum, LCSW, JD, PMH-C, MSCP", shortName: "Lauren Tetenbaum, LCSW", role: "Licensed Clinical Social Worker", org: "Menopause Society Certified Practitioner", bio: "Licensed clinical social worker specializing in women’s reproductive mental health. Certified in perinatal mental health and a Menopause Society Certified Practitioner supporting people through pregnancy, postpartum, and menopause." },
 ];
 function renderAdvisors() {
   return `
@@ -461,9 +461,9 @@ function renderModules() {
       <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
       <div class="mod-hero__users">
         <span class="mod-hero__avatars">
-          <span class="mod-hero__avatar"></span>
-          <span class="mod-hero__avatar"></span>
-          <span class="mod-hero__avatar"></span>
+          ${ADVISORS.slice(0, 3)
+            .map((a) => `<img class="mod-hero__avatar" src="${ASSET_BASE}/advisor-${a.photo}.jpg" alt="" aria-hidden="true" />`)
+            .join("")}
         </span>
         <span class="mod-hero__count">12,345 women in the community</span>
       </div>
@@ -528,7 +528,7 @@ function renderModules() {
           <div class="mod-expert-card">
             <img class="mod-expert-card__avatar" src="${ASSET_BASE}/advisor-${e.photo}.jpg" alt="${e.name}" />
             <span class="mod-expert-card__info">
-              <span class="mod-expert-card__name">${e.name}</span>
+              <span class="mod-expert-card__name">${e.shortName || e.name}</span>
               <span class="mod-expert-card__role">${e.role}</span>
             </span>
           </div>`

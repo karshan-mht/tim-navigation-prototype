@@ -51,7 +51,8 @@ Built out 2026-07-27 from the `Mobile_Splash_Landing` frame, in this order:
 4. **Experts** — solid `#EDF3F9` background (`--color-bg-blue-soft`). The three
    teaser cards are **derived from the committee data** — `ADVISORS.slice(0, 3)`
    in `main.js` — so they stay in sync with the [Advisors page](advisors.md)
-   (currently Guepet / Lanners / McCool-Pearson). Real headshots
+   (currently Guepet / Lanners / McCool-Pearson). Cards show each advisor's
+   `shortName` (trimmed credentials) rather than the full committee name. Real headshots
    (`assets/advisor-{1..3}.jpg`, 61px circles, `object-fit: cover`); "View all
    advisors →" opens the full page. (The Medical Advisors Figma set is
    intentionally ignored here — the committee data is the source of truth.)
@@ -78,7 +79,7 @@ what's **specific to the splash sections**:
 - **Hero + Factoid gradient:** both `--color-navy` (`#2b2b68`) → `--color-magenta` (`#a440bc`) — hero `184deg`, factoid `180deg`.
 - **Decorative graphics** (exported from Figma as SVG into `assets/`): the hero has concentric-ring elements bleeding off the top-left (`hero-rings-tl.svg`) and bottom-right (`hero-rings-br.svg`) corners, behind the content (`.mod-hero__ring`, `z-index:-1` inside an `isolate`d hero). Each Factoid stat card has a blob/dot element peeking from its top-right (`factoid-blob-1.svg`, `factoid-blob-2.svg`), clipped by the card's `overflow:hidden` (`.mod-stat-card__graphic`). The closing CTA card carries a magenta blob/dot element in **both** opposite corners (`closing-blob.svg`, one asset reused — top-right `scaleY(-1)` at `top:-72/right:-156`, bottom-left `scaleX(-1)` at `bottom:-96/left:-154`, so the two read as diagonal mirror-images matching Figma node `4101:141`; `.mod-cta-card__graphic`).
 - **Factoid card padding:** `24px` (the cards use tighter padding than the frame's 32px).
-- **Hero avatar stack:** 24px placeholder circles with a `2px solid #6b3794` ring (Figma ring colour — a dark navy ring read as an unwanted border on the gradient). Still hatch-fill placeholders; real community photos not wired.
+- **Hero avatar stack:** 24px circles with a `2px solid #6b3794` ring (Figma ring colour — a dark navy ring read as an unwanted border on the gradient), overlapped `-8px`. Reuses the first three committee headshots (`assets/advisor-{1..3}.jpg`, `ADVISORS.slice(0, 3)`) as stand-in community faces.
 - **Carousels are full-bleed:** the horizontal scrollers (Listicles, Articles, Community quotes) use `margin: 0 -12px` + `padding: 0 12px` so they clip at the **device edges**, not at the section's 12px padding — the first/last card stays inset 12px while cards scroll in/out at the full width.
 - **Listicles:** 5 cards from the desktop frame (`4113:51`), left-aligned, wider
   (210px), 80px icon circles using `assets/listicles_*.svg`, non-wrapping
