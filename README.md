@@ -43,7 +43,9 @@ main.js                        All behavior — reads <body data-persona> and
 assets/                        Real assets exported from Figma (flat folder):
                                logotype.png/.svg + logomark.png (logos),
                                placeholder_profile.svg, privacy-choices.png,
-                               listicles_*.svg (splash listicle icons)
+                               listicles_*.svg (splash listicle icons),
+                               hero-rings-*.svg / factoid-blob-*.svg /
+                               closing-blob.svg (splash decorative graphics)
                                (nav/UI icons are inlined in main.js, not files)
 visitor/index.html             Anonymous Visitor flow
 logged-out-member/index.html   Logged Out Member flow
@@ -60,8 +62,10 @@ foundation/                    The spec docs (see MANUAL.md):
   community.md                   Community surface (list + detail screens, icons)
   account.md                     Account surface (profile dropdown + its screens)
   onboarding.md                  Onboarding surface (Sign Up Start, Registration Step)
-.claude/                       Optional local preview helper (static server)
 ```
+
+(A local `.claude/` folder holds an optional preview helper; it's gitignored and
+not part of the repo — serve with `npx serve .` instead.)
 
 ## How it works
 
