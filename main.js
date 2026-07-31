@@ -449,11 +449,9 @@ function renderModules() {
     { title: "Article title", screen: "article" },
   ];
 
-  const experts = [
-    { name: "Dr. Fenwa Milhouse, MD", role: "Urologist", photo: "expert-1" },
-    { name: "Dr. Andrea Matsumura", role: "Sleep Specialist", photo: "expert-2" },
-    { name: "Lauren Tetenbaum, LCSW", role: "Mental Health / Therapist", photo: "expert-3" },
-  ];
+  // Teaser cards for the Experts section: the first three committee members
+  // from ADVISORS, so the landing and the Advisors page stay in sync.
+  const experts = ADVISORS.slice(0, 3);
 
   return `
     <section class="mod-hero">
@@ -528,7 +526,7 @@ function renderModules() {
           .map(
             (e) => `
           <div class="mod-expert-card">
-            <img class="mod-expert-card__avatar" src="${ASSET_BASE}/${e.photo}.png" alt="${e.name}" />
+            <img class="mod-expert-card__avatar" src="${ASSET_BASE}/advisor-${e.photo}.jpg" alt="${e.name}" />
             <span class="mod-expert-card__info">
               <span class="mod-expert-card__name">${e.name}</span>
               <span class="mod-expert-card__role">${e.role}</span>
