@@ -407,8 +407,8 @@ function renderAdvisors() {
           </li>`).join("")}
       </ul>
       <div class="mod-advisors__watch">
-        <p class="mod-advisors__watch-eyebrow">Watch now</p>
-        <div class="mod-advisors__watch-card"><span class="mod-advisors__watch-play"></span></div>
+        <h3 class="mod-advisors__watch-head">Watch Now</h3>
+        <img class="mod-advisors__watch-card" src="${ASSET_BASE}/advisor-watch.jpg" alt="Video: What Partners Need To Know About Rage During Perimenopause and Menopause" />
         <p class="mod-advisors__watch-title">What Partners Need To Know About Rage During Perimenopause and Menopause</p>
       </div>
     </div>

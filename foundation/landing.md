@@ -113,8 +113,9 @@ Sections:
   each a card: 96px round **photo**, name (20px semibold ink), role (16px magenta),
   affiliation (14px grey), bio (16px), and a non-navigating "Read full bio →"
   placeholder (no bio-detail page exists). Cards separated by hairline dividers.
-- **Watch now** — magenta caps eyebrow, a navy hatch **video placeholder** with a
-  play glyph, and the clip title.
+- **Watch now** — a DM Serif "WATCH NOW" headline (24px, navy `#2b2b68`), a real
+  **video thumbnail** (`assets/advisor-watch.jpg`, 218px, rounded, play button
+  baked into the still), and the clip title in grey (16px).
 
 **Real advisor photos** are exported from Figma into `assets/advisor-{1..5}.jpg`
 (index = card order: 1 Guepet, 2 Lanners, 3 McCool-Pearson, 4 Rariy, 5 Tetenbaum),
