@@ -3,7 +3,7 @@
 The Community surface: the Posts / Questions / Groups / Meet-Others / All-Community
 list pages, the detail pages reached from them, and the Community Overview. These
 are reached **through** the slide-out panel's Community section — the panel
-*container* itself is nav chrome, specified in [navigation.md](navigation.md) §3.
+*container* itself is nav chrome, specified in [navigation.md](../foundation/navigation.md) §3.
 The Splash Landing ([landing.md](landing.md)) also deep-links into Community
 Overview. Chronological history is in [DECISIONS.md](../DECISIONS.md). Code is the
 source of truth — correct this doc if it drifts.
@@ -42,7 +42,7 @@ the nav logo returns home.
 Distinct *detail* screens, deliberately separate from the `com-*` list pages.
 Each carries a **level-up bar** stepping one level up to its parent list (the bar
 mechanism and the Figma node id for each screen are spec'd in
-[navigation.md](navigation.md) §2):
+[navigation.md](../foundation/navigation.md) §2):
 
 | Screen | id | Levels up to |
 |---|---|---|
@@ -70,7 +70,7 @@ outside the panel:
 ## Assets — Community panel icons
 
 From the Logged-Out Member panel `6960:3` (Community). Monochrome SVGs, tinted
-magenta via CSS like the other panel icons (see [design.md](design.md) →
+magenta via CSS like the other panel icons (see [design.md](../foundation/design.md) →
 icon-tinting system):
 
 | File | Label | Source node |

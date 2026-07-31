@@ -4,7 +4,7 @@ The Library surface (labelled **"Resources"** in the panel; screen ids stay `lib
 the topic pages (HRT, Mood, Sleep, Diet, Family, All Resources) plus Topic Center
 and Article Show. These are reached **through** the slide-out panel's Resources
 section — the panel *container* itself is nav chrome, specified in
-[navigation.md](navigation.md) §3. Chronological history is in
+[navigation.md](../foundation/navigation.md) §3. Chronological history is in
 [DECISIONS.md](../DECISIONS.md). Code is the source of truth — correct this doc if it
 drifts.
 
@@ -43,7 +43,7 @@ The Visitor topic-browsing chain (shared flow screens in `SPLASH_FLOW_SCREENS`).
 **Topic Center** is a top-level `page` (no level-up bar — the side panel + in-page
 navigation orient the user at that level). **Article Show** keeps a level-up bar
 stepping one level up to Topic Center (bar mechanism + Figma node ids in
-[navigation.md](navigation.md) §2):
+[navigation.md](../foundation/navigation.md) §2):
 
 | Screen | id | Level-up |
 |---|---|---|
@@ -52,7 +52,7 @@ stepping one level up to Topic Center (bar mechanism + Figma node ids in
 
 The splash's "one Article card" opens a separate Article Show (in a collection).
 That Article Show has no level-up bar; an in-page **label pill** at the top links
-back up to its **Collection** (see [navigation.md](navigation.md) §2). Collection
+back up to its **Collection** (see [navigation.md](../foundation/navigation.md) §2). Collection
 itself is a plain page. That collection chain is a Splash Landing deep-link,
 documented in [landing.md](landing.md).
 
@@ -61,7 +61,7 @@ documented in [landing.md](landing.md).
 ## Assets — Library (panel topic) icons
 
 From the Visitor panel `6950:226` (Library). Monochrome SVGs, tinted magenta via
-CSS like the other panel icons (see [design.md](design.md) → icon-tinting
+CSS like the other panel icons (see [design.md](../foundation/design.md) → icon-tinting
 system):
 
 | File | Label | Source node |

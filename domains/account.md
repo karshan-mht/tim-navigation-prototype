@@ -3,7 +3,7 @@
 The Account surface: the **profile dropdown** menu and the destination screens it
 opens (My Health / Messages / Notifications / Settings) plus the member's own
 **My Profile**. The dropdown is triggered from the top-nav profile avatar — that
-trigger is nav chrome, spec'd in [navigation.md](navigation.md) §1 (Top Nav) /
+trigger is nav chrome, spec'd in [navigation.md](../foundation/navigation.md) §1 (Top Nav) /
 Interactions. **Log out** lives here structurally but is an auth transition — see
 [onboarding.md](onboarding.md). Chronological history is in [DECISIONS.md](../DECISIONS.md). Code
 is the source of truth — correct this doc if it drifts.
@@ -56,7 +56,7 @@ no-op (see [onboarding.md](onboarding.md)).
 ## Assets — dropdown icons
 
 From the Logged-In Member dropdown `7042:711 → 7042:776`. Monochrome SVGs, tinted
-ink via CSS (see [design.md](design.md) → icon-tinting system):
+ink via CSS (see [design.md](../foundation/design.md) → icon-tinting system):
 
 | File | Label | Source node |
 |---|---|---|

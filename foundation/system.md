@@ -39,7 +39,7 @@ Each persona has a `screens` array; `state.screenId` selects the active one and
 - `page` — a top-level page with **no** level-up bar; the nav logo returns home. All panel/dropdown destinations (`lib-*`, `com-*`, `acct-*`) and most flow screens are `page`.
 - `uplevel` — a detail screen with a level-up bar that steps one level up via `upTo` → `data-screen` (see [navigation.md](navigation.md) §2).
 - `gated-home` — the Logged Out Member's gated welcome screen.
-- `chromeless: true` — a flag (not a type) that drops nav/level-up/footer and shows an ✕ that closes back to `state.prevScreenId` (the onboarding pages — see [onboarding.md](onboarding.md)).
+- `chromeless: true` — a flag (not a type) that drops nav/level-up/footer and shows an ✕ that closes back to `state.prevScreenId` (the onboarding pages — see [onboarding.md](../domains/onboarding.md)).
 
 **State** (`state` object): `screenId`, `panelOpen`, `dropdownOpen`, `prevScreenId`
 (remembered on every navigation so chromeless pages can close "back"). Navigation
@@ -85,9 +85,9 @@ confirm either way — flagged, not decided.
 Panel/dropdown destinations are prototype-added placeholder screens so the menu
 items lead *somewhere*. They're top-level `page`s (no level-up bar). Library
 destinations are shared across personas (`lib-*`); Community are `com-*`;
-Dropdown/account are `acct-*`. Detailed in [library.md](library.md),
-[community.md](community.md), [account.md](account.md); the Splash Landing home and
-its CTA deep-links are in [landing.md](landing.md).
+Dropdown/account are `acct-*`. Detailed in [library.md](../domains/library.md),
+[community.md](../domains/community.md), [account.md](../domains/account.md); the Splash Landing home and
+its CTA deep-links are in [landing.md](../domains/landing.md).
 
 **Anonymous Visitor**
 - Splash Landing (`tabs`), Topic Center, Article Show
@@ -103,12 +103,12 @@ its CTA deep-links are in [landing.md](landing.md).
 - Detail screens: Article Show, Group Detail, Program Detail, Someone's Member Profile, Question Show, Activity Show (`uplevel`)
 - Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-all`
 - Community (panel dest.): `com-stories`, `com-questions`, `com-groups`, `com-meet`, `com-activities`
-- Account (dropdown dest.): `acct-health`, `acct-messages`, `acct-notifications`, `acct-settings`, `my-profile` (Log out is a no-op, see [onboarding.md](onboarding.md))
+- Account (dropdown dest.): `acct-health`, `acct-messages`, `acct-notifications`, `acct-settings`, `my-profile` (Log out is a no-op, see [onboarding.md](../domains/onboarding.md))
 
 **Subscriber**
-- Mirrors the Visitor Splash Landing as its home (see [landing.md](landing.md))
+- Mirrors the Visitor Splash Landing as its home (see [landing.md](../domains/landing.md))
 - Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-diet`, `lib-family`, `lib-all`
-- Adds a Subscriber-only `registration-step` (see [onboarding.md](onboarding.md))
+- Adds a Subscriber-only `registration-step` (see [onboarding.md](../domains/onboarding.md))
 
 Content behind each nav is placeholder in the *Figma source itself* — the real
 design surface there is the nav/panel/dropdown states, not full page layouts. The
