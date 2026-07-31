@@ -600,7 +600,7 @@ body {
   font-size: 28px;
   line-height: 36px;
   letter-spacing: -0.75px;
-  color: var(--color-text);
+  color: var(--color-navy);
 }
 .mod-advisors__lede { margin: 0; font-weight: 600; font-size: 18px; line-height: 26px; color: var(--color-text); }
 .mod-advisors__body { margin: 0; font-size: 18px; line-height: 26px; color: #1a1a1a; }
@@ -637,7 +637,6 @@ body {
   font-size: 24px;
   line-height: 40px;
   letter-spacing: -0.75px;
-  text-transform: uppercase;
   color: var(--color-navy);
 }
 .mod-advisors__watch-card {
