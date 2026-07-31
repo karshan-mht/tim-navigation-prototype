@@ -461,8 +461,8 @@ function renderModules() {
       <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
       <div class="mod-hero__users">
         <span class="mod-hero__avatars">
-          ${ADVISORS.slice(0, 3)
-            .map((a) => `<img class="mod-hero__avatar" src="${ASSET_BASE}/advisor-${a.photo}.jpg" alt="" aria-hidden="true" />`)
+          ${[1, 2, 3]
+            .map((n) => `<img class="mod-hero__avatar" src="${ASSET_BASE}/community-${n}.png" alt="" aria-hidden="true" />`)
             .join("")}
         </span>
         <span class="mod-hero__count">12,345 women in the community</span>
