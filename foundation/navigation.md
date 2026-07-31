@@ -10,9 +10,9 @@ what surrounds it lives elsewhere: the render model, screen types, device frame,
 and persona/screen inventory are in [system.md](system.md); color/type/motion
 tokens, the icon-tinting system, and asset provenance are in [design.md](design.md);
 and the content **surfaces** the nav leads to have their own docs —
-[landing.md](landing.md) (Splash Landing), [library.md](library.md) (topics),
-[community.md](community.md), [account.md](account.md) (the profile dropdown + its
-screens), and [onboarding.md](onboarding.md) (sign-up). History is in
+[landing.md](../domains/landing.md) (Splash Landing), [library.md](../domains/library.md) (topics),
+[community.md](../domains/community.md), [account.md](../domains/account.md) (the profile dropdown + its
+screens), and [onboarding.md](../domains/onboarding.md) (sign-up). History is in
 [DECISIONS.md](../DECISIONS.md). Code is the source of truth if any of these disagree
 — correct the doc, don't erase the stale entry.
 
@@ -24,8 +24,8 @@ The four personas (nav treatment, `navVariant` / `panelType`) and the full
 per-persona screen inventory live in the architecture doc,
 [system.md](system.md) → Personas / Screens per persona. Each persona's nav
 *variant* is detailed in §1 below; the content surfaces those screens belong to
-are in [landing.md](landing.md), [library.md](library.md),
-[community.md](community.md), and [account.md](account.md).
+are in [landing.md](../domains/landing.md), [library.md](../domains/library.md),
+[community.md](../domains/community.md), and [account.md](../domains/account.md).
 
 ---
 
@@ -35,11 +35,11 @@ are in [landing.md](landing.md), [library.md](library.md),
 - **Hamburger (☰)** → opens the slide-out Panel for the current persona. Tapping the overlay (not the panel surface) closes it with a slower ease-out slide-out animation (`closePanel()`).
 - **Nav logotype / logomark** → returns to the persona's home screen (Splash Landing for Visitor and Subscriber, Home as a hub for the member states). In-page `go-home`.
 - **Hidden home hotspot** → a small circle fixed in the top-left corner of each flow page, invisible until hovered, that links back to the root launcher (`../index.html`). Uses a launchpad / 2×2 grid icon. Injected by `main.js`, so it only appears on flow pages (not the launcher).
-- **Panel items** (Library / Community) → navigate to that item's destination screen (an in-page state change within the same persona) and close the panel. Library items and screens are in [library.md](library.md); Community in [community.md](community.md).
-- **Profile avatar** (member nav variant) → opens the account **Dropdown** (wired for Logged In Member; tapping outside closes it). The dropdown's menu and its destination screens are spec'd in [account.md](account.md).
+- **Panel items** (Library / Community) → navigate to that item's destination screen (an in-page state change within the same persona) and close the panel. Library items and screens are in [library.md](../domains/library.md); Community in [community.md](../domains/community.md).
+- **Profile avatar** (member nav variant) → opens the account **Dropdown** (wired for Logged In Member; tapping outside closes it). The dropdown's menu and its destination screens are spec'd in [account.md](../domains/account.md).
 - **Level-up bar** → only on *detail* screens (Article/Group/Program/Profile/Question/Activity). It steps **one level up** to the parent list/topic (via `upTo` → `data-screen`, e.g. Group Detail → Groups, Article Show → its topic page), not "back" and not necessarily home. Top-level pages (the panel/dropdown destinations) have no level-up bar — the nav logo returns home instead. (`program` has no list parent in the source, so it falls back to home.)
-- **Join CTAs** (nav **Join** pill, panel **Join for free** / **Finish up now**) → open the chromeless sign-up flow **in-persona** (`Sign Up Start` / `Registration Step`) — full spec in [onboarding.md](onboarding.md).
-- **"Log in now"** (Logged Out gated home) and **"Log out"** (dropdown) → currently **no-ops** (auth not wired); see [onboarding.md](onboarding.md).
+- **Join CTAs** (nav **Join** pill, panel **Join for free** / **Finish up now**) → open the chromeless sign-up flow **in-persona** (`Sign Up Start` / `Registration Step`) — full spec in [onboarding.md](../domains/onboarding.md).
+- **"Log in now"** (Logged Out gated home) and **"Log out"** (dropdown) → currently **no-ops** (auth not wired); see [onboarding.md](../domains/onboarding.md).
 
 ---
 
@@ -105,9 +105,9 @@ Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from l
 
 Each Library / Community item carries a `data-screen` and navigates to a placeholder destination screen within the current persona (in-page state change; the panel closes on click). Both sections' item→screen maps, destination screens, and panel icons live in their surface docs:
 
-**Resources** (internally the Library surface; screen ids stay `lib-*`) — bulleted icon list, section label "RESOURCES" (uppercase, `#626b74`, 14px). Present in every persona's panel (full or short set). Items, browse screens, and icons in [library.md](library.md).
+**Resources** (internally the Library surface; screen ids stay `lib-*`) — bulleted icon list, section label "RESOURCES" (uppercase, `#626b74`, 14px). Present in every persona's panel (full or short set). Items, browse screens, and icons in [library.md](../domains/library.md).
 
-**Community** — only present for Logged Out Member / Logged In Member. Section label "COMMUNITY". Items, detail screens, and icons in [community.md](community.md).
+**Community** — only present for Logged Out Member / Logged In Member. Section label "COMMUNITY". Items, detail screens, and icons in [community.md](../domains/community.md).
 
 Both sections' items are *list*-type destinations (top-level `page`s, no level-up bar), deliberately separate from the *detail* screens they don't reach directly.
 
@@ -115,7 +115,7 @@ Both sections' items are *list*-type destinations (top-level `page`s, no level-u
 - Visitor: "Join our community to access posts, questions, groups, and meet people." → **Join for free** → "Get a preview first"
 - Subscriber: "Create your account to access posts, questions, groups, and meet people." → **Finish up now** → "Get a preview first"
 
-The **Join for free** / **Finish up now** CTAs open the chromeless sign-up flow (`Sign Up Start` / `Registration Step`) — see [onboarding.md](onboarding.md).
+The **Join for free** / **Finish up now** CTAs open the chromeless sign-up flow (`Sign Up Start` / `Registration Step`) — see [onboarding.md](../domains/onboarding.md).
 
 **Footer** — "Powered by" on line 1, "MyHealthTeam, a Swoop company" on line 2 (`#626b74`, 14px), pinned to bottom.
 
@@ -135,7 +135,7 @@ The account menu opened from the top-nav profile avatar. It's a single-surface
 component (it serves only Account), so its full spec — container styling, menu
 structure, item→screen map, Notifications-above-divider, bell wiggle, Log-out
 no-op, "View Profile" → My Profile, dropdown icons, and persona availability —
-lives in **[account.md](account.md)**. The nav's role is just the trigger: the
+lives in **[account.md](../domains/account.md)**. The nav's role is just the trigger: the
 profile avatar (§1, member/subscriber personas) toggles it open.
 
 ---
@@ -149,7 +149,7 @@ Added 2026-07-24 to the bottom of **every screen's scroll area** (`renderFooter(
 
 Because the footer is tall, screens are now vertically scrollable: `.screen` is a flex column with a fixed nav/uplevel and a scrollable `.screen__scroll` holding the content + footer. Panel/dropdown overlays stay pinned to the phone viewport (absolute over `.screen`, don't scroll).
 
-**Screen content** is a labelled placeholder by default. The Visitor / Subscriber home screens carry a `modules: true` flag and render the real **Splash Landing** content via `renderModules()` — see [landing.md](landing.md). There is no screenshot-image path.
+**Screen content** is a labelled placeholder by default. The Visitor / Subscriber home screens carry a `modules: true` flag and render the real **Splash Landing** content via `renderModules()` — see [landing.md](../domains/landing.md). There is no screenshot-image path.
 
 ---
 
@@ -160,4 +160,4 @@ icon), the **icon-tinting system**, and the color/type/motion tokens referenced
 throughout this doc are catalogued in [design.md](design.md). The nav icons
 (`menu`, `search`, `ai`, `back`) and logos (`logotype`, `logomark`) are there
 under **Chrome assets**; per-surface panel icons live with their surfaces
-([library.md](library.md), [community.md](community.md), [account.md](account.md)).
+([library.md](../domains/library.md), [community.md](../domains/community.md), [account.md](../domains/account.md)).

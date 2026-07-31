@@ -51,17 +51,19 @@ visitor/index.html             Anonymous Visitor flow
 logged-out-member/index.html   Logged Out Member flow
 logged-in-member/index.html    Logged In Member flow (has the dropdown)
 subscriber/index.html          Subscriber flow
-MANUAL.md                      Index of the foundation/ spec docs
+MANUAL.md                      Index of the spec docs (start here)
 DECISIONS.md                   Chronological decisions log + "on the horizon"
-foundation/                    The spec docs (see MANUAL.md):
+foundation/                    System & behavior (the how):
   system.md                      Architecture & persona model (render, screens, device)
   design.md                      Design language (tokens, type, tinting, chrome assets)
   navigation.md                  Global-nav chrome (top nav, panel, level-up, footer)
-  landing.md                     Splash Landing surface (modules + deep-links + assets)
-  library.md                     Library surface (topic pages, Topic Center, Article)
-  community.md                   Community surface (list + detail screens, icons)
-  account.md                     Account surface (profile dropdown + its screens)
-  onboarding.md                  Onboarding surface (Sign Up Start, Registration Step)
+domains/                       Product surfaces (the what):
+  landing.md                     Splash Landing (modules + deep-links + assets)
+  advisors.md                    Medical Advisory Committee page (splash deep-link)
+  library.md                     Library / "Resources" (topic pages, Topic Center, Article)
+  community.md                   Community (list + detail screens, icons)
+  account.md                     Account (profile dropdown + its screens)
+  onboarding.md                  Onboarding (Sign Up Start, Registration Step)
 ```
 
 (A local `.claude/` folder holds an optional preview helper; it's gitignored and
@@ -90,7 +92,8 @@ four personas — is in **[foundation/system.md](foundation/system.md)**.
 
 ## Docs
 
-- **[MANUAL.md](MANUAL.md)** — index of the `foundation/` spec docs (start here).
+- **[MANUAL.md](MANUAL.md)** — index of the spec docs (start here).
 - **[DECISIONS.md](DECISIONS.md)** — the chronological decisions log.
-- **[foundation/](foundation/)** — the per-surface specs: system, design,
-  navigation, landing, library, community, account, onboarding.
+- **[foundation/](foundation/)** — system & behavior: system, design, navigation.
+- **[domains/](domains/)** — the product surfaces: landing, advisors, library,
+  community, account, onboarding.

@@ -9,7 +9,7 @@ Prototype: plain HTML/CSS/JS in this repo (`../index.html`, `../main.css`, `../m
 This doc is the self-contained spec for the **Splash Landing** — the
 Visitor/Subscriber home built from content modules, plus the flow/deep-link pages
 its CTAs open. The global navigation chrome (top nav, panel, dropdown, level-up
-bar, footer) is a separate surface — see [navigation.md](navigation.md). The
+bar, footer) is a separate surface — see [navigation.md](../foundation/navigation.md). The
 chronological history of every change lives in [DECISIONS.md](../DECISIONS.md). Code
 is the source of truth if any of these disagree — correct the doc, don't erase the
 stale entry.
@@ -71,7 +71,7 @@ also come straight from the frame.
 
 The color tokens, DM Serif type scale, and the size-based letter-spacing rule
 this landing uses are the shared design system — catalogued in
-[design.md](design.md) (the landing's build is where several tokens, e.g.
+[design.md](../foundation/design.md) (the landing's build is where several tokens, e.g.
 `--color-bg-*` and the purple accents, were first added). This section covers only
 what's **specific to the splash sections**:
 

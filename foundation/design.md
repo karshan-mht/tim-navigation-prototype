@@ -81,8 +81,8 @@ were removed (redundant); the node-id tables (here + per surface) are their Figm
 provenance.
 
 Per-surface icon tables live with their surfaces: Library `topic-*.svg`
-([library.md](library.md)), Community `community-*.svg` ([community.md](community.md)),
-dropdown `menu-*.svg` ([account.md](account.md)). The chrome assets are below.
+([library.md](../domains/library.md)), Community `community-*.svg` ([community.md](../domains/community.md)),
+dropdown `menu-*.svg` ([account.md](../domains/account.md)). The chrome assets are below.
 
 ---
 
