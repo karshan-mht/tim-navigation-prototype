@@ -408,7 +408,7 @@ function renderAdvisors() {
       </ul>
       <div class="mod-advisors__watch">
         <h3 class="mod-advisors__watch-head">Watch Now</h3>
-        <img class="mod-advisors__watch-card" src="${ASSET_BASE}/advisor-watch.jpg" alt="Video: What Partners Need To Know About Rage During Perimenopause and Menopause" />
+        <div class="mod-advisors__watch-card"></div>
         <p class="mod-advisors__watch-title">What Partners Need To Know About Rage During Perimenopause and Menopause</p>
       </div>
     </div>
@@ -463,9 +463,9 @@ function renderModules() {
       <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
       <div class="mod-hero__users">
         <span class="mod-hero__avatars">
-          <span class="mod-hero__avatar"></span>
-          <span class="mod-hero__avatar"></span>
-          <span class="mod-hero__avatar"></span>
+          <img class="mod-hero__avatar" src="${ASSET_BASE}/advisor-1.jpg" alt="" />
+          <img class="mod-hero__avatar" src="${ASSET_BASE}/advisor-2.jpg" alt="" />
+          <img class="mod-hero__avatar" src="${ASSET_BASE}/advisor-4.jpg" alt="" />
         </span>
         <span class="mod-hero__count">12,345 women in the community</span>
       </div>
