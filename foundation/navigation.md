@@ -20,8 +20,8 @@ screens), and [onboarding.md](../domains/onboarding.md) (sign-up). History is in
 
 ## Personas & screens
 
-The four personas (nav treatment, `navVariant` / `panelType`) and the full
-per-persona screen inventory live in the architecture doc,
+The four personas (nav treatment, `navVariant`; the panel is now shared, so
+`panelType` was removed) and the full per-persona screen inventory live in the architecture doc,
 [system.md](system.md) → Personas / Screens per persona. Each persona's nav
 *variant* is detailed in §1 below; the content surfaces those screens belong to
 are in [landing.md](../domains/landing.md), [library.md](../domains/library.md),
@@ -35,10 +35,10 @@ are in [landing.md](../domains/landing.md), [library.md](../domains/library.md),
 - **Hamburger (☰)** → opens the slide-out Panel for the current persona. Tapping the overlay (not the panel surface) closes it with a slower ease-out slide-out animation (`closePanel()`).
 - **Nav logotype / logomark** → returns to the persona's home screen (Splash Landing for Visitor and Subscriber, Home as a hub for the member states). In-page `go-home`.
 - **Hidden home hotspot** → a small circle fixed in the top-left corner of each flow page, invisible until hovered, that links back to the root launcher (`../index.html`). Uses a launchpad / 2×2 grid icon. Injected by `main.js`, so it only appears on flow pages (not the launcher).
-- **Panel items** (Library / Community) → navigate to that item's destination screen (an in-page state change within the same persona) and close the panel. Library items and screens are in [library.md](../domains/library.md); Community in [community.md](../domains/community.md).
+- **Panel tabs / hubs** → the shared panel's Home / Resources / Community tabs and its topic-hub rows each carry a `data-screen`; tapping navigates in-persona and closes the panel. See §3 for the full structure and targets.
 - **Profile avatar** (member nav variant) → opens the account **Dropdown** (wired for Logged In Member; tapping outside closes it). The dropdown's menu and its destination screens are spec'd in [account.md](../domains/account.md).
 - **Level-up bar** → only on *detail* screens (Article/Group/Program/Profile/Question/Activity). It steps **one level up** to the parent list/topic (via `upTo` → `data-screen`, e.g. Group Detail → Groups, Article Show → its topic page), not "back" and not necessarily home. Top-level pages (the panel/dropdown destinations) have no level-up bar — the nav logo returns home instead. (`program` has no list parent in the source, so it falls back to home.)
-- **Join CTAs** (nav **Join** pill, panel **Join for free** / **Finish up now**) → open the chromeless sign-up flow **in-persona** (`Sign Up Start` / `Registration Step`) — full spec in [onboarding.md](../domains/onboarding.md).
+- **Join CTA** (nav **Join** pill for Visitor) → opens the chromeless sign-up flow **in-persona** (`Sign Up Start`) — full spec in [onboarding.md](../domains/onboarding.md). *(The panel's old Join for free / Finish up now access cards were removed in the 2026-08-03 shared-panel redesign; see §3.)*
 - **"Log in now"** (Logged Out gated home) and **"Log out"** (dropdown) → currently **no-ops** (auth not wired); see [onboarding.md](../domains/onboarding.md).
 
 ---
@@ -67,7 +67,7 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 - Same as `member`, but Profile avatar shows a real photo instead of the generic placeholder, still with the badge
 - Node refs: 7025:302 (Article Show), 7025:371 (Group Detail), 7031:509 (Program Detail), 7025:440 (Member Profile), 6951:734 (Question Show), 6951:531 (Activity Show), 7042:711 (Home + Dropdown)
 
-**Subscriber:** no subscriber-specific top-nav frame in the source file, so the prototype reuses the **`visitor`** variant (full logotype + Join CTA) and the Visitor landing. Its slide-out panel keeps a subscriber-specific access card ("Finish up now"). See [system.md](system.md) → Personas.
+**Subscriber:** no subscriber-specific top-nav frame in the source file, so the prototype reuses the **`visitor`** variant (full logotype + Join CTA) and the Visitor landing. Its slide-out panel is the shared panel (the old subscriber "Finish up now" access card was removed in the 2026-08-03 redesign; the `registration-step` screen still exists for the sign-up flow). See [system.md](system.md) → Personas.
 
 ---
 
@@ -97,35 +97,32 @@ Figma frames are static (no destination logic). The prototype routes each detail
 
 ## 3. Slide-out Panel
 
-Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from left, 24px padding, 24px gap between sections.
+Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from left, 24px padding, 24px gap between blocks.
 
-**Structure:** `Logotype → Resources section → [Community section] → [Access card] → Footer note`
+**Redesign (2026-08-03, Figma Global Navigation `42yas7Q9FfwhL6xUocjEAl`, panel `7299:1987`).** The panel is now **one shared component for every persona** — no more per-user-type menus or access cards. It moved from persona-specific Resources/Community lists to a single set of top-level entry points plus **topic hubs** as the primary route into content and conversations.
+
+**Structure:** `Logotype → Tab card (Home · Resources · Community) → Topic-hub list → Explore (ToC) → Footer note`
 
 ### Content slots
 
-Each Library / Community item carries a `data-screen` and navigates to a placeholder destination screen within the current persona (in-page state change; the panel closes on click). Both sections' item→screen maps, destination screens, and panel icons live in their surface docs:
+**Tab card** — a bordered (`rgba(98,107,116,0.1)`, radius 16px), 12px-padded row with three icon-over-label tabs (Lato 14px, `#626b74`), each a 44px line icon:
+- **Home** → the current persona's own home screen (`persona.screens[0].id` — Splash for Visitor/Subscriber, Home-as-a-hub for members, gated home for Logged Out).
+- **Resources** → `lib-all` (All Resources). Library surface: [library.md](../domains/library.md).
+- **Community** → `community-overview` (Community Overview). Community surface: [community.md](../domains/community.md).
 
-**Resources** (internally the Library surface; screen ids stay `lib-*`) — bulleted icon list, section label "RESOURCES" (uppercase, `#626b74`, 14px). Present in every persona's panel (full or short set). Items, browse screens, and icons in [library.md](../domains/library.md).
+**Topic-hub list** — eight rows, each a 44px pre-tinted icon (magenta glyph on a pale `#F6EFF8` circle, `assets/hub-{1..8}.svg`) + label (Lato 18px, `#0d1b29`). Labels are the **Figma placeholders** ("Topic Hub Longer Name" / "…Short" / "…Long Name") — the real hub taxonomy is not yet settled. **Every hub opens the shared `topic` screen** ("Topic Hub" — the Topic Center *is* the hub). Collections (`all-collections` / `collection`) are a separate construct.
 
-**Community** — only present for Logged Out Member / Logged In Member. Section label "COMMUNITY". Items, detail screens, and icons in [community.md](../domains/community.md).
+**Explore (ToC)** — an outline pill (`#0f57a8`, radius pill, Lato 16px) below the hubs → `all-collections`.
 
-Both sections' items are *list*-type destinations (top-level `page`s, no level-up bar), deliberately separate from the *detail* screens they don't reach directly.
-
-**Access card** — only present for Visitor / Subscriber. Navy (`#2b2b68`) rounded card, `DM Serif Display` headline "Don't miss out!", body copy, white pill CTA, secondary link.
-- Visitor: "Join our community to access posts, questions, groups, and meet people." → **Join for free** → "Get a preview first"
-- Subscriber: "Create your account to access posts, questions, groups, and meet people." → **Finish up now** → "Get a preview first"
-
-The **Join for free** / **Finish up now** CTAs open the chromeless sign-up flow (`Sign Up Start` / `Registration Step`) — see [onboarding.md](../domains/onboarding.md).
+Because the panel is shared, its destinations (`topic`, `community-overview`, `all-collections`, `lib-all`) are injected into **every** persona's `screens` list (`PANEL_TARGET_SCREENS` loop in `main.js`) so they resolve everywhere, not just in the Visitor/Subscriber splash flow.
 
 **Footer** — "Powered by" on line 1, "MyHealthTeam, a Swoop company" on line 2 (`#626b74`, 14px), pinned to bottom.
 
-**Rendering notes (2026-07-24):** each Library/Community item icon sits in a light-pink circle (`--color-magenta-soft`) with the icon in magenta; section labels are 14px uppercase, normal tracking; the row rollover is a **pill** (`--radius-pill`) filled with a **single flat colour** (`--color-magenta-soft-solid` = `#f8f0fa`, the opaque equivalent of the circle's `--color-magenta-soft` — now `rgba(164,65,188,0.08)` — over white), bleeding wider than the text (negative inline margin into the 24px panel padding). On hover the icon circle goes **transparent** so it disappears into the pill — one uniform colour, no darker circle stacked on the row (using two alpha layers would double up and read as two shades). There is **no close (X)** — the panel dismisses via the scrim with a slower ease-out slide-out (`closePanel()`). The top wordmark uses `logotype.svg` (see [design.md](design.md) → Chrome assets). Color tokens and motion timings referenced here are catalogued in [design.md](design.md).
+**Rendering notes:** hub icons are pre-tinted SVGs used as `<img>` (no CSS `currentColor` tint); the hub-row rollover is still a **pill** (`--radius-pill`) filled with the flat `--color-magenta-soft-solid` (`#f8f0fa`), bleeding wider than the text (negative inline margin into the 24px panel padding). There is **no close (X)** — the panel dismisses via the scrim with a slower ease-out slide-out (`closePanel()`). The top wordmark uses `logotype.svg` (see [design.md](design.md) → Chrome assets). Color tokens and motion timings are catalogued in [design.md](design.md).
 
 ### Node refs
-- Visitor panel: 6950:226
-- Logged Out Member panel: 6960:3
-- Logged In Member panel: 6950:144 *(metadata-only confirmation — not independently fetched, assumed identical to 6960:3 structure since both are Member-tier)*
-- Subscriber panel: 6959:904
+- New shared panel (Member/Subscriber/Visitor variants, identical body): `7299:1987`, `7299:2055`, `7299:2123`, `7287:1599`
+- *(Superseded)* old per-persona panels: Visitor 6950:226, Logged Out Member 6960:3, Logged In Member 6950:144, Subscriber 6959:904
 
 ---
 

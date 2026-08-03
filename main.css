@@ -856,33 +856,61 @@ body {
 
 .panel__top {
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
-.panel__logotype { height: 30px; }  /* panel wordmark (overrides .logo--full) */
-
-.panel__menu { display: flex; flex-direction: column; gap: 28px; }
-
-.panel__section-label {
-  font-size: 14px;
-  text-transform: uppercase;
-  color: var(--color-text-secondary);
-  margin: 0 0 8px;
-  letter-spacing: 0;
-}
-
-.panel__section { display: flex; flex-direction: column; gap: 4px; }
-
-.panel__item {
+.panel__brand {
+  height: 56px;
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: calc(100% + 24px);
-  margin: 0 -12px;          /* bleed the rollover wider, into the panel padding */
-  padding: 6px 12px;
-  border-radius: var(--radius-pill);  /* pill — clearly rounded rollover */
+  justify-content: center;
+}
+.panel__logotype { height: 36px; width: auto; }  /* panel wordmark (overrides .logo--full) */
+
+/* Home / Resources / Community tab card (bordered, rounded) */
+.panel__tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border: 1px solid rgba(98, 107, 116, 0.1);
+  border-radius: 16px;
+}
+.panel__tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
   background: none;
   border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 14px;
+  letter-spacing: -0.25px;
+  color: var(--color-text-secondary);
+  transition: color 0.18s ease;
+}
+.panel__tab:hover { color: var(--color-text); }
+.panel__tab-icon { width: 44px; height: 44px; display: block; }
+
+/* Topic-hub list — the new primary entry point */
+.panel__hubs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+.panel__hub {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  width: calc(100% + 24px);
+  margin: 0 -12px;          /* bleed the hover pill into the panel padding */
+  padding: 0 12px;
+  height: 44px;
+  border: none;
+  background: none;
+  border-radius: var(--radius-pill);
   text-align: left;
   cursor: pointer;
   font-family: var(--font-body);
@@ -890,90 +918,27 @@ body {
   color: var(--color-text);
   transition: background 0.18s ease;
 }
-/* Rollover: a single flat pink pill (solid, no alpha). On hover the icon circle
-   goes transparent so it disappears into the pill — one uniform colour, not a
-   darker circle stacked on a lighter row. */
-.panel__item:hover { background: var(--color-magenta-soft-solid); }
-.panel__item:hover .panel__item-icon { background: transparent; }
+.panel__hub:hover { background: var(--color-magenta-soft-solid); }
+/* Hub icons are pre-tinted SVGs (magenta glyph on a pale circle) — no CSS tint. */
+.panel__hub-icon { width: 44px; height: 44px; flex-shrink: 0; display: block; }
 
-/* Light-pink circle behind each Library / Community icon; icon itself magenta. */
-.panel__item-icon {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background: var(--color-magenta-soft);
-  color: var(--color-magenta);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.18s ease;
-}
-
-.panel__access {
-  position: relative;
-  background: var(--color-navy);
-  border-radius: var(--radius-card);
-  padding: 20px;
-  color: #fff;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  align-items: flex-start;
-}
-.panel__access::before,
-.panel__access::after {
-  content: "";
-  position: absolute;
-  width: 160px;
-  height: 100px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
-}
-.panel__access::before { top: -50px; right: -30px; }
-.panel__access::after { bottom: -50px; left: -40px; }
-.panel__access h3 {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: 28px;
-  margin: 0 0 6px;
-  position: relative;
-}
-.panel__access p {
-  font-size: 18px;
-  margin: 0;
-  position: relative;
-  line-height: 1.45;
-}
-.panel__access-btn {
-  width: 100%;
-  height: 52px;
-  border: none;
+/* Explore (ToC) — outline pill below the hubs */
+.panel__explore {
+  align-self: flex-start;
+  height: 44px;
+  margin-top: 0;
+  padding: 0 24px;
+  border: 1px solid var(--color-primary);
   border-radius: var(--radius-pill);
-  background: #fff;
+  background: none;
   color: var(--color-primary);
   font-family: var(--font-body);
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  position: relative;
-  margin-top: 12px;
-}
-.panel__access-btn:hover { filter: brightness(0.97); }
-.panel__access-note {
   font-size: 16px;
-  text-align: center;
-  width: 100%;
-  position: relative;
-  opacity: 0.9;
-  background: none;
-  border: none;
-  color: inherit;
-  font-family: inherit;
+  letter-spacing: -0.25px;
   cursor: pointer;
-  margin-top: 12px;
+  transition: background 0.18s ease;
 }
+.panel__explore:hover { background: var(--color-primary-soft); }
 
 .panel__footer {
   margin-top: auto;

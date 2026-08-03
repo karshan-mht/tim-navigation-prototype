@@ -16,8 +16,8 @@ Defined in `:root` (`main.css`):
 | Token | Value | Use |
 |---|---|---|
 | `--color-primary` | `#0f57a8` | primary blue — Join button, links, level-up label |
-| `--color-primary-soft` | `#dee5f1` | soft blue — listicle rollover |
-| `--color-navy` | `#2b2b68` | panel access card background |
+| `--color-primary-soft` | `#dee5f1` | soft blue — listicle & panel Explore rollover |
+| `--color-navy` | `#2b2b68` | hero / factoid gradient (was the old panel access-card bg) |
 | `--color-text` | `#0d1b29` | ink — body + nav icon tint |
 | `--color-text-secondary` | `#626b74` | secondary/label text |
 | `--color-text-muted` | `rgba(13,27,41,0.7)` | muted text |

@@ -29,8 +29,9 @@ splash:
 - **Anonymous Visitor** — the Splash Landing is the home.
 - **Subscriber** — top nav and landing **mirror the Visitor** exactly
   (`navVariant: "visitor"`; home screens mirror Visitor's Splash / Topic /
-  Article), **but** its slide-out panel keeps a subscriber-specific access card
-  ("Finish up now").
+  Article). Its slide-out panel is now the shared panel (the old
+  subscriber-specific "Finish up now" access card was removed 2026-08-03 — see
+  [navigation.md](../foundation/navigation.md) §3).
 
 It does **not** render for:
 

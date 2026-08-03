@@ -60,6 +60,13 @@ documented in [landing.md](landing.md).
 
 ## Assets — Library (panel topic) icons
 
+> **Superseded (2026-08-03):** the side-panel redesign removed the per-topic
+> Library menu list (and its `icon()` calls), so these icons are **no longer
+> rendered**. The panel now shows generic topic-hub icons (`assets/hub-{1..8}.svg`,
+> pre-tinted). The files below remain in `assets/` but are currently unused; kept
+> for reference / a possible future Resources page. See
+> [navigation.md](../foundation/navigation.md) §3.
+
 From the Visitor panel `6950:226` (Library). Monochrome SVGs, tinted magenta via
 CSS like the other panel icons (see [design.md](../foundation/design.md) → icon-tinting
 system):

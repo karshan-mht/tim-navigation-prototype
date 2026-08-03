@@ -59,15 +59,19 @@ own **My Profile**, which is an Account screen; see [account.md](account.md).)
 
 ## Community Overview
 
-`community-overview` (label "Community Overview") — a top-level page reached from
-outside the panel:
+`community-overview` (label "Community Overview") — a top-level page reached from:
 
+- The shared panel's **Community** tab (all four personas, 2026-08-03 redesign — see [navigation.md](../foundation/navigation.md) §3)
 - Splash Community section **"Join the conversation →"** (see [landing.md](landing.md))
-- Panel access card secondary link **"Get a preview first"** (Visitor / Subscriber)
 
 ---
 
 ## Assets — Community panel icons
+
+> **Superseded (2026-08-03):** the side-panel redesign removed the Community menu
+> list from the panel (Community is now a single tab → Community Overview), so
+> these icons are **no longer rendered**. The files remain in `assets/` but are
+> currently unused. See [navigation.md](../foundation/navigation.md) §3.
 
 From the Logged-Out Member panel `6960:3` (Community). Monochrome SVGs, tinted
 magenta via CSS like the other panel icons (see [design.md](../foundation/design.md) →

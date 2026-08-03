@@ -67,12 +67,16 @@ scrolls; skipped at ≤430px width, where a media query full-bleeds the phone.
 Four auth states, each with its own nav treatment and panel content (nav-variant
 details in [navigation.md](navigation.md) §1):
 
-| Persona | `navVariant` | `panelType` | Home | Dropdown? |
-|---|---|---|---|---|
-| **Anonymous Visitor** | `visitor` (full logotype + Join) | `visitor` (Resources 6 + "Join for free" card) | Splash Landing | No |
-| **Logged Out Member** | `member` (logomark + generic profile) | `member` (Resources 4 + Community 5) | Gated home | Icon only, not built |
-| **Logged In Member** | `member-photo` (logomark + photo) | `member` (Resources 4 + Community 5) | Hub (placeholder) | Yes |
-| **Subscriber** | `visitor` (mirrors Visitor) | `subscriber` (Resources 6 + "Finish up now" card) | Splash Landing (mirrors Visitor) | No |
+The **side panel is now shared** across all four personas (Home / Resources /
+Community tabs + topic hubs + Explore — see [navigation.md](navigation.md) §3),
+so there is no longer a `panelType`. Only the top-nav treatment still varies:
+
+| Persona | `navVariant` | Home | Dropdown? |
+|---|---|---|---|
+| **Anonymous Visitor** | `visitor` (full logotype + Join) | Splash Landing | No |
+| **Logged Out Member** | `member` (logomark + generic profile) | Gated home | Icon only, not built |
+| **Logged In Member** | `member-photo` (logomark + photo) | Hub (placeholder) | Yes |
+| **Subscriber** | `visitor` (mirrors Visitor) | Splash Landing (mirrors Visitor) | No |
 
 **Open question:** should Subscriber have its own top-nav frame, or is reusing the
 Visitor nav correct? No Subscriber tabs/uplevel frame exists in the Figma file to

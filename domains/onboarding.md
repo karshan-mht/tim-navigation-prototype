@@ -3,8 +3,8 @@
 The onboarding surface: the start of account creation — **Sign Up Start** and
 **Registration Step** — and every CTA that opens them, plus the auth transitions
 that are deliberately *not* wired yet. These CTAs originate on other surfaces (the
-splash in [landing.md](landing.md), the nav Join button / panel access cards in
-[navigation.md](../foundation/navigation.md) / [account.md](account.md)), but the destination
+splash in [landing.md](landing.md), the nav Join button in
+[navigation.md](../foundation/navigation.md)), but the destination
 pages and their behavior are specified here. Chronological history is in
 [DECISIONS.md](../DECISIONS.md). Code is the source of truth — correct this doc if it
 drifts.
@@ -43,9 +43,13 @@ chromeless page), **not** a cross-folder jump:
 | Trigger | Persona(s) | Opens |
 |---|---|---|
 | Nav **Join** pill (`visitor` nav variant) | Visitor, Subscriber | `signup-start` |
-| Panel access card **Join for free** | Visitor | `signup-start` |
 | Splash Community **Join for free** | Visitor, Subscriber | `signup-start` |
-| Panel access card **Finish up now** | Subscriber | `registration-step` |
+
+> **Note (2026-08-03 shared-panel redesign):** the panel's **Join for free** and
+> **Finish up now** access cards were removed. `signup-start` is still reached via
+> the nav Join pill and the splash. **`registration-step` currently has no UI entry
+> point** (its only trigger was the panel's "Finish up now" card) — the screen is
+> kept for the pending subscriber-specific design. Flagged, not deleted.
 
 ---
 
