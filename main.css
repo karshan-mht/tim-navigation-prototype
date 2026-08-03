@@ -779,22 +779,39 @@ body {
   line-height: 22px;
 }
 
-/* In-page pill (top of body) — replaces the level-up bar on some pages.
-   Sits top-left, scrolls with the content, navigates one level up. */
-.page-pill {
-  align-self: flex-start;   /* top-left, don't stretch across the body */
-  display: inline-flex;
-  align-items: center;
-  margin: 16px 12px 0;
-  padding: 8px 16px;
-  height: 40px;
-  border: 0.5px solid var(--color-pill-border);
-  border-radius: var(--radius-pill);
-  background: #fff;
+/* In-page "series" callout box (placeholder) — sits near the top of an article
+   that belongs to a series, with a link to explore the full series. Replaced the
+   old in-page "Collection" label pill. */
+.series-box {
+  margin: 16px 12px;        /* top of the body, inset from the device edges */
+  padding: 16px;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  background: #f6f7f9;
+}
+.series-box__label {
+  margin: 0 0 6px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+.series-box__text {
+  margin: 0 0 12px;
+  font-size: 16px;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+.series-box__link {
+  padding: 0;
+  border: none;
+  background: none;
   cursor: pointer;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--color-primary);
 }
 

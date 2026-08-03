@@ -152,7 +152,7 @@ const SPLASH_FLOW_SCREENS = [
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
   // Article Show (in a collection) has no level-up bar; instead an in-page "pill"
   // at the top of the body links back up to its Collection.
-  { id: "article-collection", label: "Article Show (in Collection)", type: "page", title: "Article Show", pill: { label: "Collection", screen: "collection" } },
+  { id: "article-collection", label: "Article Show (in Collection)", type: "page", title: "Article Show", series: { screen: "collection" } },
   COMMUNITY_OVERVIEW_SCREEN,
   ...LIBRARY_SCREENS_FULL,
 ];
@@ -297,6 +297,20 @@ function renderUplevel(screen) {
       ${iconImg}
       <span>${screen.backLabel}</span>
     </button>
+  `;
+}
+
+// In-page "series" callout box (placeholder) — an article that belongs to a
+// series shows a small box near the top with a link to explore the full series.
+// Replaces the old "Collection" label pill. `series.screen` is the collection to
+// open (in-page navigation via data-screen).
+function renderSeriesBox(series) {
+  return `
+    <div class="series-box">
+      <p class="series-box__label">Part of a series</p>
+      <p class="series-box__text">This article is part of a series.</p>
+      <button class="series-box__link" data-screen="${series.screen}">Explore the full series &rarr;</button>
+    </div>
   `;
 }
 
@@ -671,13 +685,10 @@ function render() {
     content = renderAdvisors();
   } else if (screen.type === "gated-home") {
     content = renderGatedHome();
+  } else if (screen.series) {
+    content = renderSeriesBox(screen.series);
   } else {
     content = `<div class="screen__placeholder">${screen.title}</div>`;
-  }
-  // In-page pill at the top of the body (e.g. Collection → All Collections),
-  // used instead of a sticky level-up bar. Navigates like the level-up bar did.
-  if (screen.pill) {
-    content = `<button class="page-pill" data-screen="${screen.pill.screen}"><span>${screen.pill.label}</span></button>` + content;
   }
   // Fill the viewport (centering the label / keeping the footer below the fold)
   // only for label & gated screens; module/content screens flow at natural height.

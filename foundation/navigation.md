@@ -90,7 +90,7 @@ Only on **detail** screens. It steps **one level up** to the parent (`upTo` → 
 
 Labels/targets follow the linked frame (`7283:153`): Article Show now levels up to the **Topic Hub** (was the HRT topic page), and Activity Show to **Posts** (was All Community). `Program Detail` has no Programs list, so it falls back to home.
 
-**In-page pill (non-sticky variant).** A screen can instead carry a `pill: { label, screen }` — rendered as a rounded **label pill** at the top of the body (`.page-pill`, label only, no icon, navigates via `data-screen`), scrolling **with** the content rather than pinned. The **Article Show (in Collection)** screen uses this (`type: "page"` + `pill` → Collection). It's deliberately the non-sticky sibling of the level-up pill above; its parent **Collection** is a plain `page`.
+**Series callout (in-page, non-sticky).** An article that belongs to a series carries a `series: { screen }` and renders a small **callout box** near the top of the body (`.series-box` — "Part of a series" / a line of copy / an **"Explore the full series →"** link that navigates via `data-screen`), scrolling **with** the content. The **Article Show (in Collection)** screen uses this to link up to its **Collection**; the box is a **placeholder**. This replaced the old "Collection" label pill (removed 2026-08-03). Note: this screen has **no** page-title label — the callout is its only chrome. Its parent **Collection** is a plain `page`.
 
 ---
 

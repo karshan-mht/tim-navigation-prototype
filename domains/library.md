@@ -51,10 +51,11 @@ stepping one level up to the Topic Hub (pill mechanism + Figma node ids in
 | Article Show | `article` | Topic Hub (`topic`) |
 
 The splash's "one Article card" opens a separate Article Show (in a collection).
-That Article Show has no level-up pill; an in-page **label pill** at the top links
-back up to its **Collection** (see [navigation.md](../foundation/navigation.md) §2). Collection
-itself is a plain page. That collection chain is a Splash Landing deep-link,
-documented in [landing.md](landing.md).
+That Article Show has no level-up pill and no page-title label; an in-page
+**"part of a series" callout box** near the top links to its **Collection** (see
+[navigation.md](../foundation/navigation.md) §2). Collection itself is a plain page.
+That collection chain is a Splash Landing deep-link, documented in
+[landing.md](landing.md).
 
 ---
 
