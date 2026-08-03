@@ -439,6 +439,22 @@ function renderModules() {
   // from ADVISORS, so the landing and the Advisors page stay in sync.
   const experts = ADVISORS.slice(0, 3);
 
+  // The closing CTA card differs for the Subscriber: they've already started
+  // signing up, so it's a "finish up" card whose primary button opens the
+  // Registration Step — its only entry point after the 2026-08-03 panel
+  // redesign removed the "Finish up now" panel access card. Visitors keep the
+  // standard "Join for free" → Sign Up Start.
+  const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
+  const ctaTitle = isSubscriber
+    ? "You're almost in."
+    : "You don't have to figure this out alone.";
+  const ctaSub = isSubscriber
+    ? "Finish setting up your account to unlock posts, questions, groups, and the full community."
+    : "Get medically-reviewed resources, tips from real women, and a community who gets it.";
+  const ctaPrimary = isSubscriber
+    ? `<button class="mod-btn-primary" data-screen="registration-step">Finish up now</button>`
+    : `<button class="mod-btn-primary" data-screen="signup-start">Join for free</button>`;
+
   return `
     <section class="mod-hero">
       <img class="mod-hero__ring mod-hero__ring--tl" src="${ASSET_BASE}/hero-rings-tl.svg" alt="" aria-hidden="true" />
@@ -558,10 +574,10 @@ function renderModules() {
       <div class="mod-cta-card">
         <img class="mod-cta-card__graphic mod-cta-card__graphic--tr" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
         <img class="mod-cta-card__graphic mod-cta-card__graphic--bl" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
-        <p class="mod-cta-card__title">You don't have to figure this out alone.</p>
-        <p class="mod-cta-card__sub">Get medically-reviewed resources, tips from real women, and a community who gets it.</p>
+        <p class="mod-cta-card__title">${ctaTitle}</p>
+        <p class="mod-cta-card__sub">${ctaSub}</p>
         <div class="mod-cta-card__buttons">
-          <button class="mod-btn-primary" data-screen="signup-start">Join for free</button>
+          ${ctaPrimary}
           <button class="mod-btn-secondary" data-screen="symptom-checker">Check symptoms first</button>
         </div>
       </div>

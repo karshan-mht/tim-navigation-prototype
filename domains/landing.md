@@ -104,12 +104,15 @@ is a fully built page with its own spec in [advisors.md](advisors.md):
 | Listicle cards | **Listicle Detail** |
 | One Article card | **Article Show** (in a collection) → links back to its **Collection** via an in-page label pill |
 | "View all advisors" | **Advisors** — see [advisors.md](advisors.md) |
-| "Join the conversation" (Community) / panel "Get a preview first" | **Community Overview** |
-| Community section **Join for free** | **Sign Up Start** — see [onboarding.md](onboarding.md) |
+| "Join the conversation" (Community) / panel Community tab | **Community Overview** |
+| Closing card primary — Visitor: **Join for free** | **Sign Up Start** — see [onboarding.md](onboarding.md) |
+| Closing card primary — Subscriber: **Finish up now** | **Registration Step** — see [onboarding.md](onboarding.md) |
 
-The splash's **Join** CTAs open the sign-up flow; that surface (Sign Up Start /
-Registration Step, chromeless rendering, and the entry points from the nav and
-panel too) is specified in [onboarding.md](onboarding.md).
+The **closing CTA card is persona-aware**: Visitors see "You don't have to
+figure this out alone." / **Join for free** → Sign Up Start; Subscribers see
+"You're almost in." / **Finish up now** → Registration Step (the card is now the
+sole entry point to Registration Step). That sign-up surface — chromeless
+rendering plus the nav entry point — is specified in [onboarding.md](onboarding.md).
 
 ---
 

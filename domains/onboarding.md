@@ -43,13 +43,17 @@ chromeless page), **not** a cross-folder jump:
 | Trigger | Persona(s) | Opens |
 |---|---|---|
 | Nav **Join** pill (`visitor` nav variant) | Visitor, Subscriber | `signup-start` |
-| Splash Community **Join for free** | Visitor, Subscriber | `signup-start` |
+| Splash closing card **Join for free** | **Visitor only** | `signup-start` |
+| Splash closing card **Finish up now** | **Subscriber only** | `registration-step` |
 
-> **Note (2026-08-03 shared-panel redesign):** the panel's **Join for free** and
-> **Finish up now** access cards were removed. `signup-start` is still reached via
-> the nav Join pill and the splash. **`registration-step` currently has no UI entry
-> point** (its only trigger was the panel's "Finish up now" card) — the screen is
-> kept for the pending subscriber-specific design. Flagged, not deleted.
+The splash's closing CTA card is **persona-aware** (`renderModules()` in `main.js`):
+for the Subscriber it reads "You're almost in." with a **Finish up now** button →
+`registration-step`; for the Visitor it's the standard "…figure this out alone." /
+**Join for free** → `signup-start`.
+
+> **Note (2026-08-03 shared-panel redesign):** the panel's Join for free /
+> Finish up now access cards were removed. Their roles moved to the splash
+> closing card above — which is now the sole entry point to `registration-step`.
 
 ---
 
