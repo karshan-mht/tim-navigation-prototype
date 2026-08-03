@@ -42,14 +42,16 @@ chromeless page), **not** a cross-folder jump:
 
 | Trigger | Persona(s) | Opens |
 |---|---|---|
-| Nav **Join** pill (`visitor` nav variant) | Visitor, Subscriber | `signup-start` |
+| Nav pill **Join** | **Visitor only** | `signup-start` |
+| Nav pill **Finish** | **Subscriber only** | `registration-step` |
 | Splash closing card **Join for free** | **Visitor only** | `signup-start` |
 | Splash closing card **Finish up now** | **Subscriber only** | `registration-step` |
 
-The splash's closing CTA card is **persona-aware** (`renderModules()` in `main.js`):
-for the Subscriber it reads "You're almost in." with a **Finish up now** button →
-`registration-step`; for the Visitor it's the standard "…figure this out alone." /
-**Join for free** → `signup-start`.
+Both the nav pill and the splash closing card are **persona-aware** (Subscriber
+and Visitor share the `visitor` nav variant, so the split is by persona key, not
+nav variant). For the Subscriber the nav pill reads **Finish** and the closing
+card reads "You're almost in." / **Finish up now** — both → `registration-step`.
+For the Visitor they're **Join** / **Join for free** → `signup-start`.
 
 > **Note (2026-08-03 shared-panel redesign):** the panel's Join for free /
 > Finish up now access cards were removed. Their roles moved to the splash

@@ -245,12 +245,15 @@ function renderTopNav() {
   // The logotype / mark returns to the persona's home screen (go-home).
   const left = `<button class="logo-btn" data-action="go-home" aria-label="Home">${logoImg}</button>`;
 
-  // Both member states use Figma's placeholder_profile illustration for the
-  // avatar (the source file has no distinct member headshot, and the stock
-  // Unsplash photo it replaced was a prototype stand-in). The member vs.
-  // member-photo nav variants remain distinct in the persona model.
+  // The nav pill is persona-aware within the shared `visitor` variant: a
+  // Subscriber has already started signing up, so it reads "Finish" →
+  // Registration Step (matching the splash "Finish up now" card); a Visitor sees
+  // "Join" → Sign Up Start. Both member states use Figma's placeholder_profile
+  // illustration for the avatar (the source file has no distinct member
+  // headshot, and the stock Unsplash photo it replaced was a prototype stand-in).
+  const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
   const right = isVisitor
-    ? `<button class="join-btn" data-screen="signup-start">Join</button>`
+    ? `<button class="join-btn" data-screen="${isSubscriber ? "registration-step" : "signup-start"}">${isSubscriber ? "Finish" : "Join"}</button>`
     : `<button class="profile-btn" data-action="toggle-dropdown" aria-label="Account menu">
          <span class="profile-avatar"><img class="profile-img" src="${PROFILE_PLACEHOLDER}" alt="" /></span>
          <span class="badge"></span>
