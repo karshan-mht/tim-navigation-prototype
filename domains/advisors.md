@@ -1,9 +1,10 @@
 # TIM Advisors — spec
 
 The **Medical Advisory Committee** page — the intro, the five advisor cards, and a
-"Watch Now" clip. It's a splash deep-link destination (reached from the landing's
-Experts "View all advisors →"), so its entry point lives in
-[landing.md](landing.md); this doc owns the page itself. Built from the separate
+"Watch Now" clip. Reached two ways: the landing's Experts "View all advisors →"
+(see [landing.md](landing.md)) and the **global footer's "Medical Advisors"** link
+(see [navigation.md](../foundation/navigation.md) §5) — the latter makes it reachable
+from every persona. This doc owns the page itself. Built from the separate
 Figma file **Medical Advisors** (`Zkiv6o4d7eyQOLAvwjVYTy`, mobile `2:43`).
 Chronological history is in [DECISIONS.md](../DECISIONS.md). Code
 (`../main.js`, `../main.css`) is the source of truth — correct this doc if it drifts.
@@ -12,8 +13,9 @@ Chronological history is in [DECISIONS.md](../DECISIONS.md). Code
 
 ## Screen & rendering
 
-- `advisors` screen: top-level `type: "page"` (no level-up bar). Present in the
-  personas whose home is the splash (Visitor, Subscriber) via `SPLASH_FLOW_SCREENS`.
+- `advisors` screen: top-level `type: "page"` (no level-up bar). In the splash
+  personas (Visitor, Subscriber) via `SPLASH_FLOW_SCREENS`, and injected into the
+  member personas too (`SHARED_TARGET_SCREENS`) so the footer link resolves for all.
 - `render()` branches on `screen.id === "advisors"` → `renderAdvisors()`; the page
   flows at natural height (excluded from `screen__body--fill`).
 - Content data is the `ADVISORS` array in `main.js` (real names/roles/affiliations/

@@ -12,7 +12,7 @@ type from the **MHT Style Guide** (`zV2gbuNONeoyeRVcFUFWeZ`, node `3941:17`).
 The Splash Landing has six sections — **Checker** (hero + symptom-checker card),
 **Listicles**, **Articles**, **Experts**, **Factoid**, **Community** — whose CTAs
 deep-link to in-prototype pages (Symptom Checker, Listicle Detail, Article Show →
-Collection → All Collections, Advisors, Community Overview, Sign Up Start).
+Collection → All Articles, Advisors, Community Overview, Sign Up Start).
 
 ## Quick start
 

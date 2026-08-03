@@ -112,9 +112,9 @@ Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from l
 
 **Topic-hub list** — eight rows, each a 44px pre-tinted icon (magenta glyph on a pale `#F6EFF8` circle, `assets/hub-{1..8}.svg`) + label (Lato 18px, `#0d1b29`). Labels are the **Figma placeholders** ("Topic Hub Longer Name" / "…Short" / "…Long Name") — the real hub taxonomy is not yet settled. **Every hub opens the shared `topic` screen** ("Topic Hub" — the Topic Center *is* the hub). Collections (`all-collections` / `collection`) are a separate construct.
 
-**Explore (ToC)** — an outline pill (`#0f57a8`, radius pill, Lato 16px) below the hubs → `all-collections`.
+**Explore (ToC)** — an outline pill (`#0f57a8`, radius pill, Lato 16px) below the hubs → the `all-collections` screen (display label **"All Articles"**; the internal id stays `all-collections`).
 
-Because the panel is shared, its destinations (`topic`, `community-overview`, `all-collections`, `lib-all`) are injected into **every** persona's `screens` list (`PANEL_TARGET_SCREENS` loop in `main.js`) so they resolve everywhere, not just in the Visitor/Subscriber splash flow.
+Because the panel is shared — and the footer's "Medical Advisors" link is global — these destinations (`topic`, `community-overview`, `all-collections`, `advisors`, `lib-all`) are injected into **every** persona's `screens` list (`SHARED_TARGET_SCREENS` loop in `main.js`) so they resolve everywhere, not just in the Visitor/Subscriber splash flow.
 
 **Footer** — "Powered by" on line 1, "MyHealthTeam, a Swoop company" on line 2 (`#626b74`, 14px), pinned to bottom.
 
@@ -141,7 +141,7 @@ profile avatar (§1, member/subscriber personas) toggles it open.
 
 Added 2026-07-24 to the bottom of **every screen's scroll area** (`renderFooter()` in `main.js`). Content mirrors the Figma mobile footer (`6371:29` / `6371:139`). It's separated from the page content by ample space (`48px` margin-top on `.footer`) — no divider line. Two bands:
 
-- **Bar** (white): horizontal wordmark (`logotype.svg`) + headline "Expert advice. Real women. Real talk." (matches the Splash frame footer, node 4101:162), then two link columns — About / Editorial Process / Partner with Us / Accessibility · Getting Started / Community Guidelines / Help Center / Crisis (links are non-navigating placeholders).
+- **Bar** (white): horizontal wordmark (`logotype.svg`) + headline "Expert advice. Real women. Real talk." (matches the Splash frame footer, node 4101:162), then two link columns — About / Editorial Process / Partner with Us / **Medical Advisors** · Getting Started / Community Guidelines / Help Center / Crisis. All are non-navigating placeholders **except "Medical Advisors"**, which links to the built Advisors page (`data-screen="advisors"`; replaced the former "Accessibility" placeholder). The footer is global, so `advisors` is injected into every persona (see §3).
 - **End** (grey `#f3f4f6`): legal line "Terms of Use · Privacy Policy · Cookie Policy · Health Data · [icon] Your Privacy Choices · CA Notice at Collection" (the CCPA opt-out icon is `assets/privacy-choices.png`), the medical disclaimer, and "© 2026 MyHealthTeam, A Swoop Company."
 
 Because the footer is tall, screens are now vertically scrollable: `.screen` is a flex column with a fixed nav/uplevel and a scrollable `.screen__scroll` holding the content + footer. Panel/dropdown overlays stay pinned to the phone viewport (absolute over `.screen`, don't scroll).

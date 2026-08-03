@@ -123,13 +123,17 @@ const ACCOUNT_SCREENS = [
 
 // Shared panel destinations — the Topic Hub (the Topic Center *is* the hub, so
 // every panel hub row opens it), the Community Overview (the Community tab), and
-// All Collections ("Explore (ToC)"). Defined once and both listed in the splash
-// flow AND injected into every persona (see below) so the fully-shared panel's
-// targets resolve in all four personas. The Resources tab points at LIB.all.
+// All Articles ("Explore (ToC)"). Also the Advisors page, reached from the global
+// footer's "Medical Advisors" link. Defined once and injected into every persona
+// (see below) so these shared-chrome targets resolve in all four personas. The
+// Resources tab points at LIB.all.
+// (`all-articles` keeps the internal id `all-collections` — only its display
+// label/title were renamed from "All Collections".)
 const TOPIC_HUB_SCREEN = { id: "topic", label: "Topic Hub", type: "page", title: "Topic Hub" };
 const COMMUNITY_OVERVIEW_SCREEN = { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" };
-const ALL_COLLECTIONS_SCREEN = { id: "all-collections", label: "All Collections", type: "page", title: "All Collections" };
-const PANEL_TARGET_SCREENS = [TOPIC_HUB_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_COLLECTIONS_SCREEN, LIB.all];
+const ALL_ARTICLES_SCREEN = { id: "all-collections", label: "All Articles", type: "page", title: "All Articles" };
+const ADVISORS_SCREEN = { id: "advisors", label: "Advisors", type: "page", title: "Advisors" };
+const SHARED_TARGET_SCREENS = [TOPIC_HUB_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all];
 
 // Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
 // mirrors the Visitor landing). The splash content modules deep-link into these:
@@ -140,12 +144,12 @@ const SPLASH_FLOW_SCREENS = [
   { id: "symptom-checker", label: "Symptom Checker", type: "page", title: "Symptom Checker" },
   { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
-  { id: "advisors", label: "Advisors", type: "page", title: "Advisors" },
+  ADVISORS_SCREEN,
   // Topic Hub is a top-level page (no level-up bar) — the side panel + in-page
   // navigation orient the user at this level.
   TOPIC_HUB_SCREEN,
   { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic", upTo: "topic" },
-  ALL_COLLECTIONS_SCREEN,
+  ALL_ARTICLES_SCREEN,
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
   // Article Show (in a collection) has no level-up bar; instead an in-page "pill"
   // at the top of the body links back up to its Collection.
@@ -203,11 +207,12 @@ const PERSONAS = {
 };
 
 // The side panel is now identical for every persona (Home / Resources /
-// Community tabs + topic hubs + Explore). Guarantee its shared destinations
-// resolve everywhere by injecting any that a persona's screen list is missing.
+// Community tabs + topic hubs + Explore), and the global footer links to the
+// Advisors page. Guarantee these shared-chrome destinations resolve everywhere
+// by injecting any that a persona's screen list is missing.
 Object.values(PERSONAS).forEach((p) => {
   const have = new Set(p.screens.map((s) => s.id));
-  PANEL_TARGET_SCREENS.forEach((s) => {
+  SHARED_TARGET_SCREENS.forEach((s) => {
     if (!have.has(s.id)) p.screens.push(s);
   });
 });
@@ -590,11 +595,21 @@ function renderModules() {
 }
 
 // Global site footer — added to the bottom of every screen's scroll area.
-// Content mirrors the Figma mobile footer (6371:29). Links are non-navigating
-// placeholders (no destinations in the prototype). "Your Privacy Choices" keeps
-// its CCPA opt-out icon (raster, works over file://).
+// Content mirrors the Figma mobile footer (6371:29). Most links are
+// non-navigating placeholders; "Medical Advisors" links to the built Advisors
+// page (`data-screen="advisors"`). "Your Privacy Choices" keeps its CCPA opt-out
+// icon (raster, works over file://).
 function renderFooter() {
-  const col = (labels) => labels.map((t) => `<a class="footer__link">${t}</a>`).join("");
+  // Each item is a plain label (placeholder link) or { label, screen } to
+  // navigate via the shared [data-screen] handler.
+  const col = (items) =>
+    items
+      .map((it) => {
+        const label = typeof it === "string" ? it : it.label;
+        const attr = typeof it === "string" ? "" : ` data-screen="${it.screen}"`;
+        return `<a class="footer__link"${attr}>${label}</a>`;
+      })
+      .join("");
   const legal = ["Terms of Use", "Privacy Policy", "Cookie Policy", "Health Data"];
   const sep = ` <span class="footer__dot">&middot;</span> `;
   return `
@@ -605,7 +620,7 @@ function renderFooter() {
           <p class="footer__headline">Expert advice. Real women. Real talk.</p>
         </div>
         <div class="footer__links">
-          <div class="footer__col">${col(["About", "Editorial Process", "Partner with Us", "Accessibility"])}</div>
+          <div class="footer__col">${col(["About", "Editorial Process", "Partner with Us", { label: "Medical Advisors", screen: "advisors" }])}</div>
           <div class="footer__col">${col(["Getting Started", "Community Guidelines", "Help Center", "Crisis"])}</div>
         </div>
       </div>
