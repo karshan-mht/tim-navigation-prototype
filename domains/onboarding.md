@@ -21,7 +21,7 @@ the `screen.chromeless` branch of `render()` (~`main.js:571`); the ✕ runs the
 ## Screens
 
 Both are `type: "page"`, `chromeless: true` — they render with **no top nav, no
-level-up bar, no footer**; just an **✕** in the top-left (`.flow-close`,
+level-up pill, no footer**; just an **✕** in the top-left (`.flow-close`,
 `data-action="close-flow"`) that closes **back to the page they opened from**
 (`state.prevScreenId`).
 

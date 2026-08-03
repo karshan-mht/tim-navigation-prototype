@@ -4,7 +4,7 @@ Source: Figma **Global Navigation** file `42yas7Q9FfwhL6xUocjEAl`.
 Prototype: plain HTML/CSS/JS in this repo (`../index.html`, `../main.css`, `../main.js`), no build step.
 
 This doc is the spec for the **global navigation chrome** — the top nav, slide-out
-panel (container), level-up bar, and global footer: how they behave and their
+panel (container), level-up pill, and global footer: how they behave and their
 component structure (props, states, Figma node ids). The nav is the *mechanism*;
 what surrounds it lives elsewhere: the render model, screen types, device frame,
 and persona/screen inventory are in [system.md](system.md); color/type/motion
@@ -31,13 +31,13 @@ are in [landing.md](../domains/landing.md), [library.md](../domains/library.md),
 
 ## Interactions (as built)
 
-- **Top nav** → sticky at the top, but **auto-hides on scroll-down and returns on scroll-up** (`attachAutoHide()` toggles `.is-hidden` on the sticky `.screen__nav`). The **level-up bar** (`.screen__uplevel`) is a separate sticky element that **stays pinned** — it docks below the nav when the nav shows and rises to the top edge when the nav hides.
+- **Top nav** → sticky at the top, but **auto-hides on scroll-down and returns on scroll-up** (`attachAutoHide()` toggles `.is-hidden` on the sticky `.screen__nav`). The **level-up pill** (`.screen__uplevel`) is a separate sticky element that **stays pinned** — it docks below the nav when the nav shows and rises to the top edge when the nav hides.
 - **Hamburger (☰)** → opens the slide-out Panel for the current persona. Tapping the overlay (not the panel surface) closes it with a slower ease-out slide-out animation (`closePanel()`).
 - **Nav logotype / logomark** → returns to the persona's home screen (Splash Landing for Visitor and Subscriber, Home as a hub for the member states). In-page `go-home`.
 - **Hidden home hotspot** → a small circle fixed in the top-left corner of each flow page, invisible until hovered, that links back to the root launcher (`../index.html`). Uses a launchpad / 2×2 grid icon. Injected by `main.js`, so it only appears on flow pages (not the launcher).
 - **Panel tabs / hubs** → the shared panel's Home / Resources / Community tabs and its topic-hub rows each carry a `data-screen`; tapping navigates in-persona and closes the panel. See §3 for the full structure and targets.
 - **Profile avatar** (member nav variant) → opens the account **Dropdown** (wired for Logged In Member; tapping outside closes it). The dropdown's menu and its destination screens are spec'd in [account.md](../domains/account.md).
-- **Level-up bar** → only on *detail* screens (Article/Group/Program/Profile/Question/Activity). It steps **one level up** to the parent list/topic (via `upTo` → `data-screen`, e.g. Group Detail → Groups, Article Show → its topic page), not "back" and not necessarily home. Top-level pages (the panel/dropdown destinations) have no level-up bar — the nav logo returns home instead. (`program` has no list parent in the source, so it falls back to home.)
+- **Level-up pill** → only on *detail* screens (Article/Group/Program/Profile/Question/Activity). It steps **one level up** to the parent list/topic (via `upTo` → `data-screen`, e.g. Group Detail → Groups, Article Show → its topic page), not "back" and not necessarily home. Top-level pages (the panel/dropdown destinations) have no level-up pill — the nav logo returns home instead. (`program` has no list parent in the source, so it falls back to home.)
 - **Nav pill** → opens the chromeless sign-up flow **in-persona**. Persona-aware: **Join** → `Sign Up Start` for the Visitor; **Finish** → `Registration Step` for the Subscriber (both share the `visitor` nav variant). Full spec in [onboarding.md](../domains/onboarding.md). *(The panel's old Join for free / Finish up now access cards were removed in the 2026-08-03 shared-panel redesign; those roles moved to the nav pill + splash closing card — see §3.)*
 - **"Log in now"** (Logged Out gated home) and **"Log out"** (dropdown) → currently **no-ops** (auth not wired); see [onboarding.md](../domains/onboarding.md).
 
@@ -71,27 +71,26 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 
 ---
 
-## 2. Level-up bar (one level up)
+## 2. Level-up pill (one level up)
 
-44px tall, sits directly under the Top Nav, `0 1px 0 #dbdddf` bottom hairline shadow.
+**Redesign (2026-08-03, Figma Global Navigation `42yas7Q9FfwhL6xUocjEAl`, pill `7294:1952`).** The old full-width level-up **bar** was replaced by a **pill** that sits in-page (top-left) but sticks to the top on scroll — same pinning behaviour as the bar had.
 
-**Content slot:** `[ chevron icon ]  [ label ]` — label color `#0f57a8`, 16px semibold.
+**Pill:** a blue-tinted pill (`background`/`border` = `rgba(15,87,168,0.1)`, `border-radius: 48px`, `padding: 6px 12px`, height 34px) holding a **section icon** (16px, pre-tinted blue, `assets/up-*.svg`) + the parent's name (Lato Semibold 14px, `#0f57a8`, `-0.25px`). No chevron — the section icon + label convey the destination.
 
-Only on **detail** screens. It steps **one level up** to the parent list (`upTo` → `data-screen`), not "back" and not home. Top-level pages (panel/dropdown destinations) have no level-up bar — the nav logo returns home. The nav and the level-up bar are **independent sticky elements**: the nav (`.screen__nav`) auto-hides on scroll-down and returns on scroll-up, while the level-up bar (`.screen__uplevel`) **stays pinned**. While the nav shows, the bar pins just below it (its `top` = nav height); when the nav hides, the bar docks to the very top edge (`attachAutoHide` animates the `top`).
+Only on **detail** screens. It steps **one level up** to the parent (`upTo` → `data-screen`), not "back" and not home. Top-level pages have no pill — the nav logo returns home. The nav and the level-up pill are **independent sticky elements**: the nav (`.screen__nav`) auto-hides on scroll-down and returns on scroll-up, while the pill's sticky container (`.screen__uplevel`, transparent so the pill floats in-page) **stays pinned**. While the nav shows, it pins just below it (its `top` = nav height); when the nav hides, it docks to the very top edge (`attachAutoHide` animates the `top`).
 
-| Screen | Back label | Node id |
+| Screen | Pill label → up-to | Icon |
 |---|---|---|
-| Visitor — Article Show | Topic | 6951:800 |
-| Member — Article Show | Topic | 7025:302 |
-| Member — Group Detail | Groups | 7025:371 |
-| Member — Program Detail | Programs | 7031:509 |
-| Member — Someone's Member Profile | Meet Others | 7025:440 |
-| Member — Question Show | Questions & Answers | 6951:734 |
-| Member — Activity Show | Activity | 6951:531 |
+| Visitor / Member — Article Show | Topic Hub → `topic` | `up-hub.svg` |
+| Member — Group Detail | Groups → `com-groups` | `up-groups.svg` |
+| Member — Program Detail | Programs → home | `up-programs.svg` |
+| Member — Someone's Member Profile | Meet Others → `com-meet` | `up-meet.svg` |
+| Member — Question Show | Questions & Answers → `com-questions` | `up-qa.svg` |
+| Member — Activity Show | Posts → `com-stories` | `up-posts.svg` |
 
-Figma frames are static (no destination logic). The prototype routes each detail screen's level-up bar to its parent list where one exists (`upTo`); `Program Detail` has no Programs list, so it falls back to home.
+Labels/targets follow the linked frame (`7283:153`): Article Show now levels up to the **Topic Hub** (was the HRT topic page), and Activity Show to **Posts** (was All Community). `Program Detail` has no Programs list, so it falls back to home.
 
-**In-page pill (alternative to the level-up bar).** A screen can instead carry a `pill: { label, screen }` — rendered as a rounded **label pill** at the top of the body (`.page-pill`, label only, no chevron, navigates via `data-screen`), scrolling with the content rather than pinned as a bar. The **Article Show (in Collection)** screen uses this (`type: "page"` + `pill` → Collection) instead of a level-up bar. Its parent **Collection** is a plain `page` (no bar, no pill).
+**In-page pill (non-sticky variant).** A screen can instead carry a `pill: { label, screen }` — rendered as a rounded **label pill** at the top of the body (`.page-pill`, label only, no icon, navigates via `data-screen`), scrolling **with** the content rather than pinned. The **Article Show (in Collection)** screen uses this (`type: "page"` + `pill` → Collection). It's deliberately the non-sticky sibling of the level-up pill above; its parent **Collection** is a plain `page`.
 
 ---
 

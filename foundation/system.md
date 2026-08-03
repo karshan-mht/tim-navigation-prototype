@@ -36,8 +36,8 @@ Each persona has a `screens` array; `state.screenId` selects the active one and
 
 **Types:**
 - `tabs` — the home screen (Splash Landing / hub); carries `modules: true` where it renders content modules.
-- `page` — a top-level page with **no** level-up bar; the nav logo returns home. All panel/dropdown destinations (`lib-*`, `com-*`, `acct-*`) and most flow screens are `page`.
-- `uplevel` — a detail screen with a level-up bar that steps one level up via `upTo` → `data-screen` (see [navigation.md](navigation.md) §2).
+- `page` — a top-level page with **no** level-up pill; the nav logo returns home. All panel/dropdown destinations (`lib-*`, `com-*`, `acct-*`) and most flow screens are `page`.
+- `uplevel` — a detail screen with a level-up pill that steps one level up via `upTo` → `data-screen` (see [navigation.md](navigation.md) §2).
 - `gated-home` — the Logged Out Member's gated welcome screen.
 - `chromeless: true` — a flag (not a type) that drops nav/level-up/footer and shows an ✕ that closes back to `state.prevScreenId` (the onboarding pages — see [onboarding.md](../domains/onboarding.md)).
 
@@ -46,7 +46,7 @@ Each persona has a `screens` array; `state.screenId` selects the active one and
 is delegated: any element with `data-screen="<id>"` jumps to that screen and closes
 overlays; `data-action` handles `toggle-panel` / `toggle-dropdown` / `go-home` /
 `go-profile` / `close-flow`. The top nav auto-hides on scroll-down / returns on
-scroll-up (`attachAutoHide()`); the level-up bar stays pinned independently.
+scroll-up (`attachAutoHide()`); the level-up pill stays pinned independently.
 
 ---
 
@@ -87,7 +87,7 @@ confirm either way — flagged, not decided.
 ## Screens per persona
 
 Panel/dropdown destinations are prototype-added placeholder screens so the menu
-items lead *somewhere*. They're top-level `page`s (no level-up bar). Library
+items lead *somewhere*. They're top-level `page`s (no level-up pill). Library
 destinations are shared across personas (`lib-*`); Community are `com-*`;
 Dropdown/account are `acct-*`. Detailed in [library.md](../domains/library.md),
 [community.md](../domains/community.md), [account.md](../domains/account.md); the Splash Landing home and

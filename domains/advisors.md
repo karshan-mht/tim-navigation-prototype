@@ -13,7 +13,7 @@ Chronological history is in [DECISIONS.md](../DECISIONS.md). Code
 
 ## Screen & rendering
 
-- `advisors` screen: top-level `type: "page"` (no level-up bar). In the splash
+- `advisors` screen: top-level `type: "page"` (no level-up pill). In the splash
   personas (Visitor, Subscriber) via `SPLASH_FLOW_SCREENS`, and injected into the
   member personas too (`SHARED_TARGET_SCREENS`) so the footer link resolves for all.
 - `render()` branches on `screen.id === "advisors"` → `renderAdvisors()`; the page

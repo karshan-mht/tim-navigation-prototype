@@ -107,7 +107,8 @@ body {
   position: sticky;
   top: 0; /* overridden inline to the nav height while the nav is visible */
   z-index: 9;
-  background: #fff;
+  padding: 12px 12px 0;   /* inset the pill; transparent so it floats in-page */
+  pointer-events: none;   /* only the pill is interactive; content shows around it */
   transition: top 0.28s ease;
 }
 
@@ -752,27 +753,30 @@ body {
   z-index: 1;
 }
 
-/* ---- Uplevel (back) bar ---- */
-
+/* ---- Uplevel pill (sticks to the top; replaces the old level-up bar) ----
+   A small blue-tinted pill that sits in-page top-left inside the sticky
+   .screen__uplevel container, so it pins below the nav / docks to the top edge
+   on scroll (attachAutoHide). Figma Global Navigation 7294:1952. */
 .uplevel {
-  display: flex;
+  pointer-events: auto;   /* re-enable clicks (container is pointer-events:none) */
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 12px;
-  height: 44px;
-  background: #fff;
-  box-shadow: 0 1px 0 0 var(--color-border);
-  border: none;
-  width: 100%;
+  padding: 6px 12px;
+  height: 34px;
+  border: 1px solid rgba(15, 87, 168, 0.1);
+  border-radius: 48px;
+  background: rgba(15, 87, 168, 0.1);
   cursor: pointer;
   font-family: var(--font-body);
-  color: var(--color-primary);  /* tints both the back chevron and the label */
-  flex-shrink: 0;
+  color: var(--color-primary);
 }
-.uplevel .icon { width: 24px; height: 24px; }
+.uplevel__icon { width: 16px; height: 16px; display: block; flex-shrink: 0; }
 .uplevel span {
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 600;        /* Lato Semibold */
+  font-size: 14px;
+  letter-spacing: -0.25px;
+  line-height: 22px;
 }
 
 /* In-page pill (top of body) — replaces the level-up bar on some pages.

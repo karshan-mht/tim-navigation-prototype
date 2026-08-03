@@ -20,7 +20,7 @@ border, `0 0 8px rgba(13,27,41,0.1)` shadow, 24px padding. The user block uses
 
 **Structure:** `User block → Notifications chip → divider → My Health · Messages · Settings → divider → Log out`
 
-- **User block:** name ("Janet Smithsonian"), handle ("@jannie1234"), "View Profile" link (`#0f57a8`) → navigates to the member's own **My Profile** (`my-profile`, via `data-action="go-profile"`) — a page with **no** level-up bar, distinct from "Someone's Member Profile" reached via Meet Others (see [community.md](community.md)).
+- **User block:** name ("Janet Smithsonian"), handle ("@jannie1234"), "View Profile" link (`#0f57a8`) → navigates to the member's own **My Profile** (`my-profile`, via `data-action="go-profile"`) — a page with **no** level-up pill, distinct from "Someone's Member Profile" reached via Meet Others (see [community.md](community.md)).
 - **Notifications (5)** → `acct-notifications` — sits **above the first divider** as a distinct orange **chip**: faint orange fill (`--color-badge-soft`), orange bell + label (`--color-badge`, `#ff741d`), `16px` radius, `12px` padding — matching the orange notification badge. Its bell **wiggles periodically** (`bell-wiggle`, disabled under `prefers-reduced-motion`).
 - Top divider sits **below** the Notifications chip, separating it from the rest of the menu.
 - Then: My Health → `acct-health`, Messages → `acct-messages`, Settings → `acct-settings`.
@@ -47,7 +47,7 @@ nav (Join button, no profile icon), so it has no dropdown either.
 | Settings | `acct-settings` | dropdown |
 | My Profile | `my-profile` | dropdown "View Profile" (`go-profile`) |
 
-All `acct-*` rows are top-level `page`s with **no** level-up bar (the nav logo
+All `acct-*` rows are top-level `page`s with **no** level-up pill (the nav logo
 returns home), as is `my-profile`. **Log out** is not a screen — it's an auth
 no-op (see [onboarding.md](onboarding.md)).
 

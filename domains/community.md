@@ -28,7 +28,7 @@ navigates in-persona (the panel closes on click):
 | Meet Others | `com-meet` |
 | All Community | `com-activities` |
 
-These `com-*` list pages are top-level (`type: "page"`) with **no** level-up bar —
+These `com-*` list pages are top-level (`type: "page"`) with **no** level-up pill —
 the nav logo returns home.
 
 > **Flagged:** the Logged Out Member panel renders these Community items even
@@ -40,7 +40,7 @@ the nav logo returns home.
 ## Detail screens
 
 Distinct *detail* screens, deliberately separate from the `com-*` list pages.
-Each carries a **level-up bar** stepping one level up to its parent list (the bar
+Each carries a **level-up pill** stepping one level up to its parent list (the pill
 mechanism and the Figma node id for each screen are spec'd in
 [navigation.md](../foundation/navigation.md) §2):
 
@@ -48,7 +48,7 @@ mechanism and the Figma node id for each screen are spec'd in
 |---|---|---|
 | Group Detail | `group` | Groups (`com-groups`) |
 | Question Show | `question` | Questions & Answers (`com-questions`) |
-| Activity Show | `activity` | Activity (`com-activities`) |
+| Activity Show | `activity` | Posts (`com-stories`) |
 | Someone's Member Profile | `profile` | Meet Others (`com-meet`) |
 
 (These are the *Logged In Member* detail screens. "Someone's Member Profile" is

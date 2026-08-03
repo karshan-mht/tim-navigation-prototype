@@ -66,12 +66,20 @@ frame.
 
 ## Icon-tinting system
 
-**Icons are monochrome (black) and tinted via CSS.** The 20 icons are **inlined** in
-`main.js` as the `ICON_SVGS` map — each SVG normalized to `fill="currentColor"` —
-and rendered by `icon()` as `<span class="icon">…inline svg…</span>`. Colour comes
-from each context's `color`: nav = ink `#0D1B29`, Library/Community = magenta
-`#A440BC` (on a `--color-magenta-soft` pink circle), back-chevron = blue `#0F57A8`,
-dropdown = ink.
+Icons come in **two forms**:
+
+1. **Inline, CSS-tinted** — monochrome SVGs in the `ICON_SVGS` map in `main.js`
+   (normalized to `fill="currentColor"`, rendered by `icon()` as
+   `<span class="icon">…</span>`), tinted by each context's `color`. Used by the
+   **top nav** (menu / search / AI / grid) and the **profile dropdown**, both ink
+   `#0D1B29`.
+2. **Pre-tinted images** (`<img src>`, colour baked in) — the **panel tabs**
+   (`tab-*.svg`, ink) and **topic hubs** (`hub-*.svg`, magenta `#A440BC` glyph on a
+   pale `#F6EFF8` circle), and the **level-up pill's** section icons (`up-*.svg`,
+   blue `#0F57A8`).
+
+The old currentColor-tinted Library/Community panel icons and the back-chevron were
+**removed** in the 2026-08-03 panel + level-up redesigns.
 
 Inlining (rather than `<img>` or CSS `mask` of external files) is **deliberate**:
 CSS `mask`/`url()` refs to external SVGs are **blocked over `file://`**, so masked
@@ -100,13 +108,19 @@ ids are the leaf vector/frame node each file was exported from.
 | `logomark.png` | Compact circular logomark | 7082:926 |
 | `logotype.svg` | Horizontal wordmark (panel top + footer) | — |
 
-### Nav / uplevel icons
+### Nav icons (inline, provenance node ids)
 | File | Source node |
 |---|---|
 | `menu.svg` | 6875:148 |
 | `search.svg` | 6875:153 |
 | `ai.svg` (sparkle) | 6875:155 |
-| `back.svg` (chevron) | 7084:1412 |
+
+### Panel + level-up image icons (pre-tinted `<img>`, Global Navigation)
+| File(s) | What | Source |
+|---|---|---|
+| `tab-home.svg` / `tab-resources.svg` / `tab-community.svg` | Panel tab icons (ink) | panel `7299:1987` |
+| `hub-1.svg` … `hub-8.svg` | Topic-hub icons (magenta on pale circle) | panel `7299:1987` |
+| `up-posts.svg` / `up-qa.svg` / `up-hub.svg` / `up-groups.svg` / `up-programs.svg` / `up-meet.svg` | Level-up pill section icons (blue) | uplevel `7294:1952` |
 
 ### Profile
 | File | What | Source node |

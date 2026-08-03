@@ -32,7 +32,7 @@ click):
 - **Short set** (Logged Out Member, Logged In Member): HRT, Mood, Sleep, All
   Resources.
 
-All `lib-*` topic pages are top-level (`type: "page"`) with **no** level-up bar —
+All `lib-*` topic pages are top-level (`type: "page"`) with **no** level-up pill —
 the nav logo returns home.
 
 ---
@@ -40,18 +40,18 @@ the nav logo returns home.
 ## Browse screens
 
 The Visitor topic-browsing chain (shared flow screens in `SPLASH_FLOW_SCREENS`).
-**Topic Center** is a top-level `page` (no level-up bar — the side panel + in-page
-navigation orient the user at that level). **Article Show** keeps a level-up bar
-stepping one level up to Topic Center (bar mechanism + Figma node ids in
+**Topic Center** is a top-level `page` (no level-up pill — the side panel + in-page
+navigation orient the user at that level). **Article Show** keeps a level-up pill
+stepping one level up to the Topic Hub (pill mechanism + Figma node ids in
 [navigation.md](../foundation/navigation.md) §2):
 
 | Screen | id | Level-up |
 |---|---|---|
-| Topic Center | `topic` | — (top-level page, no bar) |
-| Article Show | `article` | Topic (`topic`) |
+| Topic Center | `topic` | — (top-level page, no pill) |
+| Article Show | `article` | Topic Hub (`topic`) |
 
 The splash's "one Article card" opens a separate Article Show (in a collection).
-That Article Show has no level-up bar; an in-page **label pill** at the top links
+That Article Show has no level-up pill; an in-page **label pill** at the top links
 back up to its **Collection** (see [navigation.md](../foundation/navigation.md) §2). Collection
 itself is a plain page. That collection chain is a Splash Landing deep-link,
 documented in [landing.md](landing.md).

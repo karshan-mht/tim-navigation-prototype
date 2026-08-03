@@ -15,7 +15,7 @@ product surfaces the navigation leads to.
   letter-spacing, spacing/radius/motion, the icon-tinting system, and the chrome
   asset provenance.
 - **[navigation.md](foundation/navigation.md)** — the global-nav chrome: top nav, slide-out
-  panel (container), level-up bar, and global footer — behavior, component
+  panel (container), level-up pill, and global footer — behavior, component
   structure, and Figma node ids.
 
 ## domains/ — the product surfaces
