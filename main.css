@@ -815,6 +815,47 @@ body {
   color: var(--color-primary);
 }
 
+/* ---- Community Overview hub (orientation menu) ---- */
+/* Wireframe-level: outlined module boxes, no visual polish. */
+.comm-hub { padding: 16px 12px 24px; }
+.comm-hub__title {
+  margin: 0 0 16px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  color: var(--color-navy);
+}
+.comm-hub__list { display: flex; flex-direction: column; gap: 12px; }
+.comm-mod {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.comm-mod__head { display: flex; align-items: center; gap: 8px; }
+.comm-mod__title {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--color-text);
+}
+.comm-mod__badge {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: #eef0f3;
+  border-radius: var(--radius-pill);
+  padding: 1px 8px;
+}
+.comm-mod__desc { font-size: 15px; line-height: 1.35; color: var(--color-text-secondary); }
+.comm-mod__link { font-weight: 600; font-size: 15px; color: var(--color-primary); }
+
 /* ---- Gated / welcome card (Logged-out Member home) ---- */
 
 .welcome-card {

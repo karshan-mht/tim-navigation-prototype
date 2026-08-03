@@ -120,7 +120,7 @@ ids are the leaf vector/frame node each file was exported from.
 |---|---|---|
 | `tab-home.svg` / `tab-resources.svg` / `tab-community.svg` | Panel tab icons (ink) | panel `7299:1987` |
 | `hub-1.svg` … `hub-8.svg` | Topic-hub icons (magenta on pale circle) | panel `7299:1987` |
-| `up-posts.svg` / `up-qa.svg` / `up-hub.svg` / `up-groups.svg` / `up-programs.svg` / `up-meet.svg` | Level-up pill section icons (blue) | uplevel `7294:1952` |
+| `up-activity.svg` / `up-qa.svg` / `up-hub.svg` / `up-groups.svg` / `up-programs.svg` / `up-meet.svg` | Level-up pill section icons (blue) | uplevel `7294:1952` |
 
 ### Profile
 | File | What | Source node |

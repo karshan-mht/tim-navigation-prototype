@@ -93,6 +93,12 @@ Dropdown/account are `acct-*`. Detailed in [library.md](../domains/library.md),
 [community.md](../domains/community.md), [account.md](../domains/account.md); the Splash Landing home and
 its CTA deep-links are in [landing.md](../domains/landing.md).
 
+The **Community Overview hub** (`community-overview`) and its five feature targets
+(`com-activities`, `com-questions`, `com-groups`, `com-meet`, `com-values`) are now
+**shared across all four personas** (injected via `SHARED_TARGET_SCREENS`), since
+every persona's panel Community tab opens the hub. The per-persona lists below note
+Community only where it was persona-specific historically.
+
 **Anonymous Visitor**
 - Splash Landing (`tabs`), Topic Center, Article Show
 - Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-diet`, `lib-family`, `lib-all`
@@ -100,13 +106,13 @@ its CTA deep-links are in [landing.md](../domains/landing.md).
 **Logged Out Member**
 - Gated home (`gated-home`, welcome card → "Log in now")
 - Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-all`
-- Community (panel dest.): `com-stories`, `com-questions`, `com-groups`, `com-meet`, `com-activities`
+- Community (via the Community Overview hub): `com-activities`, `com-questions`, `com-groups`, `com-meet`, `com-values`
 
 **Logged In Member**
 - Hub home (`tabs`, photo profile) + dropdown-open variant
 - Detail screens: Article Show, Group Detail, Program Detail, Someone's Member Profile, Question Show, Activity Show (`uplevel`)
 - Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-all`
-- Community (panel dest.): `com-stories`, `com-questions`, `com-groups`, `com-meet`, `com-activities`
+- Community (via the Community Overview hub): `com-activities`, `com-questions`, `com-groups`, `com-meet`, `com-values`
 - Account (dropdown dest.): `acct-health`, `acct-messages`, `acct-notifications`, `acct-settings`, `my-profile` (Log out is a no-op, see [onboarding.md](../domains/onboarding.md))
 
 **Subscriber**

@@ -69,6 +69,18 @@ const PANEL_TABS = [
   { icon: "tab-resources", label: "Resources", target: "lib-all" },
   { icon: "tab-community", label: "Community", target: "community-overview" },
 ];
+// Community Overview hub modules — the orientation menu into community features.
+// Wireframe-level: an outlined box per module (title, one-line description,
+// optional [TBD] count badge, link). Counts are ALWAYS the literal "[TBD]"
+// placeholder, never a fabricated number (same rule as the splash community
+// count — see DECISIONS 2026-07-27). Order is fixed.
+const COMMUNITY_MODULES = [
+  { title: "Activity Feed", desc: "See what members are sharing today", count: "[TBD]", screen: "com-activities" },
+  { title: "Q&A", desc: "Ask or answer real member questions", count: "[TBD]", screen: "com-questions" },
+  { title: "Groups", desc: "Join circles built around your journey", count: "[TBD]", screen: "com-groups" },
+  { title: "People", desc: "Meet ambassadors, CEMs, and peers", count: "[TBD]", screen: "com-meet" },
+  { title: "Community Values & Ambassador Program", desc: "How we look after each other", screen: "com-values" },
+];
 const DROPDOWN_MENU = [
   // Notifications sits above the divider as a distinct orange "chip" (its own
   // pill styling reflects the orange badge colour); the divider sits below it,
@@ -104,12 +116,18 @@ const LIB = {
 const LIBRARY_SCREENS_FULL = [LIB.hrt, LIB.mood, LIB.sleep, LIB.diet, LIB.family, LIB.all];
 const LIBRARY_SCREENS_MEMBER = [LIB.hrt, LIB.mood, LIB.sleep, LIB.all];
 
+// Community destination screens (the Community Overview hub's module targets).
+// `com-stories` (Posts) was retired 2026-08-03 — Stories folded into Activity, so
+// `com-activities` is now "Activity" and absorbs it. `com-values` is a new
+// placeholder for the Community Values & Ambassador Program. All are plain
+// top-level pages (no level-up pill) and are injected into every persona (via
+// SHARED_TARGET_SCREENS) so the shared Community hub can reach them everywhere.
 const COMMUNITY_SCREENS = [
-  { id: "com-stories", label: "Posts", type: "page", title: "Posts" },
+  { id: "com-activities", label: "Activity", type: "page", title: "Activity" },
   { id: "com-questions", label: "Questions & Answers", type: "page", title: "Questions & Answers" },
   { id: "com-groups", label: "Groups", type: "page", title: "Groups" },
   { id: "com-meet", label: "Meet Others", type: "page", title: "Meet Others" },
-  { id: "com-activities", label: "All Community", type: "page", title: "All Community" },
+  { id: "com-values", label: "Community Values & Ambassador Program", type: "page", title: "Community Values & Ambassador Program" },
 ];
 
 const ACCOUNT_SCREENS = [
@@ -132,7 +150,7 @@ const TOPIC_HUB_SCREEN = { id: "topic", label: "Topic Hub", type: "page", title:
 const COMMUNITY_OVERVIEW_SCREEN = { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" };
 const ALL_ARTICLES_SCREEN = { id: "all-collections", label: "All Articles", type: "page", title: "All Articles" };
 const ADVISORS_SCREEN = { id: "advisors", label: "Advisors", type: "page", title: "Advisors" };
-const SHARED_TARGET_SCREENS = [TOPIC_HUB_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all];
+const SHARED_TARGET_SCREENS = [TOPIC_HUB_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, ...COMMUNITY_SCREENS];
 
 // Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
 // mirrors the Visitor landing). The splash content modules deep-link into these:
@@ -188,7 +206,7 @@ const PERSONAS = {
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs", upIcon: "up-programs" },
       { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others", upTo: "com-meet", upIcon: "up-meet" },
       { id: "question", label: "Question Show", type: "uplevel", title: "Question Show", backLabel: "Questions & Answers", upTo: "com-questions", upIcon: "up-qa" },
-      { id: "activity", label: "Activity Show", type: "uplevel", title: "Activity Show", backLabel: "Posts", upTo: "com-stories", upIcon: "up-posts" },
+      { id: "activity", label: "Activity Show", type: "uplevel", title: "Activity Show", backLabel: "Activity", upTo: "com-activities", upIcon: "up-activity" },
       ...LIBRARY_SCREENS_MEMBER,
       ...COMMUNITY_SCREENS,
       ...ACCOUNT_SCREENS,
@@ -311,6 +329,32 @@ function renderSeriesBox(series) {
       <p class="series-box__text">This article is part of a series.</p>
       <button class="series-box__link" data-screen="${series.screen}">Explore the full series &rarr;</button>
     </div>
+  `;
+}
+
+// Community Overview — the /community hub landing. A lightweight orientation menu
+// (NOT a content feed): the COMMUNITY_MODULES rendered as outlined boxes, each a
+// title + one-line description + optional [TBD] count badge + a link into that
+// community feature. This is the primary navigation surface into community
+// features (the panel's single Community tab points here). Wireframe-level: no
+// live content previews, no fabricated counts.
+function renderCommunityHub() {
+  const cards = COMMUNITY_MODULES.map(
+    (m) => `
+      <button class="comm-mod" data-screen="${m.screen}">
+        <span class="comm-mod__head">
+          <span class="comm-mod__title">${m.title}</span>
+          ${m.count ? `<span class="comm-mod__badge">${m.count}</span>` : ""}
+        </span>
+        <span class="comm-mod__desc">${m.desc}</span>
+        <span class="comm-mod__link">View &rarr;</span>
+      </button>`
+  ).join("");
+  return `
+    <section class="comm-hub">
+      <h1 class="comm-hub__title">Community</h1>
+      <div class="comm-hub__list">${cards}</div>
+    </section>
   `;
 }
 
@@ -685,14 +729,17 @@ function render() {
     content = renderAdvisors();
   } else if (screen.type === "gated-home") {
     content = renderGatedHome();
+  } else if (screen.id === "community-overview") {
+    content = renderCommunityHub();
   } else if (screen.series) {
     content = renderSeriesBox(screen.series);
   } else {
     content = `<div class="screen__placeholder">${screen.title}</div>`;
   }
   // Fill the viewport (centering the label / keeping the footer below the fold)
-  // only for label & gated screens; module/content screens flow at natural height.
-  const bodyFill = !screen.modules && screen.id !== "advisors" ? " screen__body--fill" : "";
+  // only for label & gated screens; module/content screens (incl. the Community
+  // hub) flow at natural height from the top.
+  const bodyFill = !screen.modules && screen.id !== "advisors" && screen.id !== "community-overview" ? " screen__body--fill" : "";
 
   // Nav + level-up bar are separate sticky elements at the top of the scroll
   // area. The nav auto-hides on scroll-down and returns on scroll-up; the

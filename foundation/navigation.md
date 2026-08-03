@@ -86,9 +86,9 @@ Only on **detail** screens. It steps **one level up** to the parent (`upTo` → 
 | Member — Program Detail | Programs → home | `up-programs.svg` |
 | Member — Someone's Member Profile | Meet Others → `com-meet` | `up-meet.svg` |
 | Member — Question Show | Questions & Answers → `com-questions` | `up-qa.svg` |
-| Member — Activity Show | Posts → `com-stories` | `up-posts.svg` |
+| Member — Activity Show | Activity → `com-activities` | `up-activity.svg` |
 
-Labels/targets follow the linked frame (`7283:153`): Article Show now levels up to the **Topic Hub** (was the HRT topic page), and Activity Show to **Posts** (was All Community). `Program Detail` has no Programs list, so it falls back to home.
+Labels/targets follow the linked frame (`7283:153`): Article Show levels up to the **Topic Hub** (was the HRT topic page). Activity Show levels up to **Activity** (`com-activities`) — after `com-stories`/"Posts" was retired and folded into Activity (2026-08-03), the `up-posts.svg` icon was renamed `up-activity.svg`. `Program Detail` has no Programs list, so it falls back to home.
 
 **Series callout (in-page, non-sticky).** An article that belongs to a series carries a `series: { screen }` and renders a small **callout box** near the top of the body (`.series-box` — "Part of a series" / a line of copy / an **"Explore the full series →"** link that navigates via `data-screen`), scrolling **with** the content. The **Article Show (in Collection)** screen uses this to link up to its **Collection**; the box is a **placeholder**. This replaced the old "Collection" label pill (removed 2026-08-03). Note: this screen has **no** page-title label — the callout is its only chrome. Its parent **Collection** is a plain `page`.
 
