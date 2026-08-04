@@ -49,9 +49,11 @@ const PANEL_LOGO = `${ASSET_BASE}/logotype.svg`;
 // Navigation, panel node 7299:1987). The redesign drops the old per-persona
 // Resources/Community menu lists in favour of one shared list of topic hubs.
 // Labels are intentionally the Figma placeholders (the real hub taxonomy isn't
-// settled); every hub opens the shared Topic Hub screen (the Topic Center *is*
-// the hub). Icons are pre-tinted SVGs (magenta glyph on a pale circle) in
-// assets/hub-{1..8}.svg — used as <img>, not currentColor-tinted.
+// settled); every hub opens the generic Topic Hub surface (`topic-hub` — see
+// TOPIC_HUBS below), NOT the old Topic Center (`topic`), which is evolving into
+// Collections instead (see the naming note near TOPIC_CENTER_SCREEN below). Icons
+// are pre-tinted SVGs (magenta glyph on a pale circle) in assets/hub-{1..8}.svg
+// — used as <img>, not currentColor-tinted.
 const HUBS = [
   { icon: "hub-1", label: "Topic Hub Longer Name" },
   { icon: "hub-2", label: "Topic Hub Short" },
@@ -171,43 +173,47 @@ const ACCOUNT_SCREENS = [
   // No acct-logout screen: "Log out" navigates out to the Logged Out Member flow.
 ];
 
-// Shared panel destinations — the Topic Hub (the Topic Center *is* the hub, so
-// every panel hub row opens it), the Community Overview (the Community tab), and
-// All Articles ("Explore (ToC)"). Also the Advisors page, reached from the global
-// footer's "Medical Advisors" link. Defined once and injected into every persona
-// (see below) so these shared-chrome targets resolve in all four personas. The
-// Resources tab points at LIB.all.
+// Shared panel/level-up destinations. TOPIC_CENTER_SCREEN (id `topic`) is the OLD
+// Topic Center — kept only because Article Show and other detail screens still
+// level up to it, NOT because panel hub rows open it (panel rows open the NEW
+// `topic-hub` surface instead — see TOPIC_HUB_PAGES). Also here: the Community
+// Overview (the Community tab) and All Articles ("Explore (ToC)"). Also the
+// Advisors page, reached from the global footer's "Medical Advisors" link.
+// Defined once and injected into every persona (see below) so these shared-chrome
+// targets resolve in all four personas. The Resources tab points at LIB.all.
 // (`all-articles` keeps the internal id `all-collections` — only its display
 // label/title were renamed from "All Collections".)
-const TOPIC_HUB_SCREEN = { id: "topic", label: "Topic Hub", type: "page", title: "Topic Hub" };
+const TOPIC_CENTER_SCREEN = { id: "topic", label: "Topic Center", type: "page", title: "Topic Center" };
 const COMMUNITY_OVERVIEW_SCREEN = { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" };
 const ALL_ARTICLES_SCREEN = { id: "all-collections", label: "All Articles", type: "page", title: "All Articles" };
 const ADVISORS_SCREEN = { id: "advisors", label: "Advisors", type: "page", title: "Advisors" };
 
-// NOTE on naming: `TOPIC_HUB_SCREEN` above (id `topic`) is the OLD Topic Center
-// — currently mislabelled "Topic Hub" and, per current product thinking, actually
-// evolving into Collections (not into the new Topic Hubs). The NEW Topic Hub
-// surface is the `topic-hub-*` pages below (`TOPIC_HUB_PAGES`), generated from the
-// TOPIC_HUBS data array so more hubs are added as data, not one-off screens.
-// (Reconciling the old `topic` label + panel wiring is out of scope here.)
+// NAMING (reconciled 2026-08-04): the id `topic` is the OLD **Topic Center** —
+// now labelled "Topic Center" again (it had briefly been mislabelled "Topic Hub").
+// Per product thinking it's evolving into **Collections**, not into the new Topic
+// Hubs. The NEW **Topic Hub** surface is the `topic-hub` page(s) in TOPIC_HUB_PAGES
+// (from the TOPIC_HUBS data array — added as data, not one-off screens). So the two
+// no longer share a name: `topic` = Topic Center (Collections-bound), `topic-hub` =
+// Topic Hub. Article Show still levels up to Topic Center (see below); folding
+// Topic Center fully into Collections is the remaining future work.
 const TOPIC_HUB_PAGES = TOPIC_HUBS.map((h) => ({ id: h.id, label: h.name, type: "page", title: h.name, topicHub: h }));
 
-const SHARED_TARGET_SCREENS = [TOPIC_HUB_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
+const SHARED_TARGET_SCREENS = [TOPIC_CENTER_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
 
 // Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
 // mirrors the Visitor landing). The splash content modules deep-link into these:
 // the symptom-checker CTA, the listicle detail page, Article Show (levels up to
-// the Topic Hub) and a second Article Show that levels up to a Collection.
+// the Topic Center) and a second Article Show that levels up to a Collection.
 const SPLASH_FLOW_SCREENS = [
   { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
   { id: "symptom-checker", label: "Symptom Checker", type: "page", title: "Symptom Checker" },
   { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   ADVISORS_SCREEN,
-  // Topic Hub is a top-level page (no level-up bar) — the side panel + in-page
-  // navigation orient the user at this level.
-  TOPIC_HUB_SCREEN,
-  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Hub", upTo: "topic", upIcon: "up-hub" },
+  // Topic Center is a top-level page (no level-up pill) — the side panel + in-page
+  // navigation orient the user at this level. (Collections-bound; not the new hub.)
+  TOPIC_CENTER_SCREEN,
+  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic", upIcon: "up-hub" },
   ALL_ARTICLES_SCREEN,
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
   // Article Show (in a collection) has no level-up bar; instead an in-page "pill"
@@ -243,7 +249,7 @@ const PERSONAS = {
       // page with no level-up bar. Distinct from the "profile" screen below,
       // which is SOMEONE ELSE's profile (reached from Meet Others).
       { id: "my-profile", label: "My Profile", type: "page", title: "My Profile" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Hub", upTo: "topic", upIcon: "up-hub" },
+      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic", upIcon: "up-hub" },
       { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups", upIcon: "up-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs", upIcon: "up-programs" },
       { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others", upTo: "com-meet", upIcon: "up-meet" },

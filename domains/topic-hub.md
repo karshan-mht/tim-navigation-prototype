@@ -14,11 +14,13 @@ source of truth — correct this doc if it drifts.
 > render + data model already support multiple entries in `TOPIC_HUBS`.
 
 > **Not the old `topic` screen.** Topic Hubs are a **brand-new surface**. Do not
-> confuse them with the existing `topic` screen (the old "Topic Center" in
-> [library.md](library.md)), which is currently mislabelled "Topic Hub" and — per
-> current product thinking — is actually evolving into **Collections**, not into
-> Topic Hubs. Reconciling that label + the panel's "Topic Hub" rows is separate,
-> out-of-scope panel/Collections work.
+> confuse them with the existing `topic` screen — the old **"Topic Center"** in
+> [library.md](library.md), where Article Show levels up. The two no longer share a
+> name (the "Topic Hub" label `topic` briefly carried was reverted to "Topic
+> Center" 2026-08-04), and the panel's topic-hub rows open **this** surface
+> (`topic-hub`), not `topic`. Per current product thinking Topic Center is evolving
+> into **Collections** (not into Topic Hubs) — folding it fully into Collections is
+> the one remaining piece, tracked in [DECISIONS.md](../DECISIONS.md) → "on the horizon."
 >
 > **Doc placement note:** the request named `foundation/topic-hub.md`, but every
 > product *surface* lives in `domains/` (foundation/ is system + behaviour only),

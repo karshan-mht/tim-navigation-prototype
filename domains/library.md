@@ -42,13 +42,18 @@ the nav logo returns home.
 The Visitor topic-browsing chain (shared flow screens in `SPLASH_FLOW_SCREENS`).
 **Topic Center** is a top-level `page` (no level-up pill — the side panel + in-page
 navigation orient the user at that level). **Article Show** keeps a level-up pill
-stepping one level up to the Topic Hub (pill mechanism + Figma node ids in
+stepping one level up to the Topic Center (pill mechanism + Figma node ids in
 [navigation.md](../foundation/navigation.md) §2):
 
 | Screen | id | Level-up |
 |---|---|---|
 | Topic Center | `topic` | — (top-level page, no pill) |
-| Article Show | `article` | Topic Hub (`topic`) |
+| Article Show | `article` | Topic Center (`topic`) |
+
+**Topic Center vs. Topic Hub:** `topic` here is the old **Topic Center** (the label
+"Topic Hub" it briefly carried was reverted 2026-08-04). It's **not** the new Topic
+Hub surface ([topic-hub.md](topic-hub.md)); per current product thinking Topic Center
+is evolving into **Collections**.
 
 The splash's "one Article card" opens a separate Article Show (in a collection).
 That Article Show has no level-up pill and no page-title label; an in-page
