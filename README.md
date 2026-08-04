@@ -1,18 +1,19 @@
-# TIM — Global Navigation Prototype
+# TIM — Navigation Prototype
 
-A plain HTML/CSS/JS prototype of the **This Is Menopause** global navigation
-(top nav, slide-out panel, account dropdown) and the **Splash Landing** — the
-Visitor/Subscriber home built from content modules — across four auth states.
+A plain HTML/CSS/JS prototype of the **This Is Menopause** mobile experience
+across four auth states — **Anonymous Visitor**, **Logged Out Member**,
+**Logged In Member**, and **Subscriber**. It covers the global navigation (top
+nav, slide-out panel, account dropdown) and the screens each persona can reach.
 No framework, no build step — just open a file in a browser.
 
-Design sources: Figma **Global Navigation** file `42yas7Q9FfwhL6xUocjEAl`, the
-**Mobile_Splash_Landing** frame in `EWsXKakhyFLhkse035AoHX` (node `4101:3`), and
-type from the **MHT Style Guide** (`zV2gbuNONeoyeRVcFUFWeZ`, node `3941:17`).
+Start at the **launcher** (`index.html`) — a static picker that opens each
+persona flow on its own shareable page, plus a set of **Entry Points** that
+simulate arriving from an external source (search, social, a content email) on a
+specific starting screen.
 
-The Splash Landing has six sections — **Checker** (hero + symptom-checker card),
-**Listicles**, **Articles**, **Experts**, **Factoid**, **Community** — whose CTAs
-deep-link to in-prototype pages (Symptom Checker, Listicle Detail, Article Show →
-Collection → All Articles, Advisors, Community Overview, Sign Up Start).
+Design source: Figma **Global Navigation** file `42yas7Q9FfwhL6xUocjEAl`;
+per-surface Figma frames and the **MHT Style Guide** are cited in the `domains/`
+docs.
 
 ## Quick start
 
@@ -33,6 +34,16 @@ npx serve .              # then visit the printed URL
 Then open the four flows from the launcher, or directly:
 `visitor/`, `logged-out-member/`, `logged-in-member/`, `subscriber/`.
 
+The launcher has a second section, **Entry Points** — four specific traffic
+sources, each starting from a mocked-up external page (a Google search result
+page, a Facebook ad, a Gmail inbox) that clicks through into a persona flow on a
+specific starting screen instead of its default home: Paid Social (a specific
+article), Organic + Paid Search (article variant and home variant), and a
+member opening a content email. The external mocks live in `entry-points/`;
+the click-through uses a `?start=<screen-id>` query param read by `main.js` at
+boot (falls back to the normal home if the param is missing or doesn't match a
+real screen in that persona).
+
 ## Structure
 
 ```
@@ -41,7 +52,7 @@ main.css                       All styles (shared by every page)
 main.js                        All behavior — reads <body data-persona> and
                                renders the nav/panel/dropdown for that persona
 assets/                        Real assets exported from Figma (flat folder):
-                               logotype.png/.svg + logomark.png (logos),
+                               logotype.png/.svg + logomark.svg (logos),
                                placeholder_profile.svg, privacy-choices.png,
                                listicles_*.svg (splash listicle icons),
                                hero-rings-*.svg / factoid-blob-*.svg /
@@ -51,6 +62,9 @@ visitor/index.html             Anonymous Visitor flow
 logged-out-member/index.html   Logged Out Member flow
 logged-in-member/index.html    Logged In Member flow (has the dropdown)
 subscriber/index.html          Subscriber flow
+entry-points/                  Standalone mock external pages (Google search,
+                               Facebook ad, Gmail inbox) that click through into
+                               a persona flow — self-contained, no main.css/js
 MANUAL.md                      Index of the spec docs (start here)
 DECISIONS.md                   Chronological decisions log + "on the horizon"
 foundation/                    System & behavior (the how):

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Inbox - Gmail</title>
+<link rel="stylesheet" href="../main.css" />
+<style>
+  .mock { height: 100%; overflow-y: auto; font-family: arial, sans-serif; color: #202124; background: #fff; }
+  .mock__topbar { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #ebebeb; }
+  .mock__logo { font-size: 16px; color: #5f6368; }
+  .mock__logo b { color: #202124; font-weight: 600; }
+  .mock__searchbox { flex: 1; background: #eaf1fb; border-radius: 20px; padding: 7px 14px; font-size: 12px; color: #5f6368; }
+  .row { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid #f1f3f4; text-decoration: none; color: inherit; }
+  .row--read { color: #5f6368; }
+  .row--read .row__subject { font-weight: 400; }
+  .checkbox { width: 16px; height: 16px; border: 1px solid #c4c7c5; border-radius: 3px; flex-shrink: 0; }
+  .star { color: #c4c7c5; font-size: 14px; flex-shrink: 0; }
+  .row__body { flex: 1; min-width: 0; font-size: 13px; }
+  .row__sender { font-weight: 700; margin-bottom: 1px; }
+  .row--read .row__sender { font-weight: 400; }
+  .row__subject { font-weight: 700; }
+  .row__snippet { color: #5f6368; }
+  .row:target, .row#content-email:target { background: #eaf1fb; }
+</style>
+</head>
+<body>
+
+  <div class="stage">
+    <div class="phone" id="phone">
+      <div class="mock">
+        <div class="mock__topbar">
+          <div class="mock__logo"><b>Gmail</b></div>
+          <div class="mock__searchbox">Search mail</div>
+        </div>
+
+        <a class="row" id="content-email" href="../logged-in-member/index.html?start=article">
+          <div class="checkbox"></div>
+          <div class="star">&#9734;</div>
+          <div class="row__body">
+            <div class="row__sender">This is Menopause</div>
+            <div><span class="row__subject">New this week: 9 Ways to Improve Low Libido</span></div>
+            <div class="row__snippet">A new study on vaginal estrogen, plus what members are saying about&hellip;</div>
+          </div>
+        </a>
+
+        <div class="row row--read">
+          <div class="checkbox"></div>
+          <div class="star">&#9734;</div>
+          <div class="row__body">
+            <div class="row__sender">Google</div>
+            <div><span class="row__subject">Security alert</span></div>
+            <div class="row__snippet">New sign-in on Windows device</div>
+          </div>
+        </div>
+
+        <div class="row row--read">
+          <div class="checkbox"></div>
+          <div class="star">&#9734;</div>
+          <div class="row__body">
+            <div class="row__sender">LinkedIn</div>
+            <div><span class="row__subject">You have 3 new notifications</span></div>
+            <div class="row__snippet">See who viewed your profile this week</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="fit-phone.js"></script>
+</body>
+</html>

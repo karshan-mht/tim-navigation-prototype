@@ -105,7 +105,7 @@ ids are the leaf vector/frame node each file was exported from.
 | File | What | Source node |
 |---|---|---|
 | `logotype.png` | Full "this is Menopause" wordmark | 6950:211 |
-| `logomark.png` | Compact circular logomark | 7082:926 |
+| `logomark.svg` | Compact circular logomark (vector) | 7082:926 |
 | `logotype.svg` | Horizontal wordmark (panel top + footer) | — |
 
 ### Nav icons (inline, provenance node ids)

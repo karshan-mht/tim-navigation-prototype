@@ -283,8 +283,22 @@ if (!persona) {
   console.error(`Unknown or missing persona key on <body data-persona>: "${LOCKED_PERSONA_KEY}"`);
 }
 
+// Entry Points support: a persona flow normally opens on its own home screen
+// (persona.screens[0]), but the launcher's "Entry Points" section links to
+// specific starting screens instead (e.g. landing straight on an Article Show
+// as if arriving from Search, instead of the Splash Landing home) via
+// ?start=<screen-id>. Falls back to the normal default if the param is
+// missing, blank, or doesn't match a real screen in this persona — so a typo'd
+// or stale link degrades to "just open the persona normally" rather than
+// breaking.
+const requestedStart = new URLSearchParams(window.location.search).get("start");
+const startScreenId =
+  requestedStart && persona.screens.some((s) => s.id === requestedStart)
+    ? requestedStart
+    : persona.screens[0].id;
+
 let state = {
-  screenId: persona.screens[0].id,
+  screenId: startScreenId,
   prevScreenId: null,
   panelOpen: false,
   dropdownOpen: false,

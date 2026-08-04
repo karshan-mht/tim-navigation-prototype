@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TIM Global Navigation — Prototype</title>
+<title>TIM — Navigation Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,600;0,700;1,400&family=DM+Serif+Display&display=swap" rel="stylesheet" />
@@ -15,9 +15,9 @@
   <main class="launcher">
     <div class="launcher__title">
       <h1>TIM Global Navigation</h1>
-      <p>Pick a flow to preview it on its own — each one is a separate, shareable page.</p>
     </div>
 
+    <h2 class="launcher__section-title">User Types</h2>
     <div class="launcher__grid">
       <a class="launcher__card" href="visitor/index.html">
         <h2>Anonymous Visitor</h2>
@@ -25,15 +25,35 @@
       </a>
       <a class="launcher__card" href="subscriber/index.html">
         <h2>Subscriber</h2>
-        <p>Currently mirrors the Visitor experience — same top nav and landing — pending a subscriber-specific design.</p>
+        <p>Same top nav and landing as the Visitor, with a "Finish up now" upsell in place of Join.</p>
       </a>
       <a class="launcher__card" href="logged-in-member/index.html">
         <h2>Logged In Member</h2>
-        <p>Home-as-a-hub (still to be designed), profile dropdown, and every uplevel content screen (articles, groups, programs, profiles, Q&amp;A, activity).</p>
+        <p>Home hub, profile dropdown, and every uplevel content screen — articles, groups, programs, profiles, Q&amp;A, activity.</p>
       </a>
       <a class="launcher__card" href="logged-out-member/index.html">
         <h2>Logged Out Member</h2>
         <p>Gated home hub for someone with an account who isn&rsquo;t currently signed in.</p>
+      </a>
+    </div>
+
+    <h2 class="launcher__section-title">Entry Points</h2>
+    <div class="launcher__grid">
+      <a class="launcher__card" href="entry-points/facebook-ad.html">
+        <h2>Paid Social &ndash; Article</h2>
+        <p>A Facebook ad opens straight into an Article Show.</p>
+      </a>
+      <a class="launcher__card" href="entry-points/google-search.html#article">
+        <h2>Organic + Paid Search &ndash; Article</h2>
+        <p>A Google search result opens straight into an Article Show.</p>
+      </a>
+      <a class="launcher__card" href="entry-points/google-search.html#home">
+        <h2>Organic + Paid Search &ndash; Home</h2>
+        <p>A Google search result opens on the Splash Landing home.</p>
+      </a>
+      <a class="launcher__card" href="entry-points/gmail-inbox.html">
+        <h2>Content Email &ndash; Article</h2>
+        <p>A Gmail message opens Logged In Member straight into an Article Show.</p>
       </a>
     </div>
   </main>

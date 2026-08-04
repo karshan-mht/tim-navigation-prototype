@@ -1276,15 +1276,24 @@ body {
   margin: 0 0 8px;
   letter-spacing: -0.25px;
 }
-.launcher__title p {
-  margin: 0;
+.launcher__section-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   color: var(--color-text-secondary);
-  font-size: 15px;
+  margin: 40px 0 12px;
+}
+.launcher__title + .launcher__section-title {
+  margin-top: 0; /* first section sits right under the page title */
 }
 .launcher__grid {
   display: grid;
   grid-template-columns: 1fr;   /* stacked single column */
   gap: 16px;
+}
+.launcher__grid + .launcher__section-title {
+  margin-top: 40px;
 }
 .launcher__card {
   display: block;
