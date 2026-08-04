@@ -82,6 +82,11 @@ into every persona (`SHARED_TARGET_SCREENS` in `main.js`) so the links resolve
 everywhere, not just in the member personas. `com-values` (Community Values &
 Ambassador Program) is a new placeholder `page` added for module 5.
 
+Below the five modules, a **"Popular topic hubs"** section is a **temporary entry
+point** into the new [Topic Hub](topic-hub.md) surface (one link per `TOPIC_HUBS`
+entry — currently just "Newly Diagnosed"). It's a stand-in until the panel's
+"Topic Hub links" row lands; see [topic-hub.md](topic-hub.md) → Reachability.
+
 ---
 
 ## Assets — Community panel icons

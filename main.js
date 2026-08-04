@@ -81,6 +81,38 @@ const COMMUNITY_MODULES = [
   { title: "People", desc: "Meet ambassadors, CEMs, and peers", count: "[TBD]", screen: "com-meet" },
   { title: "Community Values & Ambassador Program", desc: "How we look after each other", screen: "com-values" },
 ];
+
+// Topic Hubs — a NEW surface (not the old `topic`/Topic Center, which is
+// evolving into Collections). Each hub aggregates content across feature types
+// for one popular patient concern (up to 8 per site), so a member can explore a
+// concern without bouncing between Q&A, conversations, groups, and resources.
+// Richer than the /community orientation menu: modules flagged `preview: true`
+// show a content-preview affordance (placeholder skeleton rows — no fabricated
+// posts/questions), closer in spirit to the Splash Landing modules.
+// Data-driven so more hubs are added as data, not one-off screens (see
+// TOPIC_HUB_SCREENS + renderTopicHub). "Newly Diagnosed" is the first example —
+// the only near-universal concern, so the safest default to prototype.
+// `stat` is ALWAYS the literal "[TBD]" placeholder, never a fabricated number.
+const TOPIC_HUBS = [
+  {
+    id: "topic-hub-newly-diagnosed",
+    name: "Newly Diagnosed",
+    desc: "Get your bearings after a new diagnosis — everything for this stage in one place.",
+    stat: "[TBD]% of community discussion this month",
+    modules: [
+      // No topic-filtering exists yet, so Top Q&A points at the general Q&A page.
+      { title: "Top Q&A", desc: "Most helpful answered questions", preview: true, screen: "com-questions", note: "General Q&A — topic filtering not built yet" },
+      { title: "Active Conversations", desc: "Relevant peer discussions", preview: true, screen: "com-activities" },
+      // "Expert Resources" is a curated set of articles (plural), so it points at
+      // All Resources rather than a single Article Show (the `lib-all` fallback
+      // the brief allows — no single article fits, and lib-all resolves everywhere).
+      { title: "Expert Resources", desc: "Curated, medically-reviewed articles", preview: true, screen: "lib-all" },
+      { title: "Groups & People", desc: "Circles and members walking the same path", screen: "com-groups" },
+      // No tools surface exists yet — dead/disabled placeholder for now.
+      { title: "Action-Oriented Tools", desc: "Guides, checklists, step-by-step programs", disabled: true },
+    ],
+  },
+];
 const DROPDOWN_MENU = [
   // Notifications sits above the divider as a distinct orange "chip" (its own
   // pill styling reflects the orange badge colour); the divider sits below it,
@@ -150,7 +182,16 @@ const TOPIC_HUB_SCREEN = { id: "topic", label: "Topic Hub", type: "page", title:
 const COMMUNITY_OVERVIEW_SCREEN = { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" };
 const ALL_ARTICLES_SCREEN = { id: "all-collections", label: "All Articles", type: "page", title: "All Articles" };
 const ADVISORS_SCREEN = { id: "advisors", label: "Advisors", type: "page", title: "Advisors" };
-const SHARED_TARGET_SCREENS = [TOPIC_HUB_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, ...COMMUNITY_SCREENS];
+
+// NOTE on naming: `TOPIC_HUB_SCREEN` above (id `topic`) is the OLD Topic Center
+// — currently mislabelled "Topic Hub" and, per current product thinking, actually
+// evolving into Collections (not into the new Topic Hubs). The NEW Topic Hub
+// surface is the `topic-hub-*` pages below (`TOPIC_HUB_PAGES`), generated from the
+// TOPIC_HUBS data array so more hubs are added as data, not one-off screens.
+// (Reconciling the old `topic` label + panel wiring is out of scope here.)
+const TOPIC_HUB_PAGES = TOPIC_HUBS.map((h) => ({ id: h.id, label: h.name, type: "page", title: h.name, topicHub: h }));
+
+const SHARED_TARGET_SCREENS = [TOPIC_HUB_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
 
 // Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
 // mirrors the Visitor landing). The splash content modules deep-link into these:
@@ -350,10 +391,67 @@ function renderCommunityHub() {
         <span class="comm-mod__link">View &rarr;</span>
       </button>`
   ).join("");
+  // Temporary entry point into the new Topic Hub surface (full panel wiring — the
+  // "up to 8 Topic Hub links" row — is out of scope). Data-driven from TOPIC_HUBS.
+  const hubLinks = TOPIC_HUBS.map(
+    (h) => `
+      <button class="comm-mod" data-screen="${h.id}">
+        <span class="comm-mod__head"><span class="comm-mod__title">${h.name}</span></span>
+        <span class="comm-mod__desc">${h.desc}</span>
+        <span class="comm-mod__link">Open topic hub &rarr;</span>
+      </button>`
+  ).join("");
   return `
     <section class="comm-hub">
       <h1 class="comm-hub__title">Community</h1>
       <div class="comm-hub__list">${cards}</div>
+      <h2 class="comm-hub__subhead">Popular topic hubs</h2>
+      <div class="comm-hub__list">${hubLinks}</div>
+    </section>
+  `;
+}
+
+// Topic Hub — a NEW surface (see TOPIC_HUBS). Aggregates content across feature
+// types for one patient concern. Richer than the /community orientation menu:
+// modules flagged `preview: true` render a content-preview affordance (skeleton
+// placeholder rows — no fabricated content). Templated: one render for any hub in
+// the TOPIC_HUBS data array. Header = name + description + a [TBD] stat.
+function renderTopicHub(hub) {
+  const modules = hub.modules
+    .map((m) => {
+      const preview = m.preview
+        ? `<span class="topic-hub-mod__preview" aria-hidden="true"><span></span><span></span></span>`
+        : "";
+      const note = m.note ? `<span class="topic-hub-mod__note">${m.note}</span>` : "";
+      if (m.disabled) {
+        // Dead/disabled state — no destination screen exists yet.
+        return `
+          <div class="topic-hub-mod topic-hub-mod--disabled" aria-disabled="true">
+            <span class="topic-hub-mod__head">
+              <span class="topic-hub-mod__title">${m.title}</span>
+              <span class="topic-hub-mod__soon">Coming soon</span>
+            </span>
+            <span class="topic-hub-mod__desc">${m.desc}</span>
+          </div>`;
+      }
+      return `
+        <button class="topic-hub-mod" data-screen="${m.screen}">
+          <span class="topic-hub-mod__head"><span class="topic-hub-mod__title">${m.title}</span></span>
+          <span class="topic-hub-mod__desc">${m.desc}</span>
+          ${preview}
+          ${note}
+          <span class="topic-hub-mod__link">Explore &rarr;</span>
+        </button>`;
+    })
+    .join("");
+  return `
+    <section class="topic-hub">
+      <header class="topic-hub__header">
+        <h1 class="topic-hub__name">${hub.name}</h1>
+        <p class="topic-hub__desc">${hub.desc}</p>
+        <p class="topic-hub__stat">${hub.stat}</p>
+      </header>
+      <div class="topic-hub__list">${modules}</div>
     </section>
   `;
 }
@@ -731,6 +829,8 @@ function render() {
     content = renderGatedHome();
   } else if (screen.id === "community-overview") {
     content = renderCommunityHub();
+  } else if (screen.topicHub) {
+    content = renderTopicHub(screen.topicHub);
   } else if (screen.series) {
     content = renderSeriesBox(screen.series);
   } else {
@@ -738,8 +838,8 @@ function render() {
   }
   // Fill the viewport (centering the label / keeping the footer below the fold)
   // only for label & gated screens; module/content screens (incl. the Community
-  // hub) flow at natural height from the top.
-  const bodyFill = !screen.modules && screen.id !== "advisors" && screen.id !== "community-overview" ? " screen__body--fill" : "";
+  // hub and Topic Hubs) flow at natural height from the top.
+  const bodyFill = !screen.modules && screen.id !== "advisors" && screen.id !== "community-overview" && !screen.topicHub ? " screen__body--fill" : "";
 
   // Nav + level-up bar are separate sticky elements at the top of the scroll
   // area. The nav auto-hides on scroll-down and returns on scroll-up; the

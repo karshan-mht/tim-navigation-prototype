@@ -1,0 +1,99 @@
+# TIM Topic Hub — spec
+
+A **Topic Hub** is a single destination that aggregates content **across feature
+types** — Q&A, conversations, groups/people, resources — for one specific, popular
+patient concern (e.g. "Newly Diagnosed," "Fatigue & Energy Management"). Up to **8
+per site**. The point: a member can explore one concern in one place instead of
+bouncing between the Community feature pages and the Library. Chronological history
+is in [DECISIONS.md](../DECISIONS.md). Code (`../main.js`, `../main.css`) is the
+source of truth — correct this doc if it drifts.
+
+> **Not the old `topic` screen.** Topic Hubs are a **brand-new surface**. Do not
+> confuse them with the existing `topic` screen (the old "Topic Center" in
+> [library.md](library.md)), which is currently mislabelled "Topic Hub" and — per
+> current product thinking — is actually evolving into **Collections**, not into
+> Topic Hubs. Reconciling that label + the panel's "Topic Hub" rows is separate,
+> out-of-scope panel/Collections work.
+>
+> **Doc placement note:** the request named `foundation/topic-hub.md`, but every
+> product *surface* lives in `domains/` (foundation/ is system + behaviour only),
+> so this doc sits alongside its cited templates `community.md` / `library.md`.
+
+Vs. the [Community Overview](community.md) hub: that's a lightweight *orientation
+menu* (plain link-out boxes, no previews). A Topic Hub is richer — its modules are
+meant to show **content previews**, closer in spirit to the Splash Landing modules.
+
+---
+
+## Screen & rendering
+
+- **Templated, data-driven.** Hubs are entries in the `TOPIC_HUBS` array in
+  `main.js`; `TOPIC_HUB_PAGES` maps each to a screen `{ id, label, type: "page",
+  title, topicHub }`. Adding a hub = adding a data entry, **not** a one-off screen
+  (same "data array + render function" convention as `renderModules()`).
+- `render()` branches on `screen.topicHub` → `renderTopicHub(hub)`; the page is
+  excluded from `screen__body--fill` so it flows from the top.
+- `type: "page"` — **no level-up pill** (a top-level destination, like the other
+  `com-*` / hub pages; the nav logo returns home).
+- Each hub's screen is injected into **every** persona (`SHARED_TARGET_SCREENS`)
+  so it (and its module targets) resolve everywhere.
+
+## Structure
+
+**Header** — topic **name** (DM Serif, navy), a one-line **description**, and a
+**stat** pill. The stat is always the literal **`[TBD]`** placeholder
+(`"[TBD]% of community discussion this month"`) — never a fabricated number (same
+rule as the splash community count, [DECISIONS](../DECISIONS.md) 2026-07-27).
+
+**Modules** — outlined boxes (`.topic-hub-mod`, same wireframe treatment as the
+community hub). Each has a title, one-line description, and a link. Modules flagged
+`preview: true` add a **content-preview affordance**: skeleton placeholder rows
+(grey bars) standing in for previewed items — **no fabricated posts/questions**.
+A module can be `disabled` (dead state, no destination yet) or carry a `note`
+(a small italic caveat).
+
+---
+
+## Example hub — "Newly Diagnosed"
+
+The first built example — called out as the only *near-universal* concern, so the
+safest default to prototype. Five modules, fixed order:
+
+| # | Module | Description | Preview? | → screen |
+|---|---|---|---|---|
+| 1 | Top Q&A | Most helpful answered questions | yes | `com-questions` ¹ |
+| 2 | Active Conversations | Relevant peer discussions | yes | `com-activities` |
+| 3 | Expert Resources | Curated, medically-reviewed articles | yes | `lib-all` ² |
+| 4 | Groups & People | Circles and members walking the same path | no | `com-groups` |
+| 5 | Action-Oriented Tools | Guides, checklists, step-by-step programs | no | **none** ³ |
+
+¹ **Known placeholder limitation:** no topic-filtering exists yet, so Top Q&A
+points at the general Q&A page rather than a "Newly Diagnosed"-filtered view.
+Shown as an italic note on the card.
+
+² Expert Resources is a *curated set of articles* (plural), so it points at **All
+Resources** (`lib-all`) — the brief's fallback "if no single article fits". A
+single `article` (Article Show) detail didn't fit, and `lib-all` resolves in every
+persona.
+
+³ **Dead/disabled state:** no tools surface exists yet, so this module is a
+non-interactive dashed box with a "Coming soon" chip — no destination.
+
+---
+
+## Reachability
+
+Full panel wiring (the "up to 8 Topic Hub links" row) is part of the broader
+panel-flattening work and is **out of scope** here. For now there is **one minimal,
+temporary entry point**: a **"Popular topic hubs"** section at the bottom of the
+[Community Overview](community.md) hub, listing each `TOPIC_HUBS` entry as a link.
+That makes the surface demonstrable without the full panel row.
+
+---
+
+## Fidelity / placeholders
+
+Wireframe-level only — outlined boxes, no visual polish, **no fabricated stats,
+counts, or content previews**. The stat is `[TBD]`; preview modules show skeleton
+rows, not real questions/posts/photos. There is no Figma source node yet — this is
+a from-the-brief prototype of a new surface.
