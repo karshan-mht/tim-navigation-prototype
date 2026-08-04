@@ -1036,7 +1036,9 @@ body {
   transition: color 0.18s ease;
 }
 .panel__tab:active { color: var(--color-text); }
-.panel__tab-icon { width: 44px; height: 44px; display: block; }
+.panel__tab-icon { width: 44px; height: 44px; display: block; border-radius: 50%; }
+/* Press feedback matching the top-nav icons (light gray circle on tap). */
+.panel__tab:active .panel__tab-icon { background: rgba(13, 27, 41, 0.05); }
 
 /* Topic-hub list — the new primary entry point */
 .panel__hubs {
