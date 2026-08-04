@@ -83,21 +83,22 @@ const COMMUNITY_MODULES = [
 ];
 
 // Topic Hubs — a NEW surface (not the old `topic`/Topic Center, which is
-// evolving into Collections). Each hub aggregates content across feature types
-// for one popular patient concern (up to 8 per site), so a member can explore a
-// concern without bouncing between Q&A, conversations, groups, and resources.
-// Richer than the /community orientation menu: modules flagged `preview: true`
-// show a content-preview affordance (placeholder skeleton rows — no fabricated
-// posts/questions), closer in spirit to the Splash Landing modules.
-// Data-driven so more hubs are added as data, not one-off screens (see
-// TOPIC_HUB_SCREENS + renderTopicHub). "Newly Diagnosed" is the first example —
-// the only near-universal concern, so the safest default to prototype.
-// `stat` is ALWAYS the literal "[TBD]" placeholder, never a fabricated number.
+// evolving into Collections). A hub aggregates content across feature types for
+// one patient concern (up to 8 per site), so a member can explore a concern
+// without bouncing between Q&A, conversations, groups, and resources. Reached
+// from the side panel's topic-hub rows (see renderPanel). Richer than the
+// /community orientation menu: modules flagged `preview: true` show a content-
+// preview affordance (placeholder skeleton rows — no fabricated posts/questions),
+// closer in spirit to the Splash Landing modules. Data-driven so more hubs are
+// added as data, not one-off screens (see TOPIC_HUB_PAGES + renderTopicHub).
+// For now there is a single **generic** hub used as the template for every panel
+// item (the real per-concern hubs + names come later). `stat` is ALWAYS the
+// literal "[TBD]" placeholder, never a fabricated number.
 const TOPIC_HUBS = [
   {
-    id: "topic-hub-newly-diagnosed",
-    name: "Newly Diagnosed",
-    desc: "Get your bearings after a new diagnosis — everything for this stage in one place.",
+    id: "topic-hub",
+    name: "Topic Hub",
+    desc: "Everything on this topic — questions, conversations, groups, and resources — in one place.",
     stat: "[TBD]% of community discussion this month",
     modules: [
       // No topic-filtering exists yet, so Top Q&A points at the general Q&A page.
@@ -380,6 +381,8 @@ function renderSeriesBox(series) {
 // features (the panel's single Community tab points here). Wireframe-level: no
 // live content previews, no fabricated counts.
 function renderCommunityHub() {
+  // Whole card is tappable (data-screen) — no separate link affordance; press
+  // feedback comes from :active (mobile tap/press, not desktop rollover).
   const cards = COMMUNITY_MODULES.map(
     (m) => `
       <button class="comm-mod" data-screen="${m.screen}">
@@ -388,25 +391,12 @@ function renderCommunityHub() {
           ${m.count ? `<span class="comm-mod__badge">${m.count}</span>` : ""}
         </span>
         <span class="comm-mod__desc">${m.desc}</span>
-        <span class="comm-mod__link">View &rarr;</span>
-      </button>`
-  ).join("");
-  // Temporary entry point into the new Topic Hub surface (full panel wiring — the
-  // "up to 8 Topic Hub links" row — is out of scope). Data-driven from TOPIC_HUBS.
-  const hubLinks = TOPIC_HUBS.map(
-    (h) => `
-      <button class="comm-mod" data-screen="${h.id}">
-        <span class="comm-mod__head"><span class="comm-mod__title">${h.name}</span></span>
-        <span class="comm-mod__desc">${h.desc}</span>
-        <span class="comm-mod__link">Open topic hub &rarr;</span>
       </button>`
   ).join("");
   return `
     <section class="comm-hub">
       <h1 class="comm-hub__title">Community</h1>
       <div class="comm-hub__list">${cards}</div>
-      <h2 class="comm-hub__subhead">Popular topic hubs</h2>
-      <div class="comm-hub__list">${hubLinks}</div>
     </section>
   `;
 }
@@ -434,13 +424,14 @@ function renderTopicHub(hub) {
             <span class="topic-hub-mod__desc">${m.desc}</span>
           </div>`;
       }
+      // Whole card is tappable — no separate "Explore" link; :active gives the
+      // press feedback (mobile tap/press, not a desktop rollover).
       return `
         <button class="topic-hub-mod" data-screen="${m.screen}">
           <span class="topic-hub-mod__head"><span class="topic-hub-mod__title">${m.title}</span></span>
           <span class="topic-hub-mod__desc">${m.desc}</span>
           ${preview}
           ${note}
-          <span class="topic-hub-mod__link">Explore &rarr;</span>
         </button>`;
     })
     .join("");
@@ -471,9 +462,11 @@ function renderPanel() {
       </button>`;
   }).join("");
 
+  // Every panel topic-hub row opens the (generic) Topic Hub surface for now —
+  // the primary entry point into Topic Hubs. (Real per-row concerns come later.)
   const hubs = HUBS.map(
     (h) =>
-      `<button class="panel__hub" data-screen="topic">
+      `<button class="panel__hub" data-screen="topic-hub">
         <img class="panel__hub-icon" src="${ASSET_BASE}/${h.icon}.svg" alt="" />
         <span>${h.label}</span>
       </button>`

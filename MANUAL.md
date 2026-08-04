@@ -34,8 +34,8 @@ product surfaces the navigation leads to.
   Overview, and the community panel icons.
 - **[topic-hub.md](domains/topic-hub.md)** — the Topic Hub surface (a new page type,
   distinct from the old `topic`/Topic Center): a per-concern hub aggregating Q&A /
-  conversations / groups / resources. Templated from data; "Newly Diagnosed" is the
-  first example.
+  conversations / groups / resources. Templated from data; currently one generic
+  hub reached from the side panel's topic-hub rows.
 - **[account.md](domains/account.md)** — the Account surface: the profile dropdown menu
   and its destination screens (My Health / Messages / Notifications / Settings /
   My Profile) plus the dropdown icons.

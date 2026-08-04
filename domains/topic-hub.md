@@ -8,6 +8,11 @@ bouncing between the Community feature pages and the Library. Chronological hist
 is in [DECISIONS.md](../DECISIONS.md). Code (`../main.js`, `../main.css`) is the
 source of truth — correct this doc if it drifts.
 
+> **Current state:** there is **one generic Topic Hub** (id `topic-hub`, titled
+> "Topic Hub") used as the reusable template that every panel topic-hub row opens.
+> The real per-concern hubs (their names + which ~8 concerns) come later; the
+> render + data model already support multiple entries in `TOPIC_HUBS`.
+
 > **Not the old `topic` screen.** Topic Hubs are a **brand-new surface**. Do not
 > confuse them with the existing `topic` screen (the old "Topic Center" in
 > [library.md](library.md)), which is currently mislabelled "Topic Hub" and — per
@@ -46,18 +51,21 @@ meant to show **content previews**, closer in spirit to the Splash Landing modul
 rule as the splash community count, [DECISIONS](../DECISIONS.md) 2026-07-27).
 
 **Modules** — outlined boxes (`.topic-hub-mod`, same wireframe treatment as the
-community hub). Each has a title, one-line description, and a link. Modules flagged
-`preview: true` add a **content-preview affordance**: skeleton placeholder rows
-(grey bars) standing in for previewed items — **no fabricated posts/questions**.
-A module can be `disabled` (dead state, no destination yet) or carry a `note`
-(a small italic caveat).
+community hub). Each has a title and a one-line description. The **whole card is
+tappable** (navigates via `data-screen`) — there is no separate link/arrow
+affordance; press feedback comes from `:active` (this is a mobile prototype —
+tap/press, not a desktop rollover). Modules flagged `preview: true` add a
+**content-preview affordance**: skeleton placeholder rows (grey bars) standing in
+for previewed items — **no fabricated posts/questions**. A module can be `disabled`
+(dead state, no destination yet — non-tappable, no press feedback) or carry a
+`note` (a small italic caveat).
 
 ---
 
-## Example hub — "Newly Diagnosed"
+## The generic hub (current placeholder)
 
-The first built example — called out as the only *near-universal* concern, so the
-safest default to prototype. Five modules, fixed order:
+One generic hub (`topic-hub`, titled "Topic Hub") stands in for every concern for
+now. Five modules, fixed order:
 
 | # | Module | Description | Preview? | → screen |
 |---|---|---|---|---|
@@ -68,8 +76,8 @@ safest default to prototype. Five modules, fixed order:
 | 5 | Action-Oriented Tools | Guides, checklists, step-by-step programs | no | **none** ³ |
 
 ¹ **Known placeholder limitation:** no topic-filtering exists yet, so Top Q&A
-points at the general Q&A page rather than a "Newly Diagnosed"-filtered view.
-Shown as an italic note on the card.
+points at the general Q&A page rather than a topic-filtered view. Shown as an
+italic note on the card.
 
 ² Expert Resources is a *curated set of articles* (plural), so it points at **All
 Resources** (`lib-all`) — the brief's fallback "if no single article fits". A
@@ -83,11 +91,12 @@ non-interactive dashed box with a "Coming soon" chip — no destination.
 
 ## Reachability
 
-Full panel wiring (the "up to 8 Topic Hub links" row) is part of the broader
-panel-flattening work and is **out of scope** here. For now there is **one minimal,
-temporary entry point**: a **"Popular topic hubs"** section at the bottom of the
-[Community Overview](community.md) hub, listing each `TOPIC_HUBS` entry as a link.
-That makes the surface demonstrable without the full panel row.
+The entry point is the **side panel**: each of the panel's topic-hub rows (under
+the Home / Resources / Community tabs) opens the generic Topic Hub
+(`data-screen="topic-hub"` — see [navigation.md](../foundation/navigation.md) §3).
+Conceptually these sit in the **Resources** side of the panel. For now every row
+opens the same generic hub; wiring each row to its own per-concern hub (and the
+real hub names) is later work.
 
 ---
 
