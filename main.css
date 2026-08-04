@@ -190,7 +190,7 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
-.mod-hero__cta:hover { filter: brightness(0.97); }
+.mod-hero__cta:active { filter: brightness(0.97); }
 
 .mod-section { padding: 24px 12px; }
 .mod-section__title { font-size: 18px; font-weight: 700; letter-spacing: -0.25px; margin: 0 0 16px; }
@@ -209,7 +209,7 @@ body {
   color: var(--color-text);
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
-.mod-card:hover { border-color: var(--color-primary); transform: translateY(-1px); }
+.mod-card:active { border-color: var(--color-primary); transform: scale(0.99); }
 
 .mod-article {
   display: block;
@@ -223,7 +223,7 @@ body {
   font-family: var(--font-body);
   transition: border-color 0.15s ease, transform 0.15s ease;
 }
-.mod-article:hover { border-color: var(--color-primary); transform: translateY(-1px); }
+.mod-article:active { border-color: var(--color-primary); transform: scale(0.99); }
 .mod-article__eyebrow {
   display: block;
   font-size: 12px;
@@ -301,7 +301,7 @@ body {
   letter-spacing: -0.25px;
   cursor: pointer;
 }
-.mod-checker-card__cta:hover { filter: brightness(0.97); }
+.mod-checker-card__cta:active { filter: brightness(0.97); }
 .mod-checker-card__action { display: flex; flex-direction: column; gap: 12px; }
 .mod-checker-card__note { margin: 0; text-align: center; font-size: 14px; color: var(--color-text-secondary); }
 
@@ -396,7 +396,7 @@ body {
   white-space: nowrap;
   cursor: pointer;
 }
-.mod-listicle-card__cta:hover { background: var(--color-primary-soft); }
+.mod-listicle-card__cta:active { background: var(--color-primary-soft); }
 
 /* ---- Articles — 2-up image + title grid, Figma "Articles" section ---- */
 
@@ -576,9 +576,9 @@ body {
   cursor: pointer;
 }
 .mod-btn-primary { border: none; background: #fff; color: #151515; }
-.mod-btn-primary:hover { filter: brightness(0.97); }
+.mod-btn-primary:active { filter: brightness(0.97); }
 .mod-btn-secondary { border: 1px solid rgba(255, 255, 255, 0.35); background: transparent; color: #fff; }
-.mod-btn-secondary:hover { background: rgba(255, 255, 255, 0.08); }
+.mod-btn-secondary:active { background: rgba(255, 255, 255, 0.08); }
 
 .mod-disclaimer-note {
   margin: 16px 0 0;
@@ -685,7 +685,7 @@ body {
   color: var(--color-text);
   cursor: pointer;
 }
-.icon-btn:hover { background: rgba(13, 27, 41, 0.05); }
+.icon-btn:active { background: rgba(13, 27, 41, 0.05); }
 
 /* Monochrome inline SVG icons (fill=currentColor), so each context's `color`
    tints them — nav = ink, Library/Community = magenta, back chevron = blue,
@@ -719,7 +719,7 @@ body {
   letter-spacing: -0.25px;
   cursor: pointer;
 }
-.join-btn:hover { filter: brightness(1.08); }
+.join-btn:active { filter: brightness(1.08); }
 
 .profile-btn {
   position: relative;
@@ -971,7 +971,7 @@ body {
   font-weight: 600;
   cursor: pointer;
 }
-.welcome-card__cta:hover { filter: brightness(1.08); }
+.welcome-card__cta:active { filter: brightness(1.08); }
 
 /* ---- Slide-out Panel ---- */
 
@@ -1035,7 +1035,7 @@ body {
   color: var(--color-text-secondary);
   transition: color 0.18s ease;
 }
-.panel__tab:hover { color: var(--color-text); }
+.panel__tab:active { color: var(--color-text); }
 .panel__tab-icon { width: 44px; height: 44px; display: block; }
 
 /* Topic-hub list — the new primary entry point */
@@ -1063,7 +1063,7 @@ body {
   color: var(--color-text);
   transition: background 0.18s ease;
 }
-.panel__hub:hover { background: var(--color-magenta-soft-solid); }
+.panel__hub:active { background: var(--color-magenta-soft-solid); }
 /* Hub icons are pre-tinted SVGs (magenta glyph on a pale circle) — no CSS tint. */
 .panel__hub-icon { width: 44px; height: 44px; flex-shrink: 0; display: block; }
 
@@ -1083,7 +1083,7 @@ body {
   cursor: pointer;
   transition: background 0.18s ease;
 }
-.panel__explore:hover { background: var(--color-primary-soft); }
+.panel__explore:active { background: var(--color-primary-soft); }
 
 .panel__footer {
   margin-top: auto;
