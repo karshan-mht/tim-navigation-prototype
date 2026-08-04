@@ -35,7 +35,7 @@ const ICON_SVGS = {
 
 // Logo + profile assets (raster wordmark/mark exported at 3x; profile is SVG).
 const LOGO_FULL = `${ASSET_BASE}/logotype.png`; // full "this is Menopause" wordmark
-const LOGO_MARK = `${ASSET_BASE}/logomark.png`; // compact circular logomark
+const LOGO_MARK = `${ASSET_BASE}/logomark.svg`; // compact circular logomark
 const PROFILE_PLACEHOLDER = `${ASSET_BASE}/placeholder_profile.svg`;
 // Panel wordmark — the distinct horizontal "this is Menopause" logo the user
 // added (assets/logotype.svg), vs the stacked lockup used in the nav.
@@ -607,7 +607,7 @@ function renderModules() {
   // standard "Join for free" → Sign Up Start.
   const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
   const ctaTitle = isSubscriber
-    ? "You're almost in."
+    ? "Don't miss out! You're almost in."
     : "You don't have to figure this out alone.";
   const ctaSub = isSubscriber
     ? "Finish setting up your account to unlock posts, questions, groups, and the full community."
