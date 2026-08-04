@@ -49,10 +49,9 @@ const PANEL_LOGO = `${ASSET_BASE}/logotype.svg`;
 // Navigation, panel node 7299:1987). The redesign drops the old per-persona
 // Resources/Community menu lists in favour of one shared list of topic hubs.
 // Labels are intentionally the Figma placeholders (the real hub taxonomy isn't
-// settled); every hub opens the generic Topic Hub surface (`topic-hub` — see
-// TOPIC_HUBS below), NOT the old Topic Center (`topic`), which is evolving into
-// Collections instead (see the naming note near TOPIC_CENTER_SCREEN below). Icons
-// are pre-tinted SVGs (magenta glyph on a pale circle) in assets/hub-{1..8}.svg
+// settled); these are the up-to-8 pre-defined Topic Hubs. Every row opens the
+// generic Topic Hub surface (`topic-hub` — see TOPIC_HUBS below). Icons are
+// pre-tinted SVGs (magenta glyph on a pale circle) in assets/hub-{1..8}.svg
 // — used as <img>, not currentColor-tinted.
 const HUBS = [
   { icon: "hub-1", label: "Topic Hub Longer Name" },
@@ -84,8 +83,8 @@ const COMMUNITY_MODULES = [
   { title: "Community Values & Ambassador Program", desc: "How we look after each other", screen: "com-values" },
 ];
 
-// Topic Hubs — a NEW surface (not the old `topic`/Topic Center, which is
-// evolving into Collections). A hub aggregates content across feature types for
+// Topic Hubs — a NEW surface (distinct from the old Topic Center, which was
+// retired and folded into Collections 2026-08-04). A hub aggregates content across feature types for
 // one patient concern (up to 8 per site), so a member can explore a concern
 // without bouncing between Q&A, conversations, groups, and resources. Reached
 // from the side panel's topic-hub rows (see renderPanel). Richer than the
@@ -173,52 +172,45 @@ const ACCOUNT_SCREENS = [
   // No acct-logout screen: "Log out" navigates out to the Logged Out Member flow.
 ];
 
-// Shared panel/level-up destinations. TOPIC_CENTER_SCREEN (id `topic`) is the OLD
-// Topic Center — kept only because Article Show and other detail screens still
-// level up to it, NOT because panel hub rows open it (panel rows open the NEW
-// `topic-hub` surface instead — see TOPIC_HUB_PAGES). Also here: the Community
-// Overview (the Community tab) and All Articles ("Explore (ToC)"). Also the
-// Advisors page, reached from the global footer's "Medical Advisors" link.
-// Defined once and injected into every persona (see below) so these shared-chrome
-// targets resolve in all four personas. The Resources tab points at LIB.all.
+// Shared panel/level-up destinations: the Community Overview (the Community tab),
+// All Articles ("Explore (ToC)"), and the Advisors page (global footer's "Medical
+// Advisors" link). Defined once and injected into every persona (see below) so
+// these shared-chrome targets resolve in all four personas. The Resources tab
+// points at LIB.all.
 // (`all-articles` keeps the internal id `all-collections` — only its display
 // label/title were renamed from "All Collections".)
-const TOPIC_CENTER_SCREEN = { id: "topic", label: "Topic Center", type: "page", title: "Topic Center" };
 const COMMUNITY_OVERVIEW_SCREEN = { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" };
 const ALL_ARTICLES_SCREEN = { id: "all-collections", label: "All Articles", type: "page", title: "All Articles" };
 const ADVISORS_SCREEN = { id: "advisors", label: "Advisors", type: "page", title: "Advisors" };
 
-// NAMING (reconciled 2026-08-04): the id `topic` is the OLD **Topic Center** —
-// now labelled "Topic Center" again (it had briefly been mislabelled "Topic Hub").
-// Per product thinking it's evolving into **Collections**, not into the new Topic
-// Hubs. The NEW **Topic Hub** surface is the `topic-hub` page(s) in TOPIC_HUB_PAGES
-// (from the TOPIC_HUBS data array — added as data, not one-off screens). So the two
-// no longer share a name: `topic` = Topic Center (Collections-bound), `topic-hub` =
-// Topic Hub. Article Show still levels up to Topic Center (see below); folding
-// Topic Center fully into Collections is the remaining future work.
+// NAMING (2026-08-04): the old **Topic Center** (`topic`) was **folded into
+// Collections** and retired. It was "a collection of sponsored content," so it's
+// now just a **Collection** (the `collection` screen). The **Topic Hub** surface
+// (`topic-hub` in TOPIC_HUB_PAGES, from the TOPIC_HUBS data array) is a separate,
+// kept concept — the panel's up-to-8 pre-defined hub rows. An Article Show links
+// **up to a Topic Hub** (level-up pill labelled "Topic Hub"); a different article
+// links **to a Collection** (in-body collection callout — see article-collection).
 const TOPIC_HUB_PAGES = TOPIC_HUBS.map((h) => ({ id: h.id, label: h.name, type: "page", title: h.name, topicHub: h }));
 
-const SHARED_TARGET_SCREENS = [TOPIC_CENTER_SCREEN, COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
+const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
 
 // Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
 // mirrors the Visitor landing). The splash content modules deep-link into these:
-// the symptom-checker CTA, the listicle detail page, Article Show (levels up to
-// the Topic Center) and a second Article Show that levels up to a Collection.
+// the symptom-checker CTA, the listicle detail page, Article Show (levels up to a
+// Topic Hub) and a second Article Show that belongs to a Collection.
 const SPLASH_FLOW_SCREENS = [
   { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
   { id: "symptom-checker", label: "Symptom Checker", type: "page", title: "Symptom Checker" },
   { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   ADVISORS_SCREEN,
-  // Topic Center is a top-level page (no level-up pill) — the side panel + in-page
-  // navigation orient the user at this level. (Collections-bound; not the new hub.)
-  TOPIC_CENTER_SCREEN,
-  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic", upIcon: "up-hub" },
+  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Hub", upTo: "topic-hub", upIcon: "up-hub" },
   ALL_ARTICLES_SCREEN,
+  // A Collection — the rebranded old "Topic Center": a collection of sponsored content.
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
-  // Article Show (in a collection) has no level-up bar; instead an in-page "pill"
-  // at the top of the body links back up to its Collection.
-  { id: "article-collection", label: "Article Show (in Collection)", type: "page", title: "Article Show", series: { screen: "collection" } },
+  // Article Show that belongs to a Collection — no level-up pill; instead an
+  // in-body "collection" callout box at the top links to its Collection.
+  { id: "article-collection", label: "Article Show (in Collection)", type: "page", title: "Article Show", collection: { screen: "collection" } },
   COMMUNITY_OVERVIEW_SCREEN,
   ...LIBRARY_SCREENS_FULL,
 ];
@@ -249,7 +241,7 @@ const PERSONAS = {
       // page with no level-up bar. Distinct from the "profile" screen below,
       // which is SOMEONE ELSE's profile (reached from Meet Others).
       { id: "my-profile", label: "My Profile", type: "page", title: "My Profile" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Center", upTo: "topic", upIcon: "up-hub" },
+      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Hub", upTo: "topic-hub", upIcon: "up-hub" },
       { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups", upIcon: "up-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs", upIcon: "up-programs" },
       { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others", upTo: "com-meet", upIcon: "up-meet" },
@@ -366,16 +358,16 @@ function renderUplevel(screen) {
   `;
 }
 
-// In-page "series" callout box (placeholder) — an article that belongs to a
-// series shows a small box near the top with a link to explore the full series.
-// Replaces the old "Collection" label pill. `series.screen` is the collection to
-// open (in-page navigation via data-screen).
-function renderSeriesBox(series) {
+// In-page "collection" callout box (placeholder) — an article that belongs to a
+// Collection (a curated set of sponsored content — the rebranded old Topic Center)
+// shows a small box near the top linking to the full collection. `collection.screen`
+// is the Collection to open (in-page navigation via data-screen).
+function renderCollectionCallout(collection) {
   return `
-    <div class="series-box">
-      <p class="series-box__label">Part of a series</p>
-      <p class="series-box__text">This article is part of a series.</p>
-      <button class="series-box__link" data-screen="${series.screen}">Explore the full series &rarr;</button>
+    <div class="collection-callout">
+      <p class="collection-callout__label">Part of a collection</p>
+      <p class="collection-callout__text">This article is part of a collection.</p>
+      <button class="collection-callout__link" data-screen="${collection.screen}">Explore the full collection &rarr;</button>
     </div>
   `;
 }
@@ -595,7 +587,7 @@ function renderModules() {
   // to know"), no eyebrow/tag. The first two titles come from the frame's image
   // asset names; the rest are placeholder titles. Thumbnails are simple
   // placeholder patterns (no real images yet). Most cards open Article Show
-  // (levels up to Topic Center); one opens an Article Show that levels up to a
+  // (levels up to a Topic Hub); one opens an Article Show that belongs to a
   // Collection.
   const articles = [
     { title: "6 menopause facts women wish they'd known sooner", screen: "article" },
@@ -830,8 +822,8 @@ function render() {
     content = renderCommunityHub();
   } else if (screen.topicHub) {
     content = renderTopicHub(screen.topicHub);
-  } else if (screen.series) {
-    content = renderSeriesBox(screen.series);
+  } else if (screen.collection) {
+    content = renderCollectionCallout(screen.collection);
   } else {
     content = `<div class="screen__placeholder">${screen.title}</div>`;
   }

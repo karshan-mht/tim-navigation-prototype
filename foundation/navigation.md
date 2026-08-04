@@ -81,18 +81,18 @@ Only on **detail** screens. It steps **one level up** to the parent (`upTo` → 
 
 | Screen | Pill label → up-to | Icon |
 |---|---|---|
-| Visitor / Member — Article Show | Topic Center → `topic` | `up-hub.svg` |
+| Visitor / Member — Article Show | Topic Hub → `topic-hub` | `up-hub.svg` |
 | Member — Group Detail | Groups → `com-groups` | `up-groups.svg` |
 | Member — Program Detail | Programs → home | `up-programs.svg` |
 | Member — Someone's Member Profile | Meet Others → `com-meet` | `up-meet.svg` |
 | Member — Question Show | Questions & Answers → `com-questions` | `up-qa.svg` |
 | Member — Activity Show | Activity → `com-activities` | `up-activity.svg` |
 
-Article Show levels up to the **Topic Center** (`topic`). Activity Show levels up to **Activity** (`com-activities`) — after `com-stories`/"Posts" was retired and folded into Activity (2026-08-03), the `up-posts.svg` icon was renamed `up-activity.svg`. `Program Detail` has no Programs list, so it falls back to home.
+Article Show levels up to a **Topic Hub** (`topic-hub`, §3, [topic-hub.md](../domains/topic-hub.md)) — an article belongs to a hub. Activity Show levels up to **Activity** (`com-activities`) — after `com-stories`/"Posts" was retired and folded into Activity (2026-08-03), the `up-posts.svg` icon was renamed `up-activity.svg`. `Program Detail` has no Programs list, so it falls back to home.
 
-**Naming (reconciled 2026-08-04):** the old `topic` screen — where Article Show levels up to — is now labelled **"Topic Center"** again (it had briefly been mislabelled "Topic Hub"). It's a **separate** screen from the new **Topic Hub** surface (§3, [topic-hub.md](../domains/topic-hub.md)); the two no longer share a name. Topic Center is Collections-bound — folding it fully into Collections is the remaining future work ([DECISIONS.md](../DECISIONS.md) → "on the horizon"). The `up-hub.svg` icon is reused for the Topic Center pill (no dedicated icon).
+**Topic Center folded into Collections (2026-08-04):** the old `topic` screen was retired. It was "a collection of sponsored content," so it's now simply a **Collection** (the `collection` screen). An article links **either** up to a Topic Hub (the pill above) **or** to a Collection (the callout below) — never to a standalone "Topic Center" any more.
 
-**Series callout (in-page, non-sticky).** An article that belongs to a series carries a `series: { screen }` and renders a small **callout box** near the top of the body (`.series-box` — "Part of a series" / a line of copy / an **"Explore the full series →"** link that navigates via `data-screen`), scrolling **with** the content. The **Article Show (in Collection)** screen uses this to link up to its **Collection**; the box is a **placeholder**. This replaced the old "Collection" label pill (removed 2026-08-03). Note: this screen has **no** page-title label — the callout is its only chrome. Its parent **Collection** is a plain `page`.
+**Collection callout (in-page, non-sticky).** An article that belongs to a **Collection** carries `collection: { screen }` and renders a small **callout box** near the top of the body (`.collection-callout` — "Part of a collection" / a line of copy / an **"Explore the full collection →"** link that navigates via `data-screen`), scrolling **with** the content. The **Article Show (in Collection)** screen uses this to link to its **Collection** (the rebranded old Topic Center — a curated set of sponsored content). Wireframe placeholder; this screen has **no** page-title label — the callout is its only chrome.
 
 ---
 
@@ -111,11 +111,11 @@ Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from l
 - **Resources** → `lib-all` (All Resources). Library surface: [library.md](../domains/library.md).
 - **Community** → `community-overview` (Community Overview). Community surface: [community.md](../domains/community.md).
 
-**Topic-hub list** — eight rows, each a 44px pre-tinted icon (magenta glyph on a pale `#F6EFF8` circle, `assets/hub-{1..8}.svg`) + label (Lato 18px, `#0d1b29`). Labels are the **Figma placeholders** ("Topic Hub Longer Name" / "…Short" / "…Long Name") — the real hub taxonomy is not yet settled. **Every hub opens the generic `topic-hub` screen** — the new Topic Hub surface, spec'd in [topic-hub.md](../domains/topic-hub.md). This is a **different screen** from the old `topic` ("Topic Center", where Article Show levels up — §2); the two are no longer named alike (reconciled 2026-08-04). Topic Center is Collections-bound; Collections (`all-collections` / `collection`) are a separate construct from both.
+**Topic-hub list** — eight rows (the up-to-8 **pre-defined Topic Hubs**), each a 44px pre-tinted icon (magenta glyph on a pale `#F6EFF8` circle, `assets/hub-{1..8}.svg`) + label (Lato 18px, `#0d1b29`). Labels are the **Figma placeholders** ("Topic Hub Longer Name" / "…Short" / "…Long Name") — the real hub taxonomy is not yet settled. **Every row opens the generic `topic-hub` screen** — the Topic Hub surface, spec'd in [topic-hub.md](../domains/topic-hub.md). (The old `topic` "Topic Center" screen was **retired** 2026-08-04 — folded into Collections; see §2. Collections = `all-collections` / `collection`.)
 
 **Explore (ToC)** — an outline pill (`#0f57a8`, radius pill, Lato 16px) below the hubs → the `all-collections` screen (display label **"All Articles"**; the internal id stays `all-collections`).
 
-Because the panel is shared — and the footer's "Medical Advisors" link is global — these destinations (`community-overview`, `all-collections`, `advisors`, `lib-all`, plus the Community sub-screens and every `topic-hub-*` page) are injected into **every** persona's `screens` list (`SHARED_TARGET_SCREENS` loop in `main.js`) so they resolve everywhere, not just in the Visitor/Subscriber splash flow. `topic` (the old Topic Center) is in that same injected list too, but only because Article Show's level-up pill still targets it — see §2.
+Because the panel is shared — and the footer's "Medical Advisors" link is global — these destinations (`community-overview`, `all-collections`, `advisors`, `lib-all`, plus the Community sub-screens and every `topic-hub` page) are injected into **every** persona's `screens` list (`SHARED_TARGET_SCREENS` loop in `main.js`) so they resolve everywhere, not just in the Visitor/Subscriber splash flow.
 
 **Footer** — "Powered by" on line 1, "MyHealthTeam, a Swoop company" on line 2 (`#626b74`, 14px), pinned to bottom.
 

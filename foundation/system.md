@@ -100,7 +100,7 @@ every persona's panel Community tab opens the hub. The per-persona lists below n
 Community only where it was persona-specific historically.
 
 **Anonymous Visitor**
-- Splash Landing (`tabs`), Topic Center, Article Show
+- Splash Landing (`tabs`), Article Show (levels up to a Topic Hub), Article Show in a Collection
 - Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-diet`, `lib-family`, `lib-all`
 
 **Logged Out Member**

@@ -779,17 +779,17 @@ body {
   line-height: 22px;
 }
 
-/* In-page "series" callout box (placeholder) — sits near the top of an article
-   that belongs to a series, with a link to explore the full series. Replaced the
-   old in-page "Collection" label pill. */
-.series-box {
+/* In-page "collection" callout box (placeholder) — sits near the top of an
+   article that belongs to a Collection (rebranded old Topic Center — a curated
+   set of sponsored content), linking to the full collection. */
+.collection-callout {
   margin: 16px 12px;        /* top of the body, inset from the device edges */
   padding: 16px;
   border: 1px solid var(--color-card-border);
   border-radius: var(--radius-card);
   background: #f6f7f9;
 }
-.series-box__label {
+.collection-callout__label {
   margin: 0 0 6px;
   font-family: var(--font-body);
   font-weight: 700;
@@ -798,13 +798,13 @@ body {
   text-transform: uppercase;
   color: var(--color-text-secondary);
 }
-.series-box__text {
+.collection-callout__text {
   margin: 0 0 12px;
   font-size: 16px;
   line-height: 1.4;
   color: var(--color-text);
 }
-.series-box__link {
+.collection-callout__link {
   padding: 0;
   border: none;
   background: none;

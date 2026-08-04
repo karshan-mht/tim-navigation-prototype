@@ -1,8 +1,8 @@
 # TIM Library — spec
 
 The Library surface (labelled **"Resources"** in the panel; screen ids stay `lib-*`):
-the topic pages (HRT, Mood, Sleep, Diet, Family, All Resources) plus Topic Center
-and Article Show. These are reached **through** the slide-out panel's Resources
+the topic pages (HRT, Mood, Sleep, Diet, Family, All Resources) plus Article Show.
+These are reached **through** the slide-out panel's Resources
 section — the panel *container* itself is nav chrome, specified in
 [navigation.md](../foundation/navigation.md) §3. Chronological history is in
 [DECISIONS.md](../DECISIONS.md). Code is the source of truth — correct this doc if it
@@ -39,25 +39,24 @@ the nav logo returns home.
 
 ## Browse screens
 
-The Visitor topic-browsing chain (shared flow screens in `SPLASH_FLOW_SCREENS`).
-**Topic Center** is a top-level `page` (no level-up pill — the side panel + in-page
-navigation orient the user at that level). **Article Show** keeps a level-up pill
-stepping one level up to the Topic Center (pill mechanism + Figma node ids in
-[navigation.md](../foundation/navigation.md) §2):
+The Visitor article-browsing chain (shared flow screens in `SPLASH_FLOW_SCREENS`).
+An **Article Show** belongs either to a **Topic Hub** or to a **Collection**:
 
-| Screen | id | Level-up |
+| Screen | id | Links up to |
 |---|---|---|
-| Topic Center | `topic` | — (top-level page, no pill) |
-| Article Show | `article` | Topic Center (`topic`) |
+| Article Show | `article` | **Topic Hub** (`topic-hub`) — level-up pill labelled "Topic Hub" |
+| Article Show (in Collection) | `article-collection` | **Collection** (`collection`) — in-body collection callout |
 
-**Topic Center vs. Topic Hub:** `topic` here is the old **Topic Center** (the label
-"Topic Hub" it briefly carried was reverted 2026-08-04). It's **not** the new Topic
-Hub surface ([topic-hub.md](topic-hub.md)); per current product thinking Topic Center
-is evolving into **Collections**.
+> **Topic Center was folded into Collections (2026-08-04).** The old `topic`
+> "Topic Center" screen is **retired**. It was "a collection of sponsored content,"
+> so it's now simply a **Collection** (`collection`). Article Show no longer levels
+> up to a standalone Topic Center — it links to a **Topic Hub**
+> ([topic-hub.md](topic-hub.md), a separate new surface) instead; the other article
+> links to a Collection.
 
-The splash's "one Article card" opens a separate Article Show (in a collection).
-That Article Show has no level-up pill and no page-title label; an in-page
-**"part of a series" callout box** near the top links to its **Collection** (see
+The splash's "one Article card" opens the `article-collection` variant. That
+Article Show has no level-up pill and no page-title label; an in-page
+**"part of a collection" callout box** near the top links to its **Collection** (see
 [navigation.md](../foundation/navigation.md) §2). Collection itself is a plain page.
 That collection chain is a Splash Landing deep-link, documented in
 [landing.md](landing.md).
