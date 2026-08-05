@@ -75,20 +75,20 @@ The logotype/logomark is a button that returns to the persona's home screen (`go
 
 **Redesign (2026-08-03, Figma Global Navigation `42yas7Q9FfwhL6xUocjEAl`, pill `7294:1952`).** The old full-width level-up **bar** was replaced by a **pill** that sits in-page (top-left) but sticks to the top on scroll — same pinning behaviour as the bar had.
 
-**Pill:** a blue-tinted pill (`background`/`border` = `rgba(15,87,168,0.1)`, `border-radius: 48px`, `padding: 6px 12px`, height 34px) holding a **section icon** (16px, pre-tinted blue, `assets/up-*.svg`) + the parent's name (Lato Semibold 14px, `#0f57a8`, `-0.25px`). No chevron — the section icon + label convey the destination.
+**Pill:** an opaque blue-tinted pill (`background` = `--color-bg-blue-soft` `#EDF3F9`, `border` = `1px solid #d6e2f1`, `border-radius: 48px`, `padding: 6px 12px`, height 34px) holding a **section icon** (16px, inline `currentColor` from `ICON_SVGS`, tinted blue by the pill's `color`) + the parent's name (Lato Semibold 14px, `#0f57a8`, `-0.25px`). No chevron — the section icon + label convey the destination. The pill **floats** over content (its sticky container is transparent + `pointer-events:none`, so the pill's own opaque fill is what keeps text from bleeding through) and picks up a soft blue drop-shadow only once scrolled over content (`.screen__uplevel.is-lifted`, toggled in `attachAutoHide` — no glow while idle at the top).
 
 Only on **detail** screens. It steps **one level up** to the parent (`upTo` → `data-screen`), not "back" and not home. Top-level pages have no pill — the nav logo returns home. The nav and the level-up pill are **independent sticky elements**: the nav (`.screen__nav`) auto-hides on scroll-down and returns on scroll-up, while the pill's sticky container (`.screen__uplevel`, transparent so the pill floats in-page) **stays pinned**. While the nav shows, it pins just below it (its `top` = nav height); when the nav hides, it docks to the very top edge (`attachAutoHide` animates the `top`).
 
-| Screen | Pill label → up-to | Icon |
+| Screen | Pill label → up-to | Icon (inline, `ICON_SVGS`) |
 |---|---|---|
-| Visitor / Member — Article Show | Topic Hub → `topic-hub` | `up-hub.svg` |
-| Member — Group Detail | Groups → `com-groups` | `up-groups.svg` |
-| Member — Program Detail | Programs → home | `up-programs.svg` |
-| Member — Someone's Member Profile | Meet Others → `com-meet` | `up-meet.svg` |
-| Member — Question Show | Questions & Answers → `com-questions` | `up-qa.svg` |
-| Member — Activity Show | Activity → `com-activities` | `up-activity.svg` |
+| Visitor / Member — Article Show | Skin-related Hub → `topic-hub` | `derm` |
+| Member — Group Detail | Groups → `com-groups` | `up-groups` |
+| Member — Program Detail | Programs → home | `up-programs` |
+| Member — Someone's Member Profile | Meet Others → `com-meet` | `up-meet` |
+| Member — Question Show | Questions & Answers → `com-questions` | `up-qa` |
+| Member — Activity Show | Activity → `com-activities` | `up-activity` |
 
-Article Show levels up to a **Topic Hub** (`topic-hub`, §3, [topic-hub.md](../domains/topic-hub.md)) — an article belongs to a hub. Activity Show levels up to **Activity** (`com-activities`) — after `com-stories`/"Posts" was retired and folded into Activity (2026-08-03), the `up-posts.svg` icon was renamed `up-activity.svg`. `Program Detail` has no Programs list, so it falls back to home.
+Article Show levels up to a **Topic Hub** (`topic-hub`, §3, [topic-hub.md](../domains/topic-hub.md)) — an article belongs to a hub; the built skin-care article's pill reads **"Skin-related Hub"** with the `derm` icon. Activity Show levels up to **Activity** (`com-activities`) — after `com-stories`/"Posts" was retired and folded into Activity (2026-08-03), the `up-posts.svg` icon was renamed `up-activity.svg`. `Program Detail` has no Programs list, so it falls back to home.
 
 **Topic Center folded into Collections (2026-08-04):** the old `topic` screen was retired. It was "a collection of sponsored content," so it's now simply a **Collection** (the `collection` screen). An article links **either** up to a Topic Hub (the pill above) **or** to a Collection (the callout below) — never to a standalone "Topic Center" any more.
 
