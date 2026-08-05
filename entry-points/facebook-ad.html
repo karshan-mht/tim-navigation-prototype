@@ -9,7 +9,7 @@
 <style>
   .mock { height: 100%; overflow-y: auto; font-family: helvetica, arial, sans-serif; color: #1c1e21; background: #f0f2f5; }
   .mock__topbar { background: #1877f2; color: #fff; padding: 12px 16px; font-size: 17px; font-weight: 700; }
-  .mock__feed { padding: 14px; }
+  .mock__feed { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
   .post { background: #fff; border-radius: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.15); overflow: hidden; text-decoration: none; color: inherit; display: block; }
   .post__head { display: flex; align-items: center; gap: 10px; padding: 12px 14px 4px; }
   .post__avatar { width: 36px; height: 36px; border-radius: 50%; background: #a441bc; flex-shrink: 0; }
@@ -33,6 +33,18 @@
         <div class="mock__topbar">facebook</div>
 
         <div class="mock__feed">
+          <div class="post">
+            <div class="post__head">
+              <div class="post__avatar" style="background:#f59e0b;"></div>
+              <div>
+                <div class="post__page">Danielle Rivera</div>
+                <div class="post__meta">3h &middot; &#127760;</div>
+              </div>
+            </div>
+            <div class="post__copy">Trail was gorgeous this morning. Note to self: more of this, less doomscrolling. &#127755;</div>
+            <div class="post__image"></div>
+          </div>
+
           <a class="post" href="../visitor/index.html?start=article">
             <div class="post__head">
               <div class="post__avatar"></div>
@@ -51,6 +63,28 @@
               <div class="post__cta-btn">Learn More</div>
             </div>
           </a>
+
+          <div class="post">
+            <div class="post__head">
+              <div class="post__avatar" style="background:#0a66c2;"></div>
+              <div>
+                <div class="post__page">Midlife &amp; Thriving</div>
+                <div class="post__meta">5h &middot; &#127760;</div>
+              </div>
+            </div>
+            <div class="post__copy">Live Q&amp;A with a dermatologist this Thursday at 6pm ET &mdash; drop your skin questions in the comments. &#128071;</div>
+          </div>
+
+          <div class="post">
+            <div class="post__head">
+              <div class="post__avatar" style="background:#16a34a;"></div>
+              <div>
+                <div class="post__page">Maya Okonkwo</div>
+                <div class="post__meta">7h &middot; &#127760;</div>
+              </div>
+            </div>
+            <div class="post__copy">Two years since I started running. Still slow, still showing up. &#129505;</div>
+          </div>
         </div>
       </div>
     </div>
