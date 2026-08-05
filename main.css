@@ -767,12 +767,15 @@ body {
   border: 1px solid #d6e2f1;
   border-radius: 48px;
   background: var(--color-bg-blue-soft);   /* opaque #EDF3F9 (Figma) — floats over content, no bleed-through */
-  box-shadow: 0 2px 10px rgba(15, 87, 168, 0.22);   /* soft blue glow so the pill lifts off the article */
   cursor: pointer;
   font-family: var(--font-body);
   color: var(--color-primary);
+  transition: box-shadow 0.2s ease;
 }
-.uplevel__icon { width: 16px; height: 16px; display: block; flex-shrink: 0; }
+/* Soft blue glow only once the pill floats over scrolled content (is-lifted toggled in attachAutoHide). */
+.screen__uplevel.is-lifted .uplevel { box-shadow: 0 2px 10px rgba(15, 87, 168, 0.22); }
+.uplevel__icon { width: 16px; height: 16px; display: inline-flex; flex-shrink: 0; }
+.uplevel__icon svg { width: 16px; height: 16px; display: block; }
 .uplevel span {
   font-weight: 600;        /* Lato Semibold */
   font-size: 14px;

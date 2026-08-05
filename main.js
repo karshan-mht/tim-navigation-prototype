@@ -31,6 +31,9 @@ const ICON_SVGS = {
   logout: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="vector" d="M10.1358 0.357981C10.6131 -0.119327 11.3869 -0.119327 11.8642 0.357981L16.7531 5.24687C17.2304 5.72418 17.2304 6.49805 16.7531 6.97535C16.2758 7.45266 15.502 7.45266 15.0246 6.97535L12.2222 4.17293V14.6667C12.2222 15.3417 11.675 15.8889 11 15.8889C10.325 15.8889 9.77778 15.3417 9.77778 14.6667V4.17293L6.97535 6.97535C6.49805 7.45266 5.72418 7.45266 5.24687 6.97535C4.76956 6.49805 4.76956 5.72418 5.24687 5.24687L10.1358 0.357981ZM1.22222 13.4444C1.89724 13.4444 2.44445 13.9917 2.44445 14.6667V14.9111C2.44445 15.958 2.4454 16.6697 2.49034 17.2198C2.53412 17.7557 2.61348 18.0297 2.71087 18.2209C2.94523 18.6808 3.31918 19.0548 3.77914 19.2891C3.97029 19.3865 4.24432 19.4659 4.78016 19.5097C5.33027 19.5546 6.04196 19.5556 7.08889 19.5556H14.9111C15.958 19.5556 16.6697 19.5546 17.2198 19.5097C17.7557 19.4659 18.0297 19.3865 18.2209 19.2891C18.6808 19.0548 19.0548 18.6808 19.2891 18.2209C19.3865 18.0297 19.4659 17.7557 19.5097 17.2198C19.5546 16.6697 19.5556 15.958 19.5556 14.9111V14.6667C19.5556 13.9917 20.1028 13.4444 20.7778 13.4444C21.4528 13.4444 22 13.9917 22 14.6667V14.9616C22 15.9455 22 16.7574 21.946 17.4189C21.8899 18.1059 21.7694 18.7374 21.4671 19.3306C20.9984 20.2505 20.2505 20.9984 19.3306 21.4671C18.7374 21.7694 18.1059 21.8899 17.4189 21.946C16.7574 22 15.9455 22 14.9616 22H7.03838C6.05454 22 5.24256 22 4.5811 21.946C3.89409 21.8899 3.26257 21.7694 2.66938 21.4671C1.74948 20.9984 1.00157 20.2505 0.532858 19.3306C0.230614 18.7374 0.110146 18.1059 0.0540155 17.4189C-2.78834e-05 16.7574 -1.50628e-05 15.9454 5.27133e-07 14.9616L1.10993e-06 14.6667C1.10993e-06 13.9917 0.547209 13.4444 1.22222 13.4444Z" fill="currentColor"/> </svg>`,
   // Launchpad / grid (2×2) — used by the "back to all flows" hotspot.
   grid: `<svg style="display: block;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="6.5" height="6.5" rx="1.6" fill="currentColor"/><rect x="11.5" y="2" width="6.5" height="6.5" rx="1.6" fill="currentColor"/><rect x="2" y="11.5" width="6.5" height="6.5" rx="1.6" fill="currentColor"/><rect x="11.5" y="11.5" width="6.5" height="6.5" rx="1.6" fill="currentColor"/></svg>`,
+  // Skin / derm hub icon (from the Figma pill). Glyph only — no baked circle,
+  // fill=currentColor so it's tinted by CSS `color` like every other inline icon.
+  derm: `<svg style="display: block;" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M15.9998 2.72C15.9998 3.11765 15.6532 3.44 15.2256 3.44H0.774184C0.346614 3.44 2.86896e-09 3.11765 2.86896e-09 2.72C2.86896e-09 2.32236 0.346614 2 0.774184 2H15.2256C15.6532 2 15.9998 2.32236 15.9998 2.72ZM15.5335 5.45802C15.9258 5.61618 16.106 6.04015 15.9359 6.40499C15.7659 6.76983 15.31 6.93738 14.9177 6.77922C14.4203 6.57869 13.7926 6.47448 13.0321 6.47448C12.7698 6.47448 12.6261 6.52215 12.3586 6.67989C12.3231 6.70085 12.1361 6.8142 12.0775 6.84864C11.3892 7.25319 10.7283 7.44552 9.6773 7.44552C8.63636 7.44552 8.00731 7.2648 7.26688 6.86115C7.22888 6.84043 7.09673 6.76749 7.06863 6.75215C6.68033 6.54018 6.47019 6.47448 6.06444 6.47448C5.57039 6.47448 5.25238 6.57506 4.65964 6.87175C4.62537 6.88897 4.47979 6.96199 4.4392 6.98209C3.795 7.30101 3.33329 7.44552 2.70964 7.44552C1.66275 7.44552 0.820427 7.18139 0.225995 6.62703C-0.0759231 6.34547 -0.0752441 5.88959 0.227512 5.6088C0.530268 5.32801 1.02045 5.32864 1.32237 5.61021C1.59563 5.86504 2.04361 6.00552 2.70964 6.00552C3.02654 6.00552 3.27155 5.92883 3.71163 5.71096C3.74832 5.6928 3.88679 5.62334 3.92269 5.60531C4.72299 5.20449 5.25902 5.03448 6.06444 5.03448C6.7829 5.03448 7.24612 5.17931 7.85242 5.51027C7.88499 5.52805 8.01663 5.60071 8.0499 5.61885C8.56646 5.90046 8.93215 6.00552 9.6773 6.00552C10.4232 6.00552 10.8006 5.89568 11.2504 5.63136C11.297 5.60397 11.4825 5.49147 11.5293 5.46385C12.0247 5.17169 12.4384 5.03448 13.0321 5.03448C13.992 5.03448 14.8267 5.17304 15.5335 5.45802ZM3.22577 9.88138C3.22577 10.5453 2.65007 11.0869 1.93546 11.0869C1.22085 11.0869 0.645153 10.5453 0.645153 9.88138C0.645153 9.21742 1.22085 8.67586 1.93546 8.67586C2.65007 8.67586 3.22577 9.21742 3.22577 9.88138ZM6.06444 12.7945C6.06444 13.4584 5.48874 14 4.77413 14C4.05953 14 3.48383 13.4584 3.48383 12.7945C3.48383 12.1305 4.05953 11.589 4.77413 11.589C5.48874 11.589 6.06444 12.1305 6.06444 12.7945ZM12.2579 12.7945C12.2579 13.4584 11.6822 14 10.9676 14C10.253 14 9.6773 13.4584 9.6773 12.7945C9.6773 12.1305 10.253 11.589 10.9676 11.589C11.6822 11.589 12.2579 12.1305 12.2579 12.7945ZM9.41924 9.88138C9.41924 10.5453 8.84354 11.0869 8.12893 11.0869C7.41432 11.0869 6.83863 10.5453 6.83863 9.88138C6.83863 9.21742 7.41432 8.67586 8.12893 8.67586C8.84354 8.67586 9.41924 9.21742 9.41924 9.88138ZM15.6127 9.88138C15.6127 10.5453 15.037 11.0869 14.3224 11.0869C13.6078 11.0869 13.0321 10.5453 13.0321 9.88138C13.0321 9.21742 13.6078 8.67586 14.3224 8.67586C15.037 8.67586 15.6127 9.21742 15.6127 9.88138Z" fill="currentColor"/></svg>`,
 };
 
 // Logo + profile assets (raster wordmark/mark exported at 3x; profile is SVG).
@@ -204,7 +207,7 @@ const SPLASH_FLOW_SCREENS = [
   { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   ADVISORS_SCREEN,
-  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "hub-8" },
+  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "derm" },
   ALL_ARTICLES_SCREEN,
   // A Collection — the rebranded old "Topic Center": a collection of sponsored content.
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
@@ -213,7 +216,7 @@ const SPLASH_FLOW_SCREENS = [
   { id: "article-collection", label: "Article Show (in Collection)", type: "page", title: "Article Show", collection: { screen: "collection" } },
   // Labelled placeholder for the non-featured Splash article cards (the built
   // skin-care article lives only on `article`; these stay placeholders as before).
-  { id: "article-placeholder", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "hub-8" },
+  { id: "article-placeholder", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "derm" },
   COMMUNITY_OVERVIEW_SCREEN,
   ...LIBRARY_SCREENS_FULL,
 ];
@@ -244,7 +247,7 @@ const PERSONAS = {
       // page with no level-up bar. Distinct from the "profile" screen below,
       // which is SOMEONE ELSE's profile (reached from Meet Others).
       { id: "my-profile", label: "My Profile", type: "page", title: "My Profile" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "hub-8" },
+      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "derm" },
       { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups", upIcon: "up-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs", upIcon: "up-programs" },
       { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others", upTo: "com-meet", upIcon: "up-meet" },
@@ -364,12 +367,16 @@ function renderTopNav() {
 // SVG in assets/up-*.svg.
 function renderUplevel(screen) {
   const upTo = screen.upTo || persona.screens[0].id;
-  const iconImg = screen.upIcon
-    ? `<img class="uplevel__icon" src="${ASSET_BASE}/${screen.upIcon}.svg" alt="" />`
+  // Inline SVG (fill=currentColor, tinted by CSS) when the icon is in ICON_SVGS;
+  // otherwise fall back to the pre-tinted assets/up-*.svg image.
+  const iconMarkup = screen.upIcon
+    ? (ICON_SVGS[screen.upIcon]
+        ? `<span class="uplevel__icon">${ICON_SVGS[screen.upIcon]}</span>`
+        : `<img class="uplevel__icon" src="${ASSET_BASE}/${screen.upIcon}.svg" alt="" />`)
     : "";
   return `
     <button class="uplevel" data-screen="${upTo}">
-      ${iconImg}
+      ${iconMarkup}
       <span>${screen.backLabel}</span>
     </button>
   `;
@@ -1003,11 +1010,16 @@ function attachAutoHide() {
     if (uplevel) uplevel.style.top = hidden ? "0px" : navH + "px";
   };
   setHidden(false);
+  // The uplevel pill only casts its glow once it floats over scrolled content —
+  // no shadow while idle at the top on the white background.
+  const setLifted = (y) => { if (uplevel) uplevel.classList.toggle("is-lifted", y > 8); };
+  setLifted(scroll.scrollTop);
   let lastY = scroll.scrollTop;
   scroll.addEventListener("scroll", () => {
     const y = scroll.scrollTop;
     if (y > lastY && y > 80) setHidden(true);
     else if (y < lastY) setHidden(false);
+    setLifted(y);
     lastY = y;
   });
 }
