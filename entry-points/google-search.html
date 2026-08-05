@@ -25,7 +25,7 @@
   .result__title { font-size: 17px; color: #1a0dab; margin: 2px 0 4px; line-height: 1.3; }
   .result__snippet { font-size: 13px; color: #4d5156; line-height: 1.5; margin: 0; }
   .result--muted { opacity: 0.55; pointer-events: none; }
-  .result:target { outline: 2px solid #1a73e8; outline-offset: 6px; border-radius: 8px; }
+  .result.is-entry { outline: 2px solid #1a73e8; outline-offset: 6px; border-radius: 8px; }
   .tag { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #1a73e8; border: 1px solid #1a73e8; border-radius: 4px; padding: 1px 6px; margin-bottom: 6px; }
 </style>
 </head>
@@ -98,6 +98,15 @@
     </div>
   </div>
 
+  <script>
+    // Highlight the result the launcher pointed at via ?highlight=article|home.
+    // Using a query param (not a #fragment) means the browser never scroll-jumps,
+    // so the SERP always opens at the top like a real search page.
+    (function () {
+      var which = new URLSearchParams(location.search).get("highlight");
+      if (which) { var el = document.getElementById(which); if (el) el.classList.add("is-entry"); }
+    })();
+  </script>
   <script src="fit-phone.js"></script>
 </body>
 </html>
