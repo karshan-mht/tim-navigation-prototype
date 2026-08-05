@@ -919,6 +919,9 @@ function renderArticle() {
           <p class="art-answered__title">${ICON.sparkle}Menopause, answered</p>
           ${presets.map((q) => `<button class="art-answered__q">${q}${ICON.arrow}</button>`).join("")}
           <button class="art-answered__ask">Ask AI</button>
+          <div class="art-answered__tags">
+            ${["Treatments", "Symptoms", "View all +"].map((t) => `<span class="mod-pill">${t}</span>`).join("")}
+          </div>
         </section>
 
         <section class="art-keep">

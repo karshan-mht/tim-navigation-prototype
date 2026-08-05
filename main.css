@@ -1387,6 +1387,8 @@ body {
 .art-answered__q:active { background: rgba(15, 87, 168, 0.14); }
 .art-answered__ask { align-self: flex-start; padding: 12px 24px; border: none; border-radius: var(--radius-pill); background: var(--color-primary); color: #fff; font: inherit; font-size: 18px; line-height: 24px; letter-spacing: -0.25px; cursor: pointer; }
 .art-answered__ask:active { filter: brightness(0.94); }
+/* Tag pills reuse the splash checker pill (.mod-pill) — same white / 0.5px pill-border look. */
+.art-answered__tags { display: flex; flex-wrap: wrap; gap: 12px 8px; }
 
 /* Keep Reading — full-bleed horizontal carousel */
 .art-keep__h { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 32px; letter-spacing: -0.75px; color: var(--color-navy); }
