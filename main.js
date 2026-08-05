@@ -204,7 +204,7 @@ const SPLASH_FLOW_SCREENS = [
   { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   ADVISORS_SCREEN,
-  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Hub", upTo: "topic-hub", upIcon: "up-hub" },
+  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "up-hub" },
   ALL_ARTICLES_SCREEN,
   // A Collection — the rebranded old "Topic Center": a collection of sponsored content.
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
@@ -241,7 +241,7 @@ const PERSONAS = {
       // page with no level-up bar. Distinct from the "profile" screen below,
       // which is SOMEONE ELSE's profile (reached from Meet Others).
       { id: "my-profile", label: "My Profile", type: "page", title: "My Profile" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Topic Hub", upTo: "topic-hub", upIcon: "up-hub" },
+      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "up-hub" },
       { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups", upIcon: "up-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs", upIcon: "up-programs" },
       { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others", upTo: "com-meet", upIcon: "up-meet" },
@@ -604,6 +604,8 @@ function renderModules() {
   // (levels up to a Topic Hub); one opens an Article Show that belongs to a
   // Collection.
   const articles = [
+    // First card = the fully-built skin-care Article Show (see renderArticle()).
+    { title: "Skin Care for Menopausal Skin: Best Ingredients and Routine", screen: "article" },
     { title: "6 menopause facts women wish they'd known sooner", screen: "article" },
     { title: "Article title", screen: "article-collection" },
     { title: "Which doctors treat menopause?", screen: "article" },
@@ -802,6 +804,110 @@ function renderFooter() {
   `;
 }
 
+// Article Show — the skin-care article. Built from the Figma "Articles" file
+// (title-first, no hero). The top nav, "Topic Hub" level-up pill, and global
+// footer are added by render(); this returns only the article body. Auth CTAs
+// point at the shared signup-start flow like every other Join in the prototype.
+function renderArticle() {
+  const ICON = {
+    bookmark: `<svg class="art__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>`,
+    chat: `<svg class="art__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>`,
+    sparkle: `<svg class="art__ic" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.9 6.4L20 10l-6.1 1.6L12 18l-1.9-6.4L4 10l6.1-1.6L12 2z"/><path d="M19 3l.7 2.3L22 6l-2.3.7L19 9l-.7-2.3L16 6l2.3-.7L19 3z"/></svg>`,
+    chevDown: `<svg class="art__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`,
+    chevRight: `<svg class="art__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>`,
+    arrow: `<svg class="art__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
+  };
+
+  const presets = [
+    "Tips for managing menopause at work",
+    "Can Menopause cause hair loss?",
+    "Can Menopause cause itchy skin",
+    "Can menopause cause bloating?",
+  ];
+  const keepReading = [
+    "Perimenopause Hair Changes: Hair Texture, Growth, and More",
+    "Cortisol and Menopause: How Stress Hormones Affect Your Body",
+  ];
+
+  return `
+    <article class="art">
+      <div class="art__body">
+        <header class="art__head">
+          <h1 class="art__title">Skin Care for Menopausal Skin: Best Ingredients and Routine</h1>
+          <p class="art__byline">Medically reviewed by Ellen Byars, MSN, WHNP, MSCP &middot; Written by Kate Harrison &middot; June 18, 2026</p>
+          <div class="art__strip">
+            <span class="art__reaction"><span class="art__avatar"></span>1 Reaction</span>
+            <span class="art__save">${ICON.bookmark}Save</span>
+          </div>
+        </header>
+
+        <div class="art-cta">
+          <p class="art-cta__title">Get trusted info about menopause and connect with women who get it.</p>
+          <button class="art-cta__btn" data-screen="signup-start">Join</button>
+        </div>
+
+        <div class="art-note">
+          <p class="art-note__title">Key Takeaways</p>
+          <div class="art-note__item"><span class="art-note__bullet">&bull;</span><p class="art-note__text">Menopause can bring on noticeable skin changes, including dryness, sensitivity, and loss of firmness, largely due to falling estrogen levels that affect how skin produces moisture and collagen.</p></div>
+          <button class="art-note__link">View all takeaways</button>
+        </div>
+
+        <div class="art__lede">
+          <p>Skin changes like fine lines often come with age. But if you’ve found that the skin on your face has become drier, duller, or more sensitive to products as you approach menopause, you’re not alone.</p>
+          <p>Here are the best skin care ingredients that can help you care for your menopausal skin.</p>
+        </div>
+
+        <div class="art-poll">Poll</div>
+
+        <section class="art__sec">
+          <h2 class="art__h2">How Menopause Affects Your Skin</h2>
+          <p>Skin changes often appear abruptly during perimenopause, the time leading up to menopause, marked by irregular periods. This is because hormonal changes, in particular falling levels of the hormone estrogen, affect skin cells.</p>
+          <p>Estrogen helps keep skin moisturized by telling skin cells to produce oil and other hydrating substances. Lower estrogen levels lead to drier skin, which can compromise the skin’s barrier, resulting in skin that’s easily irritated.</p>
+          <p>When estrogen levels are low, the body also makes less collagen, the protein that helps keep skin strong and smooth. Less collagen can cause a loss of skin firmness and elasticity. Research has shown that skin can lose as much as 30 percent of its collagen within five years of menopause.</p>
+          <p>Around menopause, women often develop dry skin, uneven skin texture, wrinkles, thinning or sagging skin, a dysfunctional skin barrier, slowed healing, or sensitive skin.</p>
+        </section>
+
+        <section class="art__sec art-collapse">
+          <h2 class="art__h2">The Best Ingredients for Menopausal Skin</h2>
+          <p>Whether you’re trying to tackle dryness, breakouts, or irritation, the best skin care ingredients for you will depend on your skin’s unique needs.</p>
+          <button class="art-collapse__link">Read full article ${ICON.chevDown}</button>
+        </section>
+      </div>
+
+      <div class="art__end">
+        <section class="art-conv">
+          <p class="art-conv__title">${ICON.chat}Join the conversation</p>
+          <div class="art-conv__input">Share your thoughts&hellip;</div>
+        </section>
+
+        <section class="art-answered">
+          <p class="art-answered__title">${ICON.sparkle}Menopause, answered</p>
+          ${presets.map((q) => `<button class="art-answered__q">${q}${ICON.arrow}</button>`).join("")}
+          <button class="art-answered__ask">Ask AI</button>
+        </section>
+
+        <section class="art-keep">
+          <h2 class="art-keep__h">Keep Reading</h2>
+          <div class="art-keep__scroll">
+            ${keepReading.map((t) => `<button class="art-keep__card" data-screen="article"><span class="art-keep__thumb"></span><span class="art-keep__title">${t}</span></button>`).join("")}
+          </div>
+        </section>
+
+        <div class="mod-cta-card art-access">
+          <img class="mod-cta-card__graphic mod-cta-card__graphic--tr" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
+          <img class="mod-cta-card__graphic mod-cta-card__graphic--bl" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
+          <p class="mod-cta-card__title">You don’t have to figure this out alone.</p>
+          <p class="mod-cta-card__sub">Get medically-reviewed resources, tips from real women, and a community who gets it.</p>
+          <div class="mod-cta-card__buttons">
+            <button class="mod-btn-primary" data-screen="signup-start">Join for free</button>
+            <button class="mod-btn-secondary" data-screen="symptom-checker">Check symptoms first</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
 function render() {
   const screen = persona.screens.find((s) => s.id === state.screenId) || persona.screens[0];
 
@@ -838,13 +944,15 @@ function render() {
     content = renderTopicHub(screen.topicHub);
   } else if (screen.collection) {
     content = renderCollectionCallout(screen.collection);
+  } else if (screen.id === "article") {
+    content = renderArticle();
   } else {
     content = `<div class="screen__placeholder">${screen.title}</div>`;
   }
   // Fill the viewport (centering the label / keeping the footer below the fold)
   // only for label & gated screens; module/content screens (incl. the Community
   // hub and Topic Hubs) flow at natural height from the top.
-  const bodyFill = !screen.modules && screen.id !== "advisors" && screen.id !== "community-overview" && !screen.topicHub ? " screen__body--fill" : "";
+  const bodyFill = !screen.modules && screen.id !== "advisors" && screen.id !== "community-overview" && screen.id !== "article" && !screen.topicHub ? " screen__body--fill" : "";
 
   // Nav + level-up bar are separate sticky elements at the top of the scroll
   // area. The nav auto-hides on scroll-down and returns on scroll-up; the
