@@ -1335,7 +1335,7 @@ body {
    from shared chrome; this styles the article body + end modules.
    12px reading margins throughout.
    ============================================================ */
-.art { font-family: var(--font-body); color: var(--color-text); }
+.art { font-family: var(--font-body); color: var(--color-text); letter-spacing: -0.25px; }  /* baseline tracking (like the splash); headings override to -0.75px */
 .art__body { display: flex; flex-direction: column; gap: 24px; padding: 8px 12px 0; }
 
 /* header */
@@ -1360,7 +1360,7 @@ body {
 .art-note__item { display: flex; align-items: flex-start; gap: 8px; }
 .art-note__bullet { font-size: 18px; line-height: 26px; color: var(--color-text); }
 .art-note__text { margin: 0; font-size: 18px; line-height: 26px; letter-spacing: -0.25px; color: var(--color-text); }
-.art-note__link { align-self: flex-start; border: none; background: none; padding: 0; font: inherit; font-size: 18px; line-height: 26px; color: var(--color-primary); cursor: pointer; }
+.art-note__link { align-self: flex-start; border: none; background: none; padding: 0; font: inherit; font-size: 18px; line-height: 26px; letter-spacing: -0.25px; color: var(--color-primary); cursor: pointer; }
 
 /* Poll — plain placeholder box (real poll module TBD) */
 .art-poll { display: flex; align-items: center; justify-content: center; height: 280px; border-radius: 12px; border: 1px solid var(--color-border); background: #f6f7f9; color: var(--color-text-secondary); font-size: 16px; }
