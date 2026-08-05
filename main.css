@@ -107,8 +107,8 @@ body {
   position: sticky;
   top: 0; /* overridden inline to the nav height while the nav is visible */
   z-index: 9;
-  padding: 12px 12px 0;   /* inset the pill; transparent so it floats in-page */
-  pointer-events: none;   /* only the pill is interactive; content shows around it */
+  padding: 12px 12px 8px;  /* inset the pill; container stays transparent so the pill floats over content */
+  pointer-events: none;    /* only the pill is interactive; the pill's own opaque fill prevents bleed-through */
   transition: top 0.28s ease;
 }
 
@@ -764,14 +764,18 @@ body {
   gap: 8px;
   padding: 6px 12px;
   height: 34px;
-  border: 1px solid rgba(15, 87, 168, 0.1);
+  border: 1px solid #d6e2f1;
   border-radius: 48px;
-  background: rgba(15, 87, 168, 0.1);
+  background: var(--color-bg-blue-soft);   /* opaque #EDF3F9 (Figma) — floats over content, no bleed-through */
   cursor: pointer;
   font-family: var(--font-body);
   color: var(--color-primary);
+  transition: box-shadow 0.2s ease;
 }
-.uplevel__icon { width: 16px; height: 16px; display: block; flex-shrink: 0; }
+/* Soft blue glow only once the pill floats over scrolled content (is-lifted toggled in attachAutoHide). */
+.screen__uplevel.is-lifted .uplevel { box-shadow: 0 2px 10px rgba(15, 87, 168, 0.22); }
+.uplevel__icon { width: 16px; height: 16px; display: inline-flex; flex-shrink: 0; }
+.uplevel__icon svg { width: 16px; height: 16px; display: block; }
 .uplevel span {
   font-weight: 600;        /* Lato Semibold */
   font-size: 14px;
@@ -1066,8 +1070,9 @@ body {
   transition: background 0.18s ease;
 }
 .panel__hub:active { background: var(--color-magenta-soft-solid); }
-/* Hub icons are pre-tinted SVGs (magenta glyph on a pale circle) — no CSS tint. */
-.panel__hub-icon { width: 44px; height: 44px; flex-shrink: 0; display: block; }
+/* Hub icons: inline glyph (fill=currentColor) on a CSS-drawn pale circle, tinted magenta. */
+.panel__hub-icon { width: 44px; height: 44px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--color-bg-purple-soft); color: var(--color-magenta); }
+.panel__hub-icon svg { width: 44px; height: 44px; display: block; }
 
 /* Explore (ToC) — outline pill below the hubs */
 .panel__explore {
@@ -1322,3 +1327,74 @@ body {
   color: var(--color-text-secondary);
   line-height: 1.5;
 }
+
+/* ============================================================
+   Article Show — skin-care article (renderArticle() in main.js),
+   rebuilt to match the Figma "Mobile_Article" frame. The top nav,
+   the "Skin-related Hub" uplevel pill, and the global footer come
+   from shared chrome; this styles the article body + end modules.
+   12px reading margins throughout.
+   ============================================================ */
+.art { font-family: var(--font-body); color: var(--color-text); }
+.art__body { display: flex; flex-direction: column; gap: 24px; padding: 8px 12px 0; }
+
+/* header */
+.art__head { display: flex; flex-direction: column; gap: 12px; }
+.art__title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 28px; line-height: 36px; letter-spacing: -0.75px; color: var(--color-navy); }
+.art__byline { margin: 0; font-size: 14px; line-height: 20px; letter-spacing: -0.25px; color: var(--color-text-secondary); }
+.art__strip { display: flex; align-items: center; justify-content: space-between; }
+.art__reaction { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; letter-spacing: -0.25px; color: var(--color-text-secondary); }
+.art__avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--color-primary-soft); flex-shrink: 0; }
+.art__save { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; letter-spacing: -0.25px; color: var(--color-primary); }
+.art__ic { width: 18px; height: 18px; flex-shrink: 0; }
+
+/* body copy — Lato 18 / DM Serif 26 headings */
+.art__lede { display: flex; flex-direction: column; gap: 8px; }
+.art__sec { display: flex; flex-direction: column; gap: 8px; }
+.art__h2 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 26px; line-height: 34px; letter-spacing: -0.75px; color: var(--color-navy); }
+.art__lede p, .art__sec p { margin: 0; font-size: 18px; line-height: 26px; letter-spacing: -0.25px; color: var(--color-text); }
+
+/* Key Takeaways card */
+.art-note { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: var(--radius-card); border: 1px solid var(--color-card-border); }
+.art-note__title { margin: 0; font-size: 22px; font-weight: 600; line-height: 28px; letter-spacing: -0.25px; color: var(--color-text); }
+.art-note__item { display: flex; align-items: flex-start; gap: 8px; }
+.art-note__bullet { font-size: 18px; line-height: 26px; color: var(--color-text); }
+.art-note__text { margin: 0; font-size: 18px; line-height: 26px; letter-spacing: -0.25px; color: var(--color-text); }
+.art-note__link { align-self: flex-start; border: none; background: none; padding: 0; font: inherit; font-size: 18px; line-height: 26px; color: var(--color-primary); cursor: pointer; }
+
+/* Poll — plain placeholder box (real poll module TBD) */
+.art-poll { display: flex; align-items: center; justify-content: center; height: 280px; border-radius: 12px; border: 1px solid var(--color-border); background: #f6f7f9; color: var(--color-text-secondary); font-size: 16px; }
+
+/* Collapsed body: white fade + "Read full article" link */
+.art-collapse { position: relative; padding-bottom: 4px; }
+.art-collapse::after { content: ""; position: absolute; left: 0; right: 0; bottom: 38px; height: 72px; background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff); pointer-events: none; }
+.art-collapse__link { position: relative; z-index: 1; align-self: center; margin: 4px auto 0; display: inline-flex; align-items: center; gap: 4px; border: none; background: none; font: inherit; font-size: 16px; letter-spacing: -0.25px; color: var(--color-primary); cursor: pointer; }
+.art-collapse__link .art__ic { width: 24px; height: 24px; }
+
+/* End modules (conversation, AI, keep reading, access) */
+.art__end { display: flex; flex-direction: column; gap: 32px; padding: 28px 12px 8px; }
+.art-conv, .art-answered, .art-keep { display: flex; flex-direction: column; gap: 16px; }
+.art-conv__title, .art-answered__title { display: flex; align-items: center; gap: 8px; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 32px; letter-spacing: -0.75px; }
+.art-conv__title { color: var(--color-navy); }
+.art-conv__title .art__ic { width: 24px; height: 24px; color: var(--color-navy); }
+.art-conv__input { display: flex; align-items: center; height: 56px; padding: 0 24px; border-radius: 36px; border: 1px solid var(--color-card-border); background: #fff; font-size: 18px; letter-spacing: -0.25px; color: var(--color-text-secondary); }
+
+/* Menopause, answered */
+.art-answered__title { color: var(--color-magenta); }
+.art-answered__title .art__ic { width: 24px; height: 24px; color: var(--color-magenta); }
+.art-answered__q { display: flex; align-items: center; gap: 16px; text-align: left; padding: 16px 24px; border: none; border-radius: var(--radius-pill); background: rgba(15, 87, 168, 0.08); font: inherit; font-size: 18px; line-height: 24px; letter-spacing: -0.25px; color: var(--color-primary); cursor: pointer; }
+.art-answered__q .art__arrow { width: 24px; height: 24px; margin-left: auto; flex-shrink: 0; }
+.art-answered__q:active { background: rgba(15, 87, 168, 0.14); }
+.art-answered__ask { align-self: flex-start; padding: 12px 24px; border: none; border-radius: var(--radius-pill); background: var(--color-primary); color: #fff; font: inherit; font-size: 18px; line-height: 24px; letter-spacing: -0.25px; cursor: pointer; }
+.art-answered__ask:active { filter: brightness(0.94); }
+
+/* Keep Reading — full-bleed horizontal carousel */
+.art-keep__h { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 32px; letter-spacing: -0.75px; color: var(--color-navy); }
+.art-keep__scroll { display: flex; gap: 16px; overflow-x: auto; margin: 0 -12px; padding: 0 12px; }
+.art-keep__card { flex: 0 0 auto; width: 324px; display: flex; flex-direction: column; gap: 12px; padding: 0; border: none; background: none; text-align: left; cursor: pointer; }
+.art-keep__thumb { width: 324px; height: 170px; border-radius: var(--radius-card); background: repeating-linear-gradient(45deg, #eef1f7, #eef1f7 10px, #dfe5f1 10px, #dfe5f1 20px); }
+.art-keep__title { font-size: 18px; line-height: 1.3; letter-spacing: -0.25px; color: var(--color-navy); }
+.art-keep__card:active { transform: scale(0.99); }
+
+/* Access closing CTA reuses .mod-cta-card (overrides its splash margin) */
+.art-access { margin-top: 0; }
