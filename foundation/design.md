@@ -69,14 +69,17 @@ frame.
 Icons come in **two forms**:
 
 1. **Inline, CSS-tinted** — monochrome SVGs in the `ICON_SVGS` map in `main.js`
-   (normalized to `fill="currentColor"`, rendered by `icon()` as
-   `<span class="icon">…</span>`), tinted by each context's `color`. Used by the
-   **top nav** (menu / search / AI / grid) and the **profile dropdown**, both ink
-   `#0D1B29`.
-2. **Pre-tinted images** (`<img src>`, colour baked in) — the **panel tabs**
-   (`tab-*.svg`, ink) and **topic hubs** (`hub-*.svg`, magenta `#A440BC` glyph on a
-   pale `#F6EFF8` circle), and the **level-up pill's** section icons (`up-*.svg`,
-   blue `#0F57A8`).
+   (normalized to `fill="currentColor"`), tinted by each context's `color`. Used by
+   the **top nav** (menu / search / AI / grid) and **profile dropdown** (ink
+   `#0D1B29`); the **level-up pill's** section icons (blue `#0F57A8` via the pill's
+   `color`, incl. the article's `derm` icon); and the **topic-hub** icons (magenta
+   `#A440BC` — the pale `#F6EFF8` circle behind them is drawn in CSS by
+   `.panel__hub-icon`, not baked into the SVG). The nav/dropdown icons render via
+   `icon()` as `<span class="icon">…</span>`; the pill and hub icons are inlined
+   directly into their own wrappers.
+2. **Pre-tinted images** (`<img src>`, colour baked in) — only the **panel tabs**
+   (`tab-*.svg`, ink) now. The `up-*` / `hub-*` icons were migrated to form 1 on
+   2026-08-05 (glyphs only, no baked circle) and their standalone files removed.
 
 The old currentColor-tinted Library/Community panel icons and the back-chevron were
 **removed** in the 2026-08-03 panel + level-up redesigns.
@@ -115,12 +118,16 @@ ids are the leaf vector/frame node each file was exported from.
 | `search.svg` | 6875:153 |
 | `ai.svg` (sparkle) | 6875:155 |
 
-### Panel + level-up image icons (pre-tinted `<img>`, Global Navigation)
+### Panel tab icons (pre-tinted `<img>`, Global Navigation)
 | File(s) | What | Source |
 |---|---|---|
 | `tab-home.svg` / `tab-resources.svg` / `tab-community.svg` | Panel tab icons (ink) | panel `7299:1987` |
-| `hub-1.svg` … `hub-8.svg` | Topic-hub icons (magenta on pale circle) | panel `7299:1987` |
-| `up-activity.svg` / `up-qa.svg` / `up-hub.svg` / `up-groups.svg` / `up-programs.svg` / `up-meet.svg` | Level-up pill section icons (blue) | uplevel `7294:1952` |
+
+The **topic-hub** (`hub-1…8`) and **level-up** (`up-activity` / `up-qa` / `up-hub` /
+`up-groups` / `up-programs` / `up-meet`) glyphs are now **inline** in `ICON_SVGS`
+(`fill="currentColor"`, no baked circle — 2026-08-05); their standalone files were
+removed. Figma provenance: hubs panel `7299:1987`, level-up icons uplevel
+`7294:1952`. The article's `derm` icon is inline too (Figma **Articles** file).
 
 ### Profile
 | File | What | Source node |
