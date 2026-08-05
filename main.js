@@ -204,13 +204,16 @@ const SPLASH_FLOW_SCREENS = [
   { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   ADVISORS_SCREEN,
-  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "up-hub" },
+  { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "hub-8" },
   ALL_ARTICLES_SCREEN,
   // A Collection — the rebranded old "Topic Center": a collection of sponsored content.
   { id: "collection", label: "Collection", type: "page", title: "Collection" },
   // Article Show that belongs to a Collection — no level-up pill; instead an
   // in-body "collection" callout box at the top links to its Collection.
   { id: "article-collection", label: "Article Show (in Collection)", type: "page", title: "Article Show", collection: { screen: "collection" } },
+  // Labelled placeholder for the non-featured Splash article cards (the built
+  // skin-care article lives only on `article`; these stay placeholders as before).
+  { id: "article-placeholder", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "hub-8" },
   COMMUNITY_OVERVIEW_SCREEN,
   ...LIBRARY_SCREENS_FULL,
 ];
@@ -241,7 +244,7 @@ const PERSONAS = {
       // page with no level-up bar. Distinct from the "profile" screen below,
       // which is SOMEONE ELSE's profile (reached from Meet Others).
       { id: "my-profile", label: "My Profile", type: "page", title: "My Profile" },
-      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "up-hub" },
+      { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "hub-8" },
       { id: "group", label: "Group Detail", type: "uplevel", title: "Group Detail", backLabel: "Groups", upTo: "com-groups", upIcon: "up-groups" },
       { id: "program", label: "Program Detail", type: "uplevel", title: "Program Detail", backLabel: "Programs", upIcon: "up-programs" },
       { id: "profile", label: "Member Profile", type: "uplevel", title: "Someone\u2019s Member Profile", backLabel: "Meet Others", upTo: "com-meet", upIcon: "up-meet" },
@@ -606,10 +609,10 @@ function renderModules() {
   const articles = [
     // First card = the fully-built skin-care Article Show (see renderArticle()).
     { title: "Skin Care for Menopausal Skin: Best Ingredients and Routine", screen: "article" },
-    { title: "6 menopause facts women wish they'd known sooner", screen: "article" },
+    // Second = the Collection variant; the rest stay labelled placeholders.
     { title: "Article title", screen: "article-collection" },
-    { title: "Which doctors treat menopause?", screen: "article" },
-    { title: "Article title", screen: "article" },
+    { title: "Article title", screen: "article-placeholder" },
+    { title: "Article title", screen: "article-placeholder" },
   ];
 
   // Teaser cards for the Experts section: the first three committee members
@@ -829,6 +832,19 @@ function renderArticle() {
     "Cortisol and Menopause: How Stress Hormones Affect Your Body",
   ];
 
+  // Closing "access" card is persona-aware, mirroring the Splash closing CTA:
+  // Subscribers get "Finish up now" → Registration Step; everyone else "Join for free".
+  const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
+  const accessTitle = isSubscriber
+    ? "Don't miss out! You're almost in."
+    : "You don't have to figure this out alone.";
+  const accessSub = isSubscriber
+    ? "Finish setting up your account to unlock posts, questions, groups, and the full community."
+    : "Get medically-reviewed resources, tips from real women, and a community who gets it.";
+  const accessPrimary = isSubscriber
+    ? `<button class="mod-btn-primary" data-screen="registration-step">Finish up now</button>`
+    : `<button class="mod-btn-primary" data-screen="signup-start">Join for free</button>`;
+
   return `
     <article class="art">
       <div class="art__body">
@@ -840,11 +856,6 @@ function renderArticle() {
             <span class="art__save">${ICON.bookmark}Save</span>
           </div>
         </header>
-
-        <div class="art-cta">
-          <p class="art-cta__title">Get trusted info about menopause and connect with women who get it.</p>
-          <button class="art-cta__btn" data-screen="signup-start">Join</button>
-        </div>
 
         <div class="art-note">
           <p class="art-note__title">Key Takeaways</p>
@@ -896,10 +907,10 @@ function renderArticle() {
         <div class="mod-cta-card art-access">
           <img class="mod-cta-card__graphic mod-cta-card__graphic--tr" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
           <img class="mod-cta-card__graphic mod-cta-card__graphic--bl" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
-          <p class="mod-cta-card__title">You don’t have to figure this out alone.</p>
-          <p class="mod-cta-card__sub">Get medically-reviewed resources, tips from real women, and a community who gets it.</p>
+          <p class="mod-cta-card__title">${accessTitle}</p>
+          <p class="mod-cta-card__sub">${accessSub}</p>
           <div class="mod-cta-card__buttons">
-            <button class="mod-btn-primary" data-screen="signup-start">Join for free</button>
+            ${accessPrimary}
             <button class="mod-btn-secondary" data-screen="symptom-checker">Check symptoms first</button>
           </div>
         </div>

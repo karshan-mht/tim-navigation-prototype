@@ -767,6 +767,7 @@ body {
   border: 1px solid #d6e2f1;
   border-radius: 48px;
   background: var(--color-bg-blue-soft);   /* opaque #EDF3F9 (Figma) — floats over content, no bleed-through */
+  box-shadow: 0 2px 10px rgba(15, 87, 168, 0.22);   /* soft blue glow so the pill lifts off the article */
   cursor: pointer;
   font-family: var(--font-body);
   color: var(--color-primary);
@@ -1348,12 +1349,6 @@ body {
 .art__sec { display: flex; flex-direction: column; gap: 8px; }
 .art__h2 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 26px; line-height: 34px; letter-spacing: -0.75px; color: var(--color-navy); }
 .art__lede p, .art__sec p { margin: 0; font-size: 18px; line-height: 26px; letter-spacing: -0.25px; color: var(--color-text); }
-
-/* Join CTA card (top) */
-.art-cta { display: flex; align-items: center; gap: 16px; padding: 20px; border-radius: var(--radius-card); background: var(--color-navy); }
-.art-cta__title { margin: 0; flex: 1; font-size: 18px; font-weight: 700; line-height: 26px; letter-spacing: -0.25px; color: #fff; }
-.art-cta__btn { flex-shrink: 0; border: none; border-radius: var(--radius-pill); background: #fff; color: var(--color-primary); font: inherit; font-size: 16px; font-weight: 600; letter-spacing: -0.25px; padding: 12px 24px; cursor: pointer; }
-.art-cta__btn:active { background: var(--color-primary-soft); }
 
 /* Key Takeaways card */
 .art-note { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: var(--radius-card); border: 1px solid var(--color-card-border); }
