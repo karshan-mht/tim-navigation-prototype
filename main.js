@@ -306,26 +306,95 @@ if (!persona) {
   console.error(`Unknown or missing persona key on <body data-persona>: "${LOCKED_PERSONA_KEY}"`);
 }
 
-// Entry Points support: a persona flow normally opens on its own home screen
-// (persona.screens[0]), but the launcher's "Entry Points" section links to
-// specific starting screens instead (e.g. landing straight on an Article Show
-// as if arriving from Search, instead of the Splash Landing home) via
-// ?start=<screen-id>. Falls back to the normal default if the param is
-// missing, blank, or doesn't match a real screen in this persona — so a typo'd
-// or stale link degrades to "just open the persona normally" rather than
-// breaking.
-const requestedStart = new URLSearchParams(window.location.search).get("start");
-const startScreenId =
-  requestedStart && persona.screens.some((s) => s.id === requestedStart)
-    ? requestedStart
-    : persona.screens[0].id;
+// URL routing: every screen is reachable by a friendly slug in the URL hash,
+// e.g. visitor/index.html#resources or #advisors. The hash is the source of
+// truth for the current screen: navigation sets it and the hashchange handler
+// applies it, so Back/Forward and directly-shared links both work. Entry Points
+// still pass ?start=<id> (the launcher's mocked external referrers); that seeds
+// the initial screen when no hash is present. Anything invalid/missing falls
+// back to the persona's home rather than breaking.
+//
+// Slugs are human-friendly names, never the internal screen id. They only need
+// to be unique WITHIN a persona, so the same slug (e.g. "home") can resolve to a
+// different screen id in different personas.
+const SCREEN_SLUGS = {
+  splash: "home", "home-gated": "home", home: "home",
+  "lib-all": "resources", "lib-hrt": "hrt", "lib-mood": "mood", "lib-sleep": "sleep", "lib-diet": "diet", "lib-family": "family",
+  "community-overview": "community", "com-activities": "activity-feed", "com-questions": "questions", "com-groups": "groups", "com-meet": "meet-others", "com-values": "community-values",
+  "all-collections": "all-articles", advisors: "advisors", "topic-hub": "topic-hub",
+  "symptom-checker": "symptom-checker", "signup-start": "sign-up", "listicle-detail": "listicle",
+  article: "article", collection: "collection", "article-collection": "sponsored-article", "article-placeholder": "sample-article",
+  "acct-health": "my-health", "acct-messages": "messages", "acct-notifications": "notifications", "acct-settings": "settings",
+  "my-profile": "profile", group: "group", program: "program", profile: "member-profile", question: "question", activity: "activity",
+  "registration-step": "register",
+};
+function slugFor(id) { return SCREEN_SLUGS[id] || id; }
+function idForSlug(slug) {
+  const match = persona.screens.find((s) => slugFor(s.id) === slug);
+  return match ? match.id : null;
+}
+
+function screenFromUrl() {
+  const raw = decodeURIComponent(window.location.hash.replace(/^#/, "")).trim();
+  const fromHash = raw && idForSlug(raw);
+  if (fromHash) return fromHash;
+  const start = new URLSearchParams(window.location.search).get("start");
+  if (start) {
+    if (persona.screens.some((s) => s.id === start)) return start;
+    const bySlug = idForSlug(start);
+    if (bySlug) return bySlug;
+  }
+  return persona.screens[0].id;
+}
 
 let state = {
-  screenId: startScreenId,
+  screenId: screenFromUrl(),
   prevScreenId: null,
   panelOpen: false,
   dropdownOpen: false,
 };
+
+// Navigate to a screen by updating the hash; the hashchange handler below does
+// the actual state update + render, so every navigation path flows through the
+// URL and stays shareable/back-button-able.
+function go(screenId) {
+  const slug = slugFor(screenId);
+  if (window.location.hash === "#" + slug) {
+    // Already on this screen (e.g. re-click) — just make sure overlays close.
+    if (state.panelOpen || state.dropdownOpen) {
+      state.panelOpen = false;
+      state.dropdownOpen = false;
+      render();
+    }
+    return;
+  }
+  window.location.hash = slug;
+}
+
+window.addEventListener("hashchange", () => {
+  const next = screenFromUrl();
+  if (next !== state.screenId) {
+    state.prevScreenId = state.screenId;
+    state.screenId = next;
+  }
+  state.panelOpen = false;
+  state.dropdownOpen = false;
+  render();
+});
+
+// Responsive layout mode. Below 1024px the app is the frameless mobile
+// experience (auto-hiding top nav + slide-out panel); at/above 1024px it
+// reflows into the desktop layout (persistent horizontal header). Viewport-
+// driven — no manual toggle. A re-render on the breakpoint crossing swaps the
+// nav chrome (which is JS-built, not CSS-reflowable — see renderDesktopHeader).
+const DESKTOP_MQ = window.matchMedia("(min-width: 1024px)");
+let isDesktop = DESKTOP_MQ.matches;
+DESKTOP_MQ.addEventListener("change", (e) => {
+  isDesktop = e.matches;
+  state.panelOpen = false;   // the slide-out panel doesn't exist on desktop
+  state.dropdownOpen = false;
+  render();
+});
 
 /* ---------------- Render helpers ---- */
 
@@ -371,6 +440,62 @@ function renderTopNav() {
           ${right}
         </div>
       </div>
+    </div>
+  `;
+}
+
+// Desktop header (>=1024px): one persistent horizontal bar replacing the mobile
+// top nav + slide-out panel + level-up pill. Built from the SAME data as the
+// mobile panel (PANEL_TABS + HUBS) so the two stay in sync. Primary tabs sit
+// inline; the eight Topic Hubs (the primary content entry point) live in a
+// hover/focus "Topics" dropdown so they don't overflow the bar. The persona
+// right-side control mirrors renderTopNav (Join/Finish vs. profile+dropdown),
+// and detail screens get a breadcrumb row in place of the level-up pill.
+function renderDesktopHeader(screen) {
+  const homeId = persona.screens[0].id;
+  const isVisitor = persona.navVariant === "visitor";
+  const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
+
+  // Primary tabs only. The Topic Hubs live in the slide-out panel (hamburger),
+  // so the header stays lean — no Topics dropdown.
+  const tabs = PANEL_TABS.map((t) => {
+    const target = t.target === "home" ? homeId : t.target;
+    return `<button class="dnav__link" data-screen="${target}">${t.label}</button>`;
+  }).join("");
+
+  const right = isVisitor
+    ? `<button class="join-btn" data-screen="${isSubscriber ? "registration-step" : "signup-start"}">${isSubscriber ? "Finish" : "Join"}</button>`
+    : `<button class="profile-btn" data-action="toggle-dropdown" aria-label="Account menu">
+         <span class="profile-avatar"><img class="profile-img" src="${PROFILE_PLACEHOLDER}" alt="" /></span>
+         <span class="badge"></span>
+       </button>`;
+
+  // Detail screens step one level up; the breadcrumb replaces the level-up pill.
+  const crumb =
+    screen.type === "uplevel"
+      ? `<div class="dnav__crumbbar">
+           <button class="dnav__crumb" data-screen="${screen.upTo || homeId}">
+             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+             <span>${screen.backLabel}</span>
+           </button>
+         </div>`
+      : "";
+
+  return `
+    <div class="dnav">
+      <div class="dnav__bar">
+        <button class="icon-btn dnav__menu-btn" data-action="toggle-panel" aria-label="Open menu">${icon("menu")}</button>
+        <button class="dnav__logo logo-btn" data-action="go-home" aria-label="Home">
+          <img class="logo logo--full" src="${LOGO_FULL}" alt="This is Menopause" />
+        </button>
+        <nav class="dnav__nav">${tabs}</nav>
+        <div class="dnav__right">
+          <button class="icon-btn" aria-label="Search">${icon("search")}</button>
+          <button class="icon-btn" aria-label="Ask AI">${icon("ai")}</button>
+          ${right}
+        </div>
+      </div>
+      ${crumb}
     </div>
   `;
 }
@@ -576,7 +701,7 @@ function renderAdvisors() {
   return `
     <div class="mod-advisors">
       <div class="mod-advisors__intro">
-        <h2 class="mod-advisors__title">ThisIsMenopause Medical Advisory Committee</h2>
+        <h1 class="mod-advisors__title">ThisIsMenopause Medical Advisory Committee</h1>
         <p class="mod-advisors__lede">Menopause deserves better than guesswork &mdash; so we brought in real expertise to back it up.</p>
         <p class="mod-advisors__body">Our advisory committee is made up of doctors, nurse practitioners, and clinicians who&rsquo;ve spent their careers supporting women through this exact stage of life. They help shape what we cover, weigh in on the questions that matter most, and sometimes roll up their sleeves to contribute content directly.</p>
         <p class="mod-advisors__body mod-advisors__body--italic">Think of them as the knowledgeable friends in your corner &mdash; who also happen to have the medical degrees to back it up.</p>
@@ -595,7 +720,7 @@ function renderAdvisors() {
           </li>`).join("")}
       </ul>
       <div class="mod-advisors__watch">
-        <h3 class="mod-advisors__watch-head">Watch Now</h3>
+        <h2 class="mod-advisors__watch-head">Watch Now</h2>
         <div class="mod-advisors__watch-card"></div>
         <p class="mod-advisors__watch-title">What Partners Need To Know About Rage During Perimenopause and Menopause</p>
       </div>
@@ -663,18 +788,20 @@ function renderModules() {
     <section class="mod-hero">
       <img class="mod-hero__ring mod-hero__ring--tl" src="${ASSET_BASE}/hero-rings-tl.svg" alt="" aria-hidden="true" />
       <img class="mod-hero__ring mod-hero__ring--br" src="${ASSET_BASE}/hero-rings-br.svg" alt="" aria-hidden="true" />
-      <h2 class="mod-hero__title">Where expert advice meets real women.</h2>
-      <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
-      <div class="mod-hero__users">
-        <span class="mod-hero__avatars">
-          ${[1, 2, 3]
-            .map((n) => `<img class="mod-hero__avatar" src="${ASSET_BASE}/community-${n}.png" alt="" aria-hidden="true" />`)
-            .join("")}
-        </span>
-        <span class="mod-hero__count">12,345 women in the community</span>
+      <div class="mod-hero__intro">
+        <h1 class="mod-hero__title">Where expert advice meets real women.</h1>
+        <p class="mod-hero__sub">Clear, trustworthy insights from women living it — real menopause talk, unfiltered.</p>
+        <div class="mod-hero__users">
+          <span class="mod-hero__avatars">
+            ${[1, 2, 3]
+              .map((n) => `<img class="mod-hero__avatar" src="${ASSET_BASE}/community-${n}.png" alt="" aria-hidden="true" />`)
+              .join("")}
+          </span>
+          <span class="mod-hero__count">12,345 women in the community</span>
+        </div>
       </div>
       <div class="mod-checker-card">
-        <p class="mod-checker-card__title">Could it be perimenopause? Start here.</p>
+        <h2 class="mod-checker-card__title">Could it be perimenopause? Start here.</h2>
         <div class="mod-checker-card__pills">
           ${checkerPills.map((p) => `<span class="mod-pill">${p}</span>`).join("")}
         </div>
@@ -687,7 +814,7 @@ function renderModules() {
 
     <section class="mod-listicles">
       <div class="mod-section-text">
-        <h3 class="mod-section-text__title">See what <em>actually works</em>.</h3>
+        <h2 class="mod-section-text__title">See what <em>actually works</em>.</h2>
         <p class="mod-section-text__sub">Clinician-backed tips, voted on by women who've tried them.</p>
       </div>
       <div class="mod-listicles__scroll">
@@ -706,7 +833,7 @@ function renderModules() {
 
     <section class="mod-articles">
       <div class="mod-section-text">
-        <h3 class="mod-section-text__title">Everything you <em>need to know</em>.</h3>
+        <h2 class="mod-section-text__title">Everything you <em>need to know</em>.</h2>
         <p class="mod-section-text__sub">Medically-reviewed resources to help you prepare for your appointments.</p>
       </div>
       <div class="mod-articles__scroll">
@@ -724,7 +851,7 @@ function renderModules() {
 
     <section class="mod-experts">
       <div class="mod-section-text">
-        <h3 class="mod-section-text__title">Meet our <em>menopause advisors</em>.</h3>
+        <h2 class="mod-section-text__title">Meet our <em>menopause advisors</em>.</h2>
         <p class="mod-section-text__sub">Top experts helping you stay current on what matters.</p>
       </div>
       <div class="mod-experts__list">
@@ -745,7 +872,7 @@ function renderModules() {
     </section>
 
     <section class="mod-factoid">
-      <h3 class="mod-factoid__title">You're <em>not imagining</em> it.</h3>
+      <h2 class="mod-factoid__title">You're <em>not imagining</em> it.</h2>
       <div class="mod-factoid__stats">
         <div class="mod-stat-card">
           <img class="mod-stat-card__graphic" src="${ASSET_BASE}/factoid-blob-1.svg" alt="" aria-hidden="true" />
@@ -763,7 +890,7 @@ function renderModules() {
 
     <section class="mod-community">
       <div class="mod-section-text">
-        <h3 class="mod-section-text__title">What women are <em>saying</em>.</h3>
+        <h2 class="mod-section-text__title">What women are <em>saying</em>.</h2>
       </div>
       <div class="mod-quotes__scroll">
         <div class="mod-quote-card">
@@ -772,14 +899,19 @@ function renderModules() {
         <div class="mod-quote-card">
           <p class="mod-quote-card__text">"I got three different answers on HRT from three different doctors. No wonder nobody gets it."</p>
         </div>
+        <div class="mod-quote-card">
+          <p class="mod-quote-card__text">"It's a mess. I feel like I'm a teenager all over again because my body is totally doing its OWN THING."</p>
+        </div>
       </div>
       <button class="mod-view-all-link" data-screen="community-overview">Join the conversation →</button>
 
       <div class="mod-cta-card">
         <img class="mod-cta-card__graphic mod-cta-card__graphic--tr" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
         <img class="mod-cta-card__graphic mod-cta-card__graphic--bl" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
-        <p class="mod-cta-card__title">${ctaTitle}</p>
-        <p class="mod-cta-card__sub">${ctaSub}</p>
+        <div class="mod-cta-card__text">
+          <p class="mod-cta-card__title">${ctaTitle}</p>
+          <p class="mod-cta-card__sub">${ctaSub}</p>
+        </div>
         <div class="mod-cta-card__buttons">
           ${ctaPrimary}
           <button class="mod-btn-secondary" data-screen="symptom-checker">Check symptoms first</button>
@@ -915,12 +1047,12 @@ function renderArticle() {
 
       <div class="art__end">
         <section class="art-conv">
-          <p class="art-conv__title">${ICON.chat}Join the conversation</p>
+          <h2 class="art-conv__title">${ICON.chat}Join the conversation</h2>
           <div class="art-conv__input">Share your thoughts&hellip;</div>
         </section>
 
         <section class="art-answered">
-          <p class="art-answered__title">${aiStars}<span class="art-answered__label">Menopause, answered</span></p>
+          <h2 class="art-answered__title">${aiStars}<span class="art-answered__label">Menopause, answered</span></h2>
           ${presets.map((q) => `<button class="art-answered__q">${q}${ICON.arrow}</button>`).join("")}
           <button class="art-answered__ask">Ask AI</button>
         </section>
@@ -953,6 +1085,17 @@ function renderArticle() {
 
 function render() {
   const screen = persona.screens.find((s) => s.id === state.screenId) || persona.screens[0];
+
+  // Layout-mode hook for CSS: everything desktop-specific keys off body.is-desktop.
+  document.body.classList.toggle("is-desktop", isDesktop);
+
+  // The document is the scroller now, so a screen change no longer resets scroll
+  // the way the old inner scroller did — reset it here. Only on an actual screen
+  // change: overlay toggles and breakpoint re-renders keep the scroll position.
+  if (screen.id !== render._lastScreenId) {
+    window.scrollTo(0, 0);
+    render._lastScreenId = screen.id;
+  }
 
   // Chromeless full-screen flow pages (Sign Up Start, Registration Step): no top
   // nav, level-up bar, or footer — just an X in the top-left that closes back to
@@ -997,11 +1140,18 @@ function render() {
   // hub and Topic Hubs) flow at natural height from the top.
   const bodyFill = !screen.modules && screen.id !== "advisors" && screen.id !== "community-overview" && screen.id !== "article" && !screen.topicHub ? " screen__body--fill" : "";
 
-  // Nav + level-up bar are separate sticky elements at the top of the scroll
-  // area. The nav auto-hides on scroll-down and returns on scroll-up; the
-  // level-up bar (when present) stays pinned. See attachAutoHide.
-  let chrome = `<div class="screen__nav">${renderTopNav()}</div>`;
-  if (screen.type === "uplevel") chrome += `<div class="screen__uplevel">${renderUplevel(screen)}</div>`;
+  // Chrome differs by layout mode. Desktop: one persistent horizontal header
+  // (renderDesktopHeader) with inline nav + breadcrumb — the mobile slide-out
+  // panel and level-up pill don't map to desktop, so this is a JS branch rather
+  // than a CSS reflow. Mobile: the auto-hiding top nav + (on detail screens) the
+  // level-up pill, as separate sticky elements. See attachAutoHide.
+  let chrome;
+  if (isDesktop) {
+    chrome = renderDesktopHeader(screen);
+  } else {
+    chrome = `<div class="screen__nav">${renderTopNav()}</div>`;
+    if (screen.type === "uplevel") chrome += `<div class="screen__uplevel">${renderUplevel(screen)}</div>`;
+  }
 
   let overlays = "";
   if (state.panelOpen) overlays += renderPanel();
@@ -1025,10 +1175,11 @@ function render() {
 // the bar pins just below it (top = nav height); when the nav hides, the bar's
 // top animates to 0 so it docks to the top edge. Re-bound each render.
 function attachAutoHide() {
-  const scroll = document.querySelector(".screen__scroll");
-  const nav = scroll && scroll.querySelector(".screen__nav");
-  if (!scroll || !nav) return;
-  const uplevel = scroll.querySelector(".screen__uplevel");
+  // Desktop has a persistent header (no auto-hide) — nothing to bind.
+  if (isDesktop) return;
+  const nav = document.querySelector(".screen__nav");
+  if (!nav) return;
+  const uplevel = document.querySelector(".screen__uplevel");
   const navH = nav.offsetHeight;
   const setHidden = (hidden) => {
     nav.classList.toggle("is-hidden", hidden);
@@ -1038,15 +1189,21 @@ function attachAutoHide() {
   // The uplevel pill only casts its glow once it floats over scrolled content —
   // no shadow while idle at the top on the white background.
   const setLifted = (y) => { if (uplevel) uplevel.classList.toggle("is-lifted", y > 8); };
-  setLifted(scroll.scrollTop);
-  let lastY = scroll.scrollTop;
-  scroll.addEventListener("scroll", () => {
-    const y = scroll.scrollTop;
+  setLifted(window.scrollY);
+  let lastY = window.scrollY;
+  // The document is the scroller now (the frame is gone), so listen on window.
+  const onScroll = () => {
+    const y = window.scrollY;
     if (y > lastY && y > 80) setHidden(true);
     else if (y < lastY) setHidden(false);
     setLifted(y);
     lastY = y;
-  });
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  // A re-render replaces the DOM but window listeners persist; drop the stale
+  // one so we don't stack a handler per render (each closes over an old nav).
+  attachAutoHide._cleanup && attachAutoHide._cleanup();
+  attachAutoHide._cleanup = () => window.removeEventListener("scroll", onScroll);
 }
 
 /* ---------------- Panel close animation ---- */
@@ -1080,11 +1237,9 @@ document.addEventListener("click", (e) => {
   // Stays inside the current persona; crossing folders is the auth CTAs' job.
   const screenBtn = e.target.closest("[data-screen]");
   if (screenBtn) {
-    state.prevScreenId = state.screenId; // remembered so chromeless flow pages can close "back"
-    state.screenId = screenBtn.dataset.screen;
-    state.panelOpen = false;
-    state.dropdownOpen = false;
-    render();
+    // Routes through the hash (see go/hashchange), so the URL updates to the
+    // screen's slug and prevScreenId is tracked for chromeless flow "close".
+    go(screenBtn.dataset.screen);
     return;
   }
 
@@ -1116,71 +1271,20 @@ document.addEventListener("click", (e) => {
       }
       break;
     case "go-home":
-      state.screenId = persona.screens[0].id;
-      render();
+      go(persona.screens[0].id);
       break;
     // Close a chromeless flow page (X in the corner) back to where it opened from.
     case "close-flow":
-      state.screenId = state.prevScreenId || persona.screens[0].id;
-      render();
+      go(state.prevScreenId || persona.screens[0].id);
       break;
     case "go-profile":
-      if (persona.screens.some((s) => s.id === "my-profile")) {
-        state.screenId = "my-profile";
-        state.dropdownOpen = false;
-        render();
-      }
+      if (persona.screens.some((s) => s.id === "my-profile")) go("my-profile");
       break;
     // Cross-flow auth transitions (Join / Log in / Finish up / Log out) are
     // intentionally no-ops in this prototype — these CTAs no longer jump to
     // another persona's page; each flow stays self-contained.
   }
 });
-
-/* ---------------- Fit the fixed device frame to the viewport ----
-   The phone is a fixed-size "device"; its size comes from the
-   --device-width / --device-height tokens in main.css (single source of
-   truth). On a viewport shorter (or narrower) than it, scale the whole
-   device down with a transform so the page never scrolls — the design stays
-   intact, just smaller. A transform is visual only and would otherwise leave
-   its full-size layout box behind (still forcing scroll), so we collapse that
-   leftover space with negative margins — split evenly on all four sides so the
-   collapsed box stays centered on the same point the transform scales around,
-   letting the flex .stage center it both ways.
-   Skipped on <=430px-wide screens, where the CSS media query already makes
-   the phone full-bleed (height:100vh). ---- */
-
-const FIT_MARGIN = 16; // px of breathing room kept around the device
-
-function fitPhone() {
-  const phone = document.getElementById("phone");
-  if (!phone) return;
-
-  if (window.innerWidth <= 430) {
-    phone.style.transform = "";
-    phone.style.margin = "";
-    return;
-  }
-
-  // Measure the device's true rendered box (screen + bezel border).
-  // offsetWidth/offsetHeight are transform-independent, so the fit stays
-  // correct regardless of box-sizing or border width.
-  const w = phone.offsetWidth;
-  const h = phone.offsetHeight;
-
-  const scale = Math.min(
-    1, // never upscale past the device's intrinsic size
-    (window.innerHeight - FIT_MARGIN) / h,
-    (window.innerWidth - FIT_MARGIN) / w
-  );
-
-  phone.style.transformOrigin = "center center";
-  phone.style.transform = `scale(${scale})`;
-  // Collapse the leftover layout box symmetrically so it stays centered.
-  phone.style.margin = `${(-h * (1 - scale)) / 2}px ${(-w * (1 - scale)) / 2}px`;
-}
-
-window.addEventListener("resize", fitPhone);
 
 // Hidden "back to all flows" hotspot — a small circle in the top-left corner
 // that's invisible until hovered, linking back to the root launcher. Only on
@@ -1193,7 +1297,17 @@ function addHomeHotspot() {
 }
 
 if (persona) {
+  // Reflect the initial screen as a slug in the URL so it's shareable from the
+  // first load (including Entry Points that arrived via ?start=). replaceState
+  // avoids a spurious history entry / hashchange; the location.hash fallback
+  // covers environments (e.g. some file://) where replaceState is restricted.
+  if (window.location.hash.replace(/^#/, "") !== slugFor(state.screenId)) {
+    try {
+      history.replaceState(null, "", "#" + slugFor(state.screenId));
+    } catch (_) {
+      window.location.hash = slugFor(state.screenId);
+    }
+  }
   render();
-  fitPhone();
   addHomeHotspot();
 }

@@ -96,12 +96,17 @@ loads the two shared files:
 ```
 
 `main.js` reads `data-persona` and renders that persona's nav/panel/dropdown and
-screens — no framework, no build step, no persona switcher. The phone is a fixed
-**iPhone 16 Pro** frame (402 × 874) that scales to fit the window. Navigation
-happens via `data-screen="<id>"` elements inside the prototype; each flow stays
+screens — no framework, no build step, no persona switcher. The app is a **real
+responsive product** (no device frame): a full-bleed mobile experience below
+1024px that reflows into a **desktop layout** — a persistent horizontal header
+and content capped/centered with fluid gutters — at 1024px and up. Content is
+constrained (not fully fluid): a ~1000px general cap, a ~1194px splash canvas,
+and a 728px reading column. Layout mode is viewport-driven (matchMedia), so
+resizing the browser switches between mobile and desktop. Navigation happens via
+`data-screen="<id>"` elements inside the prototype; each flow stays
 self-contained.
 
-The full architecture — render model, screen types, the device frame, and the
+The full architecture — render model, screen types, responsive layout, and the
 four personas — is in **[foundation/system.md](foundation/system.md)**.
 
 ## Docs
