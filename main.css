@@ -22,10 +22,49 @@
   --radius-card: 16px;
   --font-body: "Lato", sans-serif;
   --font-display: "DM Serif Display", serif;
-  /* Device frame — iPhone 16 Pro logical resolution. Swap these to
-     retarget the mock to another device size. */
-  --device-width: 402px;
-  --device-height: 874px;
+  /* DM Serif Display responsive type scale — mobile-first; desktop values in
+     the @media (min-width:1024px) :root override below. Line-height is always
+     size+8; tracking is -0.75px across every tier. See foundation/design.md. */
+  --display-hero-size: 40px;
+  --display-hero-lh: 48px;
+  --display-section-size: 32px;
+  --display-section-lh: 40px;
+  --display-title-size: 28px;
+  --display-title-lh: 36px;
+  /* These two are both "24px" but otherwise unrelated — named separately so
+     the number is never used as an identifier for either one. */
+  --display-subhead-size: 24px;  /* DM Serif Display sub-heading tier: art-conv/answered/keep titles, advisors watch-head. Figma-confirmed (Entry-Points file, nodes 49:1845/49:1855/49:1890). */
+  --display-subhead-lh: 32px;    /* size+8, same rule as every other DM Serif Display tier */
+  --display-tracking: -0.75px;
+  --quote-size: 24px;            /* Lato SemiBold quote text (.mod-quote-card__text) only — unrelated to --display-subhead-size above */
+  --quote-lh: 30px;               /* matches the Figma Lato "Headline" 24px swatch exactly (node 40:260) */
+  /* (Device-frame tokens removed — the app is now frameless/responsive.) */
+  /* Responsive layout — real product, no device frame. Content is capped and
+     centered with fluid gutters (NOT fully fluid): fluid up to the cap, then
+     centered with growing side margin beyond it. */
+  --content-max: 1000px;     /* the single desktop content width — nav + all sections align to this */
+  --content-column: 728px;   /* reading column — articles and other content pages */
+  --content-gutter: clamp(16px, 5vw, 40px); /* minimum side gutter before the 1000px box centers */
+  /* One shared inline padding used by the header, every full-bleed section, and
+     the footer so their content edges line up exactly: fluid gutter until the
+     viewport exceeds the 1000px box, then symmetric margin that centers it. */
+  --content-pad: max(var(--content-gutter), calc((100% - var(--content-max)) / 2));
+  --mobile-max: 480px;       /* mobile layout column cap below the desktop breakpoint */
+}
+
+/* DM Serif Display desktop type scale (foundation/design.md:98-147). Only size
+   and line-height change per breakpoint; tracking/weight are constant. */
+@media (min-width: 1024px) {
+  :root {
+    --display-hero-size: 52px;
+    --display-hero-lh: 60px;
+    --display-section-size: 36px;
+    --display-section-lh: 44px;
+    --display-title-size: 32px;
+    --display-title-lh: 40px;
+    --display-subhead-size: 28px;
+    --display-subhead-lh: 36px;
+  }
 }
 
 * { box-sizing: border-box; }
@@ -45,50 +84,69 @@ body {
 /* ---- Rig chrome (not part of the design system — just this harness) ---- */
 
 .stage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
   min-height: 100vh;
-  padding: 0;
 }
 
-/* ---- Phone frame ---- */
-
+/* ---- App container (frameless, responsive) ----
+   No device bezel at any width. Below 1024px the mobile layout is capped to a
+   comfortable column and centered on the page background; at/above 1024px it
+   goes full-width and the desktop layout takes over. The document (not an inner
+   element) is the scroller, so the sticky nav sticks to the viewport — nothing
+   here may become a scroll container (no overflow:hidden/auto on these). */
 .phone {
   position: relative;
-  /* content-box so --device-width/height are the SCREEN size (matching the
-     402×874 Figma canvas); the 8px bezel sits OUTSIDE the screen, like a real
-     device, instead of eating into the usable width. */
-  box-sizing: content-box;
-  width: var(--device-width);
-  height: var(--device-height);
-  max-width: 100%;
+  width: 100%;
+  max-width: var(--mobile-max);
+  margin-inline: auto;
+  min-height: 100vh;
   background: #fff;
-  border-radius: 40px;
-  border: 8px solid #111;
-  overflow: hidden;
-  box-shadow: 0 20px 45px rgba(13, 27, 41, 0.25);
 }
 
 .screen {
   position: relative;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   background: #fff;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* Scrollable area; holds the sticky nav + level-up bar, body, footer. */
+/* Holds the sticky nav + level-up bar, body, footer. No longer scrolls itself —
+   the document scrolls (see attachAutoHide, which listens on window). */
 .screen__scroll {
-  flex: 1 1 auto;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
 }
+
+/* Desktop: drop the mobile column cap and go full-width. */
+@media (min-width: 1024px) {
+  .phone { max-width: none; margin-inline: 0; }
+}
+
+/* Entry-point mock pages (the external Facebook / Google / Gmail simulations in
+   entry-points/) keep the phone-device frame — they represent arriving from a
+   mobile app and are NOT part of the product's responsive layout. Scoped via
+   the .mock child so the product app (which has no .mock) stays frameless.
+   entry-points/fit-phone.js scales this device to fit the window. */
+.stage:has(.mock) { display: flex; justify-content: center; align-items: center; }
+.phone:has(.mock) {
+  box-sizing: content-box;
+  width: 402px;
+  height: 874px;
+  max-width: none;
+  margin-inline: auto;
+  min-height: 0;
+  border-radius: 40px;
+  border: 8px solid #111;
+  overflow: hidden;
+  box-shadow: 0 20px 45px rgba(13, 27, 41, 0.25);
+}
+@media (max-width: 430px) {
+  .phone:has(.mock) { width: 100%; height: 100vh; border-radius: 0; border-width: 0; box-shadow: none; }
+}
+
 
 /* Nav and level-up bar are independent sticky elements. The nav auto-hides on
    scroll-down (slides up) and returns on scroll-up. The level-up bar STAYS
@@ -162,6 +220,9 @@ body {
 .mod-hero__ring { position: absolute; z-index: -1; pointer-events: none; }
 .mod-hero__ring--tl { top: -24px; left: -64px; width: 182px; }
 .mod-hero__ring--br { bottom: -48px; right: -24px; width: 265px; }
+/* Wrapper is transparent on mobile (children act as direct hero children); on
+   desktop it becomes the left column of a two-column hero. */
+.mod-hero__intro { display: contents; }
 
 /* Letter-spacing across the splash: -0.25px baseline on all module text
    (inherited from each section), with headlines overriding to -0.75px. */
@@ -174,9 +235,9 @@ body {
 .mod-hero__title {
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 40px;
-  line-height: 1.2;
-  letter-spacing: -0.75px;
+  font-size: var(--display-hero-size);
+  line-height: var(--display-hero-lh);
+  letter-spacing: var(--display-tracking);
   margin: 0 0 12px;
 }
 .mod-hero__sub { font-size: 20px; line-height: 1.4; letter-spacing: -0.75px; margin: 0 0 20px; opacity: 0.9; }
@@ -189,13 +250,11 @@ body {
   color: var(--color-primary);
   font-family: var(--font-body);
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
 }
 .mod-hero__cta:active { filter: brightness(0.97); }
 
-.mod-section { padding: 24px 12px; }
-.mod-section__title { font-size: 18px; font-weight: 700; letter-spacing: -0.25px; margin: 0 0 16px; }
 .mod-cards { display: flex; flex-direction: column; gap: 12px; }
 .mod-card {
   display: block;
@@ -243,7 +302,7 @@ body {
   color: var(--color-text);
   margin-bottom: 8px;
 }
-.mod-article__meta { display: block; font-size: 13px; color: var(--color-text-secondary); }
+.mod-article__meta { display: block; font-size: 14px; color: var(--color-text-secondary); }
 
 /* ---- Checker card (inside .mod-hero) — symptom pills + CTA, Figma 4101:30 ---- */
 
@@ -276,6 +335,7 @@ body {
   font-family: var(--font-body);
   font-weight: 600;
   font-size: 20px;
+  line-height: 28px;
   letter-spacing: -0.75px;
   color: var(--color-navy);
 }
@@ -299,7 +359,7 @@ body {
   color: #fff;
   font-family: var(--font-body);
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: -0.25px;
   cursor: pointer;
 }
@@ -314,9 +374,9 @@ body {
   margin: 0 0 16px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 32px;
-  line-height: 1.25;
-  letter-spacing: -0.75px;
+  font-size: var(--display-section-size);
+  line-height: var(--display-section-lh);
+  letter-spacing: var(--display-tracking);
   color: var(--color-navy);
 }
 .mod-section-text__title em { font-style: normal; color: var(--color-magenta); }
@@ -477,9 +537,9 @@ body {
   margin: 0 0 24px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 32px;
-  line-height: 1.25;
-  letter-spacing: -0.75px;
+  font-size: var(--display-section-size);
+  line-height: var(--display-section-lh);
+  letter-spacing: var(--display-tracking);
 }
 .mod-factoid__title em { font-style: normal; color: var(--color-purple-light); }
 .mod-factoid__stats { display: flex; flex-direction: column; gap: 16px; margin-bottom: 16px; }
@@ -532,8 +592,8 @@ body {
 .mod-quote-card__text {
   margin: 0;
   font-weight: 600;
-  font-size: 22px;
-  line-height: 1.35;
+  font-size: var(--quote-size);
+  line-height: var(--quote-lh);
   letter-spacing: -0.75px;
   color: var(--color-navy);
 }
@@ -557,13 +617,16 @@ body {
 .mod-cta-card__graphic { position: absolute; z-index: -1; width: 280px; pointer-events: none; }
 .mod-cta-card__graphic--tr { top: -72px; right: -156px; transform: scaleY(-1); }
 .mod-cta-card__graphic--bl { bottom: -96px; left: -154px; transform: scaleX(-1); }
+/* Transparent on mobile (title/sub act as direct card children); on desktop it
+   becomes the left column of the two-column CTA card. */
+.mod-cta-card__text { display: contents; }
 .mod-cta-card__title {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 32px;
-  line-height: 1.25;
-  letter-spacing: -0.75px;
+  font-size: var(--display-section-size);
+  line-height: var(--display-section-lh);
+  letter-spacing: var(--display-tracking);
 }
 .mod-cta-card__sub { margin: 0; font-size: 18px; line-height: 1.45; opacity: 0.9; }
 .mod-cta-card__buttons { display: flex; flex-direction: column; gap: 16px; }
@@ -572,7 +635,7 @@ body {
   height: 48px;
   border-radius: 24px;
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
   letter-spacing: -0.25px;
   cursor: pointer;
@@ -597,9 +660,9 @@ body {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 28px;
-  line-height: 36px;
-  letter-spacing: -0.75px;
+  font-size: var(--display-title-size);
+  line-height: var(--display-title-lh);
+  letter-spacing: var(--display-tracking);
   color: var(--color-navy);
 }
 .mod-advisors__lede { margin: 0; font-weight: 600; font-size: 18px; line-height: 26px; color: var(--color-text); }
@@ -634,8 +697,8 @@ body {
   margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 24px;
-  line-height: 40px;
+  font-size: var(--display-subhead-size);
+  line-height: var(--display-subhead-lh);
   letter-spacing: -0.75px;
   color: var(--color-navy);
 }
@@ -813,7 +876,7 @@ body {
   margin: 0 0 6px;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
@@ -842,7 +905,9 @@ body {
   margin: 0 0 16px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 28px;
+  font-size: var(--display-title-size);
+  line-height: var(--display-title-lh);
+  letter-spacing: var(--display-tracking);
   color: var(--color-navy);
 }
 .comm-hub__list { display: flex; flex-direction: column; gap: 12px; }
@@ -875,14 +940,14 @@ body {
   color: var(--color-text);
 }
 .comm-mod__badge {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--color-text-secondary);
   background: #eef0f3;
   border-radius: var(--radius-pill);
   padding: 1px 8px;
 }
-.comm-mod__desc { font-size: 15px; line-height: 1.35; color: var(--color-text-secondary); }
+.comm-mod__desc { font-size: 16px; line-height: 1.35; color: var(--color-text-secondary); }
 
 /* ---- Topic Hub (aggregates one patient concern across feature types) ---- */
 /* Wireframe-level, like the community hub, but modules can carry a content-
@@ -893,14 +958,16 @@ body {
   margin: 0 0 6px;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 28px;
+  font-size: var(--display-title-size);
+  line-height: var(--display-title-lh);
+  letter-spacing: var(--display-tracking);
   color: var(--color-navy);
 }
 .topic-hub__desc { margin: 0 0 8px; font-size: 16px; line-height: 1.4; color: var(--color-text); }
 .topic-hub__stat {
   margin: 0;
   display: inline-block;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--color-text-secondary);
   background: #eef0f3;
@@ -931,7 +998,7 @@ body {
 }
 .topic-hub-mod__head { display: flex; align-items: center; gap: 8px; }
 .topic-hub-mod__title { font-weight: 700; font-size: 18px; color: var(--color-text); }
-.topic-hub-mod__desc { font-size: 15px; line-height: 1.35; color: var(--color-text-secondary); }
+.topic-hub-mod__desc { font-size: 16px; line-height: 1.35; color: var(--color-text-secondary); }
 .topic-hub-mod__note { font-size: 12px; font-style: italic; color: var(--color-text-secondary); }
 /* Content-preview affordance: skeleton placeholder rows (no real content). */
 .topic-hub-mod__preview { display: flex; flex-direction: column; gap: 6px; }
@@ -972,7 +1039,7 @@ body {
 .welcome-card__title {
   font-weight: 700;
   font-size: 22px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.75px;
   margin: 0 0 4px;
 }
 .welcome-card__subtitle {
@@ -988,7 +1055,7 @@ body {
   background: var(--color-primary);
   color: #fff;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   cursor: pointer;
 }
 .welcome-card__cta:active { filter: brightness(1.08); }
@@ -996,7 +1063,7 @@ body {
 /* ---- Slide-out Panel ---- */
 
 .panel-overlay {
-  position: absolute;
+  position: fixed;   /* cover the viewport regardless of document scroll */
   inset: 0;
   background: rgba(0, 0, 0, 0.75);
   z-index: 20;
@@ -1119,7 +1186,7 @@ body {
 /* ---- Profile dropdown ---- */
 
 .dropdown-overlay {
-  position: absolute;
+  position: fixed;   /* cover the viewport regardless of document scroll */
   inset: 0;
   z-index: 20;
 }
@@ -1236,10 +1303,10 @@ body {
 }
 
 .footer__end { background: #f3f4f6; padding: 24px 12px; }
-.footer__legal { margin: 0 0 16px; font-size: 13px; line-height: 1.9; }
+.footer__legal { margin: 0 0 16px; font-size: 14px; line-height: 1.9; }
 .footer__link--dark {
   color: var(--color-text);
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: underline;   /* legal / privacy links: underlined */
 }
 .footer__dot { color: var(--color-text-secondary); }
@@ -1247,7 +1314,7 @@ body {
 .footer__disclaimer,
 .footer__copyright {
   margin: 0;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.5;
   color: var(--color-text-secondary);
 }
@@ -1279,8 +1346,7 @@ body {
 .home-hotspot .icon { width: 20px; height: 20px; }
 
 @media (max-width: 430px) {
-  .phone { border-radius: 0; border-width: 0; height: 100vh; box-shadow: none; }
-  .home-hotspot { display: none; }  /* phone is full-bleed here; avoid the menu icon */
+  .home-hotspot { display: none; }  /* app is full-bleed here; avoid the hamburger */
 }
 
 /* ---------------- Launcher page (root index.html) ---- */
@@ -1356,7 +1422,7 @@ body {
 
 /* header */
 .art__head { display: flex; flex-direction: column; gap: 12px; }
-.art__title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 28px; line-height: 36px; letter-spacing: -0.75px; color: var(--color-navy); }
+.art__title { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--display-title-size); line-height: var(--display-title-lh); letter-spacing: var(--display-tracking); color: var(--color-navy); }
 .art__byline { margin: 0; font-size: 14px; line-height: 20px; letter-spacing: -0.25px; color: var(--color-text-secondary); }
 .art__strip { display: flex; align-items: center; justify-content: space-between; }
 .art__reaction { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; letter-spacing: -0.25px; color: var(--color-text-secondary); }
@@ -1372,7 +1438,7 @@ body {
 
 /* Key Takeaways card */
 .art-note { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: var(--radius-card); border: 1px solid var(--color-card-border); }
-.art-note__title { margin: 0; font-size: 22px; font-weight: 600; line-height: 28px; letter-spacing: -0.25px; color: var(--color-text); }
+.art-note__title { margin: 0; font-size: 22px; font-weight: 600; line-height: 28px; letter-spacing: -0.75px; color: var(--color-text); }
 .art-note__item { display: flex; align-items: flex-start; gap: 8px; }
 .art-note__bullet { font-size: 18px; line-height: 26px; color: var(--color-text); }
 .art-note__text { margin: 0; font-size: 18px; line-height: 26px; letter-spacing: -0.25px; color: var(--color-text); }
@@ -1390,7 +1456,7 @@ body {
 /* End modules (conversation, AI, keep reading, access) */
 .art__end { display: flex; flex-direction: column; gap: 32px; padding: 28px 12px 8px; }
 .art-conv, .art-answered, .art-keep { display: flex; flex-direction: column; gap: 16px; }
-.art-conv__title, .art-answered__title { display: flex; align-items: center; gap: 8px; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 32px; letter-spacing: -0.75px; }
+.art-conv__title, .art-answered__title { display: flex; align-items: center; gap: 8px; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--display-subhead-size); line-height: var(--display-subhead-lh); letter-spacing: -0.75px; }
 .art-conv__title { color: var(--color-navy); }
 .art-conv__title .art__ic { width: 24px; height: 24px; color: var(--color-navy); }
 .art-conv__input { display: flex; align-items: center; height: 56px; padding: 0 24px; border-radius: 36px; border: 1px solid var(--color-card-border); background: #fff; font-size: 18px; letter-spacing: -0.25px; color: var(--color-text-secondary); }
@@ -1408,7 +1474,7 @@ body {
 .art-answered__tags { display: flex; flex-wrap: wrap; gap: 12px 8px; }
 
 /* Keep Reading — full-bleed horizontal carousel */
-.art-keep__h { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 32px; letter-spacing: -0.75px; color: var(--color-navy); }
+.art-keep__h { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--display-subhead-size); line-height: var(--display-subhead-lh); letter-spacing: -0.75px; color: var(--color-navy); }
 .art-keep__scroll { display: flex; gap: 16px; overflow-x: auto; margin: 0 -12px; padding: 0 12px; }
 .art-keep__card { flex: 0 0 auto; width: 324px; display: flex; flex-direction: column; gap: 12px; padding: 0; border: none; background: none; text-align: left; cursor: pointer; font-family: var(--font-body); }
 .art-keep__thumb { width: 324px; height: 170px; border-radius: var(--radius-card); background: repeating-linear-gradient(45deg, #eef1f7, #eef1f7 10px, #dfe5f1 10px, #dfe5f1 20px); }
@@ -1417,3 +1483,211 @@ body {
 
 /* Access closing CTA reuses .mod-cta-card (overrides its splash margin) */
 .art-access { margin-top: 0; }
+
+/* ============================================================================
+   DESKTOP LAYOUT (>=1024px) — the frameless app reflows into a real desktop
+   product: a persistent horizontal header + content capped/centered with fluid
+   gutters. Built up phase by phase (header/footer, then splash, article, etc.).
+   ============================================================================ */
+@media (min-width: 1024px) {
+  /* Keep the hidden launcher hotspot in the top-left corner; the header content
+     is centered in the 1000px box so the corner is clear at desktop widths. */
+
+  /* ---- Persistent header (renderDesktopHeader) ---- */
+  .dnav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: #fff;
+    box-shadow: inset 0 -1px 0 0 var(--color-border);
+  }
+  .dnav__bar {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 12px var(--content-pad);
+    height: 76px;
+  }
+  .dnav__logo { flex-shrink: 0; }
+  .dnav__logo .logo--full { height: 40px; }
+  .dnav__nav { display: flex; align-items: center; gap: 4px; }
+  .dnav__link {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.25px;
+    color: var(--color-text);
+    padding: 8px 12px;
+    border-radius: var(--radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+  .dnav__link:hover { background: rgba(13, 27, 41, 0.05); }
+  .dnav__right { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+
+  /* Breadcrumb bar — replaces the mobile level-up pill on detail screens. */
+  .dnav__crumbbar {
+    border-top: 1px solid var(--color-border);
+  }
+  .dnav__crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px var(--content-pad);
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .dnav__crumb svg { width: 18px; height: 18px; }
+
+  /* ---- Footer: constrain + center, keep the two-column link block ---- */
+  .footer__bar {
+    padding: 48px var(--content-pad);
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+  }
+  .footer__brand { margin-bottom: 0; max-width: 360px; }
+  .footer__links { gap: 12px 64px; }
+  .footer__end > .footer__legal,
+  .footer__end > .footer__disclaimer,
+  .footer__end > .footer__copyright {
+    padding-inline: var(--content-pad);
+    box-sizing: border-box;
+  }
+  .footer__end { padding-inline: 0; }
+}
+
+/* ---- Splash landing reflow (Phase 3) ---- */
+@media (min-width: 1024px) {
+  /* Each section keeps its full-bleed background; inner content centers to
+     --content-wide with fluid gutters (fluid up to the cap, then centered). */
+  .mod-hero,
+  .mod-listicles,
+  .mod-articles,
+  .mod-experts,
+  .mod-factoid,
+  .mod-community {
+    padding-block: 72px;
+    padding-inline: var(--content-pad);
+  }
+
+  /* Hero → two columns: intro (headline / sub / community) + checker card. */
+  .mod-hero {
+    display: grid;
+    grid-template-columns: 1fr minmax(360px, 420px);
+    column-gap: 64px;
+    align-items: center;
+  }
+  .mod-hero__intro { display: flex; flex-direction: column; }
+  .mod-hero__sub { font-size: 22px; max-width: 34ch; }
+  .mod-checker-card { margin: 0; }
+
+  /* Cap section-header measure so intros don't run edge to edge. */
+  .mod-section-text { max-width: 640px; }
+
+  /* Carousels stay horizontal on desktop, aligned to the content-left edge
+     (drop the mobile full-bleed negative margin) and sized so the next card
+     peeks — a cue that there's more to scroll. */
+  .mod-listicles__scroll,
+  .mod-articles__scroll,
+  .mod-quotes__scroll {
+    margin: 0;
+    padding: 0 0 8px;
+  }
+  .mod-listicle-card { width: 216px; }   /* ~4 + a peek of the 5th in the 1000px box */
+  .mod-article-card { width: 420px; }    /* ~2 + a peek of the 3rd; larger images */
+  .mod-quote-card { width: 360px; }
+
+  /* Experts → 3-up row. */
+  .mod-experts__list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+  /* Factoid → 2-up stat cards. */
+  .mod-factoid__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* Closing CTA card: two columns — copy on the left, buttons on the right. */
+  .mod-cta-card {
+    flex-direction: row;
+    align-items: center;
+    gap: 48px;
+    padding: 48px;
+  }
+  .mod-cta-card__text { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+  .mod-cta-card__buttons { flex-direction: column; flex-shrink: 0; min-width: 240px; }
+  .mod-btn-primary,
+  .mod-btn-secondary { padding: 0 28px; }
+  .mod-disclaimer-note { max-width: var(--content-column); text-align: left; }
+}
+
+/* ---- Article reading column (Phase 4) ---- */
+@media (min-width: 1024px) {
+  /* Article aligns to the 1000px box (edges match the nav); the reading text
+     itself stays a 728px measure, left-aligned to that same edge. */
+  .art { padding-inline: var(--content-pad); }
+  .art__body,
+  .art__end { max-width: var(--content-column); padding-inline: 0; }
+  .art__body { padding-top: 40px; }
+  /* Keep-reading: align to the column (drop the mobile full-bleed) and show a
+     two-up row rather than a horizontal scroll. */
+  .art-keep__scroll {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+  }
+  .art-keep__card,
+  .art-keep__thumb { width: auto; }
+  .art-keep__thumb { aspect-ratio: 324 / 170; height: auto; }
+}
+
+/* ---- Hubs + Advisors (Phase 5) ---- */
+@media (min-width: 1024px) {
+  /* Community + Topic hubs: align to the 1000px box; card lists go two-up. */
+  .comm-hub,
+  .topic-hub { padding-inline: var(--content-pad); padding-top: 40px; }
+  .comm-hub__list,
+  .topic-hub__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  /* Advisors: align to the 1000px box; reading-width intro, two-up card list. */
+  .mod-advisors { padding-inline: var(--content-pad); padding-top: 40px; }
+  .mod-advisors__intro { max-width: var(--content-column); }
+  .mod-advisors__list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding-top: 24px;
+  }
+  .advisor-card {
+    padding: 24px;
+    border: 1px solid #e5e5e5;
+    border-radius: var(--radius-card);
+  }
+  .mod-advisors__list .advisor-card:last-child { border-bottom: 1px solid #e5e5e5; }
+  .mod-advisors__watch { max-width: var(--content-column); }
+}
+
+/* ---- Long-tail screens (Phase 6): gated home, placeholders, flows ---- */
+@media (min-width: 1024px) {
+  /* Gated-home welcome card: reading-width, left-aligned to the nav edge. */
+  .welcome-card { max-width: var(--content-column); margin-block: 40px; margin-inline: var(--content-pad) 0; padding: 24px; }
+  /* Label/placeholder pages: keep the centered label but give it a little more
+     presence and stop it stretching on very wide screens. */
+  .screen__placeholder { max-width: var(--content-column); }
+}
