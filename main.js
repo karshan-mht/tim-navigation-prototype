@@ -23,6 +23,10 @@ const ASSET_BASE = "../assets";
 const ICON_SVGS = {
   menu: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22" height="18" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="Icon" d="M20.5066 15.5676C21.1816 15.5676 21.7288 16.1121 21.7288 16.7838C21.7288 17.4555 21.1816 18 20.5066 18H1.22222C0.547208 18 0 17.4555 0 16.7838C0 16.1121 0.547208 15.5676 1.22222 15.5676H20.5066ZM17.5188 7.78378C18.1937 7.78396 18.7411 8.32841 18.7411 9C18.7411 9.67159 18.1937 10.216 17.5188 10.2162H1.22222C0.547208 10.2162 0 9.6717 0 9C0 8.3283 0.547208 7.78378 1.22222 7.78378H17.5188ZM20.7778 0C21.4528 0 22 0.544519 22 1.21622C22 1.88791 21.4528 2.43243 20.7778 2.43243H1.22222C0.547208 2.43243 0 1.88791 0 1.21622C0 0.544519 0.547208 0 1.22222 0H20.7778Z" fill="currentColor"/> </svg>`,
   search: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="Icon" d="M9.29892 18.5978C6.69999 18.5978 4.50068 17.6975 2.70098 15.8969C0.901281 14.0962 0.000954492 11.8969 7.56933e-07 9.29892C-0.000952979 6.70095 0.899373 4.50163 2.70098 2.70098C4.50259 0.900326 6.7019 0 9.29892 0C11.8959 0 14.0957 0.900326 15.8983 2.70098C17.7009 4.50163 18.6007 6.70095 18.5978 9.29892C18.5978 10.348 18.4309 11.3375 18.0971 12.2674C17.7633 13.1973 17.3103 14.0199 16.7381 14.7352L21.6066 19.6037C21.8689 19.866 22 20.1998 22 20.6052C22 21.0105 21.8689 21.3443 21.6066 21.6066C21.3443 21.8689 21.0105 22 20.6052 22C20.1998 22 19.866 21.8689 19.6037 21.6066L14.7352 16.7381C14.0199 17.3103 13.1973 17.7633 12.2674 18.0971C11.3375 18.4309 10.348 18.5978 9.29892 18.5978ZM9.29892 15.7366C11.0872 15.7366 12.6074 15.111 13.8597 13.8597C15.1119 12.6084 15.7376 11.0881 15.7366 9.29892C15.7357 7.50971 15.11 5.98994 13.8597 4.73959C12.6093 3.48924 11.0891 2.86311 9.29892 2.86121C7.50876 2.8593 5.98898 3.48543 4.73959 4.73959C3.4902 5.99375 2.86407 7.51353 2.86121 9.29892C2.85835 11.0843 3.48447 12.6046 4.73959 13.8597C5.99471 15.1148 7.51448 15.7405 9.29892 15.7366Z" fill="currentColor"/> </svg>`,
+  // Desktop nav section icons (inlined from assets/tab-*.svg with fill=currentColor so the active state tints them).
+  tabHome: `<svg viewBox="11 11 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.75 30.4857H17.875V24.2C17.875 23.8438 18.007 23.5454 18.271 23.3049C18.535 23.0644 18.8613 22.9437 19.25 22.9429H24.75C25.1396 22.9429 25.4664 23.0635 25.7304 23.3049C25.9944 23.5463 26.1259 23.8446 26.125 24.2V30.4857H30.25V19.1714L22 13.5143L13.75 19.1714V30.4857ZM11 30.4857V19.1714C11 18.7733 11.0976 18.3962 11.2929 18.04C11.4881 17.6838 11.7572 17.3905 12.1 17.16L20.35 11.5029C20.8312 11.1676 21.3812 11 22 11C22.6187 11 23.1687 11.1676 23.65 11.5029L31.9 17.16C32.2437 17.3905 32.5132 17.6838 32.7085 18.04C32.9037 18.3962 33.0009 18.7733 33 19.1714V30.4857C33 31.1771 32.7305 31.7693 32.1915 32.2621C31.6525 32.7549 31.0053 33.0008 30.25 33H24.75C24.3604 33 24.0341 32.8793 23.771 32.6379C23.5079 32.3966 23.3759 32.0982 23.375 31.7429V25.4571H20.625V31.7429C20.625 32.099 20.493 32.3978 20.229 32.6392C19.965 32.8806 19.6387 33.0008 19.25 33H13.75C12.9937 33 12.3466 32.754 11.8085 32.2621C11.2704 31.7701 11.0009 31.178 11 30.4857Z" fill="currentColor"/></svg>`,
+  tabResources: `<svg viewBox="9 11 26 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M32.4839 14.9815C32.4838 14.7998 32.3964 14.7122 32.3467 14.6876C30.9505 13.9995 29.4223 13.64 27.871 13.64C26.2685 13.64 24.691 14.0237 23.2581 14.7568V29.6009C24.7264 29.0185 26.2891 28.717 27.871 28.717C29.0758 28.717 30.2697 28.8919 31.4191 29.2326C31.6726 29.3077 31.9698 29.2567 32.1972 29.1042C32.4137 28.9589 32.4839 28.7873 32.4839 28.6384V14.9815ZM11.5161 28.6384C11.5161 28.7873 11.5863 28.9589 11.8028 29.1042C12.0302 29.2567 12.3274 29.3077 12.5809 29.2326C13.7303 28.8919 14.9242 28.717 16.129 28.717C17.7109 28.717 19.2736 29.0185 20.7419 29.6009V14.7568C19.309 14.0237 17.7315 13.64 16.129 13.64C14.5777 13.64 13.0495 13.9995 11.6533 14.6876C11.6036 14.7122 11.5162 14.7998 11.5161 14.9815V28.6384ZM35 28.6384C35 29.8428 34.3584 30.7876 33.5527 31.3282C32.7579 31.8615 31.7225 32.0658 30.7348 31.773C29.8072 31.498 28.8436 31.357 27.871 31.357C26.0296 31.357 24.221 31.8631 22.627 32.8244C22.2388 33.0585 21.7612 33.0585 21.373 32.8244C19.779 31.8631 17.9704 31.357 16.129 31.357C15.1564 31.357 14.1928 31.498 13.2652 31.773C12.2775 32.0658 11.2421 31.8615 10.4473 31.3282C9.6416 30.7876 9 29.8428 9 28.6384V14.9815C9.00006 13.9036 9.54654 12.8093 10.5836 12.2981C12.314 11.4453 14.2074 11 16.129 11C18.172 11 20.1828 11.5035 22 12.4648C23.8172 11.5035 25.828 11 27.871 11C29.7926 11 31.686 11.4453 33.4164 12.2981C34.4535 12.8093 34.9999 13.9036 35 14.9815V28.6384Z" fill="currentColor"/></svg>`,
+  tabCommunity: `<svg viewBox="8.5 13 27 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.8268 18.7258C11.8267 17.7769 12.0736 16.8428 12.5455 16.0076C13.0174 15.1724 13.6994 14.4622 14.5302 13.941C15.3609 13.4197 16.3143 13.1038 17.3047 13.0215C18.2951 12.9393 19.2914 13.0933 20.204 13.4698C21.1165 13.8463 21.9167 14.4333 22.5326 15.1782C23.1485 15.9231 23.5608 16.8025 23.7324 17.7372C23.9039 18.6719 23.8294 19.6327 23.5154 20.5331C23.2015 21.4334 22.658 22.2452 21.9339 22.8954C23.2992 23.5281 24.4846 24.4656 25.3896 25.6285C26.2947 26.7914 26.8927 28.1454 27.1331 29.5758C27.1596 29.735 27.1529 29.8976 27.1135 30.0543C27.0741 30.211 27.0028 30.3588 26.9036 30.4892C26.8044 30.6196 26.6792 30.7301 26.5353 30.8143C26.3913 30.8985 26.2314 30.9549 26.0647 30.9801C25.8979 31.0053 25.7276 30.999 25.5634 30.9614C25.3992 30.9238 25.2444 30.8557 25.1078 30.761C24.9712 30.6663 24.8554 30.5468 24.7672 30.4094C24.679 30.272 24.6199 30.1194 24.5935 29.9602C24.3365 28.4231 23.5138 27.0238 22.2731 26.0136C21.0325 25.0034 19.4552 24.4485 17.8246 24.4485C16.1939 24.4485 14.6166 25.0034 13.376 26.0136C12.1354 27.0238 11.3127 28.4231 11.0556 29.9602C11.0291 30.1194 10.9699 30.272 10.8816 30.4094C10.7932 30.5467 10.6774 30.6661 10.5407 30.7608C10.404 30.8554 10.2492 30.9234 10.0849 30.9609C9.92071 30.9984 9.75036 31.0046 9.5836 30.9793C9.41685 30.9539 9.25696 30.8975 9.11306 30.8132C8.96916 30.7288 8.84407 30.6183 8.74494 30.4878C8.6458 30.3573 8.57456 30.2095 8.53528 30.0527C8.496 29.896 8.48944 29.7333 8.516 29.5742C8.75552 28.1439 9.35328 26.79 10.2585 25.6275C11.1637 24.465 12.3495 23.5283 13.7152 22.897C13.1189 22.3616 12.6437 21.7153 12.3189 20.9979C11.9941 20.2806 11.8266 19.5073 11.8268 18.7258ZM27.2496 16.2722C28.2453 16.2729 29.2193 16.5494 30.0535 17.0683C30.8877 17.5871 31.5462 18.3259 31.949 19.1951C32.3519 20.0642 32.4817 21.0263 32.3228 21.9645C32.1639 22.9027 31.7231 23.7767 31.054 24.4804C32.0976 24.9739 33.0249 25.6654 33.7792 26.5125C34.5334 27.3596 35.0989 28.3446 35.4409 29.4073C35.5088 29.6135 35.5184 29.8333 35.4686 30.0441C35.4188 30.255 35.3115 30.4496 35.1575 30.6081C35.0034 30.7665 34.8082 30.8833 34.5917 30.9465C34.3751 31.0097 34.1448 31.017 33.9243 30.9678C33.7038 30.9192 33.5007 30.8158 33.3355 30.6681C33.1703 30.5205 33.0489 30.3339 32.9835 30.1271C32.6759 29.1789 32.1161 28.323 31.3587 27.643C30.6012 26.963 29.672 26.482 28.6617 26.247C28.3811 26.1824 28.1314 26.0294 27.953 25.8128C27.7745 25.5962 27.6777 25.3285 27.6781 25.0529V24.4772C27.6779 24.2488 27.7446 24.0248 27.8705 23.8306C27.9964 23.6364 28.1767 23.4797 28.3909 23.3779C28.9105 23.1322 29.3277 22.726 29.5748 22.2253C29.8219 21.7246 29.8845 21.1589 29.7523 20.62C29.6201 20.0811 29.3009 19.6008 28.8466 19.2569C28.3922 18.913 27.8295 18.7259 27.2496 18.7258C26.9088 18.7258 26.5819 18.5966 26.3408 18.3665C26.0998 18.1364 25.9644 17.8244 25.9644 17.499C25.9644 17.1737 26.0998 16.8616 26.3408 16.6315C26.5819 16.4015 26.9088 16.2722 27.2496 16.2722ZM17.8246 15.4543C17.3681 15.4445 16.9143 15.5218 16.4896 15.6817C16.0649 15.8415 15.6779 16.0808 15.3515 16.3854C15.025 16.69 14.7655 17.0538 14.5884 17.4554C14.4112 17.8571 14.3199 18.2884 14.3198 18.7242C14.3197 19.16 14.4108 19.5914 14.5877 19.9931C14.7647 20.3948 15.0239 20.7587 15.3502 21.0635C15.6766 21.3682 16.0634 21.6077 16.488 21.7678C16.9126 21.9279 17.3664 22.0054 17.8228 21.9957C18.7183 21.9768 19.5705 21.624 20.1969 21.0129C20.8233 20.4018 21.1742 19.5808 21.1744 18.7258C21.1746 17.8708 20.8242 17.0497 20.1981 16.4383C19.572 15.8269 18.72 15.4737 17.8246 15.4543Z" fill="currentColor"/></svg>`,
   ai: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="stars" d="M10.1398 2.10306C11.0667 2.17361 11.7925 2.76841 11.9829 3.72057C12.7953 8.18883 13.8111 9.20464 18.2794 10.0171C19.2948 10.2202 19.9046 11.0322 19.9047 12.0476L19.8969 12.2359C19.8261 13.1626 19.2313 13.8887 18.2794 14.0791L17.481 14.2344C13.685 15.0317 12.7445 16.1866 11.9829 20.3755L11.9378 20.5604C11.6775 21.4642 10.9044 21.9999 9.95234 22L9.76403 21.9931C8.899 21.927 8.20889 21.404 7.96603 20.5604L7.92091 20.3755C7.15925 16.1864 6.21926 15.0317 2.42279 14.2344L1.62445 14.0791C0.609125 13.8758 0 13.063 0 12.0476C6.48301e-05 11.0956 0.535802 10.3224 1.43961 10.0622L1.62445 10.0171C5.81338 9.25543 6.96824 8.31499 7.76558 4.51891L7.92091 3.72057C8.12402 2.70504 8.93681 2.09525 9.95234 2.09525L10.1398 2.10306ZM9.95234 4.91461C9.55607 6.83354 8.98656 8.53835 7.71438 9.81053C6.44232 11.0824 4.73797 11.6514 2.81935 12.0476C4.73813 12.4439 6.44228 13.0135 7.71438 14.2856C8.9863 15.5575 9.55608 17.2613 9.95234 19.1798C10.3486 17.2615 10.9177 15.5575 12.1894 14.2856C13.4614 13.0136 15.1659 12.4439 17.0845 12.0476C15.1659 11.6514 13.4614 11.0825 12.1894 9.81053C10.9173 8.53836 10.3486 6.83351 9.95234 4.91461ZM18.3545 0C18.7264 0.000101788 19.0239 0.223224 19.0984 0.595079C19.396 2.23194 19.7681 2.60403 21.4049 2.90164C21.7768 2.97607 21.9999 3.27364 22 3.64549C22 4.01747 21.7769 4.31554 21.4049 4.38998L21.1125 4.44656C19.7217 4.73865 19.3774 5.16194 19.0984 6.69654L19.0818 6.76457C18.9864 7.09538 18.7031 7.29153 18.3545 7.29162L18.2852 7.28908C17.9685 7.26487 17.7156 7.07336 17.6266 6.76457L17.61 6.69654C17.331 5.1619 16.9868 4.73865 15.5959 4.44656L15.3035 4.38998C14.9316 4.3155 14.7084 4.01743 14.7084 3.64549C14.7085 3.27368 14.9317 2.97611 15.3035 2.90164C16.9403 2.60403 17.3124 2.23194 17.61 0.595079C17.6845 0.223124 17.9825 0 18.3545 0Z" fill="currentColor"/> </svg>`,
   myHealth: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22.5" height="19.5001" viewBox="0 0 22.5 19.5001" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="Vector" d="M15.7875 0.250066L15.5629 0.255222C13.9977 0.327357 12.588 1.1555 11.3431 2.68053L11.25 2.79703L11.1569 2.68053C9.85274 1.08288 8.36763 0.250066 6.7125 0.250066C3.07131 0.250066 0.25 3.43345 0.25 6.52685C0.25 8.99837 1.53719 11.1671 4.35519 13.4785L7.5323 16.0182C8.13507 16.5063 8.44936 16.7722 8.69164 16.9937L9.07856 17.3656L10.5965 18.9662C10.9564 19.3455 11.5467 19.3446 11.9055 18.9642L13.1155 17.682C14.3915 16.3356 15.4724 15.3976 17.8164 13.7413C20.8631 11.5885 22.25 9.23174 22.25 6.52685C22.25 3.43345 19.4287 0.250066 15.7875 0.250066ZM15.7875 2.15007C18.3797 2.15007 20.4167 4.44843 20.4167 6.52685C20.4167 8.48513 19.4313 10.227 17.0447 11.9832L16.1476 12.6256C14.1254 14.0865 13.0435 15.0464 11.8066 16.3517L11.25 16.9407L10.5726 16.225L10.225 15.8726L9.8359 15.506C9.30959 15.0317 8.46977 14.3584 5.7579 12.2026C3.1504 10.1298 2.08333 8.39805 2.08333 6.52685C2.08333 4.44843 4.12027 2.15007 6.7125 2.15007C8.04231 2.15007 9.29211 3.0332 10.4821 4.92511C10.8437 5.50008 11.6563 5.50008 12.0179 4.92511C13.2079 3.0332 14.4577 2.15007 15.7875 2.15007Z" fill="currentColor" stroke="currentColor" stroke-width="0.5"/> </svg>`,
   messages: `<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg"> <path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M19.7174 2.07079L19.7868 2.24617C21.1226 2.7433 22.0505 4.03215 21.9979 5.51048L21.5976 16.7524C21.5315 18.6097 19.9426 20.0628 18.0489 19.9979L4.92073 19.5483C3.81802 19.5105 2.85507 18.9664 2.25604 18.1518C1.31687 17.5945 0.666851 16.6051 0.60506 15.4488L0.0047873 4.21546C-0.0943858 2.35956 1.35926 0.776213 3.25159 0.678949L16.3697 0.00469512C17.8584 -0.0718234 19.1752 0.79422 19.7174 2.07079ZM5.38569 3.27281L5.4638 3.27377L18.52 3.72339C19.4617 3.75582 20.1985 4.53493 20.1656 5.46359L19.7675 16.7055C19.7346 17.6342 18.9446 18.3607 18.0029 18.3283L4.94662 17.8786C4.00492 17.8462 3.26817 17.0671 3.30106 16.1384L3.69915 4.89654C3.73112 3.99367 4.47879 3.28186 5.38569 3.27281ZM6.0089 12.3641C5.63971 12.3499 5.32997 12.6682 5.31708 13.0752C5.30419 13.4821 5.59302 13.8235 5.96221 13.8377L14.8911 14.1814C15.2603 14.1956 15.57 13.8772 15.5829 13.4703C15.5958 13.0634 15.307 12.722 14.9378 12.7078L6.0089 12.3641ZM6.18311 9.81862C5.81879 9.80489 5.51313 10.1127 5.50041 10.5061C5.48769 10.8995 5.77271 11.2295 6.13703 11.2433L16.5502 11.6359C16.9145 11.6497 17.2202 11.3419 17.2329 10.9485C17.2456 10.5551 16.9606 10.225 16.5963 10.2113L6.18311 9.81862ZM6.38812 7.2732C6.01224 7.25849 5.69688 7.58817 5.68376 8.00958C5.67063 8.43098 5.9647 8.78453 6.34059 8.79924L13.7785 9.09043C14.1544 9.10515 14.4698 8.77547 14.4829 8.35406C14.496 7.93266 14.202 7.57911 13.8261 7.5644L6.38812 7.2732Z" fill="currentColor"/> </svg>`,
@@ -89,6 +93,15 @@ const PANEL_TABS = [
   { icon: "tab-home", label: "Home", target: "home" },        // resolved to persona.screens[0].id
   { icon: "tab-resources", label: "Resources", target: "lib-all" },
   { icon: "tab-community", label: "Community", target: "community-overview" },
+];
+// The anonymous / subscriber panel (pre-2026-08-03 design, Figma Global
+// Navigation 7374:3421) lists a few library TOPICS instead of the shared
+// tabs + hubs. Last item ("All Articles") has no icon per the Figma.
+const PANEL_TOPICS = [
+  { screen: "lib-hrt", label: "HRT & Other Treatments", icon: "hub-1" },
+  { screen: "lib-mood", label: "Mood & Mental Health", icon: "hub-2" },
+  { screen: "lib-sleep", label: "Sleep & Insomnia", icon: "hub-3" },
+  { screen: "lib-all", label: "All Articles", icon: null },
 ];
 // Community Overview hub modules — the orientation menu into community features.
 // Wireframe-level: an outlined box per module (title, one-line description,
@@ -212,7 +225,7 @@ const ADVISORS_SCREEN = { id: "advisors", label: "Advisors", type: "page", title
 // links **to a Collection** (in-body collection callout — see article-collection).
 const TOPIC_HUB_PAGES = TOPIC_HUBS.map((h) => ({ id: h.id, label: h.name, type: "page", title: h.name, topicHub: h }));
 
-const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
+const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, LIB.hrt, LIB.mood, LIB.sleep, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
 
 // Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
 // mirrors the Visitor landing). The splash content modules deep-link into these:
@@ -404,6 +417,35 @@ function icon(name) {
   return svg ? `<span class="icon">${svg}</span>` : "";
 }
 
+// Glide an element's scrollLeft toward `to` (clamped) using the native
+// smooth-scroll API.
+function scrollCarousel(el, to) {
+  const max = el.scrollWidth - el.clientWidth;
+  el.scrollTo({ left: Math.max(0, Math.min(max, to)), behavior: "smooth" });
+}
+
+// Toggle each carousel's prev/next arrow between its active (dark) and
+// end-reached (light) shade based on scroll position.
+function updateCarouselArrows(scroller) {
+  const section = scroller.closest("section");
+  if (!section) return;
+  const max = scroller.scrollWidth - scroller.clientWidth;
+  const x = scroller.scrollLeft;
+  const prev = section.querySelector('[data-carousel="prev"]');
+  const next = section.querySelector('[data-carousel="next"]');
+  if (prev) prev.classList.toggle("is-disabled", x <= 1);
+  if (next) next.classList.toggle("is-disabled", x >= max - 1 || max <= 0);
+}
+
+// Bind each carousel's scroll to its arrow shades (and set the initial state).
+// Called every render; listeners live on the freshly-rendered scroll elements.
+function attachCarousels() {
+  document.querySelectorAll(".mod-listicles__scroll, .mod-articles__scroll").forEach((sc) => {
+    updateCarouselArrows(sc);
+    sc.addEventListener("scroll", () => updateCarouselArrows(sc), { passive: true });
+  });
+}
+
 function renderTopNav() {
   const isVisitor = persona.navVariant === "visitor";
 
@@ -456,12 +498,9 @@ function renderDesktopHeader(screen) {
   const isVisitor = persona.navVariant === "visitor";
   const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
 
-  // Primary tabs only. The Topic Hubs live in the slide-out panel (hamburger),
-  // so the header stays lean — no Topics dropdown.
-  const tabs = PANEL_TABS.map((t) => {
-    const target = t.target === "home" ? homeId : t.target;
-    return `<button class="dnav__link" data-screen="${target}">${t.label}</button>`;
-  }).join("");
+  // Primary tabs only (Topic Hubs live in the slide-out panel). Each tab carries
+  // its section icon and highlights when the current screen belongs to it.
+  const tabs = renderSectionTabs(screen, "dnav__link");
 
   const right = isVisitor
     ? `<button class="join-btn" data-screen="${isSubscriber ? "registration-step" : "signup-start"}">${isSubscriber ? "Finish" : "Join"}</button>`
@@ -484,10 +523,12 @@ function renderDesktopHeader(screen) {
   return `
     <div class="dnav">
       <div class="dnav__bar">
-        <button class="icon-btn dnav__menu-btn" data-action="toggle-panel" aria-label="Open menu">${icon("menu")}</button>
-        <button class="dnav__logo logo-btn" data-action="go-home" aria-label="Home">
-          <img class="logo logo--full" src="${LOGO_FULL}" alt="This is Menopause" />
-        </button>
+        <div class="dnav__cluster">
+          <button class="icon-btn dnav__menu-btn" data-action="toggle-panel" aria-label="Open menu">${icon("menu")}</button>
+          <button class="dnav__logo logo-btn" data-action="go-home" aria-label="Home">
+            <img class="logo logo--full" src="${LOGO_FULL}" alt="This is Menopause" />
+          </button>
+        </div>
         <nav class="dnav__nav">${tabs}</nav>
         <div class="dnav__right">
           <button class="icon-btn" aria-label="Search">${icon("search")}</button>
@@ -498,6 +539,29 @@ function renderDesktopHeader(screen) {
       ${crumb}
     </div>
   `;
+}
+
+// Which primary nav tab (if any) the current screen belongs to, so the nav can
+// show a selected state. Returns the tab's target screen id.
+function activeSectionTarget(screenId, homeId) {
+  if (screenId === homeId) return homeId;
+  if (/^lib-/.test(screenId) || screenId === "all-collections") return "lib-all";
+  if (screenId === "community-overview" || /^com-/.test(screenId)) return "community-overview";
+  return null;
+}
+
+// The three section tabs (Home / Resources / Community) with icons + active
+// state, shared by the desktop header and the mobile sub-nav. `cls` is the
+// per-context button class (dnav__link on desktop, subnav__link on mobile).
+function renderSectionTabs(screen, cls) {
+  const homeId = persona.screens[0].id;
+  const NAV_ICONS = { "tab-home": "tabHome", "tab-resources": "tabResources", "tab-community": "tabCommunity" };
+  const activeTarget = activeSectionTarget(screen.id, homeId);
+  return PANEL_TABS.map((t) => {
+    const target = t.target === "home" ? homeId : t.target;
+    const active = target === activeTarget ? " is-active" : "";
+    return `<button class="${cls}${active}" data-screen="${target}">${icon(NAV_ICONS[t.icon])}<span>${t.label}</span></button>`;
+  }).join("");
 }
 
 // Level-up pill (only on detail screens): a small blue pill (Figma Global
@@ -611,11 +675,52 @@ function renderTopicHub(hub) {
   `;
 }
 
-// The unified side panel (Figma Global Navigation 7299:1987). Same for every
-// persona: a Home / Resources / Community tab card, the topic-hub list, and an
-// "Explore (ToC)" pill. Home resolves to the current persona's own home screen;
-// the other targets are shared destinations injected into every persona above.
+// Side panel. Members get the unified panel (Home / Resources / Community tabs +
+// topic-hub list + Explore). Anonymous / Subscriber get the pre-redesign panel:
+// a persona-aware "Don't miss out!" access card over a short TOPICS list
+// (Figma Global Navigation 7374:3421).
 function renderPanel() {
+  return persona.navVariant === "visitor" ? renderAnonPanel() : renderMemberPanel();
+}
+
+function renderAnonPanel() {
+  const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
+  // Subscribers have started signing up → "Finish up now" (Registration Step);
+  // Visitors get "Join for free" (Sign Up Start).
+  const card = isSubscriber
+    ? { sub: "Finish setting up your account to unlock posts, questions, groups, and the full community.", cta: "Finish up now", target: "registration-step" }
+    : { sub: "Join our community to access posts, questions, groups, and meet people.", cta: "Join for free", target: "signup-start" };
+
+  const topics = PANEL_TOPICS.map(
+    (t) => `<button class="panel__hub" data-screen="${t.screen}">
+        <span class="panel__hub-icon">${t.icon ? ICON_SVGS[t.icon] || "" : ""}</span>
+        <span>${t.label}</span>
+      </button>`
+  ).join("");
+
+  return `
+    <div class="panel-overlay" data-action="close-panel">
+      <div class="panel" data-stop>
+        <div class="panel__brand">
+          <img class="panel__logotype" src="${PANEL_LOGO}" onerror="this.onerror=null;this.src='${LOGO_FULL}'" alt="This is Menopause" />
+        </div>
+        <div class="panel__promo">
+          <p class="panel__promo-title">Don't miss out!</p>
+          <p class="panel__promo-sub">${card.sub}</p>
+          <button class="panel__promo-cta" data-screen="${card.target}">${card.cta}</button>
+          <button class="panel__promo-link" data-screen="community-overview">Get a preview first</button>
+        </div>
+        <div class="panel__topics">
+          <p class="panel__topics-label">TOPICS</p>
+          <div class="panel__hubs">${topics}</div>
+        </div>
+        <div class="panel__footer">Powered by<br />MyHealthTeam, a Swoop company</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderMemberPanel() {
   const homeId = persona.screens[0].id;
 
   const tabs = PANEL_TABS.map((t) => {
@@ -817,6 +922,10 @@ function renderModules() {
         <h2 class="mod-section-text__title">See what <em>actually works</em>.</h2>
         <p class="mod-section-text__sub">Clinician-backed tips, voted on by women who've tried them.</p>
       </div>
+      <div class="mod-carousel-arrows">
+        <button class="mod-carousel-arrow" data-carousel="prev" aria-label="Scroll back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="mod-carousel-arrow" data-carousel="next" aria-label="Scroll forward"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
       <div class="mod-listicles__scroll">
         ${listicles
           .map(
@@ -835,6 +944,10 @@ function renderModules() {
       <div class="mod-section-text">
         <h2 class="mod-section-text__title">Everything you <em>need to know</em>.</h2>
         <p class="mod-section-text__sub">Medically-reviewed resources to help you prepare for your appointments.</p>
+      </div>
+      <div class="mod-carousel-arrows">
+        <button class="mod-carousel-arrow" data-carousel="prev" aria-label="Scroll back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="mod-carousel-arrow" data-carousel="next" aria-label="Scroll forward"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
       </div>
       <div class="mod-articles__scroll">
         ${articles
@@ -1150,6 +1263,8 @@ function render() {
     chrome = renderDesktopHeader(screen);
   } else {
     chrome = `<div class="screen__nav">${renderTopNav()}</div>`;
+    // Sub-nav bar with the three sections under the top bar (like the live site).
+    chrome += `<div class="screen__subnav">${renderSectionTabs(screen, "subnav__link")}</div>`;
     if (screen.type === "uplevel") chrome += `<div class="screen__uplevel">${renderUplevel(screen)}</div>`;
   }
 
@@ -1168,6 +1283,7 @@ function render() {
     </div>`;
 
   attachAutoHide();
+  attachCarousels();
 }
 
 // Auto-hiding nav: slide the top nav up on scroll-down (past a small threshold),
@@ -1235,6 +1351,20 @@ document.addEventListener("click", (e) => {
   // profile Dropdown items all use — clicking one sets the screen and closes
   // whichever overlay it lived in (both flags cleared) before re-rendering.
   // Stays inside the current persona; crossing folders is the auth CTAs' job.
+  // Carousel arrows: scroll the section's carousel by roughly one card.
+  const arrow = e.target.closest("[data-carousel]");
+  if (arrow) {
+    const section = arrow.closest("section");
+    const scroller = section && section.querySelector(".mod-listicles__scroll, .mod-articles__scroll");
+    if (scroller) {
+      const firstCard = scroller.firstElementChild;
+      const step = (firstCard ? firstCard.getBoundingClientRect().width : 300) + 20;
+      const target = scroller.scrollLeft + (arrow.dataset.carousel === "next" ? step : -step);
+      scrollCarousel(scroller, target);
+    }
+    return;
+  }
+
   const screenBtn = e.target.closest("[data-screen]");
   if (screenBtn) {
     // Routes through the hash (see go/hashchange), so the URL updates to the
