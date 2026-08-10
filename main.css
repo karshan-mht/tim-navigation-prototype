@@ -126,25 +126,11 @@ body {
 }
 
 /* Entry-point mock pages (the external Facebook / Google / Gmail simulations in
-   entry-points/) keep the phone-device frame — they represent arriving from a
-   mobile app and are NOT part of the product's responsive layout. Scoped via
-   the .mock child so the product app (which has no .mock) stays frameless.
-   entry-points/fit-phone.js scales this device to fit the window. */
-.stage:has(.mock) { display: flex; justify-content: center; align-items: center; }
+   entry-points/) are responsive too — no device frame. Scoped via the .mock
+   child; they render as a centered feed-width column, full-bleed on mobile. */
 .phone:has(.mock) {
-  box-sizing: content-box;
-  width: 402px;
-  height: 874px;
-  max-width: none;
+  max-width: 640px;
   margin-inline: auto;
-  min-height: 0;
-  border-radius: 40px;
-  border: 8px solid #111;
-  overflow: hidden;
-  box-shadow: 0 20px 45px rgba(13, 27, 41, 0.25);
-}
-@media (max-width: 430px) {
-  .phone:has(.mock) { width: 100%; height: 100vh; border-radius: 0; border-width: 0; box-shadow: none; }
 }
 
 
