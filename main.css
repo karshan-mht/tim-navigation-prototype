@@ -190,8 +190,8 @@ body {
   border-radius: var(--radius-pill);
   white-space: nowrap;
 }
-.subnav__link .icon { width: auto; height: 20px; }
-.subnav__link .icon svg { width: auto; height: 20px; display: block; }
+.subnav__link .icon { width: auto; height: 16px; }
+.subnav__link .icon svg { width: auto; height: 16px; display: block; }
 .subnav__link.is-active { color: var(--color-primary); background: rgba(15, 87, 168, 0.08); }
 
 .screen__uplevel {
@@ -1623,9 +1623,9 @@ body {
     white-space: nowrap;
   }
   /* Each tab icon's viewBox is cropped to its own artwork bbox, so sizing by a
-     shared height renders them all at an even 22px tall (natural widths). */
-  .dnav__link .icon { width: auto; height: 22px; }
-  .dnav__link .icon svg { width: auto; height: 22px; display: block; }
+     shared height renders them all at an even 16px tall (natural widths). */
+  .dnav__link .icon { width: auto; height: 16px; }
+  .dnav__link .icon svg { width: auto; height: 16px; display: block; }
   .dnav__link:hover { background: rgba(13, 27, 41, 0.05); }
   .dnav__link.is-active { color: var(--color-primary); background: rgba(15, 87, 168, 0.08); }
   .dnav__right { justify-self: end; display: flex; align-items: center; gap: 10px; }
@@ -1758,15 +1758,15 @@ body {
   /* Factoid → 2-up stat cards. */
   .mod-factoid__stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 
-  /* Closing CTA card: two EQUAL columns — copy left, buttons right. */
+  /* Closing CTA card: two columns — copy left (fills), buttons right (compact). */
   .mod-cta-card {
     flex-direction: row;
     align-items: center;
     gap: 48px;
     padding: 48px;
   }
-  .mod-cta-card__text { display: flex; flex-direction: column; gap: 12px; flex: 1 1 0; }
-  .mod-cta-card__buttons { flex: 1 1 0; flex-direction: column; }
+  .mod-cta-card__text { display: flex; flex-direction: column; gap: 12px; flex: 1 1 auto; }
+  .mod-cta-card__buttons { flex: 0 0 auto; width: 300px; flex-direction: column; }
   .mod-btn-primary,
   .mod-btn-secondary { padding: 0 28px; }
   .mod-disclaimer-note { max-width: var(--content-column); text-align: left; }
@@ -1774,11 +1774,10 @@ body {
 
 /* ---- Article reading column (Phase 4) ---- */
 @media (min-width: 1024px) {
-  /* Article aligns to the 1000px box (edges match the nav); the reading text
-     itself stays a 728px measure, left-aligned to that same edge. */
-  .art { padding-inline: var(--content-pad); }
+  /* Article is a 728px reading page, centered in the viewport. */
+  .art { max-width: var(--content-column); margin-inline: auto; padding-inline: 12px; }
   .art__body,
-  .art__end { max-width: var(--content-column); padding-inline: 0; }
+  .art__end { max-width: none; padding-inline: 0; }
   .art__body { padding-top: 40px; }
   /* Keep-reading: align to the column (drop the mobile full-bleed) and show a
      two-up row rather than a horizontal scroll. */
@@ -1807,22 +1806,9 @@ body {
     align-items: start;
   }
 
-  /* Advisors: align to the 1000px box; reading-width intro, two-up card list. */
-  .mod-advisors { padding-inline: var(--content-pad); padding-top: 40px; }
-  .mod-advisors__intro { max-width: var(--content-column); }
-  .mod-advisors__list {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    padding-top: 24px;
-  }
-  .advisor-card {
-    padding: 24px;
-    border: 1px solid #e5e5e5;
-    border-radius: var(--radius-card);
-  }
-  .mod-advisors__list .advisor-card:last-child { border-bottom: 1px solid #e5e5e5; }
-  .mod-advisors__watch { max-width: var(--content-column); }
+  /* Advisors: a 728px reading page, centered — single-column list (the mobile
+     divider-row style), not the 1000px two-up grid. */
+  .mod-advisors { max-width: var(--content-column); margin-inline: auto; padding-inline: 12px; padding-top: 40px; }
 }
 
 /* ---- Long-tail screens (Phase 6): gated home, placeholders, flows ---- */
@@ -1832,4 +1818,10 @@ body {
   /* Label/placeholder pages: keep the centered label but give it a little more
      presence and stop it stretching on very wide screens. */
   .screen__placeholder { max-width: var(--content-column); }
+
+  /* Chromeless flow pages (Sign Up Start / Registration Step): a 728px column
+     centered in the viewport, with the close (✕) sitting inside that column's
+     top-left rather than the viewport corner. */
+  .screen__body--flow { max-width: var(--content-column); margin-inline: auto; width: 100%; }
+  .screen__body--flow .flow-close { left: 12px; }
 }

@@ -494,7 +494,6 @@ function renderTopNav() {
 // right-side control mirrors renderTopNav (Join/Finish vs. profile+dropdown),
 // and detail screens get a breadcrumb row in place of the level-up pill.
 function renderDesktopHeader(screen) {
-  const homeId = persona.screens[0].id;
   const isVisitor = persona.navVariant === "visitor";
   const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
 
@@ -509,16 +508,10 @@ function renderDesktopHeader(screen) {
          <span class="badge"></span>
        </button>`;
 
-  // Detail screens step one level up; the breadcrumb replaces the level-up pill.
-  const crumb =
-    screen.type === "uplevel"
-      ? `<div class="dnav__crumbbar">
-           <button class="dnav__crumb" data-screen="${screen.upTo || homeId}">
-             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-             <span>${screen.backLabel}</span>
-           </button>
-         </div>`
-      : "";
+  // Breadcrumb bar dropped for now (2026-08-04) — detail screens no longer show a
+  // desktop breadcrumb. Re-add via screen.type === "uplevel" when the up-nav
+  // treatment is decided.
+  const crumb = "";
 
   return `
     <div class="dnav">
