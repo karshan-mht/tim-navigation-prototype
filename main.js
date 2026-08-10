@@ -538,8 +538,19 @@ function renderDesktopHeader(screen) {
 // show a selected state. Returns the tab's target screen id.
 function activeSectionTarget(screenId, homeId) {
   if (screenId === homeId) return homeId;
-  if (/^lib-/.test(screenId) || screenId === "all-collections") return "lib-all";
-  if (screenId === "community-overview" || /^com-/.test(screenId)) return "community-overview";
+  // Resources stays selected for library pages, collections, topic hubs, and
+  // articles — an article lives under Resources.
+  if (/^lib-/.test(screenId) || /^article/.test(screenId) ||
+      screenId === "all-collections" || screenId === "collection" || screenId === "topic-hub") {
+    return "lib-all";
+  }
+  // Community stays selected for the overview, the com-* pages, and their
+  // detail screens (a group / profile / question / activity / program page is
+  // part of Community).
+  if (screenId === "community-overview" || /^com-/.test(screenId) ||
+      ["group", "program", "profile", "question", "activity"].includes(screenId)) {
+    return "community-overview";
+  }
   return null;
 }
 
@@ -1260,7 +1271,6 @@ function render() {
     chrome = `<div class="screen__nav">${renderTopNav()}</div>`;
     // Sub-nav bar with the three sections under the top bar (like the live site).
     chrome += `<div class="screen__subnav">${renderSectionTabs(screen, "subnav__link")}</div>`;
-    if (screen.type === "uplevel") chrome += `<div class="screen__uplevel">${renderUplevel(screen)}</div>`;
   }
 
   let overlays = "";

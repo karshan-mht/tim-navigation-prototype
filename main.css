@@ -705,16 +705,15 @@ body {
 }
 .mod-advisors__lede { margin: 0; font-weight: 400; font-size: 18px; line-height: 26px; color: var(--color-text); }
 .mod-advisors__body { margin: 0; font-size: 18px; line-height: 26px; color: #1a1a1a; }
-.mod-advisors__body--italic { font-style: italic; font-weight: 400; color: var(--color-text); }
+.mod-advisors__body--italic { font-style: italic; font-weight: 600; color: var(--color-text); }
 
 .mod-advisors__list { list-style: none; margin: 0; padding: 0; }
-/* Horizontal card — circular photo left, text block right (Figma Medical
-   Advisors desktop, node 1:6). */
+/* Base (mobile): stacked — circular photo on top, text below (Figma
+   Mobile_Advisor, node 2:43). Desktop switches to photo-left / text-right. */
 .advisor-card {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  gap: 20px;
+  flex-direction: column;
+  gap: 12px;
   padding: 28px 0;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -746,7 +745,8 @@ body {
   color: var(--color-navy);
 }
 .mod-advisors__watch-card {
-  height: 218px;
+  aspect-ratio: 16 / 9;   /* proper video ratio at any width (mobile + 728px desktop) */
+  width: 100%;
   border: 1px solid #e5e5e5;
   border-radius: 12px;
   /* Placeholder pattern (neutral gray + faint diagonal hatch) until a real
@@ -1783,7 +1783,7 @@ body {
   .art { max-width: var(--content-column); margin-inline: auto; padding-inline: 12px; }
   .art__body,
   .art__end { max-width: none; padding-inline: 0; }
-  .art__body { padding-top: 40px; }
+  .art__body { padding-top: 24px; }
   /* Keep-reading: align to the column (drop the mobile full-bleed) and show a
      two-up row rather than a horizontal scroll. */
   .art-keep__scroll {
@@ -1814,6 +1814,9 @@ body {
   /* Advisors: a 728px reading page, centered — single-column list (the mobile
      divider-row style), not the 1000px two-up grid. */
   .mod-advisors { max-width: var(--content-column); margin-inline: auto; padding-inline: 12px; padding-top: 40px; }
+  /* Desktop only: each card goes horizontal — photo left, text right (Figma
+     desktop, node 1:6). Mobile stays stacked (the base rule). */
+  .advisor-card { flex-direction: row; align-items: flex-start; gap: 20px; }
 }
 
 /* ---- Long-tail screens (Phase 6): gated home, placeholders, flows ---- */
