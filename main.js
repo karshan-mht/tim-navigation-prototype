@@ -144,6 +144,39 @@ const PANEL_TOPICS = [
   { screen: "lib-sleep", label: "Sleep & Insomnia", icon: "hub-3" },
   { screen: "lib-all", label: "All Articles", icon: null },
 ];
+// The persona-specific card at the top of the side panel (Figma Global
+// Navigation). Every persona's panel shares the same layout — brand + this card
+// + a TOPICS list + footer — so only the card differs. `cta` is the white pill
+// (screen = in-persona nav, action = a data-action like the no-op "log-in");
+// `link` is the secondary text button below it.
+const PANEL_CARDS = {
+  visitor: {
+    title: "Don't miss out!",
+    sub: "Join our community to access posts, questions, groups, and meet people.",
+    cta: { label: "Join for free", screen: "signup-start" },
+    link: { label: "Get a preview first", screen: "community-overview" },
+  },
+  subscriber: {
+    title: "Don't miss out!",
+    sub: "Finish setting up your account to unlock posts, questions, groups, and the full community.",
+    cta: { label: "Finish up now", screen: "registration-step" },
+    link: { label: "Get a preview first", screen: "community-overview" },
+  },
+  // Logged-out "Access" card (7417:3673) — mirrors the gated-home welcome card.
+  "logged-out-member": {
+    title: "Welcome back, Jannie123!",
+    sub: "You’re not logged in.",
+    cta: { label: "Log in now", action: "log-in" },
+    link: { label: "Join for free", screen: "signup-start" },
+  },
+  // Logged-in card (7417:3712) — Share posts to Activity, Ask a question to Q&A.
+  "logged-in-member": {
+    title: "Jannie123, how are you today?",
+    sub: "It’s okay to open up.",
+    cta: { label: "Share now", screen: "com-activities" },
+    link: { label: "Ask a question", screen: "com-questions" },
+  },
+};
 // Community Overview hub modules — the orientation menu into community features.
 // Wireframe-level: an outlined box per module (title, one-line description,
 // optional [TBD] count badge, link). Counts are ALWAYS the literal "[TBD]"
@@ -266,7 +299,12 @@ const ADVISORS_SCREEN = { id: "advisors", label: "Advisors", type: "page", title
 // links **to a Collection** (in-body collection callout — see article-collection).
 const TOPIC_HUB_PAGES = TOPIC_HUBS.map((h) => ({ id: h.id, label: h.name, type: "page", title: h.name, topicHub: h }));
 
-const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, LIB.hrt, LIB.mood, LIB.sleep, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
+// Sign Up Start — the chromeless sign-up entry. Shared so the panel's "Join for
+// free" resolves for every persona (e.g. the logged-out member's access card),
+// not just the Visitor/Subscriber splash flow.
+const SIGNUP_START_SCREEN = { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true };
+
+const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, LIB.hrt, LIB.mood, LIB.sleep, SIGNUP_START_SCREEN, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
 
 // Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
 // mirrors the Visitor landing). The splash content modules deep-link into these:
@@ -275,7 +313,7 @@ const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, A
 const SPLASH_FLOW_SCREENS = [
   { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
   { id: "symptom-checker", label: "Symptom Checker", type: "page", title: "Symptom Checker" },
-  { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true },
+  SIGNUP_START_SCREEN,
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   ADVISORS_SCREEN,
   { id: "article", label: "Article Show", type: "uplevel", title: "Article Show", backLabel: "Skin-related Hub", upTo: "topic-hub", upIcon: "derm" },
@@ -720,28 +758,28 @@ function renderTopicHub(hub) {
   `;
 }
 
-// Side panel. Members get the unified panel (Home / Resources / Community tabs +
-// topic-hub list + Explore). Anonymous / Subscriber get the pre-redesign panel:
-// a persona-aware "Don't miss out!" access card over a short TOPICS list
-// (Figma Global Navigation 7374:3421).
+// Side panel — one aligned layout for every persona: brand + a persona-specific
+// card (PANEL_CARDS) + a TOPICS list + footer. Only the card differs by persona;
+// anon/subscriber list the short library TOPICS, members list the topic hubs.
 function renderPanel() {
-  return persona.navVariant === "visitor" ? renderAnonPanel() : renderMemberPanel();
-}
+  const card = PANEL_CARDS[LOCKED_PERSONA_KEY] || PANEL_CARDS.visitor;
+  const isMember = persona.navVariant !== "visitor";
 
-function renderAnonPanel() {
-  const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
-  // Subscribers have started signing up → "Finish up now" (Registration Step);
-  // Visitors get "Join for free" (Sign Up Start).
-  const card = isSubscriber
-    ? { sub: "Finish setting up your account to unlock posts, questions, groups, and the full community.", cta: "Finish up now", target: "registration-step" }
-    : { sub: "Join our community to access posts, questions, groups, and meet people.", cta: "Join for free", target: "signup-start" };
-
-  const topics = PANEL_TOPICS.map(
-    (t) => `<button class="panel__hub" data-screen="${t.screen}">
+  // Members' rows are the eight topic hubs (all → the generic Topic Hub for now);
+  // anon/subscriber show the short library-topic list.
+  const topicItems = isMember
+    ? HUBS.map((h) => ({ screen: "topic-hub", label: h.label, icon: h.icon }))
+    : PANEL_TOPICS;
+  const topics = topicItems
+    .map(
+      (t) => `<button class="panel__hub" data-screen="${t.screen}">
         <span class="panel__hub-icon">${t.icon ? ICON_SVGS[t.icon] || "" : ""}</span>
         <span>${t.label}</span>
       </button>`
-  ).join("");
+    )
+    .join("");
+
+  const attr = (x) => (x.action ? `data-action="${x.action}"` : `data-screen="${x.screen}"`);
 
   return `
     <div class="panel-overlay" data-action="close-panel">
@@ -750,54 +788,14 @@ function renderAnonPanel() {
           ${inlineLogo(LOGO_WORDMARK, "panel__logotype")}
         </div>
         <div class="panel__promo">
-          <p class="panel__promo-title">Don't miss out!</p>
+          <p class="panel__promo-title">${card.title}</p>
           <p class="panel__promo-sub">${card.sub}</p>
-          <button class="panel__promo-cta" data-screen="${card.target}">${card.cta}</button>
-          <button class="panel__promo-link" data-screen="community-overview">Get a preview first</button>
+          <button class="panel__promo-cta" ${attr(card.cta)}>${card.cta.label}</button>
+          <button class="panel__promo-link" ${attr(card.link)}>${card.link.label}</button>
         </div>
         <div class="panel__topics">
           <p class="panel__topics-label">TOPICS</p>
           <div class="panel__hubs">${topics}</div>
-        </div>
-        <div class="panel__footer">Powered by<br />MyHealthTeam, a Swoop company</div>
-      </div>
-    </div>
-  `;
-}
-
-function renderMemberPanel() {
-  const homeId = persona.screens[0].id;
-
-  const tabs = PANEL_TABS.map((t) => {
-    const target = t.target === "home" ? homeId : t.target;
-    return `<button class="panel__tab" data-screen="${target}">
-        <img class="panel__tab-icon" src="${ASSET_BASE}/${t.icon}.svg" alt="" />
-        <span>${t.label}</span>
-      </button>`;
-  }).join("");
-
-  // Every panel topic-hub row opens the (generic) Topic Hub surface for now —
-  // the primary entry point into Topic Hubs. (Real per-row concerns come later.)
-  const hubs = HUBS.map(
-    (h) =>
-      `<button class="panel__hub" data-screen="topic-hub">
-        <span class="panel__hub-icon">${ICON_SVGS[h.icon] || ""}</span>
-        <span>${h.label}</span>
-      </button>`
-  ).join("");
-
-  return `
-    <div class="panel-overlay" data-action="close-panel">
-      <div class="panel" data-stop>
-        <div class="panel__top">
-          <div class="panel__brand">
-            ${inlineLogo(LOGO_WORDMARK, "panel__logotype")}
-          </div>
-          <nav class="panel__tabs">${tabs}</nav>
-        </div>
-        <div class="panel__hubs">
-          ${hubs}
-          <button class="panel__explore" data-screen="all-collections">Explore (ToC)</button>
         </div>
         <div class="panel__footer">Powered by<br />MyHealthTeam, a Swoop company</div>
       </div>
@@ -1231,8 +1229,10 @@ function renderArticle() {
         <div class="mod-cta-card art-access">
           <img class="mod-cta-card__graphic mod-cta-card__graphic--tr" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
           <img class="mod-cta-card__graphic mod-cta-card__graphic--bl" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
-          <p class="mod-cta-card__title">${accessTitle}</p>
-          <p class="mod-cta-card__sub">${accessSub}</p>
+          <div class="mod-cta-card__text">
+            <p class="mod-cta-card__title">${accessTitle}</p>
+            <p class="mod-cta-card__sub">${accessSub}</p>
+          </div>
           <div class="mod-cta-card__buttons">
             ${accessPrimary}
             <button class="mod-btn-secondary" data-screen="symptom-checker">Check symptoms first</button>
