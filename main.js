@@ -135,14 +135,15 @@ const PANEL_TABS = [
   { icon: "tab-resources", label: "Resources", target: "lib-all" },
   { icon: "tab-community", label: "Community", target: "community-overview" },
 ];
-// The anonymous / subscriber panel (pre-2026-08-03 design, Figma Global
-// Navigation 7374:3421) lists a few library TOPICS instead of the shared
-// tabs + hubs. Last item ("All Articles") has no icon per the Figma.
+// The side panel's TOPICS list (Figma Global Navigation 7374:3421). Each of the
+// three topics opens its own Topic Hub page (titled by the topic — see
+// TOPIC_HUBS). The last item ("Explore All Articles") has no icon per the Figma
+// and opens the Explore All Articles page (all-collections).
 const PANEL_TOPICS = [
-  { screen: "lib-hrt", label: "HRT & Other Treatments", icon: "hub-1" },
-  { screen: "lib-mood", label: "Mood & Mental Health", icon: "hub-2" },
-  { screen: "lib-sleep", label: "Sleep & Insomnia", icon: "hub-3" },
-  { screen: "lib-all", label: "All Articles", icon: null },
+  { screen: "topic-hub-hrt", label: "HRT & Other Treatments", icon: "hub-1" },
+  { screen: "topic-hub-mood", label: "Mood & Mental Health", icon: "hub-2" },
+  { screen: "topic-hub-sleep", label: "Sleep & Insomnia", icon: "hub-3" },
+  { screen: "all-collections", label: "Explore All Articles", icon: null },
 ];
 // The persona-specific card at the top of the side panel (Figma Global
 // Navigation). Every persona's panel shares the same layout — brand + this card
@@ -199,28 +200,33 @@ const COMMUNITY_MODULES = [
 // preview affordance (placeholder skeleton rows — no fabricated posts/questions),
 // closer in spirit to the Splash Landing modules. Data-driven so more hubs are
 // added as data, not one-off screens (see TOPIC_HUB_PAGES + renderTopicHub).
-// For now there is a single **generic** hub used as the template for every panel
-// item (the real per-concern hubs + names come later). `stat` is ALWAYS the
-// literal "[TBD]" placeholder, never a fabricated number.
+// Topic filtering isn't built yet, so every hub shares the same generic modules,
+// description, and [TBD] stat — only the name/title differs per topic. `stat` is
+// ALWAYS the literal "[TBD]" placeholder, never a fabricated number.
+const TOPIC_HUB_DESC =
+  "Everything on this topic — questions, conversations, groups, and resources — in one place.";
+const TOPIC_HUB_STAT = "[TBD]% of community discussion this month";
+const TOPIC_HUB_MODULES = [
+  // No topic-filtering exists yet, so Top Q&A points at the general Q&A page.
+  { title: "Top Q&A", desc: "Most helpful answered questions", preview: true, screen: "com-questions", note: "General Q&A — topic filtering not built yet" },
+  { title: "Active Conversations", desc: "Relevant peer discussions", preview: true, screen: "com-activities" },
+  // "Expert Resources" is a curated set of articles (plural), so it points at
+  // All Resources rather than a single Article Show (the `lib-all` fallback
+  // the brief allows — no single article fits, and lib-all resolves everywhere).
+  { title: "Expert Resources", desc: "Curated, medically-reviewed articles", preview: true, screen: "lib-all" },
+  { title: "Groups & People", desc: "Circles and members walking the same path", screen: "com-groups" },
+  // No tools surface exists yet — dead/disabled placeholder for now.
+  { title: "Action-Oriented Tools", desc: "Guides, checklists, step-by-step programs", disabled: true },
+];
+const makeTopicHub = (id, name) => ({ id, name, desc: TOPIC_HUB_DESC, stat: TOPIC_HUB_STAT, modules: TOPIC_HUB_MODULES });
 const TOPIC_HUBS = [
-  {
-    id: "topic-hub",
-    name: "Topic Hub",
-    desc: "Everything on this topic — questions, conversations, groups, and resources — in one place.",
-    stat: "[TBD]% of community discussion this month",
-    modules: [
-      // No topic-filtering exists yet, so Top Q&A points at the general Q&A page.
-      { title: "Top Q&A", desc: "Most helpful answered questions", preview: true, screen: "com-questions", note: "General Q&A — topic filtering not built yet" },
-      { title: "Active Conversations", desc: "Relevant peer discussions", preview: true, screen: "com-activities" },
-      // "Expert Resources" is a curated set of articles (plural), so it points at
-      // All Resources rather than a single Article Show (the `lib-all` fallback
-      // the brief allows — no single article fits, and lib-all resolves everywhere).
-      { title: "Expert Resources", desc: "Curated, medically-reviewed articles", preview: true, screen: "lib-all" },
-      { title: "Groups & People", desc: "Circles and members walking the same path", screen: "com-groups" },
-      // No tools surface exists yet — dead/disabled placeholder for now.
-      { title: "Action-Oriented Tools", desc: "Guides, checklists, step-by-step programs", disabled: true },
-    ],
-  },
+  // Generic hub — kept as the up-level target for Article Show / Collection.
+  makeTopicHub("topic-hub", "Topic Hub"),
+  // Per-topic hubs behind the side panel's TOPICS list (see PANEL_TOPICS): same
+  // surface, each titled by its topic name.
+  makeTopicHub("topic-hub-hrt", "HRT & Other Treatments"),
+  makeTopicHub("topic-hub-mood", "Mood & Mental Health"),
+  makeTopicHub("topic-hub-sleep", "Sleep & Insomnia"),
 ];
 const DROPDOWN_MENU = [
   // Notifications sits above the divider as a distinct orange "chip" (its own
@@ -285,9 +291,9 @@ const ACCOUNT_SCREENS = [
 // these shared-chrome targets resolve in all four personas. The Resources tab
 // points at LIB.all.
 // (`all-articles` keeps the internal id `all-collections` — only its display
-// label/title were renamed from "All Collections".)
+// label/title were renamed, most recently to "Explore All Articles".)
 const COMMUNITY_OVERVIEW_SCREEN = { id: "community-overview", label: "Community Overview", type: "page", title: "Community Overview" };
-const ALL_ARTICLES_SCREEN = { id: "all-collections", label: "All Articles", type: "page", title: "All Articles" };
+const ALL_ARTICLES_SCREEN = { id: "all-collections", label: "Explore All Articles", type: "page", title: "Explore All Articles" };
 const ADVISORS_SCREEN = { id: "advisors", label: "Advisors", type: "page", title: "Advisors" };
 
 // NAMING (2026-08-04): the old **Topic Center** (`topic`) was **folded into
@@ -620,7 +626,7 @@ function activeSectionTarget(screenId, homeId) {
   // Resources stays selected for library pages, collections, topic hubs, and
   // articles — an article lives under Resources.
   if (/^lib-/.test(screenId) || /^article/.test(screenId) ||
-      screenId === "all-collections" || screenId === "collection" || screenId === "topic-hub") {
+      screenId === "all-collections" || screenId === "collection" || /^topic-hub/.test(screenId)) {
     return "lib-all";
   }
   // Community stays selected for the overview, the com-* pages, and their
@@ -759,8 +765,8 @@ function renderTopicHub(hub) {
 }
 
 // Side panel — one aligned layout for every persona: brand + a persona-specific
-// card (PANEL_CARDS) + a TOPICS list + footer. Only the card differs by persona;
-// anon/subscriber list the short library TOPICS, members list the topic hubs.
+// card (PANEL_CARDS, with decorative corner blobs) + a shared TOPICS list +
+// footer. Only the card content differs by persona.
 function renderPanel() {
   const card = PANEL_CARDS[LOCKED_PERSONA_KEY] || PANEL_CARDS.visitor;
 
@@ -784,6 +790,8 @@ function renderPanel() {
           ${inlineLogo(LOGO_WORDMARK, "panel__logotype")}
         </div>
         <div class="panel__promo">
+          <img class="panel__promo-graphic panel__promo-graphic--tr" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
+          <img class="panel__promo-graphic panel__promo-graphic--bl" src="${ASSET_BASE}/closing-blob.svg" alt="" aria-hidden="true" />
           <p class="panel__promo-title">${card.title}</p>
           <p class="panel__promo-sub">${card.sub}</p>
           <button class="panel__promo-cta" ${attr(card.cta)}>${card.cta.label}</button>

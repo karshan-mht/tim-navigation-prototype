@@ -1188,6 +1188,9 @@ body {
 
 /* ---- Anonymous / Subscriber panel: promo access card + TOPICS list ---- */
 .panel__promo {
+  position: relative;      /* stacking context (z-index:0) for the z-index:-1 blobs */
+  z-index: 0;
+  overflow: hidden;        /* clip the corner blobs that bleed off the card */
   background: var(--color-navy);
   border-radius: var(--radius-card);
   padding: 24px;
@@ -1196,6 +1199,13 @@ body {
   flex-direction: column;
   gap: 12px;
 }
+/* Decorative magenta blob/dot graphic in opposite corners (Figma card
+   7417:3673/3712) — one asset reused, top-right flipped vertically and
+   bottom-left flipped horizontally, so they read as diagonal mirror-images.
+   Same brand element as the splash closing CTA card. */
+.panel__promo-graphic { position: absolute; z-index: -1; width: 246px; pointer-events: none; }
+.panel__promo-graphic--tr { top: -64px; right: -150px; transform: scaleY(-1); }
+.panel__promo-graphic--bl { bottom: -83px; left: -76px; transform: scaleX(-1); }
 .panel__promo-title {
   margin: 0;
   font-family: var(--font-display);
