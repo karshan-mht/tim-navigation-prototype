@@ -763,14 +763,10 @@ function renderTopicHub(hub) {
 // anon/subscriber list the short library TOPICS, members list the topic hubs.
 function renderPanel() {
   const card = PANEL_CARDS[LOCKED_PERSONA_KEY] || PANEL_CARDS.visitor;
-  const isMember = persona.navVariant !== "visitor";
 
-  // Members' rows are the eight topic hubs (all → the generic Topic Hub for now);
-  // anon/subscriber show the short library-topic list.
-  const topicItems = isMember
-    ? HUBS.map((h) => ({ screen: "topic-hub", label: h.label, icon: h.icon }))
-    : PANEL_TOPICS;
-  const topics = topicItems
+  // Every persona's panel shows the same short TOPICS list — 3 library topics
+  // + All Articles (PANEL_TOPICS) — so the panels stay aligned.
+  const topics = PANEL_TOPICS
     .map(
       (t) => `<button class="panel__hub" data-screen="${t.screen}">
         <span class="panel__hub-icon">${t.icon ? ICON_SVGS[t.icon] || "" : ""}</span>

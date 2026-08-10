@@ -100,30 +100,32 @@ Article Show levels up to a **Topic Hub** (`topic-hub`, §3, [topic-hub.md](../d
 
 Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from left, 24px padding, 24px gap between blocks.
 
-**Redesign (2026-08-03, Figma Global Navigation `42yas7Q9FfwhL6xUocjEAl`, panel `7299:1987`).** The panel is now **one shared component for every persona** — no more per-user-type menus or access cards. It moved from persona-specific Resources/Community lists to a single set of top-level entry points plus **topic hubs** as the primary route into content and conversations.
+**Aligned panel (2026-08-10, Figma Global Navigation `42yas7Q9FfwhL6xUocjEAl`).** Every persona's panel shares **one layout** — only the top card differs. (This supersedes the 2026-08-03 "tab card + topic-hub list + Explore" panel: the tabs and the in-panel Explore pill were dropped.)
 
-**Structure:** `Logotype → Tab card (Home · Resources · Community) → Topic-hub list → Explore (ToC) → Footer note`
+**Structure:** `Logotype → persona card → TOPICS list → Footer note`
 
 ### Content slots
 
-**Tab card** — a bordered (`rgba(98,107,116,0.1)`, radius 16px), 12px-padded row with three icon-over-label tabs (Lato 14px, `#626b74`), each a 44px line icon:
-- **Home** → the current persona's own home screen (`persona.screens[0].id` — Splash for Visitor/Subscriber, Home-as-a-hub for members, gated home for Logged Out).
-- **Resources** → `lib-all` (All Resources). Library surface: [library.md](../domains/library.md).
-- **Community** → `community-overview` (Community Overview). Community surface: [community.md](../domains/community.md).
+**Persona card** (`.panel__promo` — navy, DM Serif title + sub + a white pill CTA + a secondary text link). The card is the only per-persona difference:
 
-**Topic-hub list** — eight rows (the up-to-8 **pre-defined Topic Hubs**), each a 44px pre-tinted icon (magenta glyph on a pale `#F6EFF8` circle, `assets/hub-{1..8}.svg`) + label (Lato 18px, `#0d1b29`). Labels are the **Figma placeholders** ("Topic Hub Longer Name" / "…Short" / "…Long Name") — the real hub taxonomy is not yet settled. **Every row opens the generic `topic-hub` screen** — the Topic Hub surface, spec'd in [topic-hub.md](../domains/topic-hub.md). (The old `topic` "Topic Center" screen was **retired** 2026-08-04 — folded into Collections; see §2. Collections = `all-collections` / `collection`.)
+| Persona | Title / sub | Pill CTA → | Link → |
+|---|---|---|---|
+| Visitor | "Don't miss out!" / join copy | **Join for free** → `signup-start` | Get a preview first → `community-overview` |
+| Subscriber | "Don't miss out!" / finish copy | **Finish up now** → `registration-step` | Get a preview first → `community-overview` |
+| **Logged Out Member** (Figma `7417:3673`, "Access") | "Welcome back, Jannie123!" / "You're not logged in." | **Log in now** → `data-action="log-in"` (no-op, like the gated home) | Join for free → `signup-start` |
+| **Logged In Member** (Figma `7417:3712`) | "Jannie123, how are you today?" / "It's okay to open up." | **Share now** → `com-activities` (Activity) | Ask a question → `com-questions` (Q&A) |
 
-**Explore (ToC)** — an outline pill (`#0f57a8`, radius pill, Lato 16px) below the hubs → the `all-collections` screen (display label **"All Articles"**; the internal id stays `all-collections`).
+Card data lives in `PANEL_CARDS` (`main.js`); the whole panel is one `renderPanel()`.
 
-Because the panel is shared — and the footer's "Medical Advisors" link is global — these destinations (`community-overview`, `all-collections`, `advisors`, `lib-all`, plus the Community sub-screens and every `topic-hub` page) are injected into **every** persona's `screens` list (`SHARED_TARGET_SCREENS` loop in `main.js`) so they resolve everywhere, not just in the Visitor/Subscriber splash flow.
+**TOPICS list** — the **same for every persona**: 3 library topics (HRT & Other Treatments, Mood & Mental Health, Sleep & Insomnia) + **All Articles** (`PANEL_TOPICS`). Each row is a pill (magenta glyph on a pale circle; All Articles has no icon) → its `lib-*` screen (All Articles → `lib-all`).
 
-**Footer** — "Powered by" on line 1, "MyHealthTeam, a Swoop company" on line 2 (`#626b74`, 14px), pinned to bottom.
+`signup-start` is a shared injected screen (`SIGNUP_START_SCREEN` in `SHARED_TARGET_SCREENS`) so "Join for free" resolves for the logged-out member too, not just the splash personas. `com-activities` / `com-questions` are already shared (community sub-screens).
 
-**Rendering notes:** hub icons are pre-tinted SVGs used as `<img>` (no CSS `currentColor` tint); the hub-row rollover is still a **pill** (`--radius-pill`) filled with the flat `--color-magenta-soft-solid` (`#f8f0fa`), bleeding wider than the text (negative inline margin into the 24px panel padding). There is **no close (X)** — the panel dismisses via the scrim with a slower ease-out slide-out (`closePanel()`). The top wordmark uses `logotype.svg` (see [design.md](design.md) → Chrome assets). Color tokens and motion timings are catalogued in [design.md](design.md).
+**Footer** — "Powered by" / "MyHealthTeam, a Swoop company" (`#626b74`, 14px), pinned to bottom. There is **no close (X)** — the panel dismisses via the scrim (`closePanel()`).
 
 ### Node refs
-- New shared panel (Member/Subscriber/Visitor variants, identical body): `7299:1987`, `7299:2055`, `7299:2123`, `7287:1599`
-- *(Superseded)* old per-persona panels: Visitor 6950:226, Logged Out Member 6960:3, Logged In Member 6950:144, Subscriber 6959:904
+- Persona cards: Logged-in `7417:3712`, Logged-out "Access" `7417:3673`.
+- *(Superseded)* 2026-08-03 shared panel `7299:1987` / `7299:2055` / `7299:2123` / `7287:1599`; older per-persona panels 6950:226, 6960:3, 6950:144, 6959:904.
 
 ---
 
