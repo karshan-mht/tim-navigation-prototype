@@ -708,10 +708,13 @@ body {
 .mod-advisors__body--italic { font-style: italic; font-weight: 400; color: var(--color-text); }
 
 .mod-advisors__list { list-style: none; margin: 0; padding: 0; }
+/* Horizontal card — circular photo left, text block right (Figma Medical
+   Advisors desktop, node 1:6). */
 .advisor-card {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 20px;
   padding: 28px 0;
   border-bottom: 1px solid #e5e5e5;
 }
@@ -719,10 +722,12 @@ body {
 .advisor-card__photo {
   width: 96px;
   height: 96px;
+  flex-shrink: 0;
   border-radius: 50%;
   object-fit: cover;
   background: #e9ebee;
 }
+.advisor-card__text { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
 .advisor-card__identity { display: flex; flex-direction: column; gap: 2px; }
 .advisor-card__name { margin: 0; font-weight: 600; font-size: 20px; line-height: 28px; letter-spacing: -0.75px; color: var(--color-text); }
 .advisor-card__role { margin: 0; font-weight: 400; font-size: 16px; line-height: 22px; color: var(--color-magenta); }

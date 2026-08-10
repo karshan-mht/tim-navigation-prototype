@@ -808,13 +808,15 @@ function renderAdvisors() {
         ${ADVISORS.map((a) => `
           <li class="advisor-card">
             <img class="advisor-card__photo" src="${ASSET_BASE}/advisor-${a.photo}.jpg" alt="${a.name}" />
-            <div class="advisor-card__identity">
-              <p class="advisor-card__name">${a.name}</p>
-              <p class="advisor-card__role">${a.role}</p>
-              <p class="advisor-card__org">${a.org}</p>
+            <div class="advisor-card__text">
+              <div class="advisor-card__identity">
+                <p class="advisor-card__name">${a.name}</p>
+                <p class="advisor-card__role">${a.role}</p>
+                <p class="advisor-card__org">${a.org}</p>
+              </div>
+              <p class="advisor-card__bio">${a.bio}</p>
+              <span class="advisor-card__link">Read full bio &rarr;</span>
             </div>
-            <p class="advisor-card__bio">${a.bio}</p>
-            <span class="advisor-card__link">Read full bio &rarr;</span>
           </li>`).join("")}
       </ul>
       <div class="mod-advisors__watch">
