@@ -47,8 +47,12 @@ Built out 2026-07-27 from the `Mobile_Splash_Landing` frame, in this order:
 
 1. **Checker** — hero: avatar stack + community count + symptom-checker card.
 2. **Listicles** — 5 cards (see asset table below).
-3. **Articles** — horizontal carousel, 324×170 thumbnails, simple diagonal-hatch
-   placeholder pattern (no gradients), no eyebrows.
+3. **Articles** — horizontal carousel, 324×170 thumbnails. The first two cards
+   carry real images (`article-1`, `article-2`); the rest fall back to the
+   diagonal-hatch placeholder pattern. No eyebrows. The **Collection** card (2nd,
+   → `article-collection`) is flagged `collection: true`, which runs its title on
+   two lines and adds a magenta **stack ("layers") icon** to the right of the
+   title so the card reads as part of a Collection.
 4. **Experts** — solid `#EDF3F9` background (`--color-bg-blue-soft`). The three
    teaser cards are **derived from the committee data** — `ADVISORS.slice(0, 3)`
    in `main.js` — so they stay in sync with the [Advisors page](advisors.md)
@@ -85,8 +89,10 @@ what's **specific to the splash sections**:
 - **Listicles:** 5 cards from the desktop frame (`4113:51`), left-aligned, wider
   (210px), 80px icon circles using `assets/listicles_*.svg`, non-wrapping
   buttons; rollover uses `--color-primary-soft` (not the panel pink).
-- **Articles:** horizontal carousel, 324×170 thumbnails, diagonal-hatch
-  placeholder pattern.
+- **Articles:** horizontal carousel, 324×170 thumbnails (first two cards use
+  real images `article-1`/`article-2`; others fall back to the diagonal-hatch
+  placeholder). The Collection card gets a magenta stack icon beside a two-line
+  title.
 - **Footer tagline:** "Expert advice. Real women. Real talk." at 20px / -0.75px
   Regular (frame `4101:162`).
 
@@ -102,7 +108,7 @@ is a fully built page with its own spec in [advisors.md](advisors.md):
 |---|---|
 | "Check all my symptoms" / "Check symptoms first" | **Symptom Checker** |
 | Listicle cards | **Listicle Detail** |
-| One Article card | **Article Show** (in a collection) → full article template with a "part of a collection" callout box above Key Takeaways, linking to its **Collection** |
+| One Article card (Collection — 2-line title + stack icon) | **Article Show** (in a collection) → full article template with a "part of a collection" callout box above Key Takeaways, linking to its **Collection** |
 | "View all advisors" | **Advisors** — see [advisors.md](advisors.md) |
 | "Join the conversation" (Community) / panel Community tab | **Community Overview** |
 | Closing card primary — Visitor: **Join for free** | **Sign Up Start** — see [onboarding.md](onboarding.md) |

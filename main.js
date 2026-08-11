@@ -904,8 +904,10 @@ function renderModules() {
   const articles = [
     // First card = the fully-built skin-care Article Show (see renderArticle()).
     { title: "Skin Care for Menopausal Skin: Best Ingredients and Routine", screen: "article", img: "article-1" },
-    // Second = the Collection variant; the rest stay labelled placeholders.
-    { title: "Article title", screen: "article-collection" },
+    // Second = the Collection variant. `collection: true` adds the stack icon to
+    // the right of its title (which runs two lines) so the card reads as part of
+    // a Collection. Generic image + title for now.
+    { title: "The Complete Guide to Managing Menopause Symptoms", screen: "article-collection", img: "article-2", collection: true },
     { title: "Article title", screen: "article-placeholder" },
     { title: "Article title", screen: "article-placeholder" },
   ];
@@ -994,9 +996,12 @@ function renderModules() {
         ${articles
           .map(
             (a) => `
-          <button class="mod-article-card" data-screen="${a.screen}">
+          <button class="mod-article-card${a.collection ? " mod-article-card--collection" : ""}" data-screen="${a.screen}">
             <span class="mod-article-card__thumb"${a.img ? ` style="background:url('${ASSET_BASE}/${a.img}.png') center/cover no-repeat"` : ""}></span>
-            <span class="mod-article-card__title">${a.title}</span>
+            <span class="mod-article-card__title">
+              <span class="mod-article-card__title-text">${a.title}</span>
+              ${a.collection ? `<span class="mod-article-card__stack" title="Part of a collection" aria-label="Part of a collection"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></span>` : ""}
+            </span>
           </button>`
           )
           .join("")}
