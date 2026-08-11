@@ -1126,7 +1126,7 @@ function renderFooter() {
 // shared. renderArticle() = the skin-care article; renderCollectionArticle() =
 // the generic in-a-Collection article with a "Part of a collection" top card.
 function renderArticleShell(content) {
-  const { title, byline, takeaway, lede, sections, topCard = "" } = content;
+  const { title, byline, takeaway, lede, midPara = [], sections, topCard = "" } = content;
   const ICON = {
     bookmark: `<svg class="art__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>`,
     chat: `<svg class="art__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>`,
@@ -1186,7 +1186,7 @@ function renderArticleShell(content) {
 
         <div class="art__lede">${lede.map((p) => `<p>${p}</p>`).join("")}</div>
 
-        <div class="art-poll">Poll</div>
+        ${midPara.length ? `<div class="art__lede">${midPara.map((p) => `<p>${p}</p>`).join("")}</div>` : ""}
 
         ${sections
           .map((s, i) => {
@@ -1251,6 +1251,9 @@ function renderArticle() {
       "Skin changes like fine lines often come with age. But if you’ve found that the skin on your face has become drier, duller, or more sensitive to products as you approach menopause, you’re not alone.",
       "Here are the best skin care ingredients that can help you care for your menopausal skin.",
     ],
+    midPara: [
+      "The good news: with a few targeted adjustments, most menopause-related skin changes respond well to the right ingredients and a consistent routine. Understanding what’s happening beneath the surface is the first step to choosing products that actually help.",
+    ],
     sections: [
       {
         h2: "How Menopause Affects Your Skin",
@@ -1286,11 +1289,14 @@ function renderCollectionArticle(collection) {
       "This is placeholder lede copy introducing the article — a sentence or two setting up what the reader will learn. Real content is not written yet.",
       "A second introductory line continues the setup before the body sections begin.",
     ],
+    midPara: [
+      "An additional placeholder paragraph sits between the lede and the body sections, giving the reading column a little more length and rhythm before the first heading. Real copy will replace this later.",
+    ],
     sections: [
       {
         h2: "Section Heading One",
         paras: [
-          "Placeholder body paragraph. Real copy for this collection article will be written later — for now this stands in to show the full article layout: header, key takeaways, lede, poll, and body sections.",
+          "Placeholder body paragraph. Real copy for this collection article will be written later — for now this stands in to show the full article layout: header, key takeaways, lede, and body sections.",
           "A second placeholder paragraph continues the section so the reading column has realistic length and rhythm.",
         ],
       },
