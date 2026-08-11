@@ -39,7 +39,7 @@ are in [landing.md](../domains/landing.md), [library.md](../domains/library.md),
 - **Profile avatar** (member nav variant) → opens the account **Dropdown** (wired for Logged In Member; tapping outside closes it). The dropdown's menu and its destination screens are spec'd in [account.md](../domains/account.md).
 - **Level-up pill** → only on *detail* screens (Article/Group/Program/Profile/Question/Activity). It steps **one level up** to the parent list/topic (via `upTo` → `data-screen`, e.g. Group Detail → Groups, Article Show → its topic page), not "back" and not necessarily home. Top-level pages (the panel/dropdown destinations) have no level-up pill — the nav logo returns home instead. (`program` has no list parent in the source, so it falls back to home.)
 - **Nav pill** → opens the chromeless sign-up flow **in-persona**. Persona-aware: **Join** → `Sign Up Start` for the Visitor; **Finish** → `Registration Step` for the Subscriber (both share the `visitor` nav variant). Full spec in [onboarding.md](../domains/onboarding.md). *(The panel's old Join for free / Finish up now access cards were removed in the 2026-08-03 shared-panel redesign; those roles moved to the nav pill + splash closing card — see §3.)*
-- **"Log in now"** (Logged Out gated home) and **"Log out"** (dropdown) → currently **no-ops** (auth not wired); see [onboarding.md](../domains/onboarding.md).
+- **"Log in now"** (Logged Out Member's panel access card — see §3) and **"Log out"** (dropdown) → currently **no-ops** (auth not wired); see [onboarding.md](../domains/onboarding.md).
 
 ---
 
@@ -92,7 +92,7 @@ Article Show levels up to a **Topic Hub** (`topic-hub`, §3, [topic-hub.md](../d
 
 **Topic Center folded into Collections (2026-08-04):** the old `topic` screen was retired. It was "a collection of sponsored content," so it's now simply a **Collection** (the `collection` screen). An article links **either** up to a Topic Hub (the pill above) **or** to a Collection (the callout below) — never to a standalone "Topic Center" any more.
 
-**Collection callout (in-page, non-sticky).** An article that belongs to a **Collection** carries `collection: { screen }` and renders a small **callout box** near the top of the body (`.collection-callout` — "Part of a collection" / a line of copy / an **"Explore the full collection →"** link that navigates via `data-screen`), scrolling **with** the content. The **Article Show (in Collection)** screen uses this to link to its **Collection** (the rebranded old Topic Center — a curated set of sponsored content). Wireframe placeholder; this screen has **no** page-title label — the callout is its only chrome.
+**Collection callout (in-page, non-sticky).** An article that belongs to a **Collection** carries `collection: { screen }`. The **Article Show (in Collection)** screen renders the **full article template** (shared `renderArticleShell` — same as the standalone Article Show, with generic placeholder copy) and inserts a small **callout box** directly **above Key Takeaways** (`.collection-callout` — "Part of a collection" / a line of copy / an **"Explore the full collection →"** link that navigates via `data-screen`), scrolling **with** the content. The callout links to its **Collection** (the rebranded old Topic Center — a curated set of sponsored content).
 
 ---
 
@@ -112,7 +112,7 @@ Full-height overlay: `rgba(0,0,0,0.75)` scrim + 300px white panel sliding from l
 |---|---|---|---|
 | Visitor | "Don't miss out!" / join copy | **Join for free** → `signup-start` | Get a preview first → `community-overview` |
 | Subscriber | "Don't miss out!" / finish copy | **Finish up now** → `registration-step` | Get a preview first → `community-overview` |
-| **Logged Out Member** (Figma `7417:3673`, "Access") | "Welcome back, Jannie123!" / "You're not logged in." | **Log in now** → `data-action="log-in"` (no-op, like the gated home) | Join for free → `signup-start` |
+| **Logged Out Member** (Figma `7417:3673`, "Access") | "Welcome back, Jannie123!" / "You're not logged in." | **Log in now** → `data-action="log-in"` (no-op — auth not wired) | Join for free → `signup-start` |
 | **Logged In Member** (Figma `7417:3712`) | "Jannie123, how are you today?" / "It's okay to open up." | **Share now** → `com-activities` (Activity) | Ask a question → `com-questions` (Q&A) |
 
 Card data lives in `PANEL_CARDS` (`main.js`); the whole panel is one `renderPanel()`.

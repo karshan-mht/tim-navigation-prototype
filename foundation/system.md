@@ -38,7 +38,6 @@ Each persona has a `screens` array; `state.screenId` selects the active one and
 - `tabs` — the home screen (Splash Landing / hub); carries `modules: true` where it renders content modules.
 - `page` — a top-level page with **no** level-up pill; the nav logo returns home. All panel/dropdown destinations (`lib-*`, `com-*`, `acct-*`) and most flow screens are `page`.
 - `uplevel` — a detail screen with a level-up pill that steps one level up via `upTo` → `data-screen` (see [navigation.md](navigation.md) §2).
-- `gated-home` — the Logged Out Member's gated welcome screen.
 - `chromeless: true` — a flag (not a type) that drops nav/level-up/footer and shows an ✕ that closes back to `state.prevScreenId` (the onboarding pages — see [onboarding.md](../domains/onboarding.md)).
 
 **State** (`state` object): `screenId`, `panelOpen`, `dropdownOpen`, `prevScreenId`
@@ -104,7 +103,7 @@ Community only where it was persona-specific historically.
 - Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-diet`, `lib-family`, `lib-all`
 
 **Logged Out Member**
-- Gated home (`gated-home`, welcome card → "Log in now")
+- Gated home (`tabs`; wireframe placeholder labelled "Home as a hub (gated)")
 - Resources (panel dest.): `lib-hrt`, `lib-mood`, `lib-sleep`, `lib-all`
 - Community (via the Community Overview hub): `com-activities`, `com-questions`, `com-groups`, `com-meet`, `com-values`
 

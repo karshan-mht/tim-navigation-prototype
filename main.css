@@ -901,6 +901,8 @@ body {
   border-radius: var(--radius-card);
   background: #f6f7f9;
 }
+/* Inside an Article Show (above Key Takeaways) it flows with the art body gap. */
+.art__body .collection-callout { margin: 0; }
 .collection-callout__label {
   margin: 0 0 6px;
   font-family: var(--font-body);
@@ -1055,39 +1057,6 @@ body {
   padding: 1px 8px;
 }
 
-/* ---- Gated / welcome card (Logged-out Member home) ---- */
-
-.welcome-card {
-  margin: 12px;
-  border: 1px solid rgba(13, 27, 41, 0.1);
-  border-radius: var(--radius-card);
-  padding: 16px;
-  background: #fff;
-  overflow: hidden;
-}
-.welcome-card__title {
-  font-weight: 700;
-  font-size: 22px;
-  letter-spacing: -0.75px;
-  margin: 0 0 4px;
-}
-.welcome-card__subtitle {
-  margin: 0 0 16px;
-  font-size: 16px;
-  color: var(--color-text-muted);
-}
-.welcome-card__cta {
-  width: 100%;
-  height: 52px;
-  border: none;
-  border-radius: var(--radius-pill);
-  background: var(--color-primary);
-  color: #fff;
-  font-size: 18px;
-  font-weight: 400;
-  cursor: pointer;
-}
-.welcome-card__cta:active { filter: brightness(1.08); }
 
 /* ---- Slide-out Panel ---- */
 
@@ -1815,10 +1784,8 @@ body {
   .advisor-card { flex-direction: row; align-items: flex-start; gap: 20px; }
 }
 
-/* ---- Long-tail screens (Phase 6): gated home, placeholders, flows ---- */
+/* ---- Long-tail screens (Phase 6): placeholders, flows ---- */
 @media (min-width: 1024px) {
-  /* Gated-home welcome card: reading-width, left-aligned to the nav edge. */
-  .welcome-card { max-width: var(--content-column); margin-block: 40px; margin-inline: var(--content-pad) 0; padding: 24px; }
   /* Label/placeholder pages: keep the centered label but give it a little more
      presence and stop it stretching on very wide screens. */
   .screen__placeholder { max-width: var(--content-column); }

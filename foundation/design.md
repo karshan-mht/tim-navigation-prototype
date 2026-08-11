@@ -212,7 +212,7 @@ system," same exemption as the entry-point mocks.
 | 16px | Body Small | Yes — "Body Small", 22px lh, -0.25px | `.mod-expert-card__role`, `.topic-hub__desc`, descriptions (post-fix) |
 | 18px | Body Large | Yes — "Body Large", 24px lh, -0.25px | `.mod-cta-card__sub`, `.art__lede p`, most paragraph/button text |
 | 20px | Card/component title | No — extends beyond the base Figma Body scale | `.mod-checker-card__title`, `.mod-listicle-card__title`, `.mod-view-all-link` |
-| 22px | Emphasis title | No | `.welcome-card__title`, `.art-note__title` |
+| 22px | Emphasis title | No | `.art-note__title` |
 | 24px | Quote (Lato SemiBold) | No — **same pixel value as the DM Serif Display 24px tier, different font/weight** | `.mod-quote-card__text` only |
 
 Base sizes (12/14/16/18) map directly onto the Lato Body scale already

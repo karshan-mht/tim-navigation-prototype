@@ -37,7 +37,7 @@ It does **not** render for:
 
 - **Logged In Member** — home is "Home as a hub" (still to be designed), a
   placeholder label, not the splash.
-- **Logged Out Member** — a gated home ("Welcome back… you're not logged in").
+- **Logged Out Member** — a gated home, a placeholder label ("Home as a hub (gated)"), not the splash. (The "Welcome back… you're not logged in" welcome card was removed 2026-08-11; that copy now lives only in the panel access card — see [navigation.md](../foundation/navigation.md) §3.)
 
 ---
 
@@ -102,7 +102,7 @@ is a fully built page with its own spec in [advisors.md](advisors.md):
 |---|---|
 | "Check all my symptoms" / "Check symptoms first" | **Symptom Checker** |
 | Listicle cards | **Listicle Detail** |
-| One Article card | **Article Show** (in a collection) → an in-page "part of a collection" callout box links to its **Collection** |
+| One Article card | **Article Show** (in a collection) → full article template with a "part of a collection" callout box above Key Takeaways, linking to its **Collection** |
 | "View all advisors" | **Advisors** — see [advisors.md](advisors.md) |
 | "Join the conversation" (Community) / panel Community tab | **Community Overview** |
 | Closing card primary — Visitor: **Join for free** | **Sign Up Start** — see [onboarding.md](onboarding.md) |

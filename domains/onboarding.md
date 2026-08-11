@@ -69,7 +69,7 @@ each flow stays self-contained").
 
 | CTA | Where | Action | Behavior today |
 |---|---|---|---|
-| **Log in now** | Logged Out Member gated-home welcome card | `data-action="log-in"` | no-op |
+| **Log in now** | Logged Out Member panel access card | `data-action="log-in"` | no-op |
 | **Log out** | Logged In Member profile dropdown | `data-action="log-out"` | no-op |
 
 This **supersedes** the earlier (2026-07-24) design in which Log out did a real

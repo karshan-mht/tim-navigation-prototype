@@ -346,7 +346,7 @@ const PERSONAS = {
     label: "Logged Out Member",
     navVariant: "member",
     screens: [
-      { id: "home-gated", label: "Home (gated)", type: "gated-home", title: "Home as a hub\n(gated)" },
+      { id: "home-gated", label: "Home (gated)", type: "tabs", title: "Home as a hub\n(gated)" },
       ...LIBRARY_SCREENS_MEMBER,
       ...COMMUNITY_SCREENS,
     ],
@@ -828,16 +828,6 @@ function renderDropdown() {
   `;
 }
 
-function renderGatedHome() {
-  return `
-    <div class="welcome-card">
-      <p class="welcome-card__title">Welcome back, Jannie123!</p>
-      <p class="welcome-card__subtitle">You&rsquo;re not logged in.</p>
-      <button class="welcome-card__cta" data-action="log-in">Log in now</button>
-    </div>
-  `;
-}
-
 // Medical Advisory Committee page (Figma "Medical Advisors", file
 // Zkiv6o4d7eyQOLAvwjVYTy, mobile 2:43). Reached from the splash "View all
 // advisors" link. Real advisor photos live in assets/advisor-{1..5}.jpg (index
@@ -1129,7 +1119,14 @@ function renderFooter() {
 // (title-first, no hero). The top nav, "Topic Hub" level-up pill, and global
 // footer are added by render(); this returns only the article body. Auth CTAs
 // point at the shared signup-start flow like every other Join in the prototype.
-function renderArticle() {
+// Shared Article Show template. `content` supplies the variable parts (title,
+// byline, Key Takeaways, lede, body sections) and an optional `topCard` HTML
+// block rendered just above Key Takeaways. The header strip, poll, and all the
+// end modules (conversation, Menopause-answered, Keep Reading, access card) are
+// shared. renderArticle() = the skin-care article; renderCollectionArticle() =
+// the generic in-a-Collection article with a "Part of a collection" top card.
+function renderArticleShell(content) {
+  const { title, byline, takeaway, lede, sections, topCard = "" } = content;
   const ICON = {
     bookmark: `<svg class="art__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>`,
     chat: `<svg class="art__ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z"/></svg>`,
@@ -1171,40 +1168,36 @@ function renderArticle() {
     <article class="art">
       <div class="art__body">
         <header class="art__head">
-          <h1 class="art__title">Skin Care for Menopausal Skin: Best Ingredients and Routine</h1>
-          <p class="art__byline">Medically reviewed by Ellen Byars, MSN, WHNP, MSCP &middot; Written by Kate Harrison &middot; June 18, 2026</p>
+          <h1 class="art__title">${title}</h1>
+          <p class="art__byline">${byline}</p>
           <div class="art__strip">
             <span class="art__reaction"><img class="art__avatar" src="${ASSET_BASE}/community-1.png" alt="" />1 Reaction</span>
             <span class="art__save">${ICON.bookmark}Save</span>
           </div>
         </header>
 
+        ${topCard}
+
         <div class="art-note">
           <p class="art-note__title">Key Takeaways</p>
-          <div class="art-note__item"><span class="art-note__bullet">&bull;</span><p class="art-note__text">Menopause can bring on noticeable skin changes, including dryness, sensitivity, and loss of firmness, largely due to falling estrogen levels that affect how skin produces moisture and collagen.</p></div>
+          <div class="art-note__item"><span class="art-note__bullet">&bull;</span><p class="art-note__text">${takeaway}</p></div>
           <button class="art-note__link">View all takeaways</button>
         </div>
 
-        <div class="art__lede">
-          <p>Skin changes like fine lines often come with age. But if you’ve found that the skin on your face has become drier, duller, or more sensitive to products as you approach menopause, you’re not alone.</p>
-          <p>Here are the best skin care ingredients that can help you care for your menopausal skin.</p>
-        </div>
+        <div class="art__lede">${lede.map((p) => `<p>${p}</p>`).join("")}</div>
 
         <div class="art-poll">Poll</div>
 
-        <section class="art__sec">
-          <h2 class="art__h2">How Menopause Affects Your Skin</h2>
-          <p>Skin changes often appear abruptly during perimenopause, the time leading up to menopause, marked by irregular periods. This is because hormonal changes, in particular falling levels of the hormone estrogen, affect skin cells.</p>
-          <p>Estrogen helps keep skin moisturized by telling skin cells to produce oil and other hydrating substances. Lower estrogen levels lead to drier skin, which can compromise the skin’s barrier, resulting in skin that’s easily irritated.</p>
-          <p>When estrogen levels are low, the body also makes less collagen, the protein that helps keep skin strong and smooth. Less collagen can cause a loss of skin firmness and elasticity. Research has shown that skin can lose as much as 30 percent of its collagen within five years of menopause.</p>
-          <p>Around menopause, women often develop dry skin, uneven skin texture, wrinkles, thinning or sagging skin, a dysfunctional skin barrier, slowed healing, or sensitive skin.</p>
-        </section>
-
-        <section class="art__sec art-collapse">
-          <h2 class="art__h2">The Best Ingredients for Menopausal Skin</h2>
-          <p>Whether you’re trying to tackle dryness, breakouts, or irritation, the best skin care ingredients for you will depend on your skin’s unique needs.</p>
-          <button class="art-collapse__link">Read full article ${ICON.chevDown}</button>
-        </section>
+        ${sections
+          .map((s, i) => {
+            const last = i === sections.length - 1;
+            return `<section class="art__sec${last ? " art-collapse" : ""}">
+          <h2 class="art__h2">${s.h2}</h2>
+          ${s.paras.map((p) => `<p>${p}</p>`).join("")}
+          ${last ? `<button class="art-collapse__link">Read full article ${ICON.chevDown}</button>` : ""}
+        </section>`;
+          })
+          .join("")}
       </div>
 
       <div class="art__end">
@@ -1247,6 +1240,70 @@ function renderArticle() {
   `;
 }
 
+// The fully-built skin-care Article Show (Figma "Mobile_Article").
+function renderArticle() {
+  return renderArticleShell({
+    title: "Skin Care for Menopausal Skin: Best Ingredients and Routine",
+    byline: "Medically reviewed by Ellen Byars, MSN, WHNP, MSCP &middot; Written by Kate Harrison &middot; June 18, 2026",
+    takeaway:
+      "Menopause can bring on noticeable skin changes, including dryness, sensitivity, and loss of firmness, largely due to falling estrogen levels that affect how skin produces moisture and collagen.",
+    lede: [
+      "Skin changes like fine lines often come with age. But if you’ve found that the skin on your face has become drier, duller, or more sensitive to products as you approach menopause, you’re not alone.",
+      "Here are the best skin care ingredients that can help you care for your menopausal skin.",
+    ],
+    sections: [
+      {
+        h2: "How Menopause Affects Your Skin",
+        paras: [
+          "Skin changes often appear abruptly during perimenopause, the time leading up to menopause, marked by irregular periods. This is because hormonal changes, in particular falling levels of the hormone estrogen, affect skin cells.",
+          "Estrogen helps keep skin moisturized by telling skin cells to produce oil and other hydrating substances. Lower estrogen levels lead to drier skin, which can compromise the skin’s barrier, resulting in skin that’s easily irritated.",
+          "When estrogen levels are low, the body also makes less collagen, the protein that helps keep skin strong and smooth. Less collagen can cause a loss of skin firmness and elasticity. Research has shown that skin can lose as much as 30 percent of its collagen within five years of menopause.",
+          "Around menopause, women often develop dry skin, uneven skin texture, wrinkles, thinning or sagging skin, a dysfunctional skin barrier, slowed healing, or sensitive skin.",
+        ],
+      },
+      {
+        h2: "The Best Ingredients for Menopausal Skin",
+        paras: [
+          "Whether you’re trying to tackle dryness, breakouts, or irritation, the best skin care ingredients for you will depend on your skin’s unique needs.",
+        ],
+      },
+    ],
+  });
+}
+
+// Article Show that belongs to a Collection — same template as the skin-care
+// article, generic placeholder copy for now, with the "Part of a collection"
+// card (renderCollectionCallout) above Key Takeaways. `collection.screen` is the
+// Collection it links to.
+function renderCollectionArticle(collection) {
+  return renderArticleShell({
+    topCard: renderCollectionCallout(collection),
+    title: "Article Title Goes Here",
+    byline: "Medically reviewed by [Reviewer], MD &middot; Written by [Author] &middot; 2026",
+    takeaway:
+      "A short, one-sentence key takeaway summarizing the most important point of this article for the reader. (Placeholder copy.)",
+    lede: [
+      "This is placeholder lede copy introducing the article — a sentence or two setting up what the reader will learn. Real content is not written yet.",
+      "A second introductory line continues the setup before the body sections begin.",
+    ],
+    sections: [
+      {
+        h2: "Section Heading One",
+        paras: [
+          "Placeholder body paragraph. Real copy for this collection article will be written later — for now this stands in to show the full article layout: header, key takeaways, lede, poll, and body sections.",
+          "A second placeholder paragraph continues the section so the reading column has realistic length and rhythm.",
+        ],
+      },
+      {
+        h2: "Section Heading Two",
+        paras: [
+          "A final placeholder section, collapsed with a “Read full article” link, mirroring the skin-care article’s structure.",
+        ],
+      },
+    ],
+  });
+}
+
 function render() {
   const screen = persona.screens.find((s) => s.id === state.screenId) || persona.screens[0];
 
@@ -1279,21 +1336,20 @@ function render() {
     return;
   }
 
-  // Screen content: content modules if the screen has them, the gated welcome
-  // card, otherwise the labelled placeholder.
+  // Screen content: content modules if the screen has them, a built surface
+  // (advisors / community hub / topic hub / article), otherwise the labelled
+  // placeholder (e.g. the gated "Home as a hub" home).
   let content;
   if (screen.modules) {
     content = renderModules();
   } else if (screen.id === "advisors") {
     content = renderAdvisors();
-  } else if (screen.type === "gated-home") {
-    content = renderGatedHome();
   } else if (screen.id === "community-overview") {
     content = renderCommunityHub();
   } else if (screen.topicHub) {
     content = renderTopicHub(screen.topicHub);
   } else if (screen.collection) {
-    content = renderCollectionCallout(screen.collection);
+    content = renderCollectionArticle(screen.collection);
   } else if (screen.id === "article") {
     content = renderArticle();
   } else {
@@ -1302,7 +1358,7 @@ function render() {
   // Fill the viewport (centering the label / keeping the footer below the fold)
   // only for label & gated screens; module/content screens (incl. the Community
   // hub and Topic Hubs) flow at natural height from the top.
-  const bodyFill = !screen.modules && screen.id !== "advisors" && screen.id !== "community-overview" && screen.id !== "article" && !screen.topicHub ? " screen__body--fill" : "";
+  const bodyFill = !screen.modules && screen.id !== "advisors" && screen.id !== "community-overview" && screen.id !== "article" && !screen.topicHub && !screen.collection ? " screen__body--fill" : "";
 
   // Chrome differs by layout mode. Desktop: one persistent horizontal header
   // (renderDesktopHeader) with inline nav + breadcrumb — the mobile slide-out

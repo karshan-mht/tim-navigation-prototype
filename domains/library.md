@@ -45,7 +45,7 @@ An **Article Show** belongs either to a **Topic Hub** or to a **Collection**:
 | Screen | id | Links up to |
 |---|---|---|
 | Article Show | `article` | **Topic Hub** (`topic-hub`) — level-up pill labelled "Topic Hub" |
-| Article Show (in Collection) | `article-collection` | **Collection** (`collection`) — in-body collection callout |
+| Article Show (in Collection) | `article-collection` | **Collection** (`collection`) — full article template + in-body collection callout above Key Takeaways |
 
 > **Topic Center was folded into Collections (2026-08-04).** The old `topic`
 > "Topic Center" screen is **retired**. It was "a collection of sponsored content,"
@@ -55,8 +55,10 @@ An **Article Show** belongs either to a **Topic Hub** or to a **Collection**:
 > links to a Collection.
 
 The splash's "one Article card" opens the `article-collection` variant. That
-Article Show has no level-up pill and no page-title label; an in-page
-**"part of a collection" callout box** near the top links to its **Collection** (see
+Article Show uses the **same full article template** as the standalone Article Show
+(shared `renderArticleShell`, generic placeholder copy); an in-page
+**"part of a collection" callout box** sits directly **above Key Takeaways** and
+links to its **Collection** (see
 [navigation.md](../foundation/navigation.md) §2). Collection itself is a plain page.
 That collection chain is a Splash Landing deep-link, documented in
 [landing.md](landing.md).
