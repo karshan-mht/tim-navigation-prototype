@@ -170,7 +170,7 @@ const PANEL_CARDS = {
     title: "Welcome back, Jannie123!",
     sub: "You’re not logged in.",
     cta: { label: "Log in now", action: "log-in" },
-    link: { label: "Join for free", screen: "signup-start" },
+    link: { label: "Other ways to log in", screen: "signup-start" },
   },
   // Logged-in card (7417:3712) — Share posts to Activity, Ask a question to Q&A.
   "logged-in-member": {
