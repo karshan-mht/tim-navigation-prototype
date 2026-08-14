@@ -193,6 +193,36 @@ const COMMUNITY_MODULES = [
   { title: "Community Values & Ambassador Program", desc: "How we look after each other", screen: "com-values" },
 ];
 
+// Community preview cards — the NEW Visitor + Subscriber Community page (Figma
+// Community 5:2 desktop / 6:68 mobile). A "get a glimpse what's happening inside"
+// content preview that funnels to a join upsell — deliberately DIFFERENT from the
+// wireframe orientation menu (COMMUNITY_MODULES) the members still get. Each card
+// previews one feature with a headline stat + a one-line summary of what's inside.
+// The stat COUNT is always the literal "[TBD]" placeholder, never a fabricated
+// number (same rule as the member hub / splash community count — see DECISIONS
+// 2026-07-27); the mockup's sample numbers are dropped. `memberOnly` cards carry
+// the magenta "· Member only" tag and a lock (not an arrow) — content gated.
+const COMMUNITY_PREVIEW = [
+  { icon: "community-posts", title: "Posts", stat: "[TBD] updates shared", memberOnly: true, screen: "com-activities", desc: "This week's posts cover HRT patches, sleep issues, and how to cope with love and family relationships." },
+  { icon: "community-questions", title: "Questions & Answers", stat: "[TBD] questions answered", screen: "com-questions", desc: "Members are asking about hot flashes, hormone therapy options, and how to manage mood changes during menopause." },
+  { icon: "community-groups", title: "Groups", stat: "[TBD] groups active", screen: "com-groups", desc: "This month, groups have shared tips on managing weight gain, staying active, and finding energy during perimenopause." },
+  { icon: "community-people", title: "People", stat: "[TBD] people joined", screen: "com-meet", desc: "Many members have found their match over time — discover who shares your journey." },
+];
+
+// Inline SVG glyphs for the community preview cards (icons + chevrons).
+// Inlined (not <img>) so they render over file:// and travel with main.js;
+// these carry baked-in fills (magenta glyph / blue arrow), so unlike ICON_SVGS
+// they are NOT currentColor-tinted. The larger decorative banner/upsell graphics
+// stay as <img> (assets/community-banner-graphic.svg, community-upsell-{tr,bl}.svg).
+const COMMUNITY_SVGS = {
+  "community-posts": `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="40" fill="#F6EFF8"/><path d="M46.5455 19.5H33.4545C23.5223 19.5 16 27.3531 16 37.7222L16.0097 38.2767C16.3398 47.6632 25.0047 55.0397 33.6146 55.0397L36.2691 55.0379L36.4881 55.2601C39.7831 58.4821 44.3149 60.5 48.7273 60.5C50.5152 60.5 51.8788 59.4086 51.8788 57.5051C51.8788 57.1476 51.833 56.8136 51.7451 56.4314L51.6433 56.0305C51.58 55.799 51.3366 54.9887 51.3019 54.8681L51.1535 54.3113L51.3402 54.2629C58.8259 52.1459 64 46.2833 64 37.7222C64 27.4237 56.3376 19.5 46.5455 19.5ZM46.5455 24.0556C53.9369 24.0556 59.6364 29.9494 59.6364 37.7222C59.6364 44.65 55.1161 49.1069 48.3686 50.281L46.5455 50.5982V52.5278L46.562 53.1366C46.6058 53.9371 46.7366 54.7016 46.9484 55.5363L47.0205 55.8085C43.9743 55.3312 40.9217 53.6293 38.7869 51.2164L38.139 50.4841H33.6146C27.086 50.4841 20.3636 44.6498 20.3636 37.7222C20.3636 29.8691 25.9323 24.0556 33.4545 24.0556H46.5455Z" fill="#A440BC"/></svg>`,
+  "community-questions": `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="40" fill="#F6EFF8"/><path d="M60.8448 34.2172C60.1166 33.4579 59.3655 32.6738 59.1193 32.08C58.9 31.5503 58.8834 30.46 58.869 29.5C58.8379 27.431 58.7986 24.8572 56.9697 23.0303C55.1407 21.2034 52.569 21.1683 50.5 21.131C49.54 21.1166 48.4497 21.1 47.92 20.8807C47.3262 20.6345 46.5421 19.8834 45.7828 19.1552C44.3179 17.7503 42.4931 16 40 16C37.5069 16 35.6821 17.7503 34.2172 19.1552C33.4579 19.8834 32.6738 20.6345 32.08 20.8807C31.5503 21.1 30.46 21.1166 29.5 21.131C27.431 21.1724 24.8572 21.2014 23.0345 23.0345C21.2117 24.8676 21.1724 27.431 21.131 29.5C21.1166 30.46 21.1 31.5503 20.8807 32.08C20.6345 32.6738 19.8834 33.4579 19.1552 34.2172C17.7503 35.6821 16 37.5172 16 40C16 42.4828 17.7503 44.3179 19.1552 45.7931C19.8834 46.5524 20.6345 47.3366 20.8807 47.9303C21.1 48.46 21.1166 49.5503 21.131 50.5103C21.1621 52.5793 21.2014 55.1531 23.0303 56.98C24.8593 58.8069 27.431 58.8421 29.5 58.8793C30.46 58.8938 31.5503 58.9103 32.08 59.1297C32.6738 59.3759 33.4579 60.1269 34.2172 60.8552C35.6821 62.2497 37.5172 64 40 64C42.4828 64 44.3179 62.2497 45.7828 60.8448C46.5421 60.1166 47.3262 59.3655 47.92 59.1193C48.4497 58.9 49.54 58.8834 50.5 58.869C52.569 58.8379 55.1428 58.7986 56.9697 56.9697C58.7966 55.1407 58.8317 52.569 58.869 50.5C58.8834 49.54 58.9 48.4497 59.1193 47.92C59.3655 47.3262 60.1166 46.5421 60.8448 45.7828C62.2497 44.3179 64 42.4931 64 40C64 37.5069 62.2497 35.6821 60.8448 34.2172ZM57.2614 42.3462C56.2641 43.3807 55.1345 44.5641 54.5324 46.0207C53.949 47.4276 53.9262 48.9503 53.9117 50.4255C53.8952 51.5345 53.8724 53.0552 53.4669 53.4586C53.0614 53.8621 51.5428 53.8869 50.4338 53.9034C48.9586 53.9262 47.4359 53.949 46.029 54.5241C44.5807 55.1262 43.3952 56.2559 42.3545 57.2531C41.6097 57.9669 40.4966 59.0345 40 59.0345C39.5034 59.0345 38.3903 57.9669 37.6538 57.2614C36.6193 56.2641 35.4359 55.1345 33.9793 54.5324C32.5724 53.949 31.0497 53.9262 29.5745 53.9117C28.4655 53.8952 26.9448 53.8724 26.5414 53.4669C26.1379 53.0614 26.1131 51.5428 26.0966 50.4338C26.0738 48.9586 26.051 47.4359 25.4759 46.029C24.8738 44.5807 23.7441 43.3952 22.7469 42.3545C22.0331 41.6097 20.9655 40.4966 20.9655 40C20.9655 39.5034 22.0331 38.3903 22.7386 37.6538C23.7359 36.6193 24.8655 35.4359 25.4676 33.9793C26.051 32.5724 26.0738 31.0497 26.0883 29.5745C26.1131 28.4655 26.1379 26.9448 26.5517 26.5517C26.9655 26.1586 28.4759 26.1234 29.5848 26.1069C31.06 26.0841 32.5828 26.0614 33.9897 25.4862C35.4379 24.8841 36.6234 23.7545 37.6641 22.7572C38.3903 22.0331 39.5034 20.9655 40 20.9655C40.4966 20.9655 41.6097 22.0331 42.3462 22.7386C43.3807 23.7359 44.5641 24.8655 46.0207 25.4676C47.4276 26.051 48.9503 26.0738 50.4255 26.0883C51.5345 26.1048 53.0552 26.1276 53.4586 26.5331C53.8621 26.9386 53.8869 28.4572 53.9034 29.5662C53.9262 31.0414 53.949 32.5641 54.5241 33.971C55.1262 35.4193 56.2559 36.6048 57.2531 37.6455C57.9586 38.3821 59.0262 39.4952 59.0262 39.9917C59.0262 40.4883 57.9669 41.6097 57.2614 42.3462ZM43.3103 50.7586C43.3103 51.4133 43.1162 52.0534 42.7525 52.5978C42.3887 53.1421 41.8717 53.5664 41.2668 53.817C40.6619 54.0675 39.9963 54.1331 39.3542 54.0054C38.712 53.8776 38.1222 53.5623 37.6592 53.0994C37.1963 52.6364 36.881 52.0466 36.7533 51.4044C36.6255 50.7623 36.6911 50.0967 36.9416 49.4918C37.1922 48.8869 37.6165 48.3699 38.1609 48.0062C38.7053 47.6424 39.3453 47.4483 40 47.4483C40.878 47.4483 41.72 47.797 42.3408 48.4179C42.9616 49.0387 43.3103 49.8807 43.3103 50.7586ZM49.1034 35.8621C49.1034 39.6628 46.271 42.8717 42.4269 43.84C42.2975 44.4396 41.9508 44.9701 41.4535 45.3292C40.9562 45.6883 40.3436 45.8506 39.7337 45.7848C39.1238 45.719 38.5599 45.4298 38.1507 44.9729C37.7414 44.516 37.5158 43.9237 37.5172 43.3103V41.6552C37.5172 40.9967 37.7788 40.3652 38.2444 39.8996C38.71 39.434 39.3415 39.1724 40 39.1724C42.2759 39.1724 44.1379 37.6869 44.1379 35.8621C44.1379 34.0372 42.2759 32.5517 40 32.5517C37.7241 32.5517 35.8621 34.0372 35.8621 35.8621V36.6897C35.8621 37.3481 35.6005 37.9796 35.1349 38.4452C34.6693 38.9108 34.0378 39.1724 33.3793 39.1724C32.7208 39.1724 32.0893 38.9108 31.6237 38.4452C31.1581 37.9796 30.8966 37.3481 30.8966 36.6897V35.8621C30.8966 31.2979 34.9807 27.5862 40 27.5862C45.0193 27.5862 49.1034 31.2979 49.1034 35.8621Z" fill="#A440BC"/></svg>`,
+  "community-groups": `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="40" fill="#F6EFF8"/><path d="M40 30.3571C38.3431 30.3571 37 31.6523 37 33.25C37 34.8477 38.3431 36.1429 40 36.1429C41.6569 36.1429 43 34.8477 43 33.25C43 31.6523 41.6569 30.3571 40 30.3571ZM33 33.25C33 29.5221 36.134 26.5 40 26.5C43.866 26.5 47 29.5221 47 33.25C47 36.9779 43.866 40 40 40C36.134 40 33 36.9779 33 33.25ZM24 33.25C22.8954 33.25 22 34.1135 22 35.1786C22 36.2437 22.8954 37.1071 24 37.1071C25.1046 37.1071 26 36.2437 26 35.1786C26 34.1135 25.1046 33.25 24 33.25ZM18 35.1786C18 31.9832 20.6863 29.3929 24 29.3929C27.3137 29.3929 30 31.9832 30 35.1786C30 38.3739 27.3137 40.9643 24 40.9643C20.6863 40.9643 18 38.3739 18 35.1786ZM56 33.25C54.8954 33.25 54 34.1135 54 35.1786C54 36.2437 54.8954 37.1071 56 37.1071C57.1046 37.1071 58 36.2437 58 35.1786C58 34.1135 57.1046 33.25 56 33.25ZM50 35.1786C50 31.9832 52.6863 29.3929 56 29.3929C59.3137 29.3929 62 31.9832 62 35.1786C62 38.3739 59.3137 40.9643 56 40.9643C52.6863 40.9643 50 38.3739 50 35.1786ZM34.284 47.3575C32.8763 48.3228 32 49.6924 32 51.5714C32 52.6366 31.1046 53.5 30 53.5C28.8954 53.5 28 52.6366 28 51.5714C28 48.3076 29.6237 45.8202 31.966 44.2141C34.2487 42.6488 37.1785 41.9286 40 41.9286C42.8215 41.9286 45.7513 42.6487 48.034 44.214C50.3763 45.8201 52 48.3076 52 51.5714C52 52.6366 51.1046 53.5 50 53.5C48.8954 53.5 48 52.6366 48 51.5714C48 49.6924 47.1237 48.3227 45.716 47.3574C44.2487 46.3513 42.1785 45.7858 40 45.7858C37.8215 45.7858 35.7513 46.3514 34.284 47.3575ZM25.969 44.4831C26.1628 45.5317 25.4383 46.5332 24.3509 46.7201C21.5785 47.1965 20 48.6521 20 50.6071C20 51.6723 19.1046 52.5357 18 52.5357C16.8954 52.5357 16 51.6723 16 50.6071C16 45.959 19.9559 43.5574 23.6491 42.9228C24.7366 42.7359 25.7752 43.4345 25.969 44.4831ZM54.031 44.4831C54.2248 43.4345 55.2634 42.7359 56.3509 42.9228C60.0441 43.5574 64 45.959 64 50.6071C64 51.6723 63.1046 52.5357 62 52.5357C60.8954 52.5357 60 51.6723 60 50.6071C60 48.6521 58.4215 47.1965 55.6491 46.7201C54.5617 46.5332 53.8372 45.5317 54.031 44.4831Z" fill="#A441BC"/></svg>`,
+  "community-people": `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="40" fill="#F6EFF8"/><path d="M38.8411 24.4C35.552 24.4 32.8857 27.0191 32.8857 30.25C32.8857 33.4808 35.552 36.1 38.8411 36.1C42.1301 36.1 44.7964 33.4808 44.7964 30.25C44.7964 27.0191 42.1301 24.4 38.8411 24.4ZM28.9154 30.25C28.9154 24.8652 33.3593 20.5 38.8411 20.5C44.3228 20.5 48.7667 24.8652 48.7667 30.25C48.7667 35.6347 44.3228 40 38.8411 40C33.3593 40 28.9154 35.6347 28.9154 30.25ZM38.8411 45.85C32.0046 45.85 26.4086 51.0736 25.966 57.678C25.894 58.7526 24.9488 59.5665 23.8548 59.4957C22.7608 59.425 21.9324 58.4965 22.0044 57.4219C22.5833 48.7811 29.8993 41.95 38.8411 41.95C39.6021 41.95 40.3523 41.9996 41.0884 42.0959C42.1751 42.2381 42.9387 43.2188 42.7939 44.2864C42.6491 45.3539 41.6508 46.104 40.564 45.9617C40.0013 45.8881 39.4262 45.85 38.8411 45.85ZM50.0591 43.9C51.1554 43.8999 52.0443 44.7728 52.0444 45.8498L52.0447 49.7499H56.0149C57.1112 49.7499 58 50.623 58 51.6999C58 52.7769 57.1112 53.6499 56.0149 53.6499H52.0449V57.5499C52.0449 58.6269 51.1561 59.4999 50.0598 59.4999C48.9634 59.4999 48.0746 58.6269 48.0746 57.5499V53.6499H44.1041C43.0078 53.6499 42.119 52.7769 42.119 51.6999C42.119 50.623 43.0078 49.7499 44.1041 49.7499H48.0745L48.0741 45.8501C48.074 44.7732 48.9627 43.9001 50.0591 43.9Z" fill="#A441BC"/></svg>`,
+  "community-lock": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.33333 7.6C5.33333 3.95492 8.3181 1 12 1C15.6819 1 18.6667 3.95492 18.6667 7.6V7.76536C18.9807 7.83348 19.2821 7.93267 19.5733 8.07957C20.4096 8.50141 21.0895 9.17453 21.5156 10.0024C21.7904 10.5363 21.8999 11.1047 21.9509 11.723C22 12.3183 22 13.0491 22 13.9345V16.6655C22 17.5509 22 18.2817 21.9509 18.877C21.8999 19.4953 21.7904 20.0637 21.5156 20.5976C21.0895 21.4255 20.4096 22.0986 19.5733 22.5204C19.034 22.7924 18.4599 22.9009 17.8354 22.9514C17.234 23 16.4959 23 15.6015 23H8.39853C7.50413 23 6.76596 23 6.16464 22.9514C5.54009 22.9009 4.96597 22.7924 4.42671 22.5204C3.59043 22.0986 2.91052 21.4255 2.48442 20.5976C2.20965 20.0637 2.10013 19.4953 2.04911 18.877C1.99997 18.2817 1.99999 17.5509 2 16.6654V13.9346C1.99999 13.0491 1.99997 12.3183 2.04911 11.723C2.10013 11.1047 2.20965 10.5363 2.48442 10.0024C2.91052 9.17453 3.59043 8.50141 4.42671 8.07957C4.71794 7.93267 5.01933 7.83348 5.33333 7.76536V7.6ZM7.55556 7.60179C7.81968 7.59999 8.10044 7.59999 8.39856 7.6H15.6014C15.8996 7.59999 16.1803 7.59999 16.4444 7.60179V7.6C16.4444 5.16995 14.4546 3.2 12 3.2C9.5454 3.2 7.55556 5.16995 7.55556 7.6V7.60179ZM6.3456 9.84131C5.85847 9.88071 5.60936 9.95213 5.43558 10.0398C5.01744 10.2507 4.67748 10.5873 4.46443 11.0012C4.37589 11.1733 4.30375 11.4199 4.26395 11.9021C4.22309 12.3972 4.22222 13.0378 4.22222 13.98V16.62C4.22222 17.5622 4.22309 18.2028 4.26395 18.6979C4.30375 19.1801 4.37589 19.4267 4.46443 19.5988C4.67748 20.0127 5.01744 20.3493 5.43558 20.5602C5.60936 20.6479 5.85847 20.7193 6.3456 20.7587C6.8457 20.7991 7.49269 20.8 8.44445 20.8H15.5556C16.5073 20.8 17.1543 20.7991 17.6544 20.7587C18.1415 20.7193 18.3906 20.6479 18.5644 20.5602C18.9826 20.3493 19.3225 20.0127 19.5356 19.5988C19.6241 19.4267 19.6963 19.1801 19.7361 18.6979C19.7769 18.2028 19.7778 17.5622 19.7778 16.62V13.98C19.7778 13.0378 19.7769 12.3972 19.7361 11.9021C19.6963 11.4199 19.6241 11.1733 19.5356 11.0012C19.3225 10.5873 18.9826 10.2507 18.5644 10.0398C18.3906 9.95213 18.1415 9.88071 17.6544 9.84131C17.1543 9.80086 16.5073 9.8 15.5556 9.8H8.44445C7.49269 9.8 6.8457 9.80086 6.3456 9.84131Z" fill="#A440BC"/><path d="M10.8889 13.1C10.8889 12.4925 11.3864 12 12 12C12.6137 12 13.1111 12.4925 13.1111 13.1V16.4C13.1111 17.0075 12.6137 17.5 12 17.5C11.3864 17.5 10.8889 17.0075 10.8889 16.4V13.1Z" fill="#A440BC"/></svg>`,
+  "community-arrow": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.7271 11.3603L14.5917 4.39037C14.0689 3.8797 13.2133 3.86863 12.6763 4.3656C12.1838 4.82134 12.1467 5.55802 12.5741 6.05584L12.6607 6.14728L17.5292 10.6528H3.40797C2.63037 10.6528 2 11.2559 2 12C2 12.7441 2.63037 13.3472 3.40797 13.3472H17.5292L12.6763 17.8381C12.1838 18.2938 12.1467 19.0305 12.5741 19.5283L12.6607 19.6197L12.6763 19.6344C13.2133 20.1314 14.0689 20.1203 14.5917 19.6096L21.7271 12.6397C22.091 12.2843 22.091 11.7157 21.7271 11.3603Z" fill="#0F57A8"/></svg>`,
+};
+
 // Topic Hubs — a NEW surface (distinct from the old Topic Center, which was
 // retired and folded into Collections 2026-08-04). A hub aggregates content across feature types for
 // one patient concern (up to 8 per site), so a member can explore a concern
@@ -716,6 +746,85 @@ function renderCommunityHub() {
     <section class="comm-hub">
       <h1 class="comm-hub__title">Community</h1>
       <div class="comm-hub__list">${cards}</div>
+    </section>
+  `;
+}
+
+// Community preview — the Visitor + Subscriber /community page (Figma Community
+// 5:2 desktop / 6:68 mobile). A beige intro banner (title + community count) over
+// four feature preview cards (COMMUNITY_PREVIEW) and a closing join upsell. This
+// replaces the orientation-menu hub for those two personas only; logged-out and
+// logged-in members keep renderCommunityHub above. Subscribers get the same
+// preview but the upsell swaps to "finish up" → Registration Step, matching how
+// the splash home already differentiates them (see renderHome).
+function renderCommunityPreview() {
+  const cards = COMMUNITY_PREVIEW.map((c) => {
+    const stat = c.memberOnly
+      ? `${c.stat}<span class="comm-card__member"> &middot; Member only</span>`
+      : c.stat;
+    const chevron = c.memberOnly ? "community-lock" : "community-arrow";
+    return `
+      <button class="comm-card" data-screen="${c.screen}">
+        <span class="comm-card__content">
+          <span class="comm-card__left">
+            <span class="comm-card__icon">${COMMUNITY_SVGS[c.icon]}</span>
+            <span class="comm-card__text">
+              <span class="comm-card__title">${c.title}</span>
+              <span class="comm-card__stat">${stat}</span>
+            </span>
+          </span>
+          <span class="comm-card__chevron">${COMMUNITY_SVGS[chevron]}</span>
+        </span>
+        <span class="comm-card__desc">${c.desc}</span>
+      </button>`;
+  }).join("");
+
+  // Subscriber upsell mirrors the splash home's "finish up" CTA (renderHome).
+  const isSubscriber = LOCKED_PERSONA_KEY === "subscriber";
+  const upTitle = isSubscriber ? "Don't miss out! You're almost in." : "You don't have to figure this out alone.";
+  const upSub = isSubscriber
+    ? "Finish setting up your account to unlock posts, questions, groups, and the full community."
+    : "Get medically-reviewed resources, tips from real women, and a community who gets it.";
+  const upPrimary = isSubscriber
+    ? `<button class="comm-upsell__btn comm-upsell__btn--primary" data-screen="registration-step">Finish up now</button>`
+    : `<button class="comm-upsell__btn comm-upsell__btn--primary" data-screen="signup-start">Join for free</button>`;
+
+  return `
+    <section class="comm-preview">
+      <div class="comm-preview__banner">
+        <div class="comm-preview__banner-inner">
+          <img class="comm-preview__banner-graphic" src="${ASSET_BASE}/community-banner-graphic.svg" alt="" aria-hidden="true" />
+          <div class="comm-preview__head">
+            <h1 class="comm-preview__title">Community</h1>
+            <p class="comm-preview__sub">Get a glimpse what's happening inside &mdash; then join to take part.</p>
+          </div>
+          <div class="comm-preview__status">
+            <span class="comm-preview__avatars">
+              ${[1, 2, 3].map((n) => `<img class="comm-preview__avatar" src="${ASSET_BASE}/community-${n}.png" alt="" aria-hidden="true" />`).join("")}
+            </span>
+            <span class="comm-preview__count">12,345 women in the community</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comm-preview__list">
+        ${cards}
+        <div class="comm-upsell">
+          <div class="comm-upsell__card">
+            <img class="comm-upsell__graphic comm-upsell__graphic--tr" src="${ASSET_BASE}/community-upsell-tr.svg" alt="" aria-hidden="true" />
+            <img class="comm-upsell__graphic comm-upsell__graphic--bl" src="${ASSET_BASE}/community-upsell-bl.svg" alt="" aria-hidden="true" />
+            <div class="comm-upsell__text">
+              <p class="comm-upsell__title">${upTitle}</p>
+              <p class="comm-upsell__sub">${upSub}</p>
+            </div>
+            <div class="comm-upsell__buttons">
+              ${upPrimary}
+              <button class="comm-upsell__btn comm-upsell__btn--secondary" data-screen="symptom-checker">Check symptoms first</button>
+            </div>
+          </div>
+          <p class="comm-upsell__note">BTW, we don't sell supplements or prescribe treatments. Just unbiased information and real talk.</p>
+        </div>
+      </div>
     </section>
   `;
 }
@@ -1358,7 +1467,11 @@ function render() {
   } else if (screen.id === "advisors") {
     content = renderAdvisors();
   } else if (screen.id === "community-overview") {
-    content = renderCommunityHub();
+    // Visitor + Subscriber get the new content-preview page; members keep the
+    // wireframe orientation menu.
+    content = LOCKED_PERSONA_KEY === "visitor" || LOCKED_PERSONA_KEY === "subscriber"
+      ? renderCommunityPreview()
+      : renderCommunityHub();
   } else if (screen.topicHub) {
     content = renderTopicHub(screen.topicHub);
   } else if (screen.collection) {

@@ -51,11 +51,62 @@ own **My Profile**, which is an Account screen; see [account.md](account.md).)
 ## Community Overview (the hub)
 
 `community-overview` (label "Community Overview") — a top-level `page` that renders
-the **/community hub landing**: a fast, lightweight **orientation menu**, not a
-content feed. Reached from:
+**one of two surfaces, split by persona** (both branch off `screen.id ===
+"community-overview"` in `render()`):
+
+| Persona | Surface | Render fn |
+|---|---|---|
+| **Visitor, Subscriber** | Content **preview** page (Figma Community `5:2` / `6:68`) | `renderCommunityPreview()` |
+| **Logged-Out, Logged-In Member** | Wireframe **orientation menu** (below) | `renderCommunityHub()` |
+
+Reached from:
 
 - The shared panel's single **Community** tab (all four personas — see [navigation.md](../foundation/navigation.md) §3)
 - Splash Community section **"Join the conversation →"** (see [landing.md](landing.md))
+
+### Visitor / Subscriber — the preview page (`renderCommunityPreview`)
+
+A "get a glimpse what's happening inside" marketing preview (added 2026-08-13,
+Figma Community `5:2` desktop / `6:68` mobile), not the orientation menu. Data-driven
+(`COMMUNITY_PREVIEW` + `renderCommunityPreview` in `main.js`). Structure:
+
+- **Beige intro banner** (`.comm-preview__banner`, full-bleed `#fbf7f3`): DM Serif
+  "Community" title, subtitle "Get a glimpse what's happening inside — then join to
+  take part.", avatar stack (`community-{1,2,3}.png`) + "12,345 women in the
+  community", and a dotted corner graphic.
+- **Four feature preview cards** (`.comm-card`) — 80px magenta glyph icon, title,
+  headline stat, one-line summary, chevron:
+
+  | Card | Stat | Chevron | → screen |
+  |---|---|---|---|
+  | Posts | [TBD] updates shared **· Member only** | lock | `com-activities` |
+  | Questions & Answers | [TBD] questions answered | arrow | `com-questions` |
+  | Groups | [TBD] groups active | arrow | `com-groups` |
+  | People | [TBD] people joined | arrow | `com-meet` |
+
+  **Posts is `memberOnly`** — magenta "· Member only" tag + a **lock** (not an arrow):
+  content is gated behind joining.
+- **Light join upsell** (`.comm-upsell` — white/bordered, *not* the navy splash CTA):
+  persona-aware, mirroring the splash home's closing card. Visitor → "You don't have
+  to figure this out alone." / **Join for free** (`signup-start`); Subscriber → "Don't
+  miss out! You're almost in." / **Finish up now** (`registration-step`). Both share
+  the secondary **Check symptoms first** (`symptom-checker`) and the disclaimer note.
+
+**Counts:** each stat's number is the literal **`[TBD]`** placeholder ("[TBD] updates
+shared", etc.) — never a fabricated number, same rule as the member hub and the splash
+community count ([DECISIONS](../DECISIONS.md) 2026-07-27). The mockup's sample numbers
+(123/12/3/32) are dropped. The one-line summary under each card stays as descriptive
+preview copy (not a count).
+
+Assets — the card **glyphs are inlined** in `main.js` as `COMMUNITY_SVGS`
+(`community-{posts,questions,groups,people}` + `community-{lock,arrow}`; baked-in
+fills, not `currentColor`-tinted like `ICON_SVGS`). The larger **decorative graphics
+stay `<img>`** (too heavy to inline): `community-banner-graphic.svg` (inside
+`.comm-preview__banner-inner`, right-aligned to the 728px column) and
+`community-upsell-{tr,bl}.svg` (bleed off the upsell corners). Source `.svg` files
+remain in `assets/`.
+
+### Members — the orientation menu (`renderCommunityHub`)
 
 **Render:** module-based, following the Splash Landing pattern — a data array
 (`COMMUNITY_MODULES` in `main.js`) + a render function (`renderCommunityHub()`),

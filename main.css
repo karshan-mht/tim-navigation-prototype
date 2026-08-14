@@ -986,6 +986,148 @@ body {
 }
 .comm-mod__desc { font-size: 16px; line-height: 1.35; color: var(--color-text-secondary); }
 
+/* ---- Community preview (Visitor + Subscriber) — Figma Community 5:2 / 6:68 ---- */
+/* A "get a glimpse" content preview: a beige intro banner, four feature preview
+   cards, and a join upsell. Distinct from the wireframe hub above (members). */
+.comm-preview { display: flex; flex-direction: column; }
+
+/* Beige intro banner — full-bleed; its inner content caps to the reading column. */
+.comm-preview__banner {
+  position: relative;
+  overflow: hidden;
+  background: #fbf7f3;
+  padding: 24px 12px;
+}
+.comm-preview__banner-inner {
+  position: relative;
+  z-index: 1;              /* above the decorative graphic */
+  max-width: var(--content-column);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.comm-preview__head { display: flex; flex-direction: column; gap: 4px; }
+.comm-preview__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;         /* Figma holds 32/40 across breakpoints (node 12:4) */
+  line-height: 40px;
+  letter-spacing: var(--display-tracking);
+  color: var(--color-text);
+}
+.comm-preview__sub { margin: 0; font-size: 18px; line-height: 24px; color: var(--color-text-secondary); }
+.comm-preview__status { display: flex; align-items: center; gap: 10px; }
+.comm-preview__avatars { display: flex; align-items: center; }
+.comm-preview__avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #e9ebee;
+  border: 2px solid #fbf7f3;   /* banner-coloured ring, matching Figma */
+  margin-left: -8px;
+}
+.comm-preview__avatars .comm-preview__avatar:first-child { margin-left: 0; }
+.comm-preview__count { font-size: 14px; line-height: 22px; color: var(--color-text-secondary); }
+/* Decorative dotted graphic — top-right, aligned to the reading column's right
+   edge (it lives inside .comm-preview__banner-inner) and sits behind the text. */
+.comm-preview__banner-graphic {
+  position: absolute;
+  top: -24px;              /* bleed up under the banner's top padding */
+  right: 0;                /* flush to the 728px column's right edge */
+  z-index: -1;             /* behind the header text */
+  width: 210px;
+  pointer-events: none;
+}
+
+/* Card list — a centered reading column. */
+.comm-preview__list {
+  max-width: var(--content-column);
+  margin-inline: auto;
+  width: 100%;
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Feature preview card: icon + title/stat + chevron, then a summary line. */
+.comm-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.12s ease, transform 0.06s ease;
+}
+.comm-card:active { border-color: var(--color-primary); transform: scale(0.99); }
+.comm-card__content { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.comm-card__left { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.comm-card__icon { display: block; width: 80px; height: 80px; flex-shrink: 0; }
+.comm-card__icon svg { display: block; width: 100%; height: 100%; }
+.comm-card__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.comm-card__title { font-weight: 600; font-size: 18px; line-height: 24px; color: #000; }
+.comm-card__stat { font-size: 18px; line-height: 26px; color: var(--color-text-secondary); }
+.comm-card__member { color: var(--color-magenta); }
+.comm-card__chevron { display: block; width: 24px; height: 24px; flex-shrink: 0; }
+.comm-card__chevron svg { display: block; width: 100%; height: 100%; }
+.comm-card__desc { font-size: 18px; line-height: 26px; color: var(--color-text); }
+
+/* Join upsell — a light card (distinct from the navy splash CTA). */
+.comm-upsell { display: flex; flex-direction: column; gap: 16px; }
+.comm-upsell__card {
+  position: relative;
+  z-index: 0;              /* stacking context for the decorative graphics */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 32px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+.comm-upsell__graphic { position: absolute; z-index: -1; width: 280px; pointer-events: none; }
+.comm-upsell__graphic--tr { top: -73px; right: -155px; transform: scaleY(-1); }
+.comm-upsell__graphic--bl { bottom: -80px; left: -155px; }
+.comm-upsell__text { display: flex; flex-direction: column; gap: 8px; }
+.comm-upsell__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: var(--display-tracking);
+  color: var(--color-text);
+}
+.comm-upsell__sub { margin: 0; font-size: 18px; line-height: 26px; color: var(--color-text); }
+.comm-upsell__buttons { display: flex; flex-direction: column; gap: 16px; }
+.comm-upsell__btn {
+  padding: 14px 28px;
+  border-radius: 24px;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;     /* "Check symptoms first" stays on one line */
+  cursor: pointer;
+}
+.comm-upsell__btn--primary { border: none; background: var(--color-primary); color: #fff; }
+.comm-upsell__btn--primary:active { filter: brightness(0.97); }
+.comm-upsell__btn--secondary { border: 1px solid var(--color-primary); background: transparent; color: var(--color-primary); }
+.comm-upsell__btn--secondary:active { background: rgba(15, 87, 168, 0.06); }
+.comm-upsell__note { margin: 0; padding-left: 12px; font-size: 14px; line-height: 22px; color: var(--color-text); }
+
 /* ---- Topic Hub (aggregates one patient concern across feature types) ---- */
 /* Wireframe-level, like the community hub, but modules can carry a content-
    preview affordance (skeleton rows) — no fabricated content. */
@@ -1778,6 +1920,21 @@ body {
     gap: 16px;
     align-items: start;
   }
+
+  /* Community preview: full-bleed banner, 728px card column, and the upsell
+     card reflows to an even two-column split (copy left, buttons right). */
+  .comm-preview__banner { padding-block: 40px; }
+  .comm-preview__list { padding-block: 24px 40px; }
+  .comm-upsell__card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;   /* even two columns */
+    align-items: center;
+    gap: 32px;
+    padding: 32px;
+  }
+  .comm-upsell__title { font-size: 36px; line-height: 44px; }  /* Figma desktop 76:3110 */
+  .comm-upsell__graphic--tr { right: -175px; }
+  .comm-upsell__graphic--bl { left: -157px; bottom: -95px; }
 
   /* Advisors: a 728px reading page, centered — single-column list (the mobile
      divider-row style), not the 1000px two-up grid. */
