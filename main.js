@@ -665,10 +665,11 @@ function renderDesktopHeader(screen) {
 // show a selected state. Returns the tab's target screen id.
 function activeSectionTarget(screenId, homeId) {
   if (screenId === homeId) return homeId;
-  // Resources stays selected for library pages, collections, topic hubs, and
-  // articles — an article lives under Resources.
+  // Resources stays selected for library pages, collections, topic hubs,
+  // articles, and the Symptom Checker — all live under Resources.
   if (/^lib-/.test(screenId) || /^article/.test(screenId) ||
-      screenId === "all-collections" || screenId === "collection" || /^topic-hub/.test(screenId)) {
+      screenId === "all-collections" || screenId === "collection" ||
+      screenId === "symptom-checker" || /^topic-hub/.test(screenId)) {
     return "lib-all";
   }
   // Community stays selected for the overview, the com-* pages, and their
