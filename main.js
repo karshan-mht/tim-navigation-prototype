@@ -1684,6 +1684,21 @@ function render() {
 
   attachAutoHide();
   attachCarousels();
+  positionDropdown();
+}
+
+// Anchor the account dropdown directly under the profile button, in both the
+// mobile top nav and the desktop header, so it always sits under the avatar
+// without per-breakpoint CSS. The dropdown lives inside a viewport-fixed overlay,
+// so the button's viewport rect maps straight onto the dropdown's absolute
+// top/right. Runs synchronously after each render (before paint), so no flash.
+function positionDropdown() {
+  const dd = document.querySelector(".dropdown");
+  const btn = document.querySelector(".profile-btn");
+  if (!dd || !btn) return;
+  const r = btn.getBoundingClientRect();
+  dd.style.top = `${Math.round(r.bottom + 8)}px`;
+  dd.style.right = `${Math.round(window.innerWidth - r.right)}px`;
 }
 
 // Auto-hiding nav: slide the top nav up on scroll-down (past a small threshold),

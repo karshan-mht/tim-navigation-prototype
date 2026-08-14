@@ -1648,6 +1648,9 @@ body {
 
 .dropdown {
   position: absolute;
+  /* Fallback anchor; positionDropdown() overrides top/right inline each render so
+     the menu sits directly under the profile button in every layout (no
+     per-breakpoint override needed). */
   top: 60px;
   right: 12px;
   width: 246px;
@@ -1991,11 +1994,6 @@ body {
   .dnav__link:hover { background: rgba(13, 27, 41, 0.05); }
   .dnav__link.is-active { color: var(--color-primary); background: rgba(15, 87, 168, 0.08); }
   .dnav__right { justify-self: end; display: flex; align-items: center; gap: 10px; }
-
-  /* Profile dropdown: on desktop the profile button sits at the centered content
-     box's right edge (the .dnav__bar padding = --content-pad), not the viewport
-     edge — so align the dropdown there and drop it below the 76px header. */
-  .dropdown { top: 76px; right: var(--content-pad); }
 
   /* Breadcrumb bar — replaces the mobile level-up pill on detail screens. */
   .dnav__crumbbar {
