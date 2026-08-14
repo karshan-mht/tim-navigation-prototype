@@ -195,13 +195,15 @@ html.is-modal-open { overflow: hidden; }
 .screen__uplevel.is-lifted { padding: 0; }
 
 .screen__body { flex: 1 0 auto; display: flex; flex-direction: column; }
-/* Label & gated screens fill the viewport, so the placeholder sits roughly
-   centered and the (tall) footer starts below the fold. Image/module screens
-   omit this and flow at natural height. */
-.screen__body--fill { min-height: 100%; }
+/* Label & gated screens fill a full viewport (100vh — a definite height, unlike
+   the old `100%` which didn't resolve against the flex parent). This pushes the
+   tall footer entirely below the fold; the placeholder itself sits high in the
+   upper third rather than dead-centre (see the --fill override below). Image /
+   module screens omit this and flow at natural height. */
+.screen__body--fill { min-height: 100vh; }
 
 .screen__placeholder {
-  margin: auto;              /* center within the flex body */
+  margin: auto;              /* center within the flex body (flow pages) */
   text-align: center;
   padding: 24px;
   font-size: 20px;
@@ -209,6 +211,10 @@ html.is-modal-open { overflow: hidden; }
   color: rgba(0, 0, 0, 0.35);
   white-space: pre-line;
 }
+/* On the tall fill body, anchor the label in the upper third (not the vertical
+   centre of the full 100vh) so it reads high and the footer stays out of view.
+   Chromeless flow pages (--flow) have no footer, so they keep the centred label. */
+.screen__body--fill:not(.screen__body--flow) .screen__placeholder { margin-block: 22vh auto; }
 
 /* Chromeless flow pages (Sign Up Start / Registration Step): X to close, top-left. */
 .screen__body--flow { position: relative; }
@@ -2260,13 +2266,15 @@ html.is-modal-open { overflow: hidden; }
   /* Community + Topic hubs: align to the 1000px box; card lists go two-up. */
   .comm-hub,
   .topic-hub { padding-inline: var(--content-pad); padding-top: 40px; }
-  .comm-hub__list,
-  .topic-hub__list {
+  .comm-hub__list {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
     align-items: start;
   }
+  /* Topic Hub keeps its single-column stack on desktop, capped to the 728px
+     reading column so the cards don't stretch the full content width. */
+  .topic-hub__list { gap: 16px; max-width: 728px; }
 
   /* Community preview: full-bleed banner, 728px card column, and the upsell
      card reflows to an even two-column split (copy left, buttons right). */
