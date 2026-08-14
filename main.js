@@ -221,6 +221,9 @@ const COMMUNITY_SVGS = {
   "community-people": `<svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="80" height="80" rx="40" fill="#F6EFF8"/><path d="M38.8411 24.4C35.552 24.4 32.8857 27.0191 32.8857 30.25C32.8857 33.4808 35.552 36.1 38.8411 36.1C42.1301 36.1 44.7964 33.4808 44.7964 30.25C44.7964 27.0191 42.1301 24.4 38.8411 24.4ZM28.9154 30.25C28.9154 24.8652 33.3593 20.5 38.8411 20.5C44.3228 20.5 48.7667 24.8652 48.7667 30.25C48.7667 35.6347 44.3228 40 38.8411 40C33.3593 40 28.9154 35.6347 28.9154 30.25ZM38.8411 45.85C32.0046 45.85 26.4086 51.0736 25.966 57.678C25.894 58.7526 24.9488 59.5665 23.8548 59.4957C22.7608 59.425 21.9324 58.4965 22.0044 57.4219C22.5833 48.7811 29.8993 41.95 38.8411 41.95C39.6021 41.95 40.3523 41.9996 41.0884 42.0959C42.1751 42.2381 42.9387 43.2188 42.7939 44.2864C42.6491 45.3539 41.6508 46.104 40.564 45.9617C40.0013 45.8881 39.4262 45.85 38.8411 45.85ZM50.0591 43.9C51.1554 43.8999 52.0443 44.7728 52.0444 45.8498L52.0447 49.7499H56.0149C57.1112 49.7499 58 50.623 58 51.6999C58 52.7769 57.1112 53.6499 56.0149 53.6499H52.0449V57.5499C52.0449 58.6269 51.1561 59.4999 50.0598 59.4999C48.9634 59.4999 48.0746 58.6269 48.0746 57.5499V53.6499H44.1041C43.0078 53.6499 42.119 52.7769 42.119 51.6999C42.119 50.623 43.0078 49.7499 44.1041 49.7499H48.0745L48.0741 45.8501C48.074 44.7732 48.9627 43.9001 50.0591 43.9Z" fill="#A441BC"/></svg>`,
   "community-lock": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.33333 7.6C5.33333 3.95492 8.3181 1 12 1C15.6819 1 18.6667 3.95492 18.6667 7.6V7.76536C18.9807 7.83348 19.2821 7.93267 19.5733 8.07957C20.4096 8.50141 21.0895 9.17453 21.5156 10.0024C21.7904 10.5363 21.8999 11.1047 21.9509 11.723C22 12.3183 22 13.0491 22 13.9345V16.6655C22 17.5509 22 18.2817 21.9509 18.877C21.8999 19.4953 21.7904 20.0637 21.5156 20.5976C21.0895 21.4255 20.4096 22.0986 19.5733 22.5204C19.034 22.7924 18.4599 22.9009 17.8354 22.9514C17.234 23 16.4959 23 15.6015 23H8.39853C7.50413 23 6.76596 23 6.16464 22.9514C5.54009 22.9009 4.96597 22.7924 4.42671 22.5204C3.59043 22.0986 2.91052 21.4255 2.48442 20.5976C2.20965 20.0637 2.10013 19.4953 2.04911 18.877C1.99997 18.2817 1.99999 17.5509 2 16.6654V13.9346C1.99999 13.0491 1.99997 12.3183 2.04911 11.723C2.10013 11.1047 2.20965 10.5363 2.48442 10.0024C2.91052 9.17453 3.59043 8.50141 4.42671 8.07957C4.71794 7.93267 5.01933 7.83348 5.33333 7.76536V7.6ZM7.55556 7.60179C7.81968 7.59999 8.10044 7.59999 8.39856 7.6H15.6014C15.8996 7.59999 16.1803 7.59999 16.4444 7.60179V7.6C16.4444 5.16995 14.4546 3.2 12 3.2C9.5454 3.2 7.55556 5.16995 7.55556 7.6V7.60179ZM6.3456 9.84131C5.85847 9.88071 5.60936 9.95213 5.43558 10.0398C5.01744 10.2507 4.67748 10.5873 4.46443 11.0012C4.37589 11.1733 4.30375 11.4199 4.26395 11.9021C4.22309 12.3972 4.22222 13.0378 4.22222 13.98V16.62C4.22222 17.5622 4.22309 18.2028 4.26395 18.6979C4.30375 19.1801 4.37589 19.4267 4.46443 19.5988C4.67748 20.0127 5.01744 20.3493 5.43558 20.5602C5.60936 20.6479 5.85847 20.7193 6.3456 20.7587C6.8457 20.7991 7.49269 20.8 8.44445 20.8H15.5556C16.5073 20.8 17.1543 20.7991 17.6544 20.7587C18.1415 20.7193 18.3906 20.6479 18.5644 20.5602C18.9826 20.3493 19.3225 20.0127 19.5356 19.5988C19.6241 19.4267 19.6963 19.1801 19.7361 18.6979C19.7769 18.2028 19.7778 17.5622 19.7778 16.62V13.98C19.7778 13.0378 19.7769 12.3972 19.7361 11.9021C19.6963 11.4199 19.6241 11.1733 19.5356 11.0012C19.3225 10.5873 18.9826 10.2507 18.5644 10.0398C18.3906 9.95213 18.1415 9.88071 17.6544 9.84131C17.1543 9.80086 16.5073 9.8 15.5556 9.8H8.44445C7.49269 9.8 6.8457 9.80086 6.3456 9.84131Z" fill="#A440BC"/><path d="M10.8889 13.1C10.8889 12.4925 11.3864 12 12 12C12.6137 12 13.1111 12.4925 13.1111 13.1V16.4C13.1111 17.0075 12.6137 17.5 12 17.5C11.3864 17.5 10.8889 17.0075 10.8889 16.4V13.1Z" fill="#A440BC"/></svg>`,
   "community-arrow": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.7271 11.3603L14.5917 4.39037C14.0689 3.8797 13.2133 3.86863 12.6763 4.3656C12.1838 4.82134 12.1467 5.55802 12.5741 6.05584L12.6607 6.14728L17.5292 10.6528H3.40797C2.63037 10.6528 2 11.2559 2 12C2 12.7441 2.63037 13.3472 3.40797 13.3472H17.5292L12.6763 17.8381C12.1838 18.2938 12.1467 19.0305 12.5741 19.5283L12.6607 19.6197L12.6763 19.6344C13.2133 20.1314 14.0689 20.1203 14.5917 19.6096L21.7271 12.6397C22.091 12.2843 22.091 11.7157 21.7271 11.3603Z" fill="#0F57A8"/></svg>`,
+  "community-post-pencil": `<svg viewBox="0 0 20 20.0012" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.72 14.4632L7.481 13.9552L18.084 3.22517C18.1676 3.13947 18.2142 3.0243 18.2136 2.90456C18.2131 2.78481 18.1654 2.67009 18.081 2.58517L17.446 1.94317C17.405 1.90101 17.3559 1.86744 17.3018 1.84443C17.2477 1.82142 17.1895 1.80942 17.1306 1.80914C17.0718 1.80886 17.0135 1.8203 16.9591 1.8428C16.9048 1.8653 16.8554 1.8984 16.814 1.94017L6.239 12.6422L5.72 14.4632ZM18.703 0.671171L19.338 1.31417C20.214 2.20117 20.222 3.63217 19.354 4.51017L8.428 15.5682L4.664 16.6522C4.55021 16.6842 4.43123 16.6934 4.31386 16.6794C4.1965 16.6654 4.08303 16.6284 3.97996 16.5706C3.87688 16.5127 3.78621 16.4351 3.71313 16.3422C3.64004 16.2493 3.58597 16.143 3.554 16.0292C3.50496 15.8642 3.50426 15.6886 3.552 15.5232L4.647 11.6832L15.544 0.654171C15.7512 0.445528 15.9979 0.280232 16.2696 0.167923C16.5414 0.0556135 16.8328 -0.00146091 17.1269 2.84129e-05C17.4209 0.00151774 17.7117 0.061541 17.9823 0.176597C18.2529 0.291654 18.4979 0.46044 18.703 0.671171ZM7.184 1.82417C7.68 1.82417 8.082 2.23117 8.082 2.73317C8.08279 2.85184 8.06018 2.9695 8.01547 3.07942C7.97076 3.18935 7.90481 3.28938 7.82141 3.3738C7.73801 3.45823 7.63879 3.52538 7.52942 3.57143C7.42004 3.61748 7.30267 3.64152 7.184 3.64217H3.592C2.6 3.64217 1.796 4.45617 1.796 5.45917V16.3652C1.796 17.3692 2.6 18.1832 3.592 18.1832H14.368C15.36 18.1832 16.165 17.3692 16.165 16.3652V12.7302C16.165 12.2282 16.567 11.8212 17.063 11.8212C17.559 11.8212 17.961 12.2282 17.961 12.7312V16.3652C17.961 18.3732 16.352 20.0012 14.368 20.0012H3.592C1.608 20.0012 0 18.3732 0 16.3652V5.45917C0 3.45217 1.608 1.82417 3.592 1.82417H7.184Z" fill="#0F57A8"/></svg>`,
+  "community-comment": `<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.4774 2.43054H7.52281C3.76373 2.43054 0.916748 5.33024 0.916748 9.15894L0.920434 9.36366C1.04536 12.8296 4.32479 15.5533 7.5834 15.5533L8.58804 15.5526L8.67091 15.6346C9.91799 16.8243 11.6332 17.5694 13.3031 17.5694C13.9798 17.5694 14.4959 17.1664 14.4959 16.4636C14.4959 16.3316 14.4786 16.2083 14.4453 16.0671L14.4068 15.9191C14.3828 15.8336 14.2907 15.5345 14.2775 15.4899L14.2214 15.2843L14.292 15.2664C17.1252 14.4847 19.0834 12.32 19.0834 9.15894C19.0834 5.3563 16.1834 2.43054 12.4774 2.43054ZM12.4774 4.11264C15.2748 4.11264 17.4319 6.2889 17.4319 9.15894C17.4319 11.717 15.7211 13.3626 13.1674 13.7962L12.4774 13.9133V14.6258L12.4836 14.8506C12.5002 15.1461 12.5497 15.4284 12.6299 15.7366L12.6572 15.8371C11.5042 15.6609 10.3489 15.0325 9.54094 14.1415L9.29574 13.8712H7.5834C5.11251 13.8712 2.56826 11.7169 2.56826 9.15894C2.56826 6.25924 4.67583 4.11264 7.52281 4.11264H12.4774Z" fill="#0D1B29" fill-opacity="0.65"/><path d="M7.52319 2.63855H12.4773C16.0653 2.63855 18.8748 5.46844 18.8748 9.15906C18.8747 12.2147 16.9911 14.3053 14.2371 15.0653L14.1707 15.0819L13.9646 15.1346L14.0203 15.3387L14.0769 15.5448L14.0779 15.5487L14.2058 15.9755L14.2439 16.12C14.2736 16.2473 14.2878 16.353 14.2878 16.4637C14.2878 16.7604 14.1805 16.9781 14.0154 17.1239C13.8472 17.2724 13.6015 17.3611 13.3035 17.3612C11.7932 17.3612 10.2354 16.7274 9.04761 15.6952L8.81519 15.4843L8.73413 15.4042L8.67358 15.3446H7.58374C4.5216 15.3446 1.4476 12.8589 1.14917 9.66687L1.12866 9.35632L1.12476 9.15906C1.12476 5.4418 3.88276 2.63855 7.52319 2.63855ZM7.52319 3.90417C4.55756 3.90417 2.36011 6.14792 2.36011 9.15906C2.36015 10.5088 3.03096 11.7399 4.00952 12.6288C4.98757 13.517 6.29004 14.08 7.58374 14.08H9.20386L9.38647 14.2811C10.2256 15.2063 11.424 15.8591 12.6257 16.0428L12.9421 16.0917L12.8582 15.7821L12.8318 15.6844C12.7548 15.3886 12.7081 15.1215 12.6921 14.8446L12.6853 14.62V14.0887L13.2019 14.0018C14.5132 13.7792 15.6238 13.2423 16.408 12.4178C17.1943 11.591 17.6404 10.4875 17.6404 9.15906C17.6404 6.17701 15.3928 3.90417 12.4773 3.90417H7.52319Z" stroke="#0D1B29" stroke-opacity="0.65" stroke-width="0.416684"/></svg>`,
+  "community-check": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.6095 6.40558C20.1054 6.92059 20.129 7.74036 19.6803 8.2844L19.6095 8.36387L10.7206 17.5953C10.4974 17.8271 10.2149 17.9595 9.92378 17.9926L9.82652 18H9.72904C9.43671 17.989 9.14722 17.8786 8.91149 17.6689L8.83497 17.5953L4.39052 12.9796C3.86983 12.4388 3.86983 11.5621 4.39052 11.0213C4.88643 10.5063 5.67578 10.4818 6.19963 10.9477L6.27614 11.0213L9.77778 14.6585L17.7239 6.40558C18.2446 5.86481 19.0888 5.86481 19.6095 6.40558Z" fill="#0F57A8"/></svg>`,
 };
 
 // Topic Hubs — a NEW surface (distinct from the old Topic Center, which was
@@ -557,7 +560,7 @@ function updateCarouselArrows(scroller) {
 // Bind each carousel's scroll to its arrow shades (and set the initial state).
 // Called every render; listeners live on the freshly-rendered scroll elements.
 function attachCarousels() {
-  document.querySelectorAll(".mod-listicles__scroll, .mod-articles__scroll").forEach((sc) => {
+  document.querySelectorAll(".mod-listicles__scroll, .mod-articles__scroll, .comm-feed__scroll").forEach((sc) => {
     updateCarouselArrows(sc);
     sc.addEventListener("scroll", () => updateCarouselArrows(sc), { passive: true });
   });
@@ -826,6 +829,163 @@ function renderCommunityPreview() {
         </div>
       </div>
     </section>
+  `;
+}
+
+// Community feed — the Logged-Out + Logged-In Member Community page (Figma
+// Community: logged-out 9:134 / 9:200, logged-in 34:609 / 34:536). A real activity
+// feed (Trending Posts / Open Questions / Groups You're In / People Near You), NOT
+// the visitor preview. Logged-OUT members see it BLURRED behind a "you're not
+// logged in" reminder (a locked teaser); logged-IN members see it in full. Counts
+// are the "[TBD]" placeholder (no fabricated numbers — DECISIONS 2026-07-27); the
+// post / question / group text is placeholder mockup copy (usernames are literally
+// "Username"), kept to convey what the feed looks like. See renderCommunityFeed.
+const COMMUNITY_FEED = {
+  posts: [
+    { avatar: "community-1", eyebrow: "Username asked a question", body: "Hey everyone! What helped you most with hot flashes and night sweats? Looking for tips beyond the usual advice." },
+    { avatar: "community-2", eyebrow: "Username posted this photo", body: "Has anyone tried adjusting their exercise routine during perimenopause? I'm finding my old workouts just aren't cutting it anymore." },
+    { avatar: "community-3", eyebrow: "Username was having a good day", body: "Just started HRT and feeling nervous — would love to hear about your experiences and any side effects to watch out for." },
+  ],
+  questions: [
+    "What symptoms first made you realize you were entering menopause?",
+    "How do you navigate conversations about menopause with your partner or family?",
+    "What advice would you give to someone just beginning their menopause journey?",
+  ],
+  groups: [
+    { name: "Movement, Activity and Exercise", desc: "Share how you like to move and find support and encouragement" },
+    { name: "Hormone Therapy", desc: "Join a supportive group for those receiving hormone therapy" },
+    { name: "Relationships & Intimacy", desc: "Discuss how your health affects intimacy, share advice, and navigate challenges in a supportive environment" },
+  ],
+  people: ["community-2", "community-1", "community-3"],
+};
+
+// Renders the member Community feed. `gated` (Logged-Out member) blurs the card
+// content and shows the login-reminder card; ungated (Logged-In member) shows it
+// live. The two carousels (Open Questions, People) reuse the shared carousel
+// mechanism (.comm-feed__scroll is wired into attachCarousels + the arrow handler).
+function renderCommunityFeed(gated) {
+  const F = COMMUNITY_FEED;
+  const arrows = `
+    <div class="comm-feed__arrows">
+      <button class="mod-carousel-arrow" data-carousel="prev" aria-label="Scroll back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="mod-carousel-arrow" data-carousel="next" aria-label="Scroll forward"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    </div>`;
+
+  const posts = F.posts.map((p) => `
+    <button class="comm-post" data-screen="com-activities">
+      <span class="comm-post__avatar"><img src="${ASSET_BASE}/${p.avatar}.png" alt="" aria-hidden="true" /></span>
+      <span class="comm-post__text">
+        <span class="comm-post__eyebrow">${p.eyebrow}</span>
+        <span class="comm-post__body">${p.body}</span>
+      </span>
+    </button>`).join("");
+
+  const questions = F.questions.map((q) => `
+    <button class="comm-q" data-screen="com-questions">
+      <span class="comm-q__text">${q}</span>
+      <span class="comm-q__user">
+        <span class="comm-q__by">Username asked a question</span>
+        <span class="comm-q__answers">${COMMUNITY_SVGS["community-comment"]}<span>[TBD]</span></span>
+      </span>
+    </button>`).join("");
+
+  const groups = F.groups.map((g) => `
+    <button class="comm-group" data-screen="com-groups">
+      <span class="comm-group__content">
+        <span class="comm-group__left">
+          <span class="comm-group__icon" aria-hidden="true"></span>
+          <span class="comm-group__text">
+            <span class="comm-group__name">${g.name}</span>
+            <span class="comm-group__meta">[TBD] members</span>
+          </span>
+        </span>
+        <span class="comm-group__check" aria-label="You're in this group">${COMMUNITY_SVGS["community-check"]}</span>
+      </span>
+      <span class="comm-group__desc">${g.desc}</span>
+    </button>`).join("");
+
+  const people = F.people.map((ph) => `
+    <button class="comm-person" data-screen="com-meet">
+      <span class="comm-person__left">
+        <span class="comm-person__avatar"><img src="${ASSET_BASE}/${ph}.png" alt="" aria-hidden="true" /></span>
+        <span class="comm-person__text">
+          <span class="comm-person__name">Username</span>
+          <span class="comm-person__meta">[TBD] team members</span>
+        </span>
+      </span>
+      <span class="comm-person__chevron">${COMMUNITY_SVGS["community-arrow"]}</span>
+    </button>`).join("");
+
+  // Logged-out reminder: "you're not logged in" (mirrors the panel access card).
+  const reminder = gated
+    ? `
+      <div class="comm-reminder">
+        <img class="comm-reminder__graphic comm-reminder__graphic--tr" src="${ASSET_BASE}/community-upsell-tr.svg" alt="" aria-hidden="true" />
+        <img class="comm-reminder__graphic comm-reminder__graphic--bl" src="${ASSET_BASE}/community-upsell-bl.svg" alt="" aria-hidden="true" />
+        <div class="comm-reminder__text">
+          <p class="comm-reminder__title">Welcome back, Jannie123!</p>
+          <p class="comm-reminder__sub">You're not logged in.</p>
+        </div>
+        <button class="comm-reminder__cta" data-action="log-in">Log in now</button>
+      </div>`
+    : "";
+
+  return `
+    <div class="comm-feed${gated ? " comm-feed--gated" : ""}">
+      <div class="comm-preview__banner">
+        <div class="comm-preview__banner-inner">
+          <img class="comm-preview__banner-graphic" src="${ASSET_BASE}/community-banner-graphic.svg" alt="" aria-hidden="true" />
+          <div class="comm-preview__head">
+            <h1 class="comm-preview__title">Community</h1>
+          </div>
+          <div class="comm-preview__status">
+            <span class="comm-preview__avatars">
+              ${[1, 2, 3].map((n) => `<img class="comm-preview__avatar" src="${ASSET_BASE}/community-${n}.png" alt="" aria-hidden="true" />`).join("")}
+            </span>
+            <span class="comm-preview__count">12,345 women in the community</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="comm-feed__body">
+        ${reminder}
+
+        <section class="comm-feed__section">
+          <div class="comm-feed__header">
+            <h2 class="comm-feed__title">Trending Posts</h2>
+            <button class="comm-feed__post-btn" data-screen="com-activities">${COMMUNITY_SVGS["community-post-pencil"]}<span>Post</span></button>
+          </div>
+          <div class="comm-feed__cards">${posts}</div>
+          <button class="comm-feed__link" data-screen="com-activities">View all posts &rarr;</button>
+        </section>
+
+        <section class="comm-feed__section">
+          <div class="comm-feed__header">
+            <h2 class="comm-feed__title">Open Questions</h2>
+            ${arrows}
+          </div>
+          <div class="comm-feed__cards comm-feed__scroll">${questions}</div>
+          <button class="comm-feed__link" data-screen="com-questions">View all questions &rarr;</button>
+        </section>
+
+        <section class="comm-feed__section">
+          <div class="comm-feed__header">
+            <h2 class="comm-feed__title">Groups You're In</h2>
+          </div>
+          <div class="comm-feed__cards">${groups}</div>
+          <button class="comm-feed__link" data-screen="com-groups">View all groups &rarr;</button>
+        </section>
+
+        <section class="comm-feed__section">
+          <div class="comm-feed__header">
+            <h2 class="comm-feed__title">People Near You</h2>
+            ${arrows}
+          </div>
+          <div class="comm-feed__cards comm-feed__scroll">${people}</div>
+          <button class="comm-feed__link" data-screen="com-meet">View all people &rarr;</button>
+        </section>
+      </div>
+    </div>
   `;
 }
 
@@ -1467,11 +1627,19 @@ function render() {
   } else if (screen.id === "advisors") {
     content = renderAdvisors();
   } else if (screen.id === "community-overview") {
-    // Visitor + Subscriber get the new content-preview page; members keep the
-    // wireframe orientation menu.
-    content = LOCKED_PERSONA_KEY === "visitor" || LOCKED_PERSONA_KEY === "subscriber"
-      ? renderCommunityPreview()
-      : renderCommunityHub();
+    // Community splits by persona: Visitor + Subscriber get the content preview;
+    // members get the activity feed (Logged-Out sees it gated/blurred behind a
+    // login reminder, Logged-In sees it live). renderCommunityHub is kept as a
+    // defensive fallback for any unknown persona.
+    if (LOCKED_PERSONA_KEY === "visitor" || LOCKED_PERSONA_KEY === "subscriber") {
+      content = renderCommunityPreview();
+    } else if (LOCKED_PERSONA_KEY === "logged-out-member") {
+      content = renderCommunityFeed(true);
+    } else if (LOCKED_PERSONA_KEY === "logged-in-member") {
+      content = renderCommunityFeed(false);
+    } else {
+      content = renderCommunityHub();
+    }
   } else if (screen.topicHub) {
     content = renderTopicHub(screen.topicHub);
   } else if (screen.collection) {
@@ -1587,7 +1755,7 @@ document.addEventListener("click", (e) => {
   const arrow = e.target.closest("[data-carousel]");
   if (arrow) {
     const section = arrow.closest("section");
-    const scroller = section && section.querySelector(".mod-listicles__scroll, .mod-articles__scroll");
+    const scroller = section && section.querySelector(".mod-listicles__scroll, .mod-articles__scroll, .comm-feed__scroll");
     if (scroller) {
       const firstCard = scroller.firstElementChild;
       const step = (firstCard ? firstCard.getBoundingClientRect().width : 300) + 20;

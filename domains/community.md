@@ -51,13 +51,18 @@ own **My Profile**, which is an Account screen; see [account.md](account.md).)
 ## Community Overview (the hub)
 
 `community-overview` (label "Community Overview") — a top-level `page` that renders
-**one of two surfaces, split by persona** (both branch off `screen.id ===
+**one of three surfaces, split by persona** (all branch off `screen.id ===
 "community-overview"` in `render()`):
 
 | Persona | Surface | Render fn |
 |---|---|---|
-| **Visitor, Subscriber** | Content **preview** page (Figma Community `5:2` / `6:68`) | `renderCommunityPreview()` |
-| **Logged-Out, Logged-In Member** | Wireframe **orientation menu** (below) | `renderCommunityHub()` |
+| **Visitor, Subscriber** | Content **preview** page (Figma `5:2` / `6:68`) | `renderCommunityPreview()` |
+| **Logged-Out Member** | Activity **feed**, gated (blurred + login reminder) — Figma `9:134` / `9:200` | `renderCommunityFeed(true)` |
+| **Logged-In Member** | Activity **feed**, live — Figma `34:609` / `34:536` | `renderCommunityFeed(false)` |
+
+`renderCommunityHub()` (the old wireframe orientation menu, below) is no longer
+reached by any persona — it's kept only as a defensive fallback for an unknown
+persona key.
 
 Reached from:
 
@@ -106,7 +111,45 @@ stay `<img>`** (too heavy to inline): `community-banner-graphic.svg` (inside
 `community-upsell-{tr,bl}.svg` (bleed off the upsell corners). Source `.svg` files
 remain in `assets/`.
 
-### Members — the orientation menu (`renderCommunityHub`)
+### Members — the activity feed (`renderCommunityFeed`)
+
+The Logged-Out and Logged-In members get a real **activity feed** (added 2026-08-13,
+Figma logged-out `9:134`/`9:200`, logged-in `34:609`/`34:536`), data-driven from
+`COMMUNITY_FEED` in `main.js`. Same reused **beige banner** as the preview (`.comm-preview__banner`,
+title + avatar stack + count — no subtitle), then four sections in `.comm-feed__body`:
+
+| Section | Cards | Layout | Card → |
+|---|---|---|---|
+| **Trending Posts** | 3 post cards (52px avatar, uppercase eyebrow, body) + a "Post" button | vertical list | `com-activities` |
+| **Open Questions** | 3 question cards (text, "Username asked…", comment icon + count) | **carousel** | `com-questions` |
+| **Groups You're In** | 3 group cards (80px icon, name, count, membership ✓, description) | vertical list | `com-groups` |
+| **People Near You** | 3 person cards (80px photo, Username, count, arrow) | **carousel** | `com-meet` |
+
+Each section ends in a "View all … →" link. The two carousels reuse the shared
+carousel mechanism — `.comm-feed__scroll` is wired into `attachCarousels()` and the
+`[data-carousel]` arrow handler; arrows (`.comm-feed__arrows`) show on desktop only,
+mobile is swipe. The **"Post" button** and cards point at the `com-*` list pages.
+
+**Logged-Out vs Logged-In:** the logged-out member sees the feed **gated** —
+`renderCommunityFeed(true)` adds the `.comm-feed--gated` class (blurs the card
+content 4px and makes it non-interactive) and prepends a **login-reminder card**
+("Welcome back, Jannie123! / You're not logged in. / **Log in now**", the
+`data-action="log-in"` no-op auth transition — mirrors the panel access card). The
+logged-in member sees it live, no reminder. Both share all four sections' content.
+
+**Counts** are the literal **`[TBD]`** placeholder ("[TBD] members", "[TBD] team
+members", question answer count "[TBD]") — no fabricated numbers ([DECISIONS](../DECISIONS.md)
+2026-07-27). The post/question/group **text** is illustrative placeholder copy
+(usernames are literally "Username"), kept to show what the feed looks like.
+
+Assets: the "Post" pencil, question comment icon, and group membership check are
+inlined into `COMMUNITY_SVGS`; post/people avatars reuse `community-{1,2,3}.png`;
+the reminder-card corner graphics reuse `community-upsell-{tr,bl}.svg`.
+
+### Members (fallback) — the orientation menu (`renderCommunityHub`)
+
+> **Superseded (2026-08-13):** members now get the activity feed above. This
+> wireframe hub is retained only as a defensive fallback for an unknown persona.
 
 **Render:** module-based, following the Splash Landing pattern — a data array
 (`COMMUNITY_MODULES` in `main.js`) + a render function (`renderCommunityHub()`),

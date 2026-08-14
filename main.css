@@ -1128,6 +1128,253 @@ body {
 .comm-upsell__btn--secondary:active { background: rgba(15, 87, 168, 0.06); }
 .comm-upsell__note { margin: 0; padding-left: 12px; font-size: 14px; line-height: 22px; color: var(--color-text); }
 
+/* ---- Community feed (Logged-Out + Logged-In Members) — Figma 9:134 / 34:609 ---- */
+/* A real activity feed: reuses the .comm-preview__banner (title + count), then
+   four sections (Posts, Open Questions, Groups, People). Logged-out members see
+   the card content blurred (.comm-feed--gated) behind a login-reminder card. */
+.comm-feed { display: flex; flex-direction: column; }
+.comm-feed__body {
+  max-width: var(--content-column);
+  margin-inline: auto;
+  width: 100%;
+  padding: 24px 12px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.comm-feed__section { display: flex; flex-direction: column; gap: 16px; }
+.comm-feed__header { display: flex; align-items: center; gap: 6px; }
+.comm-feed__title {
+  margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: var(--display-tracking);
+  color: var(--color-text);
+}
+/* "Post" button — pencil + label, in the Trending Posts header. */
+.comm-feed__post-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 8px;
+  border: none;
+  background: none;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+.comm-feed__post-btn svg { display: block; width: 20px; height: 20px; }
+.comm-feed__post-btn:active { background: var(--color-primary-soft); }
+/* "View all …" link (per section). */
+.comm-feed__link {
+  align-self: flex-start;
+  padding: 0 12px;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 26px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+/* Carousel arrows — desktop only (mobile carousels are swipe-only, like splash). */
+.comm-feed__arrows { display: none; }
+
+/* Card containers: vertical list by default; carousels switch to a horizontal
+   scroller (.comm-feed__scroll must come after so it wins the flex-direction). */
+.comm-feed__cards { display: flex; flex-direction: column; gap: 16px; }
+.comm-feed__scroll {
+  flex-direction: row;
+  gap: 15px;
+  overflow-x: auto;
+  margin: 0 -12px;          /* full-bleed the scroller on mobile */
+  padding: 2px 12px 6px;    /* room for the card focus ring / shadow */
+  scrollbar-width: none;
+}
+.comm-feed__scroll::-webkit-scrollbar { display: none; }
+
+/* Logged-out teaser: blur the card content, non-interactive (join to unlock). */
+.comm-feed--gated .comm-feed__cards {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Login reminder (logged-out only) — light card with decorative corner graphics. */
+.comm-reminder {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+.comm-reminder__graphic { position: absolute; z-index: -1; width: 280px; pointer-events: none; }
+.comm-reminder__graphic--tr { top: -73px; right: -110px; transform: scaleY(-1); }
+.comm-reminder__graphic--bl { bottom: -80px; left: -146px; }
+.comm-reminder__text { display: flex; flex-direction: column; gap: 4px; }
+.comm-reminder__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: var(--display-tracking);
+  color: var(--color-text);
+}
+.comm-reminder__sub { margin: 0; font-size: 18px; line-height: 26px; color: var(--color-text-muted); }
+.comm-reminder__cta {
+  align-self: stretch;
+  padding: 14px 28px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+}
+.comm-reminder__cta:active { filter: brightness(0.97); }
+
+/* Post card — avatar + eyebrow + body. */
+.comm-post {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.12s ease, transform 0.06s ease;
+}
+.comm-post:active { border-color: var(--color-primary); transform: scale(0.99); }
+.comm-post__avatar {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--color-bg-purple-soft);
+}
+.comm-post__avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.comm-post__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.comm-post__eyebrow { font-size: 12px; line-height: 20px; text-transform: uppercase; color: var(--color-text-secondary); }
+.comm-post__body { font-size: 18px; line-height: 24px; color: var(--color-text); }
+
+/* Question card (carousel). */
+.comm-q {
+  flex-shrink: 0;
+  width: 297px;
+  height: 132px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: border-color 0.12s ease;
+}
+.comm-q:active { border-color: var(--color-primary); }
+.comm-q__text {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-text);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.comm-q__user { display: flex; align-items: center; gap: 6px; }
+.comm-q__by {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.comm-q__answers { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; font-size: 14px; color: rgba(13, 27, 41, 0.83); }
+.comm-q__answers svg { display: block; width: 20px; height: 20px; }
+
+/* Group card — icon + name/count + membership check, then a description. */
+.comm-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: border-color 0.12s ease, transform 0.06s ease;
+}
+.comm-group:active { border-color: var(--color-primary); transform: scale(0.99); }
+.comm-group__content { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.comm-group__left { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.comm-group__icon { flex-shrink: 0; width: 80px; height: 80px; border-radius: 50%; background: var(--color-bg-purple-soft); }
+.comm-group__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.comm-group__name { font-weight: 600; font-size: 18px; line-height: 24px; color: #000; }
+.comm-group__meta { font-size: 18px; line-height: 26px; color: var(--color-text-secondary); }
+.comm-group__check { flex-shrink: 0; width: 24px; height: 24px; }
+.comm-group__check svg { display: block; width: 100%; height: 100%; }
+.comm-group__desc { font-size: 18px; line-height: 26px; color: var(--color-text); }
+
+/* Person card (carousel). */
+.comm-person {
+  flex-shrink: 0;
+  width: 328px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: border-color 0.12s ease;
+}
+.comm-person:active { border-color: var(--color-primary); }
+.comm-person__left { display: flex; align-items: center; gap: 16px; min-width: 0; }
+.comm-person__avatar { flex-shrink: 0; width: 80px; height: 80px; border-radius: 50%; overflow: hidden; background: var(--color-bg-purple-soft); }
+.comm-person__avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.comm-person__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.comm-person__name { font-weight: 600; font-size: 18px; line-height: 24px; color: #000; }
+.comm-person__meta { font-size: 18px; line-height: 26px; color: var(--color-text-secondary); }
+.comm-person__chevron { flex-shrink: 0; width: 24px; height: 24px; }
+.comm-person__chevron svg { display: block; width: 100%; height: 100%; }
+
 /* ---- Topic Hub (aggregates one patient concern across feature types) ---- */
 /* Wireframe-level, like the community hub, but modules can carry a content-
    preview affordance (skeleton rows) — no fabricated content. */
@@ -1745,6 +1992,11 @@ body {
   .dnav__link.is-active { color: var(--color-primary); background: rgba(15, 87, 168, 0.08); }
   .dnav__right { justify-self: end; display: flex; align-items: center; gap: 10px; }
 
+  /* Profile dropdown: on desktop the profile button sits at the centered content
+     box's right edge (the .dnav__bar padding = --content-pad), not the viewport
+     edge — so align the dropdown there and drop it below the 76px header. */
+  .dropdown { top: 76px; right: var(--content-pad); }
+
   /* Breadcrumb bar — replaces the mobile level-up pill on detail screens. */
   .dnav__crumbbar {
     border-top: 1px solid var(--color-border);
@@ -1935,6 +2187,16 @@ body {
   .comm-upsell__title { font-size: 36px; line-height: 44px; }  /* Figma desktop 76:3110 */
   .comm-upsell__graphic--tr { right: -175px; }
   .comm-upsell__graphic--bl { left: -157px; bottom: -95px; }
+
+  /* Community feed: show the carousel arrows; drop the mobile full-bleed scroller
+     so the carousels align to the 728px column and peek the next card. Login
+     reminder reflows to a row (copy left, button right). */
+  .comm-feed__arrows { display: flex; gap: 8px; }
+  .comm-feed__scroll { margin: 0; padding: 2px 0 6px; }
+  .comm-reminder { flex-direction: row; align-items: center; gap: 24px; padding: 16px 24px; }
+  .comm-reminder__text { flex: 1 1 auto; }
+  .comm-reminder__cta { align-self: auto; flex: 0 0 auto; }
+  .comm-reminder__graphic--bl { left: -146px; }
 
   /* Advisors: a 728px reading page, centered — single-column list (the mobile
      divider-row style), not the 1000px two-up grid. */
