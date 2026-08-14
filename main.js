@@ -348,8 +348,12 @@ const TOPIC_HUB_PAGES = TOPIC_HUBS.map((h) => ({ id: h.id, label: h.name, type: 
 // free" resolves for every persona (e.g. the logged-out member's access card),
 // not just the Visitor/Subscriber splash flow.
 const SIGNUP_START_SCREEN = { id: "signup-start", label: "Sign Up Start", type: "page", title: "Sign Up Start", chromeless: true };
+// Symptom Checker is reachable from article CTAs in every persona (not just the
+// splash flow), so it's a shared destination — otherwise those CTAs dead-end for
+// members. It belongs to Resources (see activeSectionTarget).
+const SYMPTOM_CHECKER_SCREEN = { id: "symptom-checker", label: "Symptom Checker", type: "page", title: "Symptom Checker" };
 
-const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, LIB.hrt, LIB.mood, LIB.sleep, SIGNUP_START_SCREEN, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
+const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, ADVISORS_SCREEN, LIB.all, LIB.hrt, LIB.mood, LIB.sleep, SIGNUP_START_SCREEN, SYMPTOM_CHECKER_SCREEN, ...COMMUNITY_SCREENS, ...TOPIC_HUB_PAGES];
 
 // Home + splash-flow screens shared by Visitor and Subscriber (Subscriber
 // mirrors the Visitor landing). The splash content modules deep-link into these:
@@ -357,7 +361,7 @@ const SHARED_TARGET_SCREENS = [COMMUNITY_OVERVIEW_SCREEN, ALL_ARTICLES_SCREEN, A
 // Topic Hub) and a second Article Show that belongs to a Collection.
 const SPLASH_FLOW_SCREENS = [
   { id: "splash", label: "Splash Landing", type: "tabs", title: "Splash Landing", modules: true },
-  { id: "symptom-checker", label: "Symptom Checker", type: "page", title: "Symptom Checker" },
+  SYMPTOM_CHECKER_SCREEN,
   SIGNUP_START_SCREEN,
   { id: "listicle-detail", label: "Listicle Detail", type: "page", title: "Listicle Detail" },
   ADVISORS_SCREEN,
