@@ -91,12 +91,16 @@ Figma Community `5:2` desktop / `6:68` mobile), not the orientation menu. Data-d
 
   **Posts is `memberOnly`** — magenta "· Member only" tag + a **lock** (not an arrow).
   Instead of navigating, it opens the **member sign-up gate** (`renderMemberGate`,
-  `data-action="member-gate"`): a modal titled "This is a member-feature! / Sign up
-  for free to view posts." with three "Continue with …" options (Facebook / Google /
-  Email, all → `signup-start`) and an "Already a member? Log In" link. Dismissed via
-  the top-left ✕ or the scrim. `state.gateFeature` drives the copy so the same modal
-  can gate other features later (`GATE_FEATURES` map). Brand glyphs (`gate-facebook`,
-  `gate-google`, `gate-email`) are inlined in `COMMUNITY_SVGS`.
+  `data-action="member-gate"`): a modal with a DM-Serif headline **"This is for
+  members only!"** and a smaller Lato-gray subline **"Join for free to view posts."**
+  (`state.gateFeature` fills the feature word — `GATE_FEATURES` map), three "Continue
+  with …" options (Facebook / Google / Email — all → `signup-start`), and an "Already
+  a member? **Log In**" link that is a **no-op** (`data-action="log-in"` — no login
+  screen exists in this prototype). Dismissed via the top-left ✕ or the scrim (both
+  `data-action="close-gate"`). While open, the document scroll is **locked**
+  (`html.is-modal-open { overflow: hidden }`, toggled in `render()`), so the page
+  behind doesn't scroll. Brand glyphs (`gate-facebook/google/email`) are inlined in
+  `COMMUNITY_SVGS`; the email envelope is tinted the action blue (`#0F57A8`).
 - **Light join upsell** (`.comm-upsell` — white/bordered, *not* the navy splash CTA):
   persona-aware, mirroring the splash home's closing card. Visitor → "You don't have
   to figure this out alone." / **Join for free** (`signup-start`); Subscriber → "Don't

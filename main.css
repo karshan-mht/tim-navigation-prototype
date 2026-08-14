@@ -81,6 +81,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Freeze the document scroll while a modal overlay (member gate) is open. */
+html.is-modal-open { overflow: hidden; }
+
 /* ---- Rig chrome (not part of the design system — just this harness) ---- */
 
 .stage {
@@ -1420,14 +1423,22 @@ body {
   cursor: pointer;
 }
 .gate__close svg { display: block; width: 24px; height: 24px; pointer-events: none; }
-.gate__title {
-  margin: 40px 0 0;                   /* clear the close button */
+.gate__text { margin-top: 40px; display: flex; flex-direction: column; gap: 8px; }  /* clear the close button */
+.gate__headline {
+  margin: 0;
   font-family: var(--font-display);
   font-weight: 400;
   font-size: var(--display-title-size);
   line-height: var(--display-title-lh);
   letter-spacing: var(--display-tracking);
   color: var(--color-text);
+}
+.gate__sub {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--color-text-secondary);   /* Lato gray, like the landing subheads */
 }
 .gate__options { display: flex; flex-direction: column; gap: 16px; }
 .gate__option {

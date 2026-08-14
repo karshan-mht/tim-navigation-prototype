@@ -227,7 +227,7 @@ const COMMUNITY_SVGS = {
   "community-plus": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.3334 5.33333V10.6667H18.6667C19.3333 10.6667 20 11.3382 20 12C20 12.6618 19.3333 13.3333 18.6667 13.3333H13.3334V18.6667C13.3334 19.3333 12.6667 20 12 20C11.3334 20 10.6667 19.3333 10.6667 18.6667V13.3333H5.33343C4.66677 13.3333 4 12.6667 4 12C4 11.3333 4.66677 10.6667 5.33343 10.6667H10.6667V5.33333C10.6667 4.66667 11.3334 4 12 4C12.6667 4 13.3334 4.66667 13.3334 5.33333Z" fill="#0F57A8"/></svg>`,
   "gate-facebook": `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="11.5" fill="#1877F2"/><path d="M15.36 12.34l.42-2.73h-2.62V7.84c0-.75.37-1.48 1.54-1.48h1.19V4.04s-1.08-.18-2.11-.18c-2.15 0-3.56 1.3-3.56 3.67v2.08H7.79v2.73h2.43v6.6a9.6 9.6 0 0 0 3 0v-6.6h2.14z" fill="#fff"/></svg>`,
   "gate-google": `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.52 12.27c0-.79-.07-1.55-.2-2.27H12v4.51h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.87c2.26-2.09 3.58-5.17 3.58-8.87z" fill="#4285F4"/><path d="M12 24c3.24 0 5.96-1.08 7.94-2.91l-3.87-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09A12 12 0 0 0 12 24z" fill="#34A853"/><path d="M5.27 14.28a7.2 7.2 0 0 1 0-4.56V6.63H1.29a12 12 0 0 0 0 10.74l3.98-3.09z" fill="#FBBC05"/><path d="M12 4.76c1.77 0 3.35.61 4.6 1.8l3.43-3.43C17.95 1.2 15.24 0 12 0A12 12 0 0 0 1.29 6.63l3.98 3.09C6.22 6.87 8.87 4.76 12 4.76z" fill="#EA4335"/></svg>`,
-  "gate-email": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="5" width="19" height="14" rx="2.5" fill="#0d1b29"/><path d="M4 7.5l8 5.5 8-5.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  "gate-email": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="5" width="19" height="14" rx="2.5" fill="#0F57A8"/><path d="M4 7.5l8 5.5 8-5.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
 // Topic Hubs — a NEW surface (distinct from the old Topic Center, which was
@@ -867,13 +867,16 @@ function renderMemberGate() {
         <button class="gate__close" data-action="close-gate" aria-label="Close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18" /></svg>
         </button>
-        <h2 class="gate__title">This is a member-feature!<br />Sign up for free to view ${feature}.</h2>
+        <div class="gate__text">
+          <h2 class="gate__headline">This is for members only!</h2>
+          <p class="gate__sub">Join for free to view ${feature}.</p>
+        </div>
         <div class="gate__options">
           ${option("gate-facebook", "Facebook")}
           ${option("gate-google", "Google")}
           ${option("gate-email", "Email")}
         </div>
-        <p class="gate__footer">Already a member? <button class="gate__login" data-screen="signup-start">Log In</button></p>
+        <p class="gate__footer">Already a member? <button class="gate__login" data-action="log-in">Log In</button></p>
       </div>
     </div>
   `;
@@ -1733,6 +1736,9 @@ function render() {
   attachAutoHide();
   attachCarousels();
   positionDropdown();
+  // Lock the document scroll (the app's scroller) while the gate modal is open so
+  // the page behind the overlay doesn't scroll.
+  document.documentElement.classList.toggle("is-modal-open", state.gateOpen);
 }
 
 // Anchor the account dropdown directly under the profile button, in both the
