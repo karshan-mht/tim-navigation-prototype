@@ -1381,6 +1381,85 @@ body {
 .comm-person__add { flex-shrink: 0; width: 24px; height: 24px; }
 .comm-person__add svg { display: block; width: 100%; height: 100%; }
 
+/* ---- Member sign-up gate modal (locked community features, e.g. Posts) ---- */
+.gate-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;                        /* above panel / dropdown */
+  background: rgba(13, 27, 41, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.15s ease;
+}
+.gate {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  background: #fff;
+  border-radius: var(--radius-card);
+  padding: 32px 28px;
+  box-shadow: 0 8px 40px rgba(13, 27, 41, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.gate__close {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+.gate__close svg { display: block; width: 24px; height: 24px; pointer-events: none; }
+.gate__title {
+  margin: 40px 0 0;                   /* clear the close button */
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--display-title-size);
+  line-height: var(--display-title-lh);
+  letter-spacing: var(--display-tracking);
+  color: var(--color-text);
+}
+.gate__options { display: flex; flex-direction: column; gap: 16px; }
+.gate__option {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: 14px 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: #fff;
+  cursor: pointer;
+  font-family: var(--font-body);
+  text-align: left;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+.gate__option:hover { background: rgba(13, 27, 41, 0.03); }
+.gate__option:active { background: rgba(13, 27, 41, 0.06); }
+.gate__option-icon { flex-shrink: 0; width: 28px; height: 28px; }
+.gate__option-icon svg { display: block; width: 100%; height: 100%; }
+.gate__option-label { font-size: 18px; color: var(--color-text); }
+.gate__footer { margin: 0; font-size: 18px; color: var(--color-text); }
+.gate__login {
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+
 /* ---- Topic Hub (aggregates one patient concern across feature types) ---- */
 /* Wireframe-level, like the community hub, but modules can carry a content-
    preview affordance (skeleton rows) — no fabricated content. */

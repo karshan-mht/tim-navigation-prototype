@@ -82,15 +82,21 @@ Figma Community `5:2` desktop / `6:68` mobile), not the orientation menu. Data-d
 - **Four feature preview cards** (`.comm-card`) — 80px magenta glyph icon, title,
   headline stat, one-line summary, chevron:
 
-  | Card | Stat | Chevron | → screen |
+  | Card | Stat | Chevron | Tap → |
   |---|---|---|---|
-  | Posts | [TBD] updates shared **· Member only** | lock | `com-activities` |
+  | Posts | [TBD] updates shared **· Member only** | lock | **member-gate modal** |
   | Questions & Answers | [TBD] questions answered | arrow | `com-questions` |
   | Groups | [TBD] groups active | arrow | `com-groups` |
   | People | [TBD] people joined | arrow | `com-meet` |
 
-  **Posts is `memberOnly`** — magenta "· Member only" tag + a **lock** (not an arrow):
-  content is gated behind joining.
+  **Posts is `memberOnly`** — magenta "· Member only" tag + a **lock** (not an arrow).
+  Instead of navigating, it opens the **member sign-up gate** (`renderMemberGate`,
+  `data-action="member-gate"`): a modal titled "This is a member-feature! / Sign up
+  for free to view posts." with three "Continue with …" options (Facebook / Google /
+  Email, all → `signup-start`) and an "Already a member? Log In" link. Dismissed via
+  the top-left ✕ or the scrim. `state.gateFeature` drives the copy so the same modal
+  can gate other features later (`GATE_FEATURES` map). Brand glyphs (`gate-facebook`,
+  `gate-google`, `gate-email`) are inlined in `COMMUNITY_SVGS`.
 - **Light join upsell** (`.comm-upsell` — white/bordered, *not* the navy splash CTA):
   persona-aware, mirroring the splash home's closing card. Visitor → "You don't have
   to figure this out alone." / **Join for free** (`signup-start`); Subscriber → "Don't

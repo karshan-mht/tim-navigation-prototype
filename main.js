@@ -225,6 +225,9 @@ const COMMUNITY_SVGS = {
   "community-comment": `<svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.4774 2.43054H7.52281C3.76373 2.43054 0.916748 5.33024 0.916748 9.15894L0.920434 9.36366C1.04536 12.8296 4.32479 15.5533 7.5834 15.5533L8.58804 15.5526L8.67091 15.6346C9.91799 16.8243 11.6332 17.5694 13.3031 17.5694C13.9798 17.5694 14.4959 17.1664 14.4959 16.4636C14.4959 16.3316 14.4786 16.2083 14.4453 16.0671L14.4068 15.9191C14.3828 15.8336 14.2907 15.5345 14.2775 15.4899L14.2214 15.2843L14.292 15.2664C17.1252 14.4847 19.0834 12.32 19.0834 9.15894C19.0834 5.3563 16.1834 2.43054 12.4774 2.43054ZM12.4774 4.11264C15.2748 4.11264 17.4319 6.2889 17.4319 9.15894C17.4319 11.717 15.7211 13.3626 13.1674 13.7962L12.4774 13.9133V14.6258L12.4836 14.8506C12.5002 15.1461 12.5497 15.4284 12.6299 15.7366L12.6572 15.8371C11.5042 15.6609 10.3489 15.0325 9.54094 14.1415L9.29574 13.8712H7.5834C5.11251 13.8712 2.56826 11.7169 2.56826 9.15894C2.56826 6.25924 4.67583 4.11264 7.52281 4.11264H12.4774Z" fill="#0D1B29" fill-opacity="0.65"/><path d="M7.52319 2.63855H12.4773C16.0653 2.63855 18.8748 5.46844 18.8748 9.15906C18.8747 12.2147 16.9911 14.3053 14.2371 15.0653L14.1707 15.0819L13.9646 15.1346L14.0203 15.3387L14.0769 15.5448L14.0779 15.5487L14.2058 15.9755L14.2439 16.12C14.2736 16.2473 14.2878 16.353 14.2878 16.4637C14.2878 16.7604 14.1805 16.9781 14.0154 17.1239C13.8472 17.2724 13.6015 17.3611 13.3035 17.3612C11.7932 17.3612 10.2354 16.7274 9.04761 15.6952L8.81519 15.4843L8.73413 15.4042L8.67358 15.3446H7.58374C4.5216 15.3446 1.4476 12.8589 1.14917 9.66687L1.12866 9.35632L1.12476 9.15906C1.12476 5.4418 3.88276 2.63855 7.52319 2.63855ZM7.52319 3.90417C4.55756 3.90417 2.36011 6.14792 2.36011 9.15906C2.36015 10.5088 3.03096 11.7399 4.00952 12.6288C4.98757 13.517 6.29004 14.08 7.58374 14.08H9.20386L9.38647 14.2811C10.2256 15.2063 11.424 15.8591 12.6257 16.0428L12.9421 16.0917L12.8582 15.7821L12.8318 15.6844C12.7548 15.3886 12.7081 15.1215 12.6921 14.8446L12.6853 14.62V14.0887L13.2019 14.0018C14.5132 13.7792 15.6238 13.2423 16.408 12.4178C17.1943 11.591 17.6404 10.4875 17.6404 9.15906C17.6404 6.17701 15.3928 3.90417 12.4773 3.90417H7.52319Z" stroke="#0D1B29" stroke-opacity="0.65" stroke-width="0.416684"/></svg>`,
   "community-check": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19.6095 6.40558C20.1054 6.92059 20.129 7.74036 19.6803 8.2844L19.6095 8.36387L10.7206 17.5953C10.4974 17.8271 10.2149 17.9595 9.92378 17.9926L9.82652 18H9.72904C9.43671 17.989 9.14722 17.8786 8.91149 17.6689L8.83497 17.5953L4.39052 12.9796C3.86983 12.4388 3.86983 11.5621 4.39052 11.0213C4.88643 10.5063 5.67578 10.4818 6.19963 10.9477L6.27614 11.0213L9.77778 14.6585L17.7239 6.40558C18.2446 5.86481 19.0888 5.86481 19.6095 6.40558Z" fill="#0F57A8"/></svg>`,
   "community-plus": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.3334 5.33333V10.6667H18.6667C19.3333 10.6667 20 11.3382 20 12C20 12.6618 19.3333 13.3333 18.6667 13.3333H13.3334V18.6667C13.3334 19.3333 12.6667 20 12 20C11.3334 20 10.6667 19.3333 10.6667 18.6667V13.3333H5.33343C4.66677 13.3333 4 12.6667 4 12C4 11.3333 4.66677 10.6667 5.33343 10.6667H10.6667V5.33333C10.6667 4.66667 11.3334 4 12 4C12.6667 4 13.3334 4.66667 13.3334 5.33333Z" fill="#0F57A8"/></svg>`,
+  "gate-facebook": `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="11.5" fill="#1877F2"/><path d="M15.36 12.34l.42-2.73h-2.62V7.84c0-.75.37-1.48 1.54-1.48h1.19V4.04s-1.08-.18-2.11-.18c-2.15 0-3.56 1.3-3.56 3.67v2.08H7.79v2.73h2.43v6.6a9.6 9.6 0 0 0 3 0v-6.6h2.14z" fill="#fff"/></svg>`,
+  "gate-google": `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.52 12.27c0-.79-.07-1.55-.2-2.27H12v4.51h6.47a5.53 5.53 0 0 1-2.4 3.63v3h3.87c2.26-2.09 3.58-5.17 3.58-8.87z" fill="#4285F4"/><path d="M12 24c3.24 0 5.96-1.08 7.94-2.91l-3.87-3c-1.08.72-2.45 1.15-4.07 1.15-3.13 0-5.78-2.11-6.73-4.96H1.29v3.09A12 12 0 0 0 12 24z" fill="#34A853"/><path d="M5.27 14.28a7.2 7.2 0 0 1 0-4.56V6.63H1.29a12 12 0 0 0 0 10.74l3.98-3.09z" fill="#FBBC05"/><path d="M12 4.76c1.77 0 3.35.61 4.6 1.8l3.43-3.43C17.95 1.2 15.24 0 12 0A12 12 0 0 0 1.29 6.63l3.98 3.09C6.22 6.87 8.87 4.76 12 4.76z" fill="#EA4335"/></svg>`,
+  "gate-email": `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="5" width="19" height="14" rx="2.5" fill="#0d1b29"/><path d="M4 7.5l8 5.5 8-5.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
 // Topic Hubs — a NEW surface (distinct from the old Topic Center, which was
@@ -486,6 +489,8 @@ let state = {
   prevScreenId: null,
   panelOpen: false,
   dropdownOpen: false,
+  gateOpen: false,        // member sign-up gate modal (locked community features)
+  gateFeature: "posts",   // which feature the gate is guarding (drives its copy)
 };
 
 // Navigate to a screen by updating the hash; the hashchange handler below does
@@ -513,6 +518,7 @@ window.addEventListener("hashchange", () => {
   }
   state.panelOpen = false;
   state.dropdownOpen = false;
+  state.gateOpen = false;
   render();
 });
 
@@ -767,8 +773,12 @@ function renderCommunityPreview() {
       ? `${c.stat}<span class="comm-card__member"> &middot; Member only</span>`
       : c.stat;
     const chevron = c.memberOnly ? "community-lock" : "community-arrow";
+    // memberOnly cards are gated: open the sign-up modal instead of navigating.
+    const trigger = c.memberOnly
+      ? `data-action="member-gate" data-gate="${c.gate || "posts"}"`
+      : `data-screen="${c.screen}"`;
     return `
-      <button class="comm-card" data-screen="${c.screen}">
+      <button class="comm-card" ${trigger}>
         <span class="comm-card__content">
           <span class="comm-card__left">
             <span class="comm-card__icon">${COMMUNITY_SVGS[c.icon]}</span>
@@ -830,6 +840,42 @@ function renderCommunityPreview() {
         </div>
       </div>
     </section>
+  `;
+}
+
+// Member sign-up gate — a modal shown when a Visitor/Subscriber taps a locked
+// ("Member only") community feature (e.g. the Posts card). Mirrors the live
+// site's social-login gate: three "Continue with …" options + a Log In link. All
+// resolve to the sign-up flow (signup-start) since this prototype has no separate
+// social-auth or login screens. `state.gateFeature` drives the headline copy.
+const GATE_FEATURES = {
+  posts: "posts",
+  questions: "questions & answers",
+  groups: "groups",
+  people: "member profiles",
+};
+function renderMemberGate() {
+  const feature = GATE_FEATURES[state.gateFeature] || "this";
+  const option = (icon, label) =>
+    `<button class="gate__option" data-screen="signup-start">
+       <span class="gate__option-icon">${COMMUNITY_SVGS[icon]}</span>
+       <span class="gate__option-label">Continue with ${label}</span>
+     </button>`;
+  return `
+    <div class="gate-overlay" data-action="close-gate">
+      <div class="gate" data-stop>
+        <button class="gate__close" data-action="close-gate" aria-label="Close">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6 18 18M18 6 6 18" /></svg>
+        </button>
+        <h2 class="gate__title">This is a member-feature!<br />Sign up for free to view ${feature}.</h2>
+        <div class="gate__options">
+          ${option("gate-facebook", "Facebook")}
+          ${option("gate-google", "Google")}
+          ${option("gate-email", "Email")}
+        </div>
+        <p class="gate__footer">Already a member? <button class="gate__login" data-screen="signup-start">Log In</button></p>
+      </div>
+    </div>
   `;
 }
 
@@ -1672,6 +1718,7 @@ function render() {
   let overlays = "";
   if (state.panelOpen) overlays += renderPanel();
   if (state.dropdownOpen && persona.navVariant !== "visitor") overlays += renderDropdown();
+  if (state.gateOpen) overlays += renderMemberGate();
 
   document.getElementById("phone").innerHTML = `
     <div class="screen">
@@ -1809,6 +1856,21 @@ document.addEventListener("click", (e) => {
       state.dropdownOpen = !state.dropdownOpen;
       state.panelOpen = false;
       render();
+      break;
+    case "member-gate":
+      state.gateFeature = actionEl.dataset.gate || "posts";
+      state.gateOpen = true;
+      state.panelOpen = false;
+      state.dropdownOpen = false;
+      render();
+      break;
+    case "close-gate":
+      // Only when the scrim or the X itself is tapped (not a click bubbling from
+      // inside the card). The X's svg is pointer-events:none so e.target is the X.
+      if (e.target.dataset.action === "close-gate") {
+        state.gateOpen = false;
+        render();
+      }
       break;
     case "close-dropdown":
       if (e.target.dataset.action === "close-dropdown") {
