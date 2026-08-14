@@ -2287,7 +2287,9 @@ html.is-modal-open { overflow: hidden; }
   .comm-preview__list { padding-block: 24px 40px; }
   .comm-upsell__card {
     display: grid;
-    grid-template-columns: 1fr 1fr;   /* even two columns */
+    /* Left (copy) column widened so the headline wraps to 2 lines, not 3; buttons
+       take a fixed 270px and still fit "Check symptoms first". */
+    grid-template-columns: 1fr 270px;
     align-items: center;
     gap: 32px;
     padding: 32px;

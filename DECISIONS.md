@@ -123,6 +123,8 @@ written.
 
 - **2026-08-14** — **Placeholder pages: label sits high, footer stays below the fold.** The labelled placeholder screens (`.screen__body--fill`) used `min-height: 100%`, which never resolved against the flex parent's indefinite height — so the body only took the leftover space and the tall (381px) global footer filled the rest of the viewport, fully visible under the label. Fixed: `.screen__body--fill { min-height: 100vh }` (a definite height) pushes the footer entirely below the fold, and `.screen__body--fill:not(.screen__body--flow) .screen__placeholder { margin-block: 22vh auto }` anchors the label in the upper third instead of the dead-centre of the tall body. Scoped `:not(--flow)` so the chromeless flow pages (Sign Up Start / Registration Step — no footer) keep their centred label. Verified desktop + mobile (label ~31–36% from top, footer below the fold and still reachable by scrolling); no console errors.
 
+- **2026-08-14** — **Community upsell card: headline to 2 lines (desktop).** The closing "You don't have to figure this out alone." card's even `1fr 1fr` grid gave the 36px headline a ~303px column, wrapping it to 3 lines. Widened the copy column (`grid-template-columns: 1fr 270px` → ~336px left) so it wraps to **2 lines**; the buttons keep a fixed 270px and still fit "Check symptoms first" (verified via measurement — 2 lines, no button overflow). Desktop-only (`@media min-width:1024px`); the mobile card is a single column, unaffected.
+
 ---
 
 ## On the horizon
