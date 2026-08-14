@@ -1965,7 +1965,7 @@ body {
     align-items: center;
     gap: 16px;
     padding: 12px var(--content-pad);
-    height: 76px;
+    height: 68px;   /* 44px controls + 12px padding top/bottom (Figma) — matches the mobile nav */
   }
   .dnav__cluster { display: flex; align-items: center; gap: 8px; }  /* hamburger hugs the logo */
   .dnav__logo { flex-shrink: 0; }
