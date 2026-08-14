@@ -2273,8 +2273,11 @@ html.is-modal-open { overflow: hidden; }
     align-items: start;
   }
   /* Topic Hub keeps its single-column stack on desktop, capped to the 728px
-     reading column so the cards don't stretch the full content width. */
-  .topic-hub__list { gap: 16px; max-width: 728px; }
+     reading column and centered so the cards don't stretch the full content
+     width. The header is capped/centered to match so it aligns with the cards. */
+  .topic-hub__header,
+  .topic-hub__list { max-width: 728px; margin-inline: auto; }
+  .topic-hub__list { gap: 16px; }
 
   /* Community preview: full-bleed banner, 728px card column, and the upsell
      card reflows to an even two-column split (copy left, buttons right). */
