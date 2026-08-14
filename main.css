@@ -1743,7 +1743,8 @@ body {
 .footer {
   flex-shrink: 0;
   font-family: var(--font-body);
-  margin-top: 48px;   /* breathing room separating the footer from page content */
+  margin-top: 72px;   /* breathing room separating the footer from page content */
+  border-top: 1px solid var(--color-border);   /* thin divider line above the footer (Figma 6371:29) */
 }
 
 .footer__bar { padding: 28px 12px 24px; }
@@ -2023,9 +2024,9 @@ body {
   .dnav__crumb svg { width: 18px; height: 18px; }
 
   /* ---- Footer: constrain + center, keep the two-column link block ---- */
-  /* Drop the base 48px margin — the last section's bottom padding + the bar's
-     own top padding already separate it (the extra margin over-spaced it). */
-  .footer { margin-top: 0; }
+  /* Keep clear space above the divider on desktop too, so content never crowds
+     the footer (the divider itself is the border-top set in the base rule). */
+  .footer { margin-top: 80px; }
   .footer__bar {
     padding: 48px var(--content-pad);
     display: flex;
