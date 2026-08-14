@@ -1031,15 +1031,21 @@ body {
 }
 .comm-preview__avatars .comm-preview__avatar:first-child { margin-left: 0; }
 .comm-preview__count { font-size: 14px; line-height: 22px; color: var(--color-text-secondary); }
-/* Decorative dotted graphic — top-right, aligned to the reading column's right
-   edge (it lives inside .comm-preview__banner-inner) and sits behind the text. */
+/* Decorative graphic — top-right, aligned to the reading column's right edge (it
+   lives inside .comm-preview__banner-inner) and sits behind the text. The source
+   asset reads dots-left/square-right; Figma flips it horizontally so the square
+   sits on the left and the dots trail off to the right (node 26:515). */
 .comm-preview__banner-graphic {
   position: absolute;
-  top: -24px;              /* bleed up under the banner's top padding */
-  right: 0;                /* flush to the 728px column's right edge */
   z-index: -1;             /* behind the header text */
   width: 210px;
+  transform: scaleX(-1);   /* square left, dots right */
   pointer-events: none;
+  /* Mobile: bleed the graphic off the right edge so only a corner shows and it
+     stays clear of the (left-aligned) text (Figma mobile, node 26:507). Desktop
+     pulls it back to the reading-column edge below. */
+  top: -2px;
+  right: -132px;
 }
 
 /* Card list — a centered reading column. */
@@ -1372,8 +1378,8 @@ body {
 .comm-person__text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .comm-person__name { font-weight: 600; font-size: 18px; line-height: 24px; color: #000; }
 .comm-person__meta { font-size: 18px; line-height: 26px; color: var(--color-text-secondary); }
-.comm-person__chevron { flex-shrink: 0; width: 24px; height: 24px; }
-.comm-person__chevron svg { display: block; width: 100%; height: 100%; }
+.comm-person__add { flex-shrink: 0; width: 24px; height: 24px; }
+.comm-person__add svg { display: block; width: 100%; height: 100%; }
 
 /* ---- Topic Hub (aggregates one patient concern across feature types) ---- */
 /* Wireframe-level, like the community hub, but modules can carry a content-
@@ -2174,6 +2180,8 @@ body {
   /* Community preview: full-bleed banner, 728px card column, and the upsell
      card reflows to an even two-column split (copy left, buttons right). */
   .comm-preview__banner { padding-block: 40px; }
+  /* Banner graphic sits at the reading column's right edge, bled slightly off. */
+  .comm-preview__banner-graphic { top: -24px; right: -48px; }
   .comm-preview__list { padding-block: 24px 40px; }
   .comm-upsell__card {
     display: grid;
