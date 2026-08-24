@@ -775,6 +775,9 @@ const COMMUNITY_FEAT_SVGS = {
   "community-feat-groups": `<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M48 76C62.3594 76 74 64.3594 74 50C74 35.6406 62.3594 24 48 24C33.6406 24 22 35.6406 22 50C22 64.3594 33.6406 76 48 76Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M88 76C102.359 76 114 64.3594 114 50C114 35.6406 102.359 24 88 24C73.6406 24 62 35.6406 62 50C62 64.3594 73.6406 76 88 76Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M68 106C82.3594 106 94 94.3594 94 80C94 65.6406 82.3594 54 68 54C53.6406 54 42 65.6406 42 80C42 94.3594 53.6406 106 68 106Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
   "community-feat-leadership": `<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M64 80C79.464 80 92 67.464 92 52C92 36.536 79.464 24 64 24C48.536 24 36 36.536 36 52C36 67.464 48.536 80 64 80Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M64 36L67.8 46.8L79.2 47.1L70.1 54L73.4 64.9L64 58.4L54.6 64.9L57.9 54L48.8 47.1L60.2 46.8L64 36Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M46 75L38 108L55 99L64 110L73 99L90 108L82 75" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
   "community-feat-guidelines": `<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M64 18L102 32V64C102 87 86 102 64 110C42 102 26 87 26 64V32L64 18Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M64 84C51 76 44 69 44 61C44 55 49 50 55 50C59 50 62 52 64 55C66 52 69 50 73 50C79 50 84 55 84 61C84 69 77 76 64 84Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
+  "community-feat-panel": `<svg viewBox="0 0 235.918 320" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Artboard 18" opacity="0.25"><path id="Vector" d="M43.8008 318.716C51.4361 319.106 59.0031 316.045 65.2714 311.188C71.5349 306.33 76.5926 299.759 80.8789 292.725C89.4466 278.655 95.2366 262.432 105.406 249.754C118.255 233.727 136.679 225.027 153.37 214.238C161.713 208.844 169.803 202.766 176.496 195.028C183.184 187.29 188.447 177.756 190.331 167.216C191.737 159.366 191.239 151.174 189.482 143.407C187.724 135.64 184.737 128.263 181.197 121.282C174.118 107.32 164.843 94.861 157.681 80.9573C147.087 60.3947 141.029 36.5564 126.583 19.1329C119.358 10.4235 109.946 3.55958 99.4399 1.64588C94.187 0.689023 88.729 0.996583 83.6616 2.79312C78.5941 4.58967 73.9368 7.89472 70.5146 12.4202C65.6278 18.8839 63.4895 27.4223 62.6987 35.829C61.9029 44.2356 62.3228 52.7301 61.8687 61.1709C60.2089 92.0685 47.0717 120.574 33.6025 147.625C20.1333 174.675 5.79518 202.112 1.338 232.653C-0.663583 246.356 -0.58547 260.572 2.70982 273.973C6.0051 287.374 12.6445 299.935 22.3253 308.718C28.4472 314.268 35.9214 318.311 43.8008 318.716Z" fill="#DBE6F2"/><path id="Vector_2" d="M210.698 188.764C210.02 203.322 209.971 217.919 208.565 232.428C207.159 246.937 204.318 261.515 198.44 274.427C192.469 287.53 183.453 298.578 172.888 306.326C162.324 314.073 150.26 318.555 138.1 319.702C113.783 321.997 89.6711 310.866 71.2078 292.324C53.1887 274.227 39.9587 248.612 36.473 220.219C34.7302 206.022 35.4234 191.264 38.7773 177.302C42.1263 163.339 48.1554 150.197 56.4205 139.526C64.4903 129.103 74.4835 121.214 83.3149 111.747C107.593 85.7269 122.463 48.5659 147.243 23.263C159.629 10.6091 174.782 1.0991 190.722 0.0885466C198.689 -0.419172 206.739 1.24556 213.838 5.36589C220.941 9.48621 227.053 16.1061 230.875 24.4493C233.907 31.074 235.455 38.6605 235.826 46.3153C236.197 53.9701 235.416 61.7031 234 69.2456C231.163 84.3258 225.823 98.6103 221.771 113.319C215.048 137.719 211.89 163.281 210.698 188.764Z" fill="url(#paint0_linear_0_38)"/></g><defs><linearGradient id="paint0_linear_0_38" x1="133.884" y1="320.028" x2="127" y2="1.48731" gradientUnits="userSpaceOnUse"><stop stop-color="#DBE6F2"/><stop offset="1" stop-color="#B3CAE3"/></linearGradient></defs></svg>`,
+  "community-feat-panel2": `<svg viewBox="0 0 349.453 529.765" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="Artboard" opacity="0.25"><path id="Vector" d="M64.88 527.639C76.1898 528.285 87.3983 523.218 96.6833 515.176C105.961 507.135 113.453 496.256 119.802 484.61C132.493 461.317 141.069 434.461 156.132 413.472C175.165 386.938 202.456 372.536 227.18 354.674C239.538 345.744 251.52 335.682 261.435 322.872C271.341 310.061 279.137 294.277 281.928 276.828C284.011 263.832 283.273 250.27 280.67 237.412C278.067 224.553 273.641 212.341 268.398 200.784C257.913 177.669 244.173 157.044 233.565 134.026C217.873 99.9843 208.899 60.5196 187.502 31.6747C176.799 17.2563 162.857 5.89293 147.295 2.72476C139.514 1.14067 131.43 1.64984 123.924 4.62405C116.418 7.59825 109.519 13.0698 104.45 20.5619C97.2112 31.2625 94.0439 45.3981 92.8724 59.3154C91.6937 73.2327 92.3156 87.2955 91.6431 101.269C89.1844 152.421 69.7249 199.612 49.7737 244.395C29.8225 289.177 8.58411 334.599 1.98191 385.16C-0.982933 407.846 -0.867228 431.381 4.01392 453.567C8.89506 475.752 18.7297 496.547 33.0694 511.087C42.1374 520.276 53.2086 526.968 64.88 527.639Z" fill="#DBE6F2"/><path id="Vector_2" d="M312.097 312.502C311.092 336.603 311.02 360.768 308.937 384.788C306.854 408.808 302.646 432.941 293.939 454.318C285.095 476.011 271.739 494.3 256.09 507.126C240.442 519.953 222.573 527.372 204.56 529.271C168.541 533.07 132.825 514.643 105.476 483.947C78.7857 453.987 59.1888 411.58 54.0256 364.575C51.444 341.072 52.4709 316.64 57.4388 293.526C62.3995 270.411 71.3302 248.654 83.5728 230.987C95.5262 213.731 110.329 200.671 123.41 185C159.372 141.922 181.398 80.4015 218.104 38.5122C236.45 17.5634 258.896 1.81958 282.506 0.14659C294.308 -0.693945 306.232 2.06204 316.747 8.8833C327.268 15.7046 336.322 26.6638 341.984 40.4761C346.475 51.4435 348.767 64.003 349.317 76.6757C349.866 89.3483 348.709 102.15 346.612 114.637C342.411 139.603 334.5 163.251 328.498 187.602C318.54 227.996 313.861 270.314 312.097 312.502Z" fill="url(#paint0_linear_0_15)"/></g><defs><linearGradient id="paint0_linear_0_15" x1="198.315" y1="529.811" x2="185.579" y2="2.52359" gradientUnits="userSpaceOnUse"><stop stop-color="#DBE6F2"/><stop offset="1" stop-color="#B3CAE3"/></linearGradient></defs></svg>`,
+  "community-feat-check": `<svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M6 12.1791L9.84 16L18 8" stroke="#A440BC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
 };
 
 // Community Features — the Anonymous Visitor /community page (Figma Community
@@ -814,10 +817,18 @@ const COMMUNITY_PAIR = [
     link: { label: "View guidelines", screen: "com-values" },
   },
 ];
+// The blue panels carry a `userSpaceOnUse` linear gradient with a fixed id; when
+// the SVG is inlined on multiple cards those ids would collide, so suffix the
+// gradient id (definition + url reference) uniquely per card.
+function panelSvg(name, uid) {
+  return COMMUNITY_FEAT_SVGS[name]
+    .replace(/id="(paint[0-9A-Za-z_]+)"/g, (_m, id) => `id="${id}-${uid}"`)
+    .replace(/url\(#(paint[0-9A-Za-z_]+)\)/g, (_m, id) => `url(#${id}-${uid})`);
+}
 function renderCommunityFeatures() {
   const cards = COMMUNITY_FEATURES.map((f) => `
     <button class="feat-card feat-card--${f.art.replace("community-feat-", "")}" data-screen="${f.screen}">
-      <img class="feat-card__panel" src="${ASSET_BASE}/community-feat-panel.svg" alt="" aria-hidden="true" />
+      <span class="feat-card__panel">${panelSvg("community-feat-panel", f.art)}</span>
       <span class="feat-card__illo">${COMMUNITY_FEAT_SVGS[f.art]}</span>
       <span class="feat-card__head">
         <span class="feat-card__cat">${f.cat}</span>
@@ -838,12 +849,12 @@ function renderCommunityFeatures() {
           </div>`).join("")
       : c.rules.map((r) => `
           <div class="feat-pair__rule">
-            <img class="feat-pair__check" src="${ASSET_BASE}/community-feat-check.svg" alt="" aria-hidden="true" />
+            <span class="feat-pair__check">${COMMUNITY_FEAT_SVGS["community-feat-check"]}</span>
             <span>${r}</span>
           </div>`).join("");
     return `
       <div class="feat-pair-card">
-        <img class="feat-pair-card__panel" src="${ASSET_BASE}/community-feat-panel2.svg" alt="" aria-hidden="true" />
+        <span class="feat-pair-card__panel">${panelSvg("community-feat-panel2", c.art)}</span>
         <span class="feat-pair-card__illo">${COMMUNITY_FEAT_SVGS[c.art]}</span>
         <div class="feat-pair-card__head">
           <span class="feat-card__cat">${c.cat}</span>
