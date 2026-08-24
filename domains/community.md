@@ -56,21 +56,21 @@ own **My Profile**, which is an Account screen; see [account.md](account.md).)
 
 | Persona | Surface | Render fn |
 |---|---|---|
-| **Visitor** | **Community Features** tour — Figma `184:588` / `184:441` | `renderCommunityFeatures()` |
-| **Subscriber** | Content **preview** page (Figma `5:2` / `6:68`) | `renderCommunityPreview()` |
+| **Visitor, Subscriber** | **Community Features** tour — Figma `184:588` / `184:441` | `renderCommunityFeatures()` |
 | **Logged-Out Member** | Activity **feed**, gated (blurred + login reminder) — Figma `9:134` / `9:200` | `renderCommunityFeed(true)` |
 | **Logged-In Member** | Activity **feed**, live — Figma `34:609` / `34:536` | `renderCommunityFeed(false)` |
 
-`renderCommunityHub()` (the old wireframe orientation menu, below) is no longer
-reached by any persona — it's kept only as a defensive fallback for an unknown
-persona key.
+`renderCommunityHub()` (old wireframe menu) and `renderCommunityPreview()` (the
+stats/upsell preview + member-gate) are no longer reached by any persona — kept as
+fallbacks / reference only.
 
-### Visitor — the Community Features tour (`renderCommunityFeatures`)
+### Visitor + Subscriber — the Community Features tour (`renderCommunityFeatures`)
 
-The Anonymous Visitor gets a **"Community Features"** page (added 2026-08-14, Figma
-`184:588` desktop / `184:441` mobile) — a feature tour, not the stats/upsell preview
-the Subscriber still sees. Data-driven from `COMMUNITY_FEATURES` in `main.js`: a
-`Community Features` heading over four cards (`.feat-card`), each with a magenta
+The Anonymous Visitor and the Subscriber get a **"Community Features"** page (added
+2026-08-14, Figma `184:588` desktop / `184:441` mobile) — a feature tour, not the
+stats/upsell preview. Data-driven from `COMMUNITY_FEATURES` + `COMMUNITY_PAIR` in
+`main.js`: a `Community Features` heading, then four feature cards (`.feat-card`),
+then a two-card **feature pair** (`.feat-pair`). Each feature card has a magenta
 category eyebrow, a DM-Serif title, a description, and a magenta line-art
 illustration bleeding off the top-right over a faint blue panel:
 
@@ -81,18 +81,35 @@ illustration bleeding off the top-right over a faint blue panel:
 | Q&A | Q&A | Ask, answer, and be heard | `com-questions` |
 | Groups | GROUPS | Find the circle that fits your journey | `com-groups` |
 
-No stats, lock, member-gate, or upsell (those live on the Subscriber preview).
-Illustrations are `<img>` (`community-feat-{posts,meet,qa,groups}.svg`, magenta
-line-art) over a shared `community-feat-panel.svg` (faint blue diagonal). Responsive:
-illustration top-right with the description full-width below on mobile; illustration
-centred on the right of a 728px card on desktop.
+**Feature pair** (`COMMUNITY_PAIR`, Figma `212:110`) — two richer cards below the
+four, **side-by-side on desktop** (`.feat-pair` row, equal width/height) and
+**stacked on mobile**:
+
+- **Ambassadors & CEMs** — "The women who provide support" + a preview of two people
+  (avatar + name + role) → **View people →** (`com-meet`).
+- **Community Guidelines** — "How we look after each other" + a four-item checklist
+  (magenta check + rule) → **View guidelines →** (`com-values`).
+
+No stats, lock, member-gate, or upsell. Illustrations are `<img>`
+(`community-feat-{posts,meet,qa,groups,leadership,guidelines}.svg`, magenta line-art)
+over a faint blue panel (`community-feat-panel.svg`; the pair uses the taller
+gradient `community-feat-panel2.svg`); the checklist check is `community-feat-check.svg`.
+Responsive: illustration top-right + full-width description on mobile; illustration
+centred on the right of a 728px card on desktop (feature cards); the pair is a row on
+desktop, stacked on mobile. All DM-Serif titles use the landing's `--color-navy`
+(see the global headline-colour note in [DECISIONS](../DECISIONS.md) 2026-08-14).
 
 Reached from:
 
 - The shared panel's single **Community** tab (all four personas — see [navigation.md](../foundation/navigation.md) §3)
 - Splash Community section **"Join the conversation →"** (see [landing.md](landing.md))
 
-### Subscriber — the preview page (`renderCommunityPreview`)
+### (Superseded) Preview page + member-gate (`renderCommunityPreview`)
+
+> **Superseded (2026-08-14):** the Subscriber now gets the Community Features tour
+> above, so this preview — and the member-gate modal it triggered from the locked
+> Posts card — is **no longer reached by any persona**. Kept as reference (and the
+> `.gate` modal styles/handlers remain in place should a gate be wired up again).
 
 A "get a glimpse what's happening inside" marketing preview (added 2026-08-13,
 Figma Community `5:2` desktop / `6:68` mobile), not the orientation menu. Data-driven

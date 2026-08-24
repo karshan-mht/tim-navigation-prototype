@@ -1024,7 +1024,7 @@ html.is-modal-open { overflow: hidden; }
   font-size: 32px;         /* Figma holds 32/40 across breakpoints (node 12:4) */
   line-height: 40px;
   letter-spacing: var(--display-tracking);
-  color: var(--color-text);
+  color: var(--color-navy);
 }
 .comm-preview__sub { margin: 0; font-size: 18px; line-height: 24px; color: var(--color-text-secondary); }
 .comm-preview__status { display: flex; align-items: center; gap: 10px; }
@@ -1122,7 +1122,7 @@ html.is-modal-open { overflow: hidden; }
   font-size: 32px;
   line-height: 40px;
   letter-spacing: var(--display-tracking);
-  color: var(--color-text);
+  color: var(--color-navy);
 }
 .comm-upsell__sub { margin: 0; font-size: 18px; line-height: 26px; color: var(--color-text); }
 .comm-upsell__buttons { display: flex; flex-direction: column; gap: 16px; }
@@ -1163,7 +1163,7 @@ html.is-modal-open { overflow: hidden; }
   font-size: var(--display-title-size);
   line-height: var(--display-title-lh);
   letter-spacing: var(--display-tracking);
-  color: var(--color-text);
+  color: var(--color-navy);
 }
 .feat__list { display: flex; flex-direction: column; gap: 16px; }
 
@@ -1189,9 +1189,10 @@ html.is-modal-open { overflow: hidden; }
 .feat-card__panel {
   position: absolute;
   z-index: 0;
-  top: -36px;
+  top: 50%;
   right: -28px;
   width: 200px;
+  transform: translateY(-50%);   /* centred vertically on the card (both breakpoints) */
   pointer-events: none;
 }
 .feat-card__illo {
@@ -1226,7 +1227,7 @@ html.is-modal-open { overflow: hidden; }
   font-size: var(--display-title-size);
   line-height: var(--display-title-lh);
   letter-spacing: var(--display-tracking);
-  color: #000;
+  color: var(--color-navy);
 }
 .feat-card__desc {
   position: relative;
@@ -1236,6 +1237,57 @@ html.is-modal-open { overflow: hidden; }
   letter-spacing: -0.25px;
   color: var(--color-text);
 }
+
+/* Feature pair — two richer cards below the four features (Figma 212:110):
+   stacked on mobile, side-by-side on desktop. Each previews content (people /
+   guidelines) and ends in a "View … →" link. */
+.feat-pair { display: flex; flex-direction: column; gap: 16px; }
+.feat-pair-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+}
+.feat-pair-card__panel { position: absolute; z-index: 0; top: -24px; right: -56px; width: 280px; pointer-events: none; }
+.feat-pair-card__illo { position: absolute; z-index: 1; top: 2px; right: 2px; width: 112px; height: 112px; object-fit: contain; pointer-events: none; }
+.feat-pair-card__head { position: relative; z-index: 2; display: flex; flex-direction: column; gap: 8px; padding-right: 116px; }
+.feat-pair-card__preview,
+.feat-pair-card__link { position: relative; z-index: 2; }
+
+/* People preview (Ambassadors card). */
+.feat-pair-card__preview { display: flex; flex-direction: column; gap: 16px; }
+.feat-pair__person { display: flex; align-items: center; gap: 16px; }
+.feat-pair__avatar { flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: var(--color-bg-purple-soft); }
+.feat-pair__avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.feat-pair__person-text { display: flex; flex-direction: column; min-width: 0; }
+.feat-pair__person-name { font-weight: 600; font-size: 18px; line-height: 24px; letter-spacing: -0.25px; color: #000; }
+.feat-pair__person-role { font-size: 18px; line-height: 26px; letter-spacing: -0.25px; color: var(--color-text-secondary); }
+
+/* Guidelines preview (checklist). */
+.feat-pair__rule { display: flex; align-items: flex-start; gap: 16px; }
+.feat-pair__check { flex-shrink: 0; width: 22px; height: 22px; }
+.feat-pair__rule span { font-size: 16px; line-height: 22px; letter-spacing: -0.25px; color: var(--color-text); }
+
+/* "View … →" link. */
+.feat-pair-card__link {
+  align-self: flex-start;
+  padding: 0 12px;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: -0.75px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+.feat-pair-card__link span { font-weight: 400; }
 
 /* ---- Community feed (Logged-Out + Logged-In Members) — Figma 9:134 / 34:609 ---- */
 /* A real activity feed: reuses the .comm-preview__banner (title + count), then
@@ -1262,7 +1314,7 @@ html.is-modal-open { overflow: hidden; }
   font-size: 28px;
   line-height: 36px;
   letter-spacing: var(--display-tracking);
-  color: var(--color-text);
+  color: var(--color-navy);
 }
 /* "Post" button — pencil + label, in the Trending Posts header. */
 .comm-feed__post-btn {
@@ -1341,7 +1393,7 @@ html.is-modal-open { overflow: hidden; }
   font-size: 24px;
   line-height: 32px;
   letter-spacing: var(--display-tracking);
-  color: var(--color-text);
+  color: var(--color-navy);
 }
 .comm-reminder__sub { margin: 0; font-size: 18px; line-height: 26px; color: var(--color-text-muted); }
 .comm-reminder__cta {
@@ -1531,7 +1583,7 @@ html.is-modal-open { overflow: hidden; }
   font-size: var(--display-title-size);
   line-height: var(--display-title-lh);
   letter-spacing: var(--display-tracking);
-  color: var(--color-text);
+  color: var(--color-navy);
 }
 .gate__sub {
   margin: 0;
@@ -2411,6 +2463,9 @@ html.is-modal-open { overflow: hidden; }
   .feat-card__head { padding-right: 0; }
   .feat-card__title,
   .feat-card__desc { max-width: 560px; }
+  /* Feature pair → side-by-side, equal width and height. */
+  .feat-pair { flex-direction: row; gap: 24px; align-items: stretch; }
+  .feat-pair-card { flex: 1 1 0; min-width: 0; }
 
   /* Advisors: a 728px reading page, centered — single-column list (the mobile
      divider-row style), not the 1000px two-up grid. */

@@ -777,6 +777,31 @@ const COMMUNITY_FEATURES = [
   { art: "community-feat-qa", cat: "Q&A", title: "Ask, answer, and be heard", desc: "Ask a question. Contribute a reply that helps a fellow member. Browse featured topics curated by our community team.", screen: "com-questions" },
   { art: "community-feat-groups", cat: "Groups", title: "Find the circle that fits your journey", desc: "Join conversations on the topics that matter to you — from perimenopause and HRT to sleep, mood, and caring for someone else.", screen: "com-groups" },
 ];
+// Below the four feature cards: a "Feature pair" — two richer cards (Figma
+// 212:110), side by side on desktop and stacked on mobile. Ambassadors & CEMs
+// previews a couple of people; Community Guidelines previews the house rules.
+const COMMUNITY_PAIR = [
+  {
+    art: "community-feat-leadership", cat: "Ambassadors & CEMs", title: "The women who provide support",
+    desc: "Meet the member ambassadors and Community Engagement Managers who champion, guide, and support every day.",
+    people: [
+      { avatar: "community-1", name: "Name Surname", role: "Member Ambassador" },
+      { avatar: "community-2", name: "Name Surname", role: "Community Manager" },
+    ],
+    link: { label: "View people", screen: "com-meet" },
+  },
+  {
+    art: "community-feat-guidelines", cat: "Community Guidelines", title: "How we look after each other",
+    desc: "The short version of what makes this a place people come back to — and how we keep it safe, private, and kind.",
+    rules: [
+      "Be kind — someone here is living it",
+      "What's shared here stays here",
+      "Share experience, not medical advice",
+      "Flag anything that feels off",
+    ],
+    link: { label: "View guidelines", screen: "com-values" },
+  },
+];
 function renderCommunityFeatures() {
   const cards = COMMUNITY_FEATURES.map((f) => `
     <button class="feat-card feat-card--${f.art.replace("community-feat-", "")}" data-screen="${f.screen}">
@@ -788,10 +813,41 @@ function renderCommunityFeatures() {
       </span>
       <span class="feat-card__desc">${f.desc}</span>
     </button>`).join("");
+
+  const pair = COMMUNITY_PAIR.map((c) => {
+    const preview = c.people
+      ? c.people.map((p) => `
+          <div class="feat-pair__person">
+            <span class="feat-pair__avatar"><img src="${ASSET_BASE}/${p.avatar}.png" alt="" aria-hidden="true" /></span>
+            <span class="feat-pair__person-text">
+              <span class="feat-pair__person-name">${p.name}</span>
+              <span class="feat-pair__person-role">${p.role}</span>
+            </span>
+          </div>`).join("")
+      : c.rules.map((r) => `
+          <div class="feat-pair__rule">
+            <img class="feat-pair__check" src="${ASSET_BASE}/community-feat-check.svg" alt="" aria-hidden="true" />
+            <span>${r}</span>
+          </div>`).join("");
+    return `
+      <div class="feat-pair-card">
+        <img class="feat-pair-card__panel" src="${ASSET_BASE}/community-feat-panel2.svg" alt="" aria-hidden="true" />
+        <img class="feat-pair-card__illo" src="${ASSET_BASE}/${c.art}.svg" alt="" aria-hidden="true" />
+        <div class="feat-pair-card__head">
+          <span class="feat-card__cat">${c.cat}</span>
+          <span class="feat-card__title">${c.title}</span>
+        </div>
+        <p class="feat-card__desc">${c.desc}</p>
+        <div class="feat-pair-card__preview">${preview}</div>
+        <button class="feat-pair-card__link" data-screen="${c.link.screen}">${c.link.label} <span aria-hidden="true">→</span></button>
+      </div>`;
+  }).join("");
+
   return `
     <section class="feat">
       <h1 class="feat__heading">Community Features</h1>
       <div class="feat__list">${cards}</div>
+      <div class="feat-pair">${pair}</div>
     </section>
   `;
 }
@@ -1712,14 +1768,12 @@ function render() {
   } else if (screen.id === "advisors") {
     content = renderAdvisors();
   } else if (screen.id === "community-overview") {
-    // Community splits by persona: Visitor gets the "Community Features" page (a
-    // feature tour); Subscriber gets the content preview; members get the activity
-    // feed (Logged-Out sees it gated/blurred behind a login reminder, Logged-In
-    // sees it live). renderCommunityHub is kept as a fallback for unknown personas.
-    if (LOCKED_PERSONA_KEY === "visitor") {
+    // Community splits by persona: Visitor + Subscriber get the "Community Features"
+    // page (a feature tour); members get the activity feed (Logged-Out sees it
+    // gated/blurred behind a login reminder, Logged-In sees it live).
+    // renderCommunityHub is kept as a fallback for unknown personas.
+    if (LOCKED_PERSONA_KEY === "visitor" || LOCKED_PERSONA_KEY === "subscriber") {
       content = renderCommunityFeatures();
-    } else if (LOCKED_PERSONA_KEY === "subscriber") {
-      content = renderCommunityPreview();
     } else if (LOCKED_PERSONA_KEY === "logged-out-member") {
       content = renderCommunityFeed(true);
     } else if (LOCKED_PERSONA_KEY === "logged-in-member") {
