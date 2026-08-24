@@ -765,6 +765,18 @@ function renderCommunityHub() {
   `;
 }
 
+// Inline SVG feature illustrations for the Community Features page (magenta
+// line-art). Inlined (not <img>) so they travel with main.js and render over
+// file://; keyed by the COMMUNITY_FEATURES/COMMUNITY_PAIR `art` name.
+const COMMUNITY_FEAT_SVGS = {
+  "community-feat-posts": `<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M26 21V27M26 41V59M26 73V91M26 105V111" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 41C29.866 41 33 37.866 33 34C33 30.134 29.866 27 26 27C22.134 27 19 30.134 19 34C19 37.866 22.134 41 26 41Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 73C29.866 73 33 69.866 33 66C33 62.134 29.866 59 26 59C22.134 59 19 62.134 19 66C19 69.866 22.134 73 26 73Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M26 105C29.866 105 33 101.866 33 98C33 94.134 29.866 91 26 91C22.134 91 19 94.134 19 98C19 101.866 22.134 105 26 105Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M46 30H102M46 42H80M46 62H96M46 74H76M46 94H90M46 106H72" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
+  "community-feat-meet": `<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><g><g><path d="M70.4716 79.4716C74.0348 75.9085 78.8676 73.9067 83.9067 73.9067C88.9458 73.9067 93.7785 75.9085 97.3417 79.4716C100.905 83.0348 102.907 87.8676 102.907 92.9067M25 93.1733C25 86.8081 27.5286 80.7036 32.0294 76.2028C36.5303 71.7019 42.6348 69.1733 49 69.1733C55.3652 69.1733 61.4697 71.7019 65.9706 76.2028C70.4714 80.7036 73 86.8081 73 93.1733M96.9067 57.1467C96.9067 64.3264 91.0864 70.1467 83.9067 70.1467C76.727 70.1467 70.9067 64.3264 70.9067 57.1467C70.9067 49.967 76.727 44.1467 83.9067 44.1467C91.0864 44.1467 96.9067 49.967 96.9067 57.1467ZM65 50C65 58.8366 57.8366 66 49 66C40.1634 66 33 58.8366 33 50C33 41.1635 40.1634 34 49 34C57.8366 34 65 41.1635 65 50Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg>`,
+  "community-feat-qa": `<svg viewBox="0 0 99 74" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M59.5 22.5H87.5C90.1522 22.5 92.6957 23.5536 94.5711 25.4289C96.4464 27.3043 97.5 29.8478 97.5 32.5V50.5C97.5 53.1522 96.4464 55.6957 94.5711 57.5711C92.6957 59.4464 90.1522 60.5 87.5 60.5H83.5V72.5L70.5 60.5H59.5C56.8478 60.5 54.3043 59.4464 52.4289 57.5711C50.5536 55.6957 49.5 53.1522 49.5 50.5V32.5C49.5 29.8478 50.5536 27.3043 52.4289 25.4289C54.3043 23.5536 56.8478 22.5 59.5 22.5Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M13.5 1.5H57.5C60.6826 1.5 63.7348 2.76428 65.9853 5.01472C68.2357 7.26516 69.5 10.3174 69.5 13.5V35.5C69.5 38.6826 68.2357 41.7348 65.9853 43.9853C63.7348 46.2357 60.6826 47.5 57.5 47.5H35.5L21.5 60.5V47.5H13.5C10.3174 47.5 7.26516 46.2357 5.01472 43.9853C2.76428 41.7348 1.5 38.6826 1.5 35.5V13.5C1.5 10.3174 2.76428 7.26516 5.01472 5.01472C7.26516 2.76428 10.3174 1.5 13.5 1.5Z" fill="none" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M26.94 14.1533C27.6971 12.8749 28.8413 11.8706 30.2071 11.2856C31.5729 10.7007 33.0893 10.5655 34.537 10.8996C35.9847 11.2337 37.2886 12.0197 38.2599 13.144C39.2312 14.2683 39.8197 15.6724 39.94 17.1533C39.94 22.1533 33.94 22.1533 33.94 27.1533" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M33.94 36.3533C34.8789 36.3533 35.64 35.5922 35.64 34.6533C35.64 33.7145 34.8789 32.9533 33.94 32.9533C33.0011 32.9533 32.24 33.7145 32.24 34.6533C32.24 35.5922 33.0011 36.3533 33.94 36.3533Z" fill="#A440BC"/></g></svg>`,
+  "community-feat-groups": `<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M48 76C62.3594 76 74 64.3594 74 50C74 35.6406 62.3594 24 48 24C33.6406 24 22 35.6406 22 50C22 64.3594 33.6406 76 48 76Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M88 76C102.359 76 114 64.3594 114 50C114 35.6406 102.359 24 88 24C73.6406 24 62 35.6406 62 50C62 64.3594 73.6406 76 88 76Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M68 106C82.3594 106 94 94.3594 94 80C94 65.6406 82.3594 54 68 54C53.6406 54 42 65.6406 42 80C42 94.3594 53.6406 106 68 106Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
+  "community-feat-leadership": `<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M64 80C79.464 80 92 67.464 92 52C92 36.536 79.464 24 64 24C48.536 24 36 36.536 36 52C36 67.464 48.536 80 64 80Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M64 36L67.8 46.8L79.2 47.1L70.1 54L73.4 64.9L64 58.4L54.6 64.9L57.9 54L48.8 47.1L60.2 46.8L64 36Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M46 75L38 108L55 99L64 110L73 99L90 108L82 75" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
+  "community-feat-guidelines": `<svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg"><g><path d="M64 18L102 32V64C102 87 86 102 64 110C42 102 26 87 26 64V32L64 18Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M64 84C51 76 44 69 44 61C44 55 49 50 55 50C59 50 62 52 64 55C66 52 69 50 73 50C79 50 84 55 84 61C84 69 77 76 64 84Z" stroke="#A440BC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g></svg>`,
+};
+
 // Community Features — the Anonymous Visitor /community page (Figma Community
 // 184:588 desktop / 184:441 mobile). A "Community Features" tour: a heading over
 // four feature cards (category eyebrow + serif title + description + a magenta
@@ -791,7 +803,7 @@ const COMMUNITY_PAIR = [
     link: { label: "View people", screen: "com-meet" },
   },
   {
-    art: "community-feat-guidelines", cat: "Community Guidelines", title: "How we look after each other",
+    art: "community-feat-guidelines", cat: "Guidelines", title: "How we look after each other",
     desc: "The short version of what makes this a place people come back to — and how we keep it safe, private, and kind.",
     rules: [
       "Be kind — someone here is living it",
@@ -806,7 +818,7 @@ function renderCommunityFeatures() {
   const cards = COMMUNITY_FEATURES.map((f) => `
     <button class="feat-card feat-card--${f.art.replace("community-feat-", "")}" data-screen="${f.screen}">
       <img class="feat-card__panel" src="${ASSET_BASE}/community-feat-panel.svg" alt="" aria-hidden="true" />
-      <img class="feat-card__illo" src="${ASSET_BASE}/${f.art}.svg" alt="" aria-hidden="true" />
+      <span class="feat-card__illo">${COMMUNITY_FEAT_SVGS[f.art]}</span>
       <span class="feat-card__head">
         <span class="feat-card__cat">${f.cat}</span>
         <span class="feat-card__title">${f.title}</span>
@@ -832,7 +844,7 @@ function renderCommunityFeatures() {
     return `
       <div class="feat-pair-card">
         <img class="feat-pair-card__panel" src="${ASSET_BASE}/community-feat-panel2.svg" alt="" aria-hidden="true" />
-        <img class="feat-pair-card__illo" src="${ASSET_BASE}/${c.art}.svg" alt="" aria-hidden="true" />
+        <span class="feat-pair-card__illo">${COMMUNITY_FEAT_SVGS[c.art]}</span>
         <div class="feat-pair-card__head">
           <span class="feat-card__cat">${c.cat}</span>
           <span class="feat-card__title">${c.title}</span>

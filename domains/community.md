@@ -87,17 +87,19 @@ four, **side-by-side on desktop** (`.feat-pair` row, equal width/height) and
 
 - **Ambassadors & CEMs** — "The women who provide support" + a preview of two people
   (avatar + name + role) → **View people →** (`com-meet`).
-- **Community Guidelines** — "How we look after each other" + a four-item checklist
-  (magenta check + rule) → **View guidelines →** (`com-values`).
+- **Community Guidelines** (eyebrow: **"Guidelines"** — the full "Community
+  Guidelines" wrapped in the narrow desktop column) — "How we look after each other"
+  + a four-item checklist (magenta check + rule) → **View guidelines →** (`com-values`).
 
-No stats, lock, member-gate, or upsell. Illustrations are `<img>`
-(`community-feat-{posts,meet,qa,groups,leadership,guidelines}.svg`, magenta line-art)
-over a faint blue panel (`community-feat-panel.svg`; the pair uses the taller
-gradient `community-feat-panel2.svg`); the checklist check is `community-feat-check.svg`.
-Responsive: illustration top-right + full-width description on mobile; illustration
-centred on the right of a 728px card on desktop (feature cards); the pair is a row on
-desktop, stacked on mobile. All DM-Serif titles use the landing's `--color-navy`
-(see the global headline-colour note in [DECISIONS](../DECISIONS.md) 2026-08-14).
+No stats, lock, member-gate, or upsell. The **line-art illustrations are inline SVG**
+(`COMMUNITY_FEAT_SVGS` in `main.js`, keyed by `art` name), so they travel with the JS.
+The **faint blue panels stay `<img>`** and are **bottom-aligned** (bled slightly off
+the card's bottom-right): `community-feat-panel.svg` on the feature cards, the taller
+gradient `community-feat-panel2.svg` on the pair; the checklist check stays
+`community-feat-check.svg`. Responsive: illustration top-right + full-width
+description on mobile; illustration centred on the right of a 728px card on desktop
+(feature cards); the pair is a **row on desktop, stacked on mobile**. All DM-Serif
+titles use the landing's `--color-navy` (see [DECISIONS](../DECISIONS.md) 2026-08-14).
 
 Reached from:
 
