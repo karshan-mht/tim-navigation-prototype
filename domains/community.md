@@ -51,12 +51,13 @@ own **My Profile**, which is an Account screen; see [account.md](account.md).)
 ## Community Overview (the hub)
 
 `community-overview` (label "Community Overview") — a top-level `page` that renders
-**one of three surfaces, split by persona** (all branch off `screen.id ===
+**one of four surfaces, split by persona** (all branch off `screen.id ===
 "community-overview"` in `render()`):
 
 | Persona | Surface | Render fn |
 |---|---|---|
-| **Visitor, Subscriber** | Content **preview** page (Figma `5:2` / `6:68`) | `renderCommunityPreview()` |
+| **Visitor** | **Community Features** tour — Figma `184:588` / `184:441` | `renderCommunityFeatures()` |
+| **Subscriber** | Content **preview** page (Figma `5:2` / `6:68`) | `renderCommunityPreview()` |
 | **Logged-Out Member** | Activity **feed**, gated (blurred + login reminder) — Figma `9:134` / `9:200` | `renderCommunityFeed(true)` |
 | **Logged-In Member** | Activity **feed**, live — Figma `34:609` / `34:536` | `renderCommunityFeed(false)` |
 
@@ -64,12 +65,34 @@ own **My Profile**, which is an Account screen; see [account.md](account.md).)
 reached by any persona — it's kept only as a defensive fallback for an unknown
 persona key.
 
+### Visitor — the Community Features tour (`renderCommunityFeatures`)
+
+The Anonymous Visitor gets a **"Community Features"** page (added 2026-08-14, Figma
+`184:588` desktop / `184:441` mobile) — a feature tour, not the stats/upsell preview
+the Subscriber still sees. Data-driven from `COMMUNITY_FEATURES` in `main.js`: a
+`Community Features` heading over four cards (`.feat-card`), each with a magenta
+category eyebrow, a DM-Serif title, a description, and a magenta line-art
+illustration bleeding off the top-right over a faint blue panel:
+
+| Card | Category | Title | → screen |
+|---|---|---|---|
+| Posts | POSTS | What people are talking about | `com-activities` |
+| Meet Others | MEET OTHERS | Discover women like you | `com-meet` |
+| Q&A | Q&A | Ask, answer, and be heard | `com-questions` |
+| Groups | GROUPS | Find the circle that fits your journey | `com-groups` |
+
+No stats, lock, member-gate, or upsell (those live on the Subscriber preview).
+Illustrations are `<img>` (`community-feat-{posts,meet,qa,groups}.svg`, magenta
+line-art) over a shared `community-feat-panel.svg` (faint blue diagonal). Responsive:
+illustration top-right with the description full-width below on mobile; illustration
+centred on the right of a 728px card on desktop.
+
 Reached from:
 
 - The shared panel's single **Community** tab (all four personas — see [navigation.md](../foundation/navigation.md) §3)
 - Splash Community section **"Join the conversation →"** (see [landing.md](landing.md))
 
-### Visitor / Subscriber — the preview page (`renderCommunityPreview`)
+### Subscriber — the preview page (`renderCommunityPreview`)
 
 A "get a glimpse what's happening inside" marketing preview (added 2026-08-13,
 Figma Community `5:2` desktop / `6:68` mobile), not the orientation menu. Data-driven

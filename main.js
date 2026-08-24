@@ -765,13 +765,43 @@ function renderCommunityHub() {
   `;
 }
 
-// Community preview — the Visitor + Subscriber /community page (Figma Community
-// 5:2 desktop / 6:68 mobile). A beige intro banner (title + community count) over
-// four feature preview cards (COMMUNITY_PREVIEW) and a closing join upsell. This
-// replaces the orientation-menu hub for those two personas only; logged-out and
-// logged-in members keep renderCommunityHub above. Subscribers get the same
-// preview but the upsell swaps to "finish up" → Registration Step, matching how
-// the splash home already differentiates them (see renderHome).
+// Community Features — the Anonymous Visitor /community page (Figma Community
+// 184:588 desktop / 184:441 mobile). A "Community Features" tour: a heading over
+// four feature cards (category eyebrow + serif title + description + a magenta
+// line-art illustration bleeding off the top-right, over a faint blue panel).
+// No stats/lock/upsell — this replaces the older preview for the Visitor only;
+// Subscriber keeps renderCommunityPreview. Cards link to the com-* pages.
+const COMMUNITY_FEATURES = [
+  { art: "community-feat-posts", cat: "Posts", title: "What people are talking about", desc: "See the latest community updates — feelings, milestones, and conversations from women experiencing menopause.", screen: "com-activities" },
+  { art: "community-feat-meet", cat: "Meet Others", title: "Discover women like you", desc: "Find members who share your symptoms, your stage, or your corner of the world. Make connections that last.", screen: "com-meet" },
+  { art: "community-feat-qa", cat: "Q&A", title: "Ask, answer, and be heard", desc: "Ask a question. Contribute a reply that helps a fellow member. Browse featured topics curated by our community team.", screen: "com-questions" },
+  { art: "community-feat-groups", cat: "Groups", title: "Find the circle that fits your journey", desc: "Join conversations on the topics that matter to you — from perimenopause and HRT to sleep, mood, and caring for someone else.", screen: "com-groups" },
+];
+function renderCommunityFeatures() {
+  const cards = COMMUNITY_FEATURES.map((f) => `
+    <button class="feat-card feat-card--${f.art.replace("community-feat-", "")}" data-screen="${f.screen}">
+      <img class="feat-card__panel" src="${ASSET_BASE}/community-feat-panel.svg" alt="" aria-hidden="true" />
+      <img class="feat-card__illo" src="${ASSET_BASE}/${f.art}.svg" alt="" aria-hidden="true" />
+      <span class="feat-card__head">
+        <span class="feat-card__cat">${f.cat}</span>
+        <span class="feat-card__title">${f.title}</span>
+      </span>
+      <span class="feat-card__desc">${f.desc}</span>
+    </button>`).join("");
+  return `
+    <section class="feat">
+      <h1 class="feat__heading">Community Features</h1>
+      <div class="feat__list">${cards}</div>
+    </section>
+  `;
+}
+
+// Community preview — the Subscriber /community page (Figma Community 5:2 desktop
+// / 6:68 mobile). A beige intro banner (title + community count) over four feature
+// preview cards (COMMUNITY_PREVIEW) and a closing join upsell — the upsell's CTA
+// is "finish up" → Registration Step, matching how the splash home differentiates
+// the Subscriber (see renderHome). (Was also the Visitor page until the Visitor
+// moved to renderCommunityFeatures above.)
 function renderCommunityPreview() {
   const cards = COMMUNITY_PREVIEW.map((c) => {
     const stat = c.memberOnly
@@ -1682,11 +1712,13 @@ function render() {
   } else if (screen.id === "advisors") {
     content = renderAdvisors();
   } else if (screen.id === "community-overview") {
-    // Community splits by persona: Visitor + Subscriber get the content preview;
-    // members get the activity feed (Logged-Out sees it gated/blurred behind a
-    // login reminder, Logged-In sees it live). renderCommunityHub is kept as a
-    // defensive fallback for any unknown persona.
-    if (LOCKED_PERSONA_KEY === "visitor" || LOCKED_PERSONA_KEY === "subscriber") {
+    // Community splits by persona: Visitor gets the "Community Features" page (a
+    // feature tour); Subscriber gets the content preview; members get the activity
+    // feed (Logged-Out sees it gated/blurred behind a login reminder, Logged-In
+    // sees it live). renderCommunityHub is kept as a fallback for unknown personas.
+    if (LOCKED_PERSONA_KEY === "visitor") {
+      content = renderCommunityFeatures();
+    } else if (LOCKED_PERSONA_KEY === "subscriber") {
       content = renderCommunityPreview();
     } else if (LOCKED_PERSONA_KEY === "logged-out-member") {
       content = renderCommunityFeed(true);

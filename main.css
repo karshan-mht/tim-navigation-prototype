@@ -1143,6 +1143,100 @@ html.is-modal-open { overflow: hidden; }
 .comm-upsell__btn--secondary:active { background: rgba(15, 87, 168, 0.06); }
 .comm-upsell__note { margin: 0; padding-left: 12px; font-size: 14px; line-height: 22px; color: var(--color-text); }
 
+/* ---- Community Features (Anonymous Visitor) — Figma 184:588 / 184:441 ---- */
+/* A "Community Features" tour: a heading over four feature cards, each with a
+   category eyebrow + serif title + description and a magenta line-art illustration
+   bleeding off the top-right over a faint blue panel. */
+.feat {
+  max-width: var(--content-column);
+  margin-inline: auto;
+  width: 100%;
+  padding: 24px 12px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.feat__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--display-title-size);
+  line-height: var(--display-title-lh);
+  letter-spacing: var(--display-tracking);
+  color: var(--color-text);
+}
+.feat__list { display: flex; flex-direction: column; gap: 16px; }
+
+.feat-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  transition: border-color 0.12s ease, transform 0.06s ease;
+}
+.feat-card:active { border-color: var(--color-primary); transform: scale(0.99); }
+/* Decorative blue panel + magenta illustration, top-right (illustration above). */
+.feat-card__panel {
+  position: absolute;
+  z-index: 0;
+  top: -36px;
+  right: -28px;
+  width: 200px;
+  pointer-events: none;
+}
+.feat-card__illo {
+  position: absolute;
+  z-index: 1;
+  top: 6px;
+  right: 6px;
+  width: 112px;
+  height: 112px;
+  object-fit: contain;    /* the Q&A art is 99×74 — contain avoids stretching */
+  pointer-events: none;
+}
+.feat-card__head {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 116px;   /* clear the top-right illustration on mobile */
+}
+.feat-card__cat {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.25px;
+  text-transform: uppercase;
+  color: var(--color-magenta);
+}
+.feat-card__title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--display-title-size);
+  line-height: var(--display-title-lh);
+  letter-spacing: var(--display-tracking);
+  color: #000;
+}
+.feat-card__desc {
+  position: relative;
+  z-index: 2;
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: -0.25px;
+  color: var(--color-text);
+}
+
 /* ---- Community feed (Logged-Out + Logged-In Members) — Figma 9:134 / 34:609 ---- */
 /* A real activity feed: reuses the .comm-preview__banner (title + count), then
    four sections (Posts, Open Questions, Groups, People). Logged-out members see
@@ -2307,6 +2401,16 @@ html.is-modal-open { overflow: hidden; }
   .comm-reminder__text { flex: 1 1 auto; }
   .comm-reminder__cta { align-self: auto; flex: 0 0 auto; }
   .comm-reminder__graphic--bl { left: -146px; }
+
+  /* Community Features: wider cards, illustration centred on the right, text
+     clears it with a fixed measure instead of the mobile top-right padding. */
+  .feat { padding-block: 40px; }
+  .feat-card { min-height: 156px; justify-content: center; }
+  .feat-card__illo { top: 50%; bottom: auto; transform: translateY(-50%); right: 24px; width: 128px; height: 128px; }
+  .feat-card__panel { top: 50%; transform: translateY(-50%); right: -24px; width: 236px; }
+  .feat-card__head { padding-right: 0; }
+  .feat-card__title,
+  .feat-card__desc { max-width: 560px; }
 
   /* Advisors: a 728px reading page, centered — single-column list (the mobile
      divider-row style), not the 1000px two-up grid. */
