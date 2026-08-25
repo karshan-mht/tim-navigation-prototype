@@ -1232,6 +1232,7 @@ html.is-modal-open { overflow: hidden; }
   color: var(--color-navy);
 }
 .feat-card__desc {
+  margin: 0;              /* reset the <p> UA margin in the pair cards (it stacked on the flex gap) */
   position: relative;
   z-index: 2;
   font-size: 18px;
@@ -2467,9 +2468,23 @@ html.is-modal-open { overflow: hidden; }
   .feat-card__head { padding-right: 0; }
   .feat-card__title,
   .feat-card__desc { max-width: 560px; }
-  /* Feature pair → side-by-side, equal width and height. */
-  .feat-pair { flex-direction: row; gap: 24px; align-items: stretch; }
-  .feat-pair-card { flex: 1 1 0; min-width: 0; }
+  /* Feature pair → side-by-side. The two cards share a 4-row grid via subgrid
+     (heading / blurb / preview / link), so those rows line up across both cards;
+     the preview row grows (1fr) so the "View …" links bottom-align together. */
+  .feat-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    column-gap: 24px;
+    row-gap: 16px;
+  }
+  .feat-pair-card {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: 1 / -1;
+    row-gap: 16px;
+    min-width: 0;
+  }
 
   /* Advisors: a 728px reading page, centered — single-column list (the mobile
      divider-row style), not the 1000px two-up grid. */
