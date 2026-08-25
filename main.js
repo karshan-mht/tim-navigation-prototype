@@ -861,7 +861,7 @@ function renderCommunityFeatures() {
           <span class="feat-card__title">${c.title}</span>
         </div>
         <p class="feat-card__desc">${c.desc}</p>
-        <div class="feat-pair-card__preview">${preview}</div>
+        <div class="feat-pair-card__preview${c.rules ? " feat-pair-card__preview--tight" : ""}">${preview}</div>
         <button class="feat-pair-card__link" data-screen="${c.link.screen}">${c.link.label} <span aria-hidden="true">→</span></button>
       </div>`;
   }).join("");

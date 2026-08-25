@@ -1263,6 +1263,7 @@ html.is-modal-open { overflow: hidden; }
 
 /* People preview (Ambassadors card). */
 .feat-pair-card__preview { display: flex; flex-direction: column; gap: 16px; }
+.feat-pair-card__preview--tight { gap: 8px; }   /* guidelines checklist is tighter (Figma 212:155) */
 .feat-pair__person { display: flex; align-items: center; gap: 16px; }
 .feat-pair__avatar { flex-shrink: 0; width: 52px; height: 52px; border-radius: 50%; overflow: hidden; background: var(--color-bg-purple-soft); }
 .feat-pair__avatar img { display: block; width: 100%; height: 100%; object-fit: cover; }
