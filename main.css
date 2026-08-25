@@ -1280,8 +1280,9 @@ html.is-modal-open { overflow: hidden; }
 
 /* "View … →" link. */
 .feat-pair-card__link {
-  align-self: flex-start;
-  padding: 0 12px;
+  align-self: flex-start;   /* flex (mobile): shrink to content, left */
+  justify-self: start;      /* grid (desktop subgrid): left, not stretched */
+  padding: 0;               /* flush-left with the title / blurb / list */
   border: none;
   background: none;
   font-family: var(--font-body);
