@@ -609,7 +609,7 @@ function renderTopNav() {
         </div>
         <div class="nav__right">
           <button class="icon-btn" aria-label="Search">${icon("search")}</button>
-          <button class="icon-btn" aria-label="Ask AI">${icon("ai")}</button>
+          <button class="icon-btn ai-btn" aria-label="Ask AI">${aiDuoStarsGradientSVG("ai-grad-nav", "ai-btn__stars")}</button>
           ${right}
         </div>
       </div>
@@ -656,7 +656,7 @@ function renderDesktopHeader(screen) {
         <nav class="dnav__nav">${tabs}</nav>
         <div class="dnav__right">
           <button class="icon-btn" aria-label="Search">${icon("search")}</button>
-          <button class="icon-btn" aria-label="Ask AI">${icon("ai")}</button>
+          <button class="icon-btn ai-btn" aria-label="Ask AI">${aiDuoStarsGradientSVG("ai-grad-nav", "ai-btn__stars")}</button>
           ${right}
         </div>
       </div>
@@ -1576,9 +1576,9 @@ function renderArticleShell(content) {
     arrow: `<svg class="art__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>`,
   };
 
-  // ai-stars.svg, inlined so its fill can be the blue→magenta gradient (45deg,
-  // matching the "Menopause, answered" gradient text). Gradient id is scoped here.
-  const aiStars = `<svg class="art-answered__stars" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ai-grad" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0F57A8"/><stop offset="1" stop-color="#A441BC"/></linearGradient></defs><path d="M30.7273 37.0909C31.7147 37.0909 32.5047 37.6834 32.7022 38.6708C33.8871 44.2006 35.0721 45.3856 40.6019 46.5705C41.3918 46.768 42.1818 47.558 42.1818 48.5455C42.1818 49.5329 41.5893 50.3229 40.6019 50.5204C35.0721 51.7053 33.8871 52.8903 32.7022 58.4201C32.5047 59.4075 31.7147 60 30.7273 60C29.7398 60 28.9498 59.4075 28.7524 58.4201C27.5674 52.8903 26.3824 51.7053 20.8527 50.5204C19.8652 50.3229 19.2727 49.5329 19.2727 48.5455C19.2727 47.558 19.8652 46.768 20.8527 46.5705C26.3824 45.3856 27.5674 44.2006 28.7524 38.6708C28.9498 37.6834 29.7398 37.0909 30.7273 37.0909ZM11.6364 43.4545C11.8558 43.4545 12.0313 43.5862 12.0752 43.8056C12.3386 45.0345 12.6019 45.2978 13.8307 45.5611C14.0063 45.605 14.1818 45.7806 14.1818 46C14.1818 46.2194 14.0502 46.395 13.8307 46.4389C12.6019 46.7022 12.3386 46.9655 12.0752 48.1944C12.0313 48.4138 11.8558 48.5455 11.6364 48.5455C11.4169 48.5455 11.2414 48.4138 11.1975 48.1944C10.9342 46.9655 10.6708 46.7022 9.44201 46.4389C9.22257 46.395 9.09091 46.2194 9.09091 46C9.09091 45.7806 9.22257 45.605 9.44201 45.5611C10.6708 45.2978 10.9342 45.0345 11.1975 43.8056C11.2414 43.5862 11.4169 43.4545 11.6364 43.4545ZM43.4545 4C44.5017 4 45.3395 4.62831 45.5489 5.67549C47.2244 14.4718 49.5282 16.7756 58.3245 18.4511C59.3717 18.6605 60 19.4983 60 20.5455C60 21.5926 59.3717 22.4304 58.3245 22.6398C49.5282 24.3153 47.2244 26.6191 45.5489 35.4154C45.3395 36.2532 44.5017 37.0909 43.4545 37.0909C42.4074 37.0909 41.5696 36.4626 41.3602 35.4154C39.6847 26.6191 37.3809 24.3153 28.5846 22.6398C27.5374 22.4304 26.9091 21.5926 26.9091 20.5455C26.9091 19.4983 27.7468 18.6605 28.5846 18.4511C37.3809 16.7756 39.6847 14.4718 41.3602 5.67549C41.5696 4.62831 42.4074 4 43.4545 4ZM11.6364 21.8182C12.4156 21.8182 13.039 22.2857 13.1948 23.0649C13.8182 26.4935 14.5974 27.2727 18.026 27.8961C18.8052 28.0519 19.2727 28.6753 19.2727 29.4545C19.2727 30.2338 18.8052 30.8571 18.026 31.013C14.5974 31.6364 13.8182 32.4156 13.1948 35.8442C13.039 36.6234 12.4156 37.0909 11.6364 37.0909C10.8571 37.0909 10.2338 36.6234 10.0779 35.8442C9.45454 32.4156 8.67532 31.6364 5.24675 31.013C4.46753 30.8571 4 30.2338 4 29.4545C4 28.6753 4.46753 28.0519 5.24675 27.8961C8.67532 27.2727 9.45454 26.4935 10.0779 23.0649C10.2338 22.2857 10.8571 21.8182 11.6364 21.8182ZM18 6.54545C18.3896 6.54545 18.7013 6.77922 18.7792 7.16883C19.0909 8.88312 19.4805 9.27273 21.1948 9.58442C21.5844 9.66234 21.8182 9.97403 21.8182 10.3636C21.8182 10.7532 21.5844 11.0649 21.1948 11.1429C19.4805 11.4545 19.0909 11.8442 18.7792 13.5584C18.7013 13.9481 18.3896 14.1818 18 14.1818C17.6104 14.1818 17.2987 13.9481 17.2208 13.5584C16.9091 11.8442 16.5195 11.4545 14.8052 11.1429C14.4156 11.0649 14.1818 10.7532 14.1818 10.3636C14.1818 9.97403 14.4156 9.66234 14.8052 9.58442C16.5195 9.27273 16.9091 8.88312 17.2208 7.16883C17.2987 6.77922 17.6104 6.54545 18 6.54545Z" fill="url(#ai-grad)"/></svg>`;
+  // Blue→magenta gradient AI stars (see aiStarsGradientSVG), matching the
+  // "Menopause, answered" gradient text.
+  const aiStars = aiStarsGradientSVG("ai-grad", "art-answered__stars");
 
   const presets = [
     "Tips for managing menopause at work",
@@ -1878,6 +1878,14 @@ function attachAutoHide() {
   if (isDesktop) return;
   const nav = document.querySelector(".screen__nav");
   if (!nav) return;
+  // Assistant flow keeps the top nav fixed (never auto-hides) so the AI icon —
+  // and the greeting anchored under it — stay in view while the user scrolls.
+  if (document.body.dataset.flow === "assistant") {
+    nav.classList.remove("is-hidden");
+    attachAutoHide._cleanup && attachAutoHide._cleanup();
+    attachAutoHide._cleanup = null;
+    return;
+  }
   const uplevel = document.querySelector(".screen__uplevel");
   const navH = nav.offsetHeight;
   const setHidden = (hidden) => {
@@ -2014,6 +2022,278 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// Blue→magenta gradient AI "duo star" (the nav icon: one big outlined star + one
+// small solid star, matching the Figma design). Same path as icon("ai"), fill
+// swapped to the gradient. `gradId` scopes the <linearGradient>; `cls` is an
+// optional class on the <svg>.
+function aiDuoStarsGradientSVG(gradId, cls = "") {
+  return `<svg${cls ? ` class="${cls}"` : ""} width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${gradId}" x1="0" y1="22" x2="22" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0F57A8"/><stop offset="1" stop-color="#A441BC"/></linearGradient></defs><path d="M10.1398 2.10306C11.0667 2.17361 11.7925 2.76841 11.9829 3.72057C12.7953 8.18883 13.8111 9.20464 18.2794 10.0171C19.2948 10.2202 19.9046 11.0322 19.9047 12.0476L19.8969 12.2359C19.8261 13.1626 19.2313 13.8887 18.2794 14.0791L17.481 14.2344C13.685 15.0317 12.7445 16.1866 11.9829 20.3755L11.9378 20.5604C11.6775 21.4642 10.9044 21.9999 9.95234 22L9.76403 21.9931C8.899 21.927 8.20889 21.404 7.96603 20.5604L7.92091 20.3755C7.15925 16.1864 6.21926 15.0317 2.42279 14.2344L1.62445 14.0791C0.609125 13.8758 0 13.063 0 12.0476C6.48301e-05 11.0956 0.535802 10.3224 1.43961 10.0622L1.62445 10.0171C5.81338 9.25543 6.96824 8.31499 7.76558 4.51891L7.92091 3.72057C8.12402 2.70504 8.93681 2.09525 9.95234 2.09525L10.1398 2.10306ZM9.95234 4.91461C9.55607 6.83354 8.98656 8.53835 7.71438 9.81053C6.44232 11.0824 4.73797 11.6514 2.81935 12.0476C4.73813 12.4439 6.44228 13.0135 7.71438 14.2856C8.9863 15.5575 9.55608 17.2613 9.95234 19.1798C10.3486 17.2615 10.9177 15.5575 12.1894 14.2856C13.4614 13.0136 15.1659 12.4439 17.0845 12.0476C15.1659 11.6514 13.4614 11.0825 12.1894 9.81053C10.9173 8.53836 10.3486 6.83351 9.95234 4.91461ZM18.3545 0C18.7264 0.000101788 19.0239 0.223224 19.0984 0.595079C19.396 2.23194 19.7681 2.60403 21.4049 2.90164C21.7768 2.97607 21.9999 3.27364 22 3.64549C22 4.01747 21.7769 4.31554 21.4049 4.38998L21.1125 4.44656C19.7217 4.73865 19.3774 5.16194 19.0984 6.69654L19.0818 6.76457C18.9864 7.09538 18.7031 7.29153 18.3545 7.29162L18.2852 7.28908C17.9685 7.26487 17.7156 7.07336 17.6266 6.76457L17.61 6.69654C17.331 5.1619 16.9868 4.73865 15.5959 4.44656L15.3035 4.38998C14.9316 4.3155 14.7084 4.01743 14.7084 3.64549C14.7085 3.27368 14.9317 2.97611 15.3035 2.90164C16.9403 2.60403 17.3124 2.23194 17.61 0.595079C17.6845 0.223124 17.9825 0 18.3545 0Z" fill="url(#${gradId})"/></svg>`;
+}
+
+// Blue→magenta gradient AI stars (64-grid path), inlined so the fill can be a
+// gradient rather than a flat currentColor. `gradId` scopes the <linearGradient>
+// so multiple instances on a page don't collide; `cls` is an optional class on
+// the <svg>. Used by the article's "Menopause, answered" header and the
+// assistant greeting nudge.
+function aiStarsGradientSVG(gradId, cls = "") {
+  return `<svg${cls ? ` class="${cls}"` : ""} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="${gradId}" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0F57A8"/><stop offset="1" stop-color="#A441BC"/></linearGradient></defs><path d="M30.7273 37.0909C31.7147 37.0909 32.5047 37.6834 32.7022 38.6708C33.8871 44.2006 35.0721 45.3856 40.6019 46.5705C41.3918 46.768 42.1818 47.558 42.1818 48.5455C42.1818 49.5329 41.5893 50.3229 40.6019 50.5204C35.0721 51.7053 33.8871 52.8903 32.7022 58.4201C32.5047 59.4075 31.7147 60 30.7273 60C29.7398 60 28.9498 59.4075 28.7524 58.4201C27.5674 52.8903 26.3824 51.7053 20.8527 50.5204C19.8652 50.3229 19.2727 49.5329 19.2727 48.5455C19.2727 47.558 19.8652 46.768 20.8527 46.5705C26.3824 45.3856 27.5674 44.2006 28.7524 38.6708C28.9498 37.6834 29.7398 37.0909 30.7273 37.0909ZM11.6364 43.4545C11.8558 43.4545 12.0313 43.5862 12.0752 43.8056C12.3386 45.0345 12.6019 45.2978 13.8307 45.5611C14.0063 45.605 14.1818 45.7806 14.1818 46C14.1818 46.2194 14.0502 46.395 13.8307 46.4389C12.6019 46.7022 12.3386 46.9655 12.0752 48.1944C12.0313 48.4138 11.8558 48.5455 11.6364 48.5455C11.4169 48.5455 11.2414 48.4138 11.1975 48.1944C10.9342 46.9655 10.6708 46.7022 9.44201 46.4389C9.22257 46.395 9.09091 46.2194 9.09091 46C9.09091 45.7806 9.22257 45.605 9.44201 45.5611C10.6708 45.2978 10.9342 45.0345 11.1975 43.8056C11.2414 43.5862 11.4169 43.4545 11.6364 43.4545ZM43.4545 4C44.5017 4 45.3395 4.62831 45.5489 5.67549C47.2244 14.4718 49.5282 16.7756 58.3245 18.4511C59.3717 18.6605 60 19.4983 60 20.5455C60 21.5926 59.3717 22.4304 58.3245 22.6398C49.5282 24.3153 47.2244 26.6191 45.5489 35.4154C45.3395 36.2532 44.5017 37.0909 43.4545 37.0909C42.4074 37.0909 41.5696 36.4626 41.3602 35.4154C39.6847 26.6191 37.3809 24.3153 28.5846 22.6398C27.5374 22.4304 26.9091 21.5926 26.9091 20.5455C26.9091 19.4983 27.7468 18.6605 28.5846 18.4511C37.3809 16.7756 39.6847 14.4718 41.3602 5.67549C41.5696 4.62831 42.4074 4 43.4545 4ZM11.6364 21.8182C12.4156 21.8182 13.039 22.2857 13.1948 23.0649C13.8182 26.4935 14.5974 27.2727 18.026 27.8961C18.8052 28.0519 19.2727 28.6753 19.2727 29.4545C19.2727 30.2338 18.8052 30.8571 18.026 31.013C14.5974 31.6364 13.8182 32.4156 13.1948 35.8442C13.039 36.6234 12.4156 37.0909 11.6364 37.0909C10.8571 37.0909 10.2338 36.6234 10.0779 35.8442C9.45454 32.4156 8.67532 31.6364 5.24675 31.013C4.46753 30.8571 4 30.2338 4 29.4545C4 28.6753 4.46753 28.0519 5.24675 27.8961C8.67532 27.2727 9.45454 26.4935 10.0779 23.0649C10.2338 22.2857 10.8571 21.8182 11.6364 21.8182ZM18 6.54545C18.3896 6.54545 18.7013 6.77922 18.7792 7.16883C19.0909 8.88312 19.4805 9.27273 21.1948 9.58442C21.5844 9.66234 21.8182 9.97403 21.8182 10.3636C21.8182 10.7532 21.5844 11.0649 21.1948 11.1429C19.4805 11.4545 19.0909 11.8442 18.7792 13.5584C18.7013 13.9481 18.3896 14.1818 18 14.1818C17.6104 14.1818 17.2987 13.9481 17.2208 13.5584C16.9091 11.8442 16.5195 11.4545 14.8052 11.1429C14.4156 11.0649 14.1818 10.7532 14.1818 10.3636C14.1818 9.97403 14.4156 9.66234 14.8052 9.58442C16.5195 9.27273 16.9091 8.88312 17.2208 7.16883C17.2987 6.77922 17.6104 6.54545 18 6.54545Z" fill="url(#${gradId})"/></svg>`;
+}
+
+// ---- Assistant flow (visitor) ---------------------------------------------
+// Opt-in via ?flow=assistant. The top nav is kept fixed for this flow (see
+// attachAutoHide) so the AI icon stays put. The beats, per screen: the user gets
+// their bearings first (no pulse), then a couple scrolls in the AI icon starts
+// pulsing to catch the eye, and after a short lead a contextual bubble slides in
+// under the icon, typewriting its message like an assistant:
+//   • Home / landing — a first-time welcome ("Hi, I'm your personal assistant…"),
+//     shown once ever (localStorage). Not tappable; just a greeting.
+//   • Article — a question the assistant can answer ("What is hormone replacement
+//     therapy…"), with the WHOLE bubble tappable ("See the answer").
+// The pulse pauses while a bubble is up, then fires one farewell pulse after it
+// closes. Re-armed per screen. A no-op unless the page is in the assistant flow.
+function initAssistantFlow() {
+  if (document.body.dataset.flow !== "assistant") return;
+
+  // Start at the top and own the scroll position, so a reload/back doesn't
+  // restore a scrolled position and fire a phantom "user scrolled" trigger.
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+  window.scrollTo(0, 0);
+
+  const params = new URLSearchParams(window.location.search);
+  const PULSE_AT = 500;        // scroll well in before the pulse starts — lets the user get their bearings and clears any sticky ad up top
+  const NUDGE_LEAD = 3200;     // then the pulse runs on a bit before the bubble slides in
+  const NUDGE_LINGER = 4000;   // bubble stays this long after it finishes typing, then fades (or user closes it)
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // The pulse (and the gradient ring) run when the body is not .assistant-quiet.
+  const setPulsing = (on) => document.body.classList.toggle("assistant-quiet", !on);
+  setPulsing(false);   // start quiet — hold the pulse until the user has scrolled in a bit
+  let farewellTimer = 0;      // ends the single farewell pulse (see finish) so the ring retracts
+  let cancelPendingShow = null;   // cancels a nudge that's waiting for a pulse rest (see showAtPulseRest)
+
+  // Glue the bubble under the AI icon (its position shifts between the mobile top
+  // nav and the desktop header, and while the page scrolls). Fixed width so the
+  // typewriter only grows the bubble's height, never jitters it sideways.
+  const positionNudge = (nudge) => {
+    const btn = document.querySelector(".ai-btn");
+    if (!btn) return;
+    const r = btn.getBoundingClientRect();
+    nudge.style.top = `${Math.round(r.bottom + 10)}px`;
+    if (window.innerWidth < 600) {
+      // Phones: the icon anchor leaves too little room for two lines, so span the
+      // width with small side margins. Top-right origin keeps it reading as
+      // coming from the icon.
+      nudge.style.left = "12px";
+      nudge.style.right = "12px";
+      nudge.style.width = "auto";
+    } else {
+      // Wider screens: anchor the right edge under the icon, fixed at up to 340px.
+      nudge.style.left = "auto";
+      const right = Math.round(window.innerWidth - r.right);
+      nudge.style.right = `${right}px`;
+      nudge.style.width = `${Math.min(340, window.innerWidth - right - 12)}px`;
+    }
+  };
+
+  const closeIcon =
+    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>`;
+
+  // Typewriter: reveal `text` character-by-character (with a blinking caret),
+  // then append the styled CTA — a light LLM-style "typing" effect. Calls onDone
+  // once the message has finished typing. Under reduced-motion it sets the final
+  // text at once. Returns a cancel fn.
+  const typewrite = (el, text, ctaLabel, onDone) => {
+    el.textContent = "";
+    const addCta = () => {
+      const cta = document.createElement("span");
+      cta.className = "assistant-nudge__cta";
+      cta.textContent = ctaLabel;
+      return cta;
+    };
+    if (reduceMotion) { el.textContent = text; el.appendChild(addCta()); onDone(); return () => {}; }
+    const caret = document.createElement("span");
+    caret.className = "assistant-nudge__caret";
+    caret.setAttribute("aria-hidden", "true");
+    el.appendChild(caret);
+    let i = 0;
+    let timer = setTimeout(function step() {
+      if (i < text.length) {
+        caret.insertAdjacentText("beforebegin", text[i++]);
+        timer = setTimeout(step, 15 + Math.random() * 30);
+      } else {
+        el.insertBefore(addCta(), caret);
+        timer = setTimeout(() => caret.remove(), 550);
+        onDone();
+      }
+    }, 260);   // a beat after the slide-in, then start typing
+    return () => clearTimeout(timer);
+  };
+
+  const showNudge = (cfg) => {
+    if (document.querySelector(".assistant-nudge")) return;
+    setPulsing(false);   // hand off from pulse to the bubble
+
+    const nudge = document.createElement("div");
+    nudge.className = "assistant-nudge" + (cfg.tappable ? " assistant-nudge--tappable" : "");
+    nudge.setAttribute("role", "status");
+    nudge.setAttribute("aria-label", `${cfg.text}${cfg.ctaLabel}`);
+    nudge.innerHTML =
+      `<button class="assistant-nudge__close" type="button" aria-label="Dismiss">${closeIcon}</button>` +
+      `<p class="assistant-nudge__text" aria-hidden="true"></p>`;
+    document.body.appendChild(nudge);
+    positionNudge(nudge);
+    const reposition = () => positionNudge(nudge);
+    window.addEventListener("scroll", reposition, { passive: true });
+    window.addEventListener("resize", reposition);
+
+    // Force a reflow so the starting (hidden) styles are committed before we add
+    // .is-in — guarantees the slide-in transition runs (and doesn't depend on
+    // requestAnimationFrame, which pauses in a backgrounded tab).
+    void nudge.offsetWidth;
+    nudge.classList.add("is-in");
+
+    let cancelType = () => {};
+    let lingerTimer = 0;
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      cancelType();
+      document.body.classList.remove("assistant-typing");   // stop the sheen if dismissed mid-type
+      if (nudge.parentNode) nudge.remove();
+      // Fire exactly one farewell pulse once the bubble is gone (the ring eases
+      // in with it), then quiet the flow so the pulse stops and the ring retracts.
+      document.body.classList.remove("assistant-quiet");
+      document.body.classList.add("assistant-onepulse");
+      clearTimeout(farewellTimer);
+      farewellTimer = setTimeout(() => {
+        document.body.classList.add("assistant-quiet");
+        document.body.classList.remove("assistant-onepulse");
+      }, 3600);   // one pulse cycle
+    };
+    let dismissing = false;
+    const dismiss = () => {
+      if (dismissing) return;
+      dismissing = true;
+      clearTimeout(lingerTimer);
+      nudge.classList.remove("is-in");   // reverse the slide-in (fade + glide up)
+      window.removeEventListener("scroll", reposition);
+      window.removeEventListener("resize", reposition);
+      // Remove only after the full exit transition (0.6s) has played, so it never
+      // snaps away mid-glide. (setTimeout still fires in a backgrounded tab.)
+      setTimeout(finish, 650);
+    };
+    nudge.querySelector(".assistant-nudge__close").addEventListener("click", (e) => {
+      e.stopPropagation();   // the X dismisses without taking the bubble's action
+      dismiss();
+    });
+    if (cfg.tappable) {
+      // The whole bubble is the action (e.g. "See the answer"). There's no
+      // assistant answer screen yet, so for now the tap just dismisses — wire the
+      // destination in here later.
+      nudge.addEventListener("click", dismiss);
+    }
+    // Type the message. The sheen orbits the ring while typing (.assistant-typing);
+    // the linger countdown starts only once it's fully typed, so the reading time
+    // isn't eaten by the typing.
+    document.body.classList.add("assistant-typing");
+    cancelType = typewrite(nudge.querySelector(".assistant-nudge__text"), cfg.text, cfg.ctaLabel, () => {
+      document.body.classList.remove("assistant-typing");
+      lingerTimer = setTimeout(dismiss, NUDGE_LINGER);
+    });
+  };
+
+  // Show the nudge only at a pulse "rest" — wait for the next animation-iteration
+  // boundary (the ring is transparent there), so the bubble never cuts a ripple
+  // off. Cancellable via cancelPendingShow (see armForScreen); falls back if the
+  // pulse isn't animating (reduced motion, or no .ai-btn).
+  const showAtPulseRest = (cfg) => {
+    const btn = document.querySelector(".ai-btn");
+    if (!btn || reduceMotion) { showNudge(cfg); return; }
+    let fb;
+    const cleanup = () => {
+      btn.removeEventListener("animationiteration", go);
+      clearTimeout(fb);
+      cancelPendingShow = null;
+    };
+    const go = () => { cleanup(); showNudge(cfg); };
+    fb = setTimeout(go, 4000);   // fallback if no iteration boundary arrives
+    cancelPendingShow = cleanup;
+    btn.addEventListener("animationiteration", go);
+  };
+
+  // --- Which bubble for which screen ----------------------------------------
+  const WELCOME_KEY = "tim-assistant-welcomed";
+  const welcomed = () => { try { return localStorage.getItem(WELCOME_KEY) === "1"; } catch (_) { return false; } };
+  const markWelcomed = () => { try { localStorage.setItem(WELCOME_KEY, "1"); } catch (_) {} };
+  // Convenience for demoing: ?flow=assistant&reset=1 clears the first-visit flag.
+  if (params.get("reset") === "1") { try { localStorage.removeItem(WELCOME_KEY); } catch (_) {} }
+
+  const homeId = persona.screens[0].id;
+  const configForScreen = (id) => {
+    if (id === homeId) {
+      if (welcomed()) return null;   // welcome greeting is first-visit only
+      return {
+        key: "welcome",
+        tappable: false,
+        text: "Hi, I’m your personal assistant, here to help. ",
+        ctaLabel: "Start chatting",
+        onShow: markWelcomed,
+      };
+    }
+    if (/^article/.test(id)) {
+      return {
+        key: "article-hrt",
+        tappable: true,
+        text: "Is hormone replacement therapy right for me? ",
+        ctaLabel: "See the answer",
+      };
+    }
+    return null;
+  };
+
+  // Arm the scroll trigger for the current screen's bubble (if any, and not
+  // already shown this session). Re-armed on every screen change.
+  const shown = new Set();
+  let disarm = null;
+  let leadTimer = 0;
+  const armForScreen = () => {
+    if (disarm) { disarm(); disarm = null; }
+    if (cancelPendingShow) { cancelPendingShow(); }   // cancel a nudge waiting for a pulse rest on the previous screen
+    clearTimeout(leadTimer);       // cancel a pending lead from the previous screen so its bubble can't leak onto this one
+    clearTimeout(farewellTimer);   // and a pending farewell-end, so it can't quiet a fresh screen's pulse
+    const cfg = configForScreen(state.screenId);
+    if (!cfg || shown.has(cfg.key)) return;
+    const onScroll = () => {
+      if (window.scrollY < PULSE_AT) return;   // wait for a couple scrolls in
+      window.removeEventListener("scroll", onScroll);
+      disarm = null;
+      setPulsing(true);                        // then the pulse starts…
+      shown.add(cfg.key);
+      if (cfg.onShow) cfg.onShow();
+      leadTimer = setTimeout(() => showAtPulseRest(cfg), NUDGE_LEAD);   // …then the bubble, at the next pulse rest after the lead
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    disarm = () => window.removeEventListener("scroll", onScroll);
+  };
+
+  // On navigation to a new screen, let the pulse breathe again (unless a bubble
+  // is still up) and arm that screen's bubble. Runs after the app's own
+  // hashchange handler, so state.screenId is already current.
+  let lastScreen = state.screenId;
+  window.addEventListener("hashchange", () => {
+    if (state.screenId === lastScreen) return;
+    lastScreen = state.screenId;
+    if (!document.querySelector(".assistant-nudge")) {
+      document.body.classList.remove("assistant-onepulse");
+      setPulsing(false);   // new screen: hold the pulse again until a couple scrolls in
+    }
+    armForScreen();
+  });
+
+  armForScreen();   // arm the boot screen
+}
+
 // Hidden "back to all flows" hotspot — a small circle in the top-left corner
 // that's invisible until hovered, linking back to the root launcher. Only on
 // flow pages (this script runs there; the launcher doesn't load it).
@@ -2025,6 +2305,13 @@ function addHomeHotspot() {
 }
 
 if (persona) {
+  // Flow context (e.g. ?flow=assistant) — set once at boot and reflected on
+  // <body data-flow> so flow-specific chrome/animation can opt in via CSS (the
+  // "Ask AI" nudge pulse only runs inside the assistant flow). The param stays
+  // in the URL across hash navigation, so the flow persists for the session.
+  const flow = new URLSearchParams(window.location.search).get("flow");
+  if (flow) document.body.dataset.flow = flow;
+
   // Reflect the initial screen as a slug in the URL so it's shareable from the
   // first load (including Entry Points that arrived via ?start=). replaceState
   // avoids a spurious history entry / hashchange; the location.hash fallback
@@ -2038,4 +2325,5 @@ if (persona) {
   }
   render();
   addHomeHotspot();
+  initAssistantFlow();
 }

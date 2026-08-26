@@ -796,6 +796,178 @@ html.is-modal-open { overflow: hidden; }
 }
 .icon-btn:active { background: rgba(13, 27, 41, 0.05); }
 
+/* "Ask AI" button — a gradient sparkle inside a gradient RING (our blue→magenta,
+   45deg). The ring is an overlay (::before) so it can animate independently of
+   the icon. Fills the full 44px .icon-btn box so it reads at the same 44px size
+   as the profile avatar and search. */
+.ai-btn {
+  position: relative;
+  box-sizing: border-box;
+  background: transparent;
+}
+.ai-btn:active { transform: scale(0.95); }
+.ai-btn__stars { position: relative; z-index: 1; width: 22px; height: 22px; display: block; }
+
+/* Gradient ring overlay (masked so only the 2px edge shows) — always visible, in
+   both the normal nav and the assistant flow (at rest and while pulsing). */
+.ai-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 1px;   /* ring thickness */
+  background: linear-gradient(45deg, var(--color-primary) 0%, var(--color-magenta) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Sheen overlay — a bright arc masked to the same ring edge. Hidden at rest; it
+   fades in and rotates so the highlight travels around the ring while the
+   assistant is "typing" the nudge (see the .assistant-typing rule below). */
+.ai-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  padding: 1px;   /* same ring thickness as ::before */
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.85) 22deg, transparent 52deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+/* Travel the sheen around the ring while the assistant is typing the nudge. */
+body.assistant-typing .ai-btn::after {
+  opacity: 1;
+  animation: ai-sheen 2.4s linear infinite;
+}
+@keyframes ai-sheen {
+  to { transform: rotate(360deg); }
+}
+
+/* The attention pulse is reserved for the assistant flow — it only runs when the
+   page opted into that flow (<body data-flow="assistant">), never in the normal
+   nav. JS toggles .assistant-quiet to pause/resume it (see initAssistantFlow).
+   Each cycle is an interval (transparent rest) followed by one soft magenta ring
+   breathing outward — so pulses are spaced out, and the loop boundary lands on
+   the rest (JS shows the nudge there, never mid-ripple). */
+body[data-flow="assistant"]:not(.assistant-quiet):not(.assistant-onepulse) .ai-btn {
+  animation: ai-pulse 3.6s ease-in-out infinite;
+}
+/* One farewell pulse after the greeting closes — runs once (JS then quiets it). */
+body[data-flow="assistant"].assistant-onepulse .ai-btn {
+  animation: ai-pulse 3.6s ease-in-out 1;
+}
+@keyframes ai-pulse {
+  0%, 40% { box-shadow: 0 0 0 0 rgba(164, 64, 188, 0); }      /* interval between pulses */
+  55%     { box-shadow: 0 0 0 0 rgba(164, 64, 188, 0.5); }    /* ring appears at the edge */
+  100%    { box-shadow: 0 0 0 20px rgba(164, 64, 188, 0); }   /* expands + fades out */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-flow="assistant"] .ai-btn { animation: none; }
+  body[data-flow="assistant"] .ai-btn::after { animation: none; opacity: 0; }
+}
+
+/* Assistant greeting nudge — a speech-bubble that fades in under the AI icon
+   once the user starts scrolling, lingers, then fades away. Positioned by JS
+   (top/right anchored to the icon). Lives at the body level (outside #phone) so
+   re-renders don't wipe it. */
+.assistant-nudge {
+  position: fixed;
+  z-index: 60;
+  box-sizing: border-box;   /* JS sets an explicit width; keep padding + border inside it */
+  padding: 16px 18px;
+  /* White interior with a blue→magenta gradient border (matches the AI ring). */
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(#fff, #fff) padding-box,
+    linear-gradient(45deg, var(--color-primary) 0%, var(--color-magenta) 100%) border-box;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(13, 27, 41, 0.16), 0 2px 8px rgba(13, 27, 41, 0.08);
+  /* Smooth slide-in: fades in while gliding down into place from just under the
+   nav, on a long decelerating curve so it eases to rest rather than popping.
+   The reverse plays on dismiss (see JS, which times removal to the full exit). */
+  transform-origin: top right;
+  opacity: 0;
+  transform: translateY(-18px);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;   /* a greeting: taps pass through (except the close button) */
+}
+.assistant-nudge.is-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* Article bubble: the whole thing is the action ("See the answer"), so it's
+   tappable and lifts a touch on hover. */
+.assistant-nudge--tappable {
+  pointer-events: auto;
+  cursor: pointer;
+}
+.assistant-nudge--tappable:hover {
+  box-shadow: 0 14px 36px rgba(13, 27, 41, 0.22), 0 3px 10px rgba(13, 27, 41, 0.10);
+}
+/* Typewriter caret — a thin blinking bar shown while the message "types". */
+.assistant-nudge__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  margin-left: 1px;
+  vertical-align: -2px;
+  background: currentColor;
+  animation: assistant-caret 1s steps(1, end) infinite;
+}
+@keyframes assistant-caret {
+  0%, 50%      { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .assistant-nudge__caret { display: none; }
+}
+.assistant-nudge__text {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--color-text);
+}
+/* "Start chatting" — styled as a link/action (in the primary link colour). */
+.assistant-nudge__cta {
+  color: var(--color-primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+/* Small dismiss button — floated top-right so the greeting text flows around it
+   on the first line and uses the full width below (keeps it to two lines). The
+   bubble is pointer-events:none so taps pass through; the button opts back in. */
+.assistant-nudge__close {
+  float: right;
+  width: 28px;
+  height: 28px;
+  margin: -3px -6px 2px 8px;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+.assistant-nudge__close:hover { color: var(--color-text); background: rgba(13, 27, 41, 0.05); }
+.assistant-nudge__close svg { width: 18px; height: 18px; display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .assistant-nudge { transition: opacity 0.3s ease; transform: none; }
+  .assistant-nudge.is-in { transform: none; }
+}
+
 /* Monochrome inline SVG icons (fill=currentColor), so each context's `color`
    tints them — nav = ink, Library/Community = magenta, back chevron = blue,
    dropdown = ink. Fixed square box; the SVG sits at natural size, centered
@@ -817,7 +989,7 @@ html.is-modal-open { overflow: hidden; }
 .logo--mark { height: 40px; }  /* compact circular logomark */
 
 .join-btn {
-  height: 44px;
+  height: 44px;   /* matches the AI / profile circles and search tap box */
   padding: 0 16px;
   border-radius: var(--radius-pill);
   border: none;
@@ -832,8 +1004,8 @@ html.is-modal-open { overflow: hidden; }
 
 .profile-btn {
   position: relative;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border: none;
   background: none;
   padding: 0;
