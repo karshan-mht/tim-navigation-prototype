@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# First-open setup. Runs once (result is cached).
+# This is a plain HTML/CSS/JS prototype served by Python's built-in
+# http.server, so there are no system packages to install.
+set -euo pipefail
+
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "python3 is required to serve this prototype but was not found on PATH." >&2
+  exit 1
+fi
+
+echo "setup: python3 found ($(python3 --version 2>&1)) — nothing else to install."

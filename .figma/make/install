@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Install project dependencies. Runs on every project open.
+# Static prototype with no build step and no third-party packages,
+# so there is nothing to install.
+set -euo pipefail
+
+echo "install: no dependencies to install (static HTML/CSS/JS prototype)."

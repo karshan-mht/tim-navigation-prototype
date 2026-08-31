@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Verify the dev server has started correctly.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+set -a
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR/env"
+set +a
+
+URL="http://127.0.0.1:${PORT}/"
+
+# Poll for up to ~15s for the server to answer with a successful status.
+for i in $(seq 1 30); do
+  code="$(curl -s -o /dev/null -w '%{http_code}' "$URL" 2>/dev/null || true)"
+  if [ "$code" = "200" ]; then
+    echo "verify: dev server is up at $URL (HTTP $code)."
+    exit 0
+  fi
+  sleep 0.5
+done
+
+echo "verify: dev server did not become reachable at $URL." >&2
+exit 1

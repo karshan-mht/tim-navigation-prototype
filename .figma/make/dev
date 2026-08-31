@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Start the dev server. Runs for the whole session; killed on project close.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Load PORT (and friends) from the shared env file.
+set -a
+# shellcheck disable=SC1091
+source "$SCRIPT_DIR/env"
+set +a
+
+# Serve the repo root over HTTP on the configured port.
+REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+cd "$REPO_ROOT"
+
+echo "dev: serving $REPO_ROOT on http://localhost:${PORT}/"
+exec python3 -m http.server "${PORT}" --bind 127.0.0.1
