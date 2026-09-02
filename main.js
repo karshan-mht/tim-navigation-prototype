@@ -609,7 +609,7 @@ function renderTopNav() {
         </div>
         <div class="nav__right">
           <button class="icon-btn" aria-label="Search">${icon("search")}</button>
-          <button class="icon-btn ai-btn" aria-label="Ask AI">${aiDuoStarsGradientSVG("ai-grad-nav", "ai-btn__stars")}</button>
+          <button class="icon-btn ai-btn" aria-label="Ask AI">${aiDuoStarsGradientSVG("ai-grad-nav", "ai-btn__stars")}<span class="ai-btn__label">AI</span></button>
           ${right}
         </div>
       </div>
@@ -656,7 +656,7 @@ function renderDesktopHeader(screen) {
         <nav class="dnav__nav">${tabs}</nav>
         <div class="dnav__right">
           <button class="icon-btn" aria-label="Search">${icon("search")}</button>
-          <button class="icon-btn ai-btn" aria-label="Ask AI">${aiDuoStarsGradientSVG("ai-grad-nav", "ai-btn__stars")}</button>
+          <button class="icon-btn ai-btn" aria-label="Ask AI">${aiDuoStarsGradientSVG("ai-grad-nav", "ai-btn__stars")}<span class="ai-btn__label">AI</span></button>
           ${right}
         </div>
       </div>
@@ -2169,7 +2169,7 @@ function initAssistantFlow() {
       farewellTimer = setTimeout(() => {
         document.body.classList.add("assistant-quiet");
         document.body.classList.remove("assistant-onepulse");
-      }, 3600);   // one pulse cycle
+      }, 2600);   // one pulse cycle
     };
     let dismissing = false;
     const dismiss = () => {
