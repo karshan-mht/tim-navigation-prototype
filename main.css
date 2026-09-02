@@ -796,17 +796,34 @@ html.is-modal-open { overflow: hidden; }
 }
 .icon-btn:active { background: rgba(13, 27, 41, 0.05); }
 
-/* "Ask AI" button — a gradient sparkle inside a gradient RING (our blue→magenta,
-   45deg). The ring is an overlay (::before) so it can animate independently of
-   the icon. Fills the full 44px .icon-btn box so it reads at the same 44px size
-   as the profile avatar and search. */
+/* "Ask AI" button — a pill holding the gradient duo-star + a gradient "AI" label,
+   inside a gradient RING (our blue→magenta, 45deg). The ring is an overlay
+   (::before) so it can animate independently of the icon. 44px tall, hugging its
+   content, to sit alongside the profile avatar and search. */
 .ai-btn {
   position: relative;
   box-sizing: border-box;
+  width: auto;
+  gap: 6px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
   background: transparent;
 }
 .ai-btn:active { transform: scale(0.95); }
-.ai-btn__stars { position: relative; z-index: 1; width: 22px; height: 22px; display: block; }
+.ai-btn__stars { position: relative; z-index: 1; flex-shrink: 0; width: 22px; height: 22px; display: block; }
+.ai-btn__label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1;
+  /* gradient text, matching the stars + ring */
+  background: linear-gradient(45deg, var(--color-primary) 0%, var(--color-magenta) 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+}
 
 /* Gradient ring overlay (masked so only the 2px edge shows) — always visible, in
    both the normal nav and the assistant flow (at rest and while pulsing). */
@@ -814,7 +831,7 @@ html.is-modal-open { overflow: hidden; }
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   padding: 1px;   /* ring thickness */
   background: linear-gradient(45deg, var(--color-primary) 0%, var(--color-magenta) 100%);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -830,7 +847,7 @@ html.is-modal-open { overflow: hidden; }
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
+  border-radius: var(--radius-pill);
   padding: 1px;   /* same ring thickness as ::before */
   background: conic-gradient(from 0deg, transparent 0deg, rgba(255, 255, 255, 0.85) 22deg, transparent 52deg, transparent 360deg);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -849,28 +866,42 @@ body.assistant-typing .ai-btn::after {
   to { transform: rotate(360deg); }
 }
 
-/* The attention pulse is reserved for the assistant flow — it only runs when the
-   page opted into that flow (<body data-flow="assistant">), never in the normal
-   nav. JS toggles .assistant-quiet to pause/resume it (see initAssistantFlow).
-   Each cycle is an interval (transparent rest) followed by one soft magenta ring
-   breathing outward — so pulses are spaced out, and the loop boundary lands on
-   the rest (JS shows the nudge there, never mid-ripple). */
-body[data-flow="assistant"]:not(.assistant-quiet):not(.assistant-onepulse) .ai-btn {
-  animation: ai-pulse 3.6s ease-in-out infinite;
+/* The "Ask AI" button pulses to advertise itself — a soft magenta ring breathing
+   outward via box-shadow, spaced out with an interval between ripples. Reserved
+   for the flow demos (<body data-flow>), so the pill sits static in the normal
+   nav: it runs continuously under ?flow=pulse, and in the assistant flow JS
+   toggles .assistant-quiet to pause/resume it (held until the user scrolls in,
+   paused during the greeting) plus .assistant-onepulse for the single farewell
+   pulse. The loop boundary lands on the rest, where JS shows the nudge (never
+   mid-ripple). */
+body[data-flow]:not(.assistant-quiet):not(.assistant-onepulse) .ai-btn {
+  animation: ai-pulse 2.6s ease-in-out infinite;
 }
 /* One farewell pulse after the greeting closes — runs once (JS then quiets it). */
 body[data-flow="assistant"].assistant-onepulse .ai-btn {
-  animation: ai-pulse 3.6s ease-in-out 1;
+  animation: ai-pulse 2.6s ease-in-out 1;
 }
+/* A strong, obvious pulse: a short interval, then a double ring (magenta + blue)
+   expands wide while the pill gives a little throb. The 100%→0% boundary is at
+   rest (transparent, scale 1) so JS can show the nudge there, never mid-ripple. */
 @keyframes ai-pulse {
-  0%, 40% { box-shadow: 0 0 0 0 rgba(164, 64, 188, 0); }      /* interval between pulses */
-  55%     { box-shadow: 0 0 0 0 rgba(164, 64, 188, 0.5); }    /* ring appears at the edge */
-  100%    { box-shadow: 0 0 0 20px rgba(164, 64, 188, 0); }   /* expands + fades out */
+  0%, 18% {
+    box-shadow: 0 0 0 0 rgba(164, 64, 188, 0), 0 0 0 0 rgba(15, 87, 168, 0);
+    transform: scale(1);
+  }
+  38% {
+    box-shadow: 0 0 0 0 rgba(164, 64, 188, 0.65), 0 0 0 0 rgba(15, 87, 168, 0.45);
+    transform: scale(1.08);
+  }
+  100% {
+    box-shadow: 0 0 0 32px rgba(164, 64, 188, 0), 0 0 0 20px rgba(15, 87, 168, 0);
+    transform: scale(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  body[data-flow="assistant"] .ai-btn { animation: none; }
-  body[data-flow="assistant"] .ai-btn::after { animation: none; opacity: 0; }
+  .ai-btn { animation: none; }
+  .ai-btn::after { animation: none; opacity: 0; }
 }
 
 /* Assistant greeting nudge — a speech-bubble that fades in under the AI icon
